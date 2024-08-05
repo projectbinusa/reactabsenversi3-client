@@ -1,71 +1,104 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../../../../components/SidebarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileExport } from "@fortawesome/free-solid-svg-icons";
-import Swal from "sweetalert2";
 import axios from "axios";
+import Swal from "sweetalert2";
 import { API_DUMMY } from "../../../../utils/api";
 import NavbarAdmin from "../../../../components/NavbarAdmin";
 
-function Perkelas() {
-  const [listAbsensi, setListAbsensi] = useState([]);
-  const [listKelas, setListKelas] = useState([]); // Daftar kelas
-  const [kelasId, setKelasId] = useState(); // ID kelas yang dipilih
+function HarianPerkelas() {
+  const [tanggal, setTanggal] = useState("");
+  const [kelasId, setKelasId] = useState("");
   const [idOrganisasi, setIdOrganisasi] = useState(null);
+  const [listKelas, setListKelas] = useState([]);
+  const [absensiData, setAbsensiData] = useState([]);
 
   useEffect(() => {
     getAllKelas();
-    getAbsensiByKelasId();
-  }, []);
+    if (idOrganisasi !== null) {
+      getAllKelasByOrganisasi(idOrganisasi);
+    }
+  }, [idOrganisasi]);
 
-  // Fetch kelas data
+  const handleTanggalChange = (event) => {
+    setTanggal(event.target.value);
+    if (event.target.value && kelasId) {
+      getHarianPerkelas(event.target.value, kelasId);
+    } else {
+      setAbsensiData([]);
+    }
+  };
+
+  const handleKelasChange = (event) => {
+    setKelasId(event.target.value);
+    if (tanggal && event.target.value) {
+      getHarianPerkelas(tanggal, event.target.value);
+    } else {
+      setAbsensiData([]);
+    }
+  };
+
+  const getHarianPerkelas = async (tanggal, kelasId) => {
+    try {
+      const response = await axios.get(`${API_DUMMY}/api/absensi/by-tanggal`, {
+        params: { tanggalAbsen: tanggal, kelasId },
+      });
+      if (response.data.length === 0) {
+        Swal.fire("Tidak ada", "Tidak ada yang absen hari ini", "info");
+      } else {
+        setAbsensiData(response.data);
+      }
+    } catch (error) {
+      console.error(error);
+      Swal.fire("Gagal", "Gagal Mengambil data", "error");
+    }
+  };
+
   const getAllKelas = async () => {
     try {
       const response = await axios.get(`${API_DUMMY}/api/kelas/kelas/all`);
       setListKelas(response.data);
-      if (response.data.length > 0) {
-        setIdOrganisasi(response.data[0].organisasi.id);
+      const dataOrganisasi = response.data.map((dt) => dt.organisasi.id);
+
+      if (dataOrganisasi.length > 0) {
+        setIdOrganisasi(dataOrganisasi[0]);
       }
     } catch (error) {
-      console.error("Error fetching classes:", error);
+      console.log(error);
     }
   };
 
-  // Fetch absensi data by kelas id
-  const getAbsensiByKelasId = async () => {
+  const getAllKelasByOrganisasi = async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/absensi/by-kelas/{kelasId}?kelasId=${kelasId}`
+        `${API_DUMMY}/api/kelas/getALlByOrganisasi/${idOrganisasi}`
       );
-      console.log("Data Absensi:", response.data); // Tambahkan log ini
-      setListAbsensi(response.data);
+      console.log("list kelas by organisasi: ", response.data);
     } catch (error) {
-      console.error("Error fetching attendance:", error);
+      console.log(error);
     }
   };
 
-  // Handle kelas selection
-  const handleKelasChange = (event) => {
-    const selectedKelasId = event.target.value;
-    setKelasId(selectedKelasId);
-    if (selectedKelasId) {
-      getAbsensiByKelasId(selectedKelasId);
-    } else {
-      setListAbsensi([]);
-    }
+  const handleExportClick = (e) => {
+    exportPerkelas(e, tanggal, kelasId);
   };
 
-  // Export data function
-  const exportPerkelas = async () => {
-    if (!kelasId) {
-      Swal.fire("Peringatan", "Silakan pilih kelas terlebih dahulu", "warning");
+  const exportPerkelas = async (e, tanggal, kelasId) => {
+    e.preventDefault();
+    if (!kelasId || !tanggal) {
+      Swal.fire(
+        "Peringatan",
+        "Silakan pilih kelas dan tanggal terlebih dahulu",
+        "warning"
+      );
       return;
     }
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/absensi/export/absensi-rekapan-perkelas`,
+        `${API_DUMMY}/api/absensi/export/harian/by-kelas`,
         {
-          params: { kelasId },
+          params: { kelasId, tanggal },
           responseType: "blob",
         }
       );
@@ -73,7 +106,7 @@ function Perkelas() {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "RekapPerkelas.xlsx");
+      link.setAttribute("download", "Absensi-Harian.xlsx");
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -81,12 +114,11 @@ function Perkelas() {
 
       Swal.fire("Berhasil", "Berhasil mengunduh data", "success");
     } catch (error) {
-      console.error("Error exporting data:", error);
       Swal.fire("Error", "Gagal mengunduh data", "error");
+      console.log(error);
     }
   };
 
-  // Format date
   const formatDate = (dateString) => {
     const options = {
       weekday: "long",
@@ -95,6 +127,37 @@ function Perkelas() {
       day: "numeric",
     };
     return new Date(dateString).toLocaleDateString("id-ID", options);
+  };
+
+  const formatLamaKerja = (startKerja) => {
+    const startDate = new Date(startKerja);
+    const currentDate = new Date();
+
+    const diffYears = currentDate.getFullYear() - startDate.getFullYear();
+    let diffMonths = currentDate.getMonth() - startDate.getMonth();
+    if (diffMonths < 0) {
+      diffMonths += 12;
+    }
+
+    let diffDays = Math.floor(
+      (currentDate - startDate) / (1000 * 60 * 60 * 24)
+    );
+    const lastDayOfLastMonth = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      0
+    ).getDate();
+    if (currentDate.getDate() < startDate.getDate()) {
+      diffMonths -= 1;
+      diffDays -= lastDayOfLastMonth;
+    }
+
+    let durationString = "";
+    if (diffYears > 0) durationString += `${diffYears} tahun `;
+    if (diffMonths > 0) durationString += `${diffMonths} bulan `;
+    if (diffDays > 0) durationString += `${diffDays} hari`;
+
+    return durationString.trim();
   };
 
   return (
@@ -110,37 +173,49 @@ function Perkelas() {
           <div className="tabel-absen bg-white p-5 rounded-xl shadow-xl border border-gray-300">
             <div className="flex justify-between">
               <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
-                Rekap Perkelas
+                Rekap Harian
               </h6>
             </div>
             <hr />
-            <form className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-5">
+
+            <form
+              method="get"
+              id="filterForm"
+              className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-5"
+            >
               <select
-                id="kelas"
+                id="small"
                 className="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 value={kelasId}
-                onChange={(e) => setKelasId(e.target.value)}
+                onChange={handleKelasChange}
               >
-                <option >Pilih Kelas</option>
+                <option value="">Pilih Kelas</option>
                 {listKelas.map((data) => (
                   <option key={data.id} value={data.id}>
                     {data.namaKelas}
                   </option>
                 ))}
               </select>
-
+              <input
+                type="date"
+                className="appearance-none block w-full bg-white border border-gray-300 rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-gray-500"
+                id="tanggal"
+                name="tanggal"
+                value={tanggal}
+                onChange={handleTanggalChange}
+              />
               <div className="flex sm:flex-row gap-4 mx-auto items-center">
                 <button
                   type="button"
                   className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto"
-                  onClick={exportPerkelas}
+                  onClick={handleExportClick}
                 >
                   <FontAwesomeIcon icon={faFileExport} />
                 </button>
               </div>
             </form>
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-5 py-3">
-              {listAbsensi.length === 0 ? (
+              {absensiData.length === 0 ? (
                 <>
                   <h1 className="text-2xl font-bold text-center text-gray-900 dark:text-white mt-5 mb-3">
                     Tidak Ada Absen Hari Ini !!
@@ -181,7 +256,7 @@ function Perkelas() {
                     </tr>
                   </thead>
                   <tbody>
-                    {listAbsensi.map((absensi, index) => (
+                    {absensiData.map((absensi, index) => (
                       <tr key={absensi.id}>
                         <td className="px-6 py-3 whitespace-nowrap">
                           {index + 1}
@@ -196,21 +271,13 @@ function Perkelas() {
                           {absensi.jamMasuk}
                         </td>
                         <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          <img
-                            src={absensi.fotoMasuk}
-                            alt="Foto Masuk"
-                            className="w-16 h-16 object-cover"
-                          />
+                          <img src={absensi.fotoMasuk} alt="Foto Masuk" />
                         </td>
                         <td className="px-6 py-3 whitespace-nowrap capitalize">
                           {absensi.jamPulang}
                         </td>
                         <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          <img
-                            src={absensi.fotoPulang}
-                            alt="Foto Pulang"
-                            className="w-16 h-16 object-cover"
-                          />
+                          <img src={absensi.fotoPulang} alt="Foto Pulang" />
                         </td>
                         <td className="px-6 py-3 whitespace-nowrap capitalize">
                           {absensi.jamKerja}
@@ -231,4 +298,4 @@ function Perkelas() {
   );
 }
 
-export default Perkelas;
+export default HarianPerkelas;

@@ -90,6 +90,7 @@ import AddKelas from "./pages/admin/add/AddKelas";
 import EditKelas from "./pages/admin/edit/EditKelas";
 import Perkelas from "./pages/admin/rekapan/kelas/Perkelas";
 import BulanPerkelas from "./pages/admin/rekapan/kelas/Bulanan";
+import HarianPerkelas from "./pages/admin/rekapan/kelas/HarianPerkelas";
 
 function App() {
   const role = localStorage.getItem("role");
@@ -170,6 +171,7 @@ function App() {
               <Route path="/admin/bulanan" component={Bulanan} exact />
               <Route path="/admin/perkelas" component={Perkelas} exact />
               <Route path="/admin/bulanan/perkelas" component={BulanPerkelas} exact />
+              <Route path="/admin/harian/perkelas" component={HarianPerkelas} exact />
               {/* data absensi */}
               <Route path="/admin/absensi" component={Absensi} exact />
               <Route path="/admin/cuti" component={Cuti} exact />
