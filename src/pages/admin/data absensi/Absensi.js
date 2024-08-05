@@ -156,7 +156,7 @@ function Absensi() {
             <main id="content" className="flex-1 p-4 sm:p-6">
               <div className="bg-white rounded-lg shadow-xl p-8">
                 <div className="flex justify-between">
-                  <h6 className="text-xl font-bold">Detail History Absensi</h6>
+                  <h6 className="text-xl font-bold">Detail History Presensi</h6>
                   <div className="flex items-center gap-2 mt-2">
                     <div className="relative w-64">
                       <input

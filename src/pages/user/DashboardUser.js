@@ -228,7 +228,7 @@ function Dashboard() {
                           isAbsenMasuk ? "text-gray-400" : "text-black"
                         }`}
                       >
-                        Absen masuk.
+                        Presensi masuk.
                       </p>
                     </div>
                     <div
@@ -250,7 +250,7 @@ function Dashboard() {
                   <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                     <div className="my-auto">
                       <p className="font-bold text-black">Pulang</p>
-                      <p className="text-lg text-black">Absen pulang.</p>
+                      <p className="text-lg text-black">Presensi pulang.</p>
                     </div>
                     <div className="my-auto text-black">
                       <FontAwesomeIcon
@@ -278,7 +278,7 @@ function Dashboard() {
             </div>
 
             <div className="flex justify-center mt-3 gap-4 flex-col md:flex-row">
-              <Link to="/user/cuti">
+              {/* <Link to="/user/cuti">
                 <div className="pl-2 h-24 w-full md:w-80 bg-red-400 rounded-lg shadow-md md:mr-20 cursor-pointer">
                   <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                     <div className="my-auto">
@@ -304,7 +304,7 @@ function Dashboard() {
                     </div>
                   </div>
                 </div>
-              </Link>
+              </Link> */}
             </div>
           </div>
 
@@ -312,9 +312,9 @@ function Dashboard() {
             <div className="bg-blue-500 rounded-lg shadow-md p-4 md:w-full lg:w-auto">
               <div className="flex justify-between items-center">
                 <div>
-                  <p className="text-white font-bold text-lg">Total Absen</p>
+                  <p className="text-white font-bold text-lg">Total Presensi</p>
                   <p className="text-white text-md">
-                    Jumlah absen yang tercatat
+                    Jumlah Presensi yang tercatat
                   </p>
                 </div>
                 <div className="text-white text-2xl font-semibold">
@@ -339,7 +339,7 @@ function Dashboard() {
           </div>
 
           <div className="tabel-absen mt-12 bg-blue-100 p-5 rounded-xl shadow-xl border border-gray-300">
-            <h2 className="text-xl font-bold text-black">History Absensi</h2>
+            <h2 className="text-xl font-bold text-black">History Presensi</h2>
             <div className="overflow-x-auto rounded-lg border border-gray-200 mt-4">
               <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm border border-gray-300">
                 <thead className="text-left text-white bg-blue-500">
@@ -383,7 +383,7 @@ function Dashboard() {
             </div>
           </div>
 
-          <div className="tabel-cuti mt-12 bg-blue-100 p-5 rounded-xl shadow-xl border border-gray-300">
+          {/* <div className="tabel-cuti mt-12 bg-blue-100 p-5 rounded-xl shadow-xl border border-gray-300">
             <h2 className="text-xl font-bold text-black">Permohonan Cuti</h2>
             <div className="overflow-x-auto rounded-lg border border-gray-200 mt-4">
               <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm border border-gray-300">
@@ -420,7 +420,7 @@ function Dashboard() {
                 <FontAwesomeIcon icon={faArrowRight} />
               </button>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

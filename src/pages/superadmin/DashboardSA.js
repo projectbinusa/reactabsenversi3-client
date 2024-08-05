@@ -174,7 +174,7 @@ function DashboardSA() {
           <div className="mt-5 w-full">
             <div className="p-4 text-center bg-indigo-300 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
               <h2 className="text-2xl font-semibold mb-4">
-                Selamat Datang di Absensi
+                Selamat Datang di Presensi
                 <span> @{username}</span>
               </h2>
               <a className="profile-menu-link">{day}, </a>

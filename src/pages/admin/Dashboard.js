@@ -142,7 +142,7 @@ function Dashboard() {
           <div className="mt-5 w-full">
             <div className="p-4 text-center bg-indigo-300 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
               <h2 className="text-2xl font-semibold mb-4 capitalize">
-                Selamat Datang di Absensi
+                Selamat Datang di Presensi
                 <span> @{username}</span>
               </h2>
               <a className="profile-menu-link">{day}, </a>
@@ -151,8 +151,8 @@ function Dashboard() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8 mt-12">
-            <div className="pl-2 h-32 bg-indigo-500 rounded-lg shadow-md md:w-auto">
+          <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 mt-12">
+            <div className="pl-2 h-32 bg-indigo-500 rounded-lg shadow-md flex-1">
               <div className="flex w-full h-full py-2 px-4 bg-gray-100 rounded-lg justify-between">
                 <div className="my-auto">
                   <p className="font-bold">User</p>
@@ -164,27 +164,15 @@ function Dashboard() {
                 </div>
               </div>
             </div>
-            <div className="pl-2 h-32 bg-indigo-500 rounded-lg shadow-md md:w-auto">
+            <div className="pl-2 h-32 bg-indigo-500 rounded-lg shadow-md flex-1">
               <div className="flex w-full h-full py-2 px-4 bg-gray-100 rounded-lg justify-between">
                 <div className="my-auto">
-                  <p className="font-bold">Absensi</p>
-                  <p className="text-lg">Jumlah Absen</p>
+                  <p className="font-bold">Presensi</p>
+                  <p className="text-lg">Jumlah Presensi</p>
                   <p className="text-lg">{absenData.length}</p>
                 </div>
                 <div className="my-auto">
                   <FontAwesomeIcon icon={faClipboardUser} size="2x" />
-                </div>
-              </div>
-            </div>
-            <div className="pl-2 h-32 bg-indigo-500 rounded-lg shadow-md md:w-auto">
-              <div className="flex w-full h-full py-2 px-4 bg-gray-100 rounded-lg justify-between">
-                <div className="my-auto">
-                  <p className="font-bold">Cuti</p>
-                  <p className="text-lg">Jumlah Cuti</p>
-                  <p className="text-lg">{cutiData.length}</p>
-                </div>
-                <div className="my-auto">
-                  <FontAwesomeIcon icon={faCalendarDays} size="2x" />
                 </div>
               </div>
             </div>
@@ -196,7 +184,7 @@ function Dashboard() {
           <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
             <div className="flex justify-between">
               <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
-                History absensi
+                History Presensi
               </h6>
             </div>
             <hr />
@@ -258,10 +246,10 @@ function Dashboard() {
             </div>
           </div>
 
-          <br />
+          {/* <br /> */}
 
           {/* Tabel Cuti */}
-          <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+          {/* <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
             <div className="flex justify-between">
               <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
                 History Cuti
@@ -316,7 +304,7 @@ function Dashboard() {
                 </tbody>
               </table>
             </div>
-          </div>
+          </div> */}
 
           <br />
 

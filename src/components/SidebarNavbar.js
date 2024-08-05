@@ -168,7 +168,7 @@ function SidebarNavbar() {
                               icon={faUsersGear}
                             />{" "}
                             <span className="flex-1 ml-3 whitespace-nowrap">
-                              Karyawan
+                              Siswa
                             </span>
                           </a>
                         </li>
@@ -200,7 +200,7 @@ function SidebarNavbar() {
                               icon={faBusinessTime}
                             />{" "}
                             <span className="flex-1 ml-3 whitespace-nowrap">
-                              Shift
+                            Waktu Pembelajaran
                             </span>
                           </a>
                         </li>
@@ -403,7 +403,7 @@ function SidebarNavbar() {
                           </a>
                         </li>
                         {/* <!-- Menu Cuti --> */}
-                        <li>
+                        {/* <li>
                           <a
                             href="/admin/cuti"
                             className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
@@ -416,7 +416,7 @@ function SidebarNavbar() {
                               Cuti
                             </span>
                           </a>
-                        </li>
+                        </li> */}
                         {/* <!-- Menu Kehadiran --> */}
                         <li>
                           <a
@@ -433,7 +433,7 @@ function SidebarNavbar() {
                           </a>
                         </li>
                         {/* <!-- Menu Mingguan --> */}
-                        <li>
+                        {/* <li>
                           <a
                             href="/admin/lembur"
                             className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
@@ -446,7 +446,7 @@ function SidebarNavbar() {
                               Lembur
                             </span>
                           </a>
-                        </li>
+                        </li> */}
                       </ul>
                     </li>
                   </ul>
@@ -476,11 +476,11 @@ function SidebarNavbar() {
                           icon={faClock}
                         />
                         <span className="flex-1 ms-3 whitespace-nowrap ">
-                          Absen
+                          Presensi
                         </span>
                       </a>
                     </li>
-                    <li>
+                    {/* <li>
                       <a
                         href="/user/history_cuti"
                         className="flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group"
@@ -507,7 +507,7 @@ function SidebarNavbar() {
                           Lembur
                         </span>
                       </a>
-                    </li>
+                    </li> */}
                   </ul>
                 )}
                 {role === "SUPERADMIN" && (
@@ -684,7 +684,7 @@ function SidebarNavbar() {
                               icon={faAddressCard}
                             />{" "}
                             <span className="flex-1 ml-3 whitespace-nowrap">
-                              Absensi
+                              Presensi
                             </span>
                           </a>
                         </li>

@@ -114,7 +114,7 @@ const Sidebar = () => {
                         icon={faUsersGear}
                       />{" "}
                       <span className="flex-1 ml-3 whitespace-nowrap">
-                        Karyawan
+                        Siswa
                       </span>
                     </a>
                   </li>
@@ -146,7 +146,7 @@ const Sidebar = () => {
                         icon={faBusinessTime}
                       />{" "}
                       <span className="flex-1 ml-3 whitespace-nowrap">
-                        Shift
+                      Waktu Pembelajaran
                       </span>
                     </a>
                   </li>
@@ -335,7 +335,7 @@ const Sidebar = () => {
                     icon={faTable}
                   />
                   <span className="flex-1 ml-3 text-left whitespace-nowrap">
-                    Data Absensi
+                    Data Presensi
                   </span>
                   <FontAwesomeIcon
                     icon={absenOpen ? faChevronUp : faChevronDown}
@@ -360,12 +360,12 @@ const Sidebar = () => {
                         icon={faAddressCard}
                       />{" "}
                       <span className="flex-1 ml-3 whitespace-nowrap">
-                        Absensi
+                        Presensi
                       </span>
                     </a>
                   </li>
                   {/* <!-- Menu Cuti --> */}
-                  <li>
+                  {/* <li>
                     <a
                       href="/admin/cuti"
                       className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
@@ -378,7 +378,7 @@ const Sidebar = () => {
                         Cuti
                       </span>
                     </a>
-                  </li>
+                  </li> */}
                   {/* <!-- Menu Kehadiran --> */}
                   <li>
                     <a
@@ -395,7 +395,7 @@ const Sidebar = () => {
                     </a>
                   </li>
                   {/* <!-- Menu Mingguan --> */}
-                  <li>
+                  {/* <li>
                     <a
                       href="/admin/lembur"
                       className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
@@ -408,7 +408,7 @@ const Sidebar = () => {
                         Lembur
                       </span>
                     </a>
-                  </li>
+                  </li> */}
                 </ul>
               </li>
             </ul>
@@ -437,7 +437,7 @@ const Sidebar = () => {
                     className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                     icon={faClock}
                   />
-                  <span className="flex-1 ms-3 whitespace-nowrap ">Absen</span>
+                  <span className="flex-1 ms-3 whitespace-nowrap ">Presensi</span>
                 </a>
               </li>
               <li>
@@ -564,7 +564,7 @@ const Sidebar = () => {
                         icon={faBusinessTime}
                       />{" "}
                       <span className="flex-1 ml-3 whitespace-nowrap">
-                        Shift
+                        Waktu Pembelajaran
                       </span>
                     </a>
                   </li>
@@ -640,7 +640,7 @@ const Sidebar = () => {
                         icon={faAddressCard}
                       />{" "}
                       <span className="flex-1 ml-3 whitespace-nowrap">
-                        Absensi
+                        Presensi
                       </span>
                     </a>
                   </li>

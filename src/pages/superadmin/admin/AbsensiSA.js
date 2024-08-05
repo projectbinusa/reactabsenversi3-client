@@ -104,7 +104,7 @@ function Absensi() {
           <div className="tabel-absen bg-white p-5 rounded-xl shadow-xl border border-gray-300">
             <div className="flex justify-between">
               <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
-                Detail History Absensi
+                Detail History Presensi
               </h6>
               <div className="flex items-center gap-2 mt-5">
                 <div className="relative w-64">
