@@ -135,7 +135,7 @@ function ShiftSA() {
             <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
               <div className="flex justify-between">
                 <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
-                  Data Shift
+                  Data Waktu Pembelajaran
                 </h6>
                 <div className="flex items-center gap-2 mt-2">
                   <div className="relative w-64">
@@ -186,7 +186,7 @@ function ShiftSA() {
                         Admin
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        Nama shift
+                        Nama
                       </th>
                       <th scope="col" className="px-6 py-3">
                         Waktu Masuk

@@ -56,7 +56,7 @@ function DetailAbsensiSA() {
                 {/* <!-- Header --> */}
                 <div className="flex justify-between">
                   <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
-                    Detail Absen
+                    Detail Presensi
                   </h6>
                 </div>
                 <div className="mt-3 text-left">

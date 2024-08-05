@@ -128,7 +128,7 @@ function TabelAbsen() {
         <div className="content-page flex-1 p-8 md:ml-64 mt-16">
           <div className="tabel-absen bg-blue-100 p-5 rounded-xl shadow-xl border border-gray-300 text-center">
             <div className="flex justify-between">
-              <h2 className="text-xl font-bold">History Absensi</h2>
+              <h2 className="text-xl font-bold">History Presensi</h2>
               <div className="flex items-center gap-2 mt-2">
                 <div className="relative w-64">
                   <input
