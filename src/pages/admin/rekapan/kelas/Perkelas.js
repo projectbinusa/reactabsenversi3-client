@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
-import Navbar from "../../../components/NavbarAdmin";
-import Sidebar from "../../../components/SidebarUser";
+import Navbar from "../../../../components/NavbarAdmin";
+import Sidebar from "../../../../components/SidebarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFileExport,
@@ -9,8 +9,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import axios from "axios";
-import { API_DUMMY } from "../../../utils/api";
-import NavbarAdmin from "../../../components/NavbarAdmin";
+import { API_DUMMY } from "../../../../utils/api";
+import NavbarAdmin from "../../../../components/NavbarAdmin";
 
 function Perkelas() {
   const [listAbsensi, setListAbsensi] = useState([]);
