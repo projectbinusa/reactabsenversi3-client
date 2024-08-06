@@ -12,7 +12,7 @@ const NavbarAdmin = () => {
   const getAdmin = async () => {
     const id = localStorage.getItem("adminId");
     try {
-      const admin = await axios.get(`${API_DUMMY}/api/admin/getById/${id}`);
+      const admin = await axios.get(`${API_DUMMY}/api/admin/getById/${1}`);
       setProfileAdmin(admin.data.imageAdmin);
     } catch (error) {
       console.log(error);

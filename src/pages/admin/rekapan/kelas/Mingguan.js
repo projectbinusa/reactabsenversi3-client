@@ -12,13 +12,13 @@ import axios from "axios";
 import { API_DUMMY } from "../../../../utils/api";
 import NavbarAdmin from "../../../../components/NavbarAdmin";
 
-function BulanPerkelas() {
+function MingguanPerkelas() {
   const [listAbsensi, setListAbsensi] = useState([]);
   const [listKelas, setListKelas] = useState([]);
   const [idKelas, setIdKelas] = useState();
   const [bulan, setBulan] = useState("");
   const [rekapPerbulan, setRekapPerbulan] = useState([]);
-  const [tanggal, setTanggal] = useState("");
+  const [tanggalAwal, setTanggalAwal] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [tanggalAkhir, setTanggalAkhir] = useState("");
   const [idOrganisasi, setIdOrganisasi] = useState();
@@ -64,26 +64,28 @@ function BulanPerkelas() {
     }
   };
 
-  const getRekapPresensiPerkelasSetiapBulan = async (bulan, tahun) => {
+  const getRekapPresensiPerkelasSetiapMinggu = async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/absensi/bulanan/kelas/${idKelas}?bulan=${bulan}&tahun=${tahun}`
+        `${API_DUMMY}/api/absensi/rekap-mingguan-per-kelas?kelasId=${idKelas}&tanggalAkhir=${tanggalAkhir}&tanggalAwal=${tanggalAwal}`
       );
       //   if (response == 200) {
       setRekapPerbulan(response.data);
-      console.log("list rekap perbulan: ", response.data);
+      console.log("list rekap mingguan: ", response.data);
       //   }
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleDateChange = (event) => {
+  const handleTanggalAwalChange = (event) => {
     const value = event.target.value;
-    setSelectedDate(value);
+    setTanggalAwal(value);
+  };
 
-    const [year, month] = value.split("-");
-    getRekapPresensiPerkelasSetiapBulan(month, year);
+  const handleTanggalAkhirChange = (event) => {
+    const value = event.target.value;
+    setTanggalAkhir(value);
   };
 
   const handleExportClick = (e) => {
@@ -92,9 +94,9 @@ function BulanPerkelas() {
   };
 
   // Export data function
-  const exportPerkelas = async (e, bulan, tahun) => {
+  const exportPerkelas = async (e) => {
     e.preventDefault();
-    if (!idKelas && !selectedDate) {
+    if (!idKelas && !tanggalAwal && tanggalAkhir) {
       Swal.fire(
         "Peringatan",
         "Silakan pilih kelas dan bulan, tahun terlebih dahulu",
@@ -104,7 +106,7 @@ function BulanPerkelas() {
     }
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/absensi/export/bulanan/by-kelas?bulan=${bulan}&kelasId=${idKelas}&tahun=${tahun}`,
+        `${API_DUMMY}/api/absensi/export/mingguan/by-kelas?kelasId=2&tanggalAkhir=${tanggalAkhir}&tanggalAwal=${tanggalAwal}`,
         {
           responseType: "blob",
         }
@@ -130,14 +132,14 @@ function BulanPerkelas() {
   useEffect(() => {
     getAllKelas();
     if (idKelas != null) {
-      getRekapPresensiPerkelasSetiapBulan();
+      getRekapPresensiPerkelasSetiapMinggu(idKelas, tanggalAwal, tanggalAkhir);
     }
     // getAllOrganisasi();
     if (idOrganisasi != null) {
       getAllKelasByOrganisasi(idOrganisasi);
     }
     console.log("bulan: ", bulan);
-  }, [idOrganisasi]);
+  }, [idOrganisasi, idKelas, tanggalAwal, tanggalAkhir]);
 
   // Format date
   const formatDate = (dateString) => {
@@ -163,7 +165,7 @@ function BulanPerkelas() {
           <div className="tabel-absen bg-white p-5 rounded-xl shadow-xl border border-gray-300">
             <div className="flex justify-between">
               <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
-                Rekap Perkelas
+                Rekap Perminggu
               </h6>
             </div>
             <hr />
@@ -182,9 +184,16 @@ function BulanPerkelas() {
                 <option value="DE">Germany</option> */}
               </select>
               <input
-                value={selectedDate}
-                onChange={handleDateChange}
-                type="month"
+                value={tanggalAwal}
+                onChange={handleTanggalAwalChange}
+                type="date"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                required
+              />
+              <input
+                value={tanggalAkhir}
+                onChange={handleTanggalAkhirChange}
+                type="date"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 required
               />
@@ -355,4 +364,4 @@ function BulanPerkelas() {
   );
 }
 
-export default BulanPerkelas;
+export default MingguanPerkelas;

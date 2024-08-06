@@ -91,6 +91,8 @@ import EditKelas from "./pages/admin/edit/EditKelas";
 import Perkelas from "./pages/admin/rekapan/kelas/Perkelas";
 import BulanPerkelas from "./pages/admin/rekapan/kelas/Bulanan";
 import HarianPerkelas from "./pages/admin/rekapan/kelas/HarianPerkelas";
+import SiswaperKelas from "./pages/admin/masterdata/SiswaperKelas";
+import MingguanPerkelas from "./pages/admin/rekapan/kelas/Mingguan";
 
 function App() {
   const role = localStorage.getItem("role");
@@ -170,13 +172,36 @@ function App() {
               <Route path="/admin/mingguan" component={Mingguan} exact />
               <Route path="/admin/bulanan" component={Bulanan} exact />
               <Route path="/admin/perkelas" component={Perkelas} exact />
-              <Route path="/admin/bulanan/perkelas" component={BulanPerkelas} exact />
-              <Route path="/admin/harian/perkelas" component={HarianPerkelas} exact />
+              <Route
+                path="/admin/bulanan/perkelas"
+                component={BulanPerkelas}
+                exact
+              />
+              <Route
+                path="/admin/harian/perkelas"
+                component={HarianPerkelas}
+                exact
+              />
               {/* data absensi */}
               <Route path="/admin/absensi" component={Absensi} exact />
               <Route path="/admin/cuti" component={Cuti} exact />
               <Route path="/admin/kehadiran" component={Kehadiran} exact />
               <Route path="/admin/lembur" component={Lembur} exact />
+              <Route
+                path="/admin/siswa/kelas/:id"
+                component={SiswaperKelas}
+                exact
+              />
+              <Route
+                path="/admin/bulanan/perkelas"
+                component={BulanPerkelas}
+                exact
+              />
+              <Route
+                path="/admin/mingguan/perkelas"
+                component={MingguanPerkelas}
+                exact
+              />
             </>
           )}
           {/* end admin */}
