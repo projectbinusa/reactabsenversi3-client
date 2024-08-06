@@ -15,8 +15,10 @@ function Perkelas() {
 
   useEffect(() => {
     getAllKelas();
-    getAbsensiByKelasId();
-  }, []);
+    if (kelasId != null) {
+      getAbsensiByKelasId(kelasId);
+    }
+  }, [kelasId]);
 
   // Fetch kelas data
   const getAllKelas = async () => {
@@ -119,9 +121,8 @@ function Perkelas() {
                 id="kelas"
                 className="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 value={kelasId}
-                onChange={(e) => setKelasId(e.target.value)}
-              >
-                <option >Pilih Kelas</option>
+                onChange={(e) => setKelasId(e.target.value)}>
+                <option>Pilih Kelas</option>
                 {listKelas.map((data) => (
                   <option key={data.id} value={data.id}>
                     {data.namaKelas}
@@ -133,8 +134,7 @@ function Perkelas() {
                 <button
                   type="button"
                   className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto"
-                  onClick={exportPerkelas}
-                >
+                  onClick={exportPerkelas}>
                   <FontAwesomeIcon icon={faFileExport} />
                 </button>
               </div>

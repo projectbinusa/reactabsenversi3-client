@@ -37,6 +37,7 @@ const Sidebar = () => {
   // State untuk mengelola status dropdown
   const [masterDataOpen, setMasterDataOpen] = useState(false);
   const [rekapanOpen, setRekapanOpen] = useState(false);
+  const [rekapanOpenPerkelas, setRekapanOpenPerkelas] = useState(false);
   const [absenOpen, setAbsenOpen] = useState(false);
 
   // Fungsi untuk menampilkan atau menyembunyikan dropdown master data
@@ -49,6 +50,10 @@ const Sidebar = () => {
     setRekapanOpen(!rekapanOpen);
   };
 
+  const toggleRekapanPerkelas = () => {
+    setRekapanOpenPerkelas(!rekapanOpenPerkelas);
+  };
+
   // Fungsi untuk menampilkan atau menyembunyikan dropdown absen
   const toggleAbsen = () => {
     setAbsenOpen(!absenOpen);
@@ -58,8 +63,7 @@ const Sidebar = () => {
     <aside
       id="logo-sidebar"
       className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-blue-200 sm:translate-x-0 dark:bg-blue-800 dark:border-blue-700"
-      aria-label="Sidebar"
-    >
+      aria-label="Sidebar">
       <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-blue-800">
         <ul className="space-y-2 font-medium">
           {role === "ADMIN" && (
@@ -67,8 +71,7 @@ const Sidebar = () => {
               <li>
                 <a
                   href="/admin/dashboard"
-                  className="flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group"
-                >
+                  className="flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group">
                   <FontAwesomeIcon
                     className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                     icon={faCube}
@@ -83,8 +86,7 @@ const Sidebar = () => {
                   className="flex items-center w-full p-2 text-base text-blue-900 transition duration-75 rounded-lg group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
                   // aria-controls="dropdown-masterdata"
                   // data-dropdown-toggle="dropdown-masterdata"
-                  onClick={toggleMasterData}
-                >
+                  onClick={toggleMasterData}>
                   <FontAwesomeIcon
                     className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                     icon={faDatabase}
@@ -101,14 +103,12 @@ const Sidebar = () => {
                   // id="dropdown-masterdata"
                   className={`${
                     masterDataOpen ? "" : "hidden" // Tampilkan atau sembunyikan dropdown berdasarkan state masterDataOpen
-                  } py-2 space-y-2`}
-                >
+                  } py-2 space-y-2`}>
                   {/* <!-- Menu Karyawan --> */}
                   <li>
                     <a
                       href="/admin/karyawan"
-                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                    >
+                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700">
                       <FontAwesomeIcon
                         className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                         icon={faUsersGear}
@@ -123,8 +123,7 @@ const Sidebar = () => {
                   <li>
                     <a
                       href="/admin/jabatan"
-                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                    >
+                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700">
                       <FontAwesomeIcon
                         className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                         icon={faBriefcase}
@@ -139,14 +138,13 @@ const Sidebar = () => {
                   <li>
                     <a
                       href="/admin/shift"
-                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                    >
+                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700">
                       <FontAwesomeIcon
                         className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                         icon={faBusinessTime}
                       />{" "}
                       <span className="flex-1 ml-3 whitespace-nowrap">
-                      Waktu Pembelajaran
+                        Waktu Pembelajaran
                       </span>
                     </a>
                   </li>
@@ -155,8 +153,7 @@ const Sidebar = () => {
                   <li>
                     <a
                       href="/admin/lokasi"
-                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                    >
+                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700">
                       <FontAwesomeIcon
                         className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                         icon={faMapLocationDot}
@@ -171,8 +168,7 @@ const Sidebar = () => {
                   <li>
                     <a
                       href="/admin/organisasi"
-                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                    >
+                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700">
                       <FontAwesomeIcon
                         className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                         icon={faBuilding}
@@ -187,8 +183,7 @@ const Sidebar = () => {
                   <li>
                     <a
                       href="/admin/kelas"
-                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                    >
+                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700">
                       <FontAwesomeIcon
                         className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                         icon={faSchool}
@@ -207,8 +202,7 @@ const Sidebar = () => {
                   className="flex items-center w-full p-2 text-base text-blue-900 transition duration-75 rounded-lg group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
                   // aria-controls="dropdown-example"
                   // data-collapse-toggle="dropdown-example"
-                  onClick={toggleRekapan}
-                >
+                  onClick={toggleRekapan}>
                   <FontAwesomeIcon
                     className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                     icon={faSignal}
@@ -226,14 +220,12 @@ const Sidebar = () => {
                   // id="dropdown-masterdata"
                   className={`${
                     rekapanOpen ? "" : "hidden" // Tampilkan atau sembunyikan dropdown berdasarkan state masterDataOpen
-                  } py-2 space-y-2`}
-                >
+                  } py-2 space-y-2`}>
                   {/* <!-- Menu Simpel --> */}
                   <li>
                     <a
                       href="/admin/simpel"
-                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                    >
+                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700">
                       <FontAwesomeIcon
                         className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                         icon={faUserGear}
@@ -247,8 +239,7 @@ const Sidebar = () => {
                   <li>
                     <a
                       href="/admin/perkaryawan"
-                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                    >
+                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700">
                       <FontAwesomeIcon
                         className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                         icon={faUserPen}
@@ -258,27 +249,85 @@ const Sidebar = () => {
                       </span>
                     </a>
                   </li>
-                   {/* <!-- Menu Perkelas --> */}
-                   <li>
-                    <a
-                      href="/admin/perkelas"
-                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                    >
-                      <FontAwesomeIcon
-                        className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
-                        icon={faLandmark}
-                      />{" "}
-                      <span className="flex-1 ml-3 whitespace-nowrap">
-                        Perkelas
-                      </span>
-                    </a>
-                  </li>
+                  {/* <!-- Menu Perkelas --> */}
+                  {/* <li> */}
+                  <button
+                    type="button"
+                    onClick={toggleRekapanPerkelas}
+                    className="flex gap-3 w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700">
+                    <FontAwesomeIcon
+                      className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
+                      icon={faLandmark}
+                    />{" "}
+                    <span className="flex-1 whitespace-nowrap">Perkelas</span>
+                    <FontAwesomeIcon
+                      icon={rekapanOpenPerkelas ? faChevronUp : faChevronDown}
+                      className="flex-shrink-0 w-4 h-4 text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
+                    />
+                  </button>
+                  {/* </li> */}
+                  <ul
+                    className={`${
+                      rekapanOpenPerkelas ? "" : "hidden" // Tampilkan atau sembunyikan dropdown berdasarkan state masterDataOpen
+                    } py-2 space-y-2`}>
+                    <li>
+                      <a
+                        href="/admin/perkelas"
+                        className="flex ml-3 items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700">
+                        <FontAwesomeIcon
+                          className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
+                          icon={faUsers}
+                        />
+                        <span className="flex-1 ml-3 whitespace-nowrap">
+                          Kelas
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="/admin/harian/perkelas"
+                        className="flex ml-3 items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700">
+                        <FontAwesomeIcon
+                          className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
+                          icon={faCalendarDay}
+                        />
+                        <span className="flex-1 ml-3 whitespace-nowrap">
+                          Harian
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="/admin/mingguan/perkelas"
+                        className="flex ml-3 items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700">
+                        <FontAwesomeIcon
+                          className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
+                          icon={faCalendarWeek}
+                        />
+                        <span className="flex-1 ml-3 whitespace-nowrap">
+                          Mingguan
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="/admin/bulanan/perkelas"
+                        className="flex ml-3 items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700">
+                        <FontAwesomeIcon
+                          className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
+                          icon={faCalendar}
+                        />
+                        <span className="flex-1 ml-3 whitespace-nowrap">
+                          Bulanan
+                        </span>
+                      </a>
+                    </li>
+                  </ul>
                   {/* <!-- Menu Harian --> */}
                   <li>
                     <a
                       href="/admin/harian"
-                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                    >
+                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700">
                       <FontAwesomeIcon
                         className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                         icon={faCalendarDay}
@@ -292,8 +341,7 @@ const Sidebar = () => {
                   <li>
                     <a
                       href="/admin/mingguan"
-                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                    >
+                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700">
                       <FontAwesomeIcon
                         className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                         icon={faCalendarWeek}
@@ -307,8 +355,7 @@ const Sidebar = () => {
                   <li>
                     <a
                       href="/admin/bulanan"
-                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                    >
+                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700">
                       <FontAwesomeIcon
                         className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                         icon={faCalendar}
@@ -328,8 +375,7 @@ const Sidebar = () => {
                   className="flex items-center w-full p-2 text-base text-blue-900 transition duration-75 rounded-lg group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
                   // aria-controls="dropdown-data"
                   // data-collapse-toggle="dropdown-data"
-                  onClick={toggleAbsen}
-                >
+                  onClick={toggleAbsen}>
                   <FontAwesomeIcon
                     className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                     icon={faTable}
@@ -347,14 +393,12 @@ const Sidebar = () => {
                   id="dropdown-masterdata"
                   className={`${
                     absenOpen ? "" : "hidden" // Tampilkan atau sembunyikan dropdown berdasarkan state masterDataOpen
-                  } py-2 space-y-2`}
-                >
+                  } py-2 space-y-2`}>
                   {/* <!-- Menu Absensi --> */}
                   <li>
                     <a
                       href="/admin/absensi"
-                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                    >
+                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700">
                       <FontAwesomeIcon
                         className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                         icon={faAddressCard}
@@ -383,8 +427,7 @@ const Sidebar = () => {
                   <li>
                     <a
                       href="/admin/kehadiran"
-                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                    >
+                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700">
                       <FontAwesomeIcon
                         className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                         icon={faUserCheck}
@@ -419,8 +462,7 @@ const Sidebar = () => {
               <li>
                 <a
                   href="/user/dashboard"
-                  className="flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group"
-                >
+                  className="flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group">
                   <FontAwesomeIcon
                     className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                     icon={faCube}
@@ -431,20 +473,20 @@ const Sidebar = () => {
               <li>
                 <a
                   href="/user/history_absen"
-                  className="flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group"
-                >
+                  className="flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group">
                   <FontAwesomeIcon
                     className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                     icon={faClock}
                   />
-                  <span className="flex-1 ms-3 whitespace-nowrap ">Presensi</span>
+                  <span className="flex-1 ms-3 whitespace-nowrap ">
+                    Presensi
+                  </span>
                 </a>
               </li>
               <li>
                 <a
                   href="/user/history_cuti"
-                  className="flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group"
-                >
+                  className="flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group">
                   <FontAwesomeIcon
                     className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                     icon={faCalendarDays}
@@ -455,8 +497,7 @@ const Sidebar = () => {
               <li>
                 <a
                   href="/user/history_lembur"
-                  className="flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group"
-                >
+                  className="flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group">
                   <FontAwesomeIcon
                     className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                     icon={faBusinessTime}
@@ -471,8 +512,7 @@ const Sidebar = () => {
               <li>
                 <a
                   href="/superadmin/dashboard"
-                  className="flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group"
-                >
+                  className="flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group">
                   <FontAwesomeIcon
                     className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                     icon={faCube}
@@ -487,8 +527,7 @@ const Sidebar = () => {
                   className="flex items-center w-full p-2 text-base text-blue-900 transition duration-75 rounded-lg group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
                   // aria-controls="dropdown-masterdata"
                   // data-dropdown-toggle="dropdown-masterdata"
-                  onClick={toggleMasterData}
-                >
+                  onClick={toggleMasterData}>
                   <FontAwesomeIcon
                     className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                     icon={faUserTie}
@@ -505,14 +544,12 @@ const Sidebar = () => {
                   // id="dropdown-masterdata"
                   className={`${
                     masterDataOpen ? "" : "hidden" // Tampilkan atau sembunyikan dropdown berdasarkan state masterDataOpen
-                  } py-2 space-y-2`}
-                >
+                  } py-2 space-y-2`}>
                   {/* <!-- Menu superadmin --> */}
                   <li>
                     <a
                       href="/superadmin/admin"
-                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                    >
+                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700">
                       <FontAwesomeIcon
                         className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                         icon={faChalkboardUser}
@@ -526,8 +563,7 @@ const Sidebar = () => {
                   <li>
                     <a
                       href="/superadmin/organisasi"
-                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                    >
+                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700">
                       <FontAwesomeIcon
                         className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                         icon={faBuilding}
@@ -541,8 +577,7 @@ const Sidebar = () => {
                   <li>
                     <a
                       href="/superadmin/jabatan"
-                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                    >
+                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700">
                       <FontAwesomeIcon
                         className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                         icon={faBriefcase}
@@ -557,8 +592,7 @@ const Sidebar = () => {
                   <li>
                     <a
                       href="/superadmin/shift"
-                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                    >
+                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700">
                       <FontAwesomeIcon
                         className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                         icon={faBusinessTime}
@@ -573,8 +607,7 @@ const Sidebar = () => {
                   <li>
                     <a
                       href="/superadmin/lokasi"
-                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                    >
+                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700">
                       <FontAwesomeIcon
                         className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                         icon={faMapLocationDot}
@@ -593,8 +626,7 @@ const Sidebar = () => {
                   className="flex items-center w-full p-2 text-base text-blue-900 transition duration-75 rounded-lg group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
                   // aria-controls="dropdown-example"
                   // data-collapse-toggle="dropdown-example"
-                  onClick={toggleRekapan}
-                >
+                  onClick={toggleRekapan}>
                   <FontAwesomeIcon
                     className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                     icon={faUserPlus}
@@ -612,14 +644,12 @@ const Sidebar = () => {
                   // id="dropdown-masterdata"
                   className={`${
                     rekapanOpen ? "" : "hidden" // Tampilkan atau sembunyikan dropdown berdasarkan state masterDataOpen
-                  } py-2 space-y-2`}
-                >
+                  } py-2 space-y-2`}>
                   {/* <!-- Menu Simpel --> */}
                   <li>
                     <a
                       href="/superadmin/data-user"
-                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                    >
+                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700">
                       <FontAwesomeIcon
                         className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                         icon={faUsers}
@@ -633,8 +663,7 @@ const Sidebar = () => {
                   <li>
                     <a
                       href="/superadmin/absensi"
-                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                    >
+                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700">
                       <FontAwesomeIcon
                         className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                         icon={faAddressCard}

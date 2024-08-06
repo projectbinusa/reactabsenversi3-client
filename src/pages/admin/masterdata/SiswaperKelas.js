@@ -1,66 +1,49 @@
 import React, { useEffect, useState } from "react";
-import NavbarAdmin from "../../../components/NavbarAdmin";
+import Navbar from "../../../components/NavbarAdmin";
 import Sidebar from "../../../components/SidebarUser";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faInfo,
   faPenToSquare,
   faPlus,
   faTrash,
-  faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Pagination } from "flowbite-react";
 import { API_DUMMY } from "../../../utils/api";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
-function KelasSiswa() {
+function SiswaperKelas() {
   const [userData, setUserData] = useState([]);
-  const [organisasiData, setOrganisasiData] = useState([]);
-  const [validOrganisasiIds, setValidOrganisasiIds] = useState([]);
-  const idAdmin = localStorage.getItem("adminId");
   const [searchTerm, setSearchTerm] = useState("");
+  const [namaKelas, setNamaKelas] = useState("");
   const [limit, setLimit] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const idAdmin = localStorage.getItem("adminId");
+  const param = useParams();
 
-  const getAllKelasbyAdmin = async () => {
+  const getAllKaryawan = async () => {
     const token = localStorage.getItem("token");
+
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/kelas/getALlByAdmin/${idAdmin}`
+        `${API_DUMMY}/api/user/by-kelas/${param.id}`,
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
       );
       setUserData(response.data);
+      //   console.log(response.data);
+      const dataKelas = response.data.map((data) => data.kelas.namaKelas);
+      setNamaKelas(dataKelas[0]);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
-
-  const getOrganisasiData = async () => {
-    try {
-      const response = await axios.get(`${API_DUMMY}/api/organisasi/all`);
-      setOrganisasiData(response.data);
-    } catch (error) {
-      console.error("Error fetching organisasi data:", error);
-    }
-  };
-
-  const validateOrganisasiIds = () => {
-    const validIds = organisasiData.map((org) => org.id);
-    const validKelasIds = userData
-      .filter((kelas) => validIds.includes(kelas.organisasi.id))
-      .map((kelas) => kelas.organisasi.id);
-    setValidOrganisasiIds(validKelasIds);
-  };
-
-  useEffect(() => {
-    getAllKelasbyAdmin();
-    getOrganisasiData();
-  }, []);
-
-  useEffect(() => {
-    validateOrganisasiIds();
-  }, [userData, organisasiData]);
 
   const deleteData = async (id) => {
     Swal.fire({
@@ -69,12 +52,12 @@ function KelasSiswa() {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Delete",
-      cancelButtonText: "Cancel",
+      confirmButtonText: "Hapus",
+      cancelButtonText: "Batal",
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${API_DUMMY}/api/kelas/deleteKelas/` + id, {
+          await axios.delete(`${API_DUMMY}/api/user/delete-user/` + id, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
@@ -99,14 +82,18 @@ function KelasSiswa() {
       }
     });
   };
+  useEffect(() => {
+    getAllKaryawan();
+  }, []);
 
   useEffect(() => {
     const filteredData = userData.filter(
-      (kelas) =>
-        kelas.namaKelas?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        kelas.organisasi?.namaOrganisasi
+      (user) =>
+        user.username?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.admin?.username
           ?.toLowerCase()
-          .includes(searchTerm.toLowerCase())
+          .includes(searchTerm.toLowerCase()) ||
+        user.email?.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setTotalPages(Math.ceil(filteredData.length / limit));
   }, [searchTerm, limit, userData]);
@@ -124,15 +111,14 @@ function KelasSiswa() {
     setCurrentPage(page);
   }
 
-  const filteredKelas = userData.filter(
-    (kelas) =>
-      kelas.namaKelas?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      kelas.organisasi?.namaOrganisasi
-        ?.toLowerCase()
-        .includes(searchTerm.toLowerCase())
+  const filteredUser = userData.filter(
+    (user) =>
+      user.username?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.admin?.username?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.email?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const paginatedKelas = filteredKelas.slice(
+  const paginatedUser = filteredUser.slice(
     (currentPage - 1) * limit,
     currentPage * limit
   );
@@ -140,7 +126,7 @@ function KelasSiswa() {
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
-        <NavbarAdmin />
+        <Navbar />
       </div>
       <div className="flex h-full">
         <div className="fixed">
@@ -152,7 +138,7 @@ function KelasSiswa() {
             <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
               <div className="flex justify-between">
                 <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
-                  Data Kelas
+                  Data Siswa {namaKelas}
                 </h6>
                 <div className="flex items-center gap-2 mt-2">
                   <div className="relative w-64">
@@ -177,7 +163,7 @@ function KelasSiswa() {
                   </select>
                   <a
                     type="button"
-                    href="/admin/addkelas"
+                    href="/admin/addkary"
                     className="text-white bg-indigo-500 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800 mt-2">
                     <FontAwesomeIcon icon={faPlus} size="lg" />
                   </a>
@@ -188,30 +174,31 @@ function KelasSiswa() {
               {/* <!-- Tabel --> */}
               <div className="relative overflow-x-auto mt-5">
                 <table
-                  id="dataKelas"
+                  id="dataKaryawan"
                   className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                   {/* <!-- Tabel Head --> */}
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
+                      <th scope="col" className="px-6 py-3">
                         No
                       </th>
-                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                        Nama Kelas
+                      <th scope="col" className="px-6 py-3">
+                        Username
                       </th>
-                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                        Organisasi
+                      <th scope="col" className="px-6 py-3">
+                        Email
                       </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 whitespace-nowrap text-center">
+                      <th scope="col" className="px-6 py-3">
+                        Admin
+                      </th>
+                      <th scope="col" className="px-6 py-3 text-center">
                         Aksi
                       </th>
                     </tr>
                   </thead>
                   {/* <!-- Tabel Body --> */}
                   <tbody className="text-left">
-                    {paginatedKelas.map((kelas, index) => (
+                    {paginatedUser.map((user, index) => (
                       <tr
                         className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                         key={index}>
@@ -220,17 +207,33 @@ function KelasSiswa() {
                           className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                           {(currentPage - 1) * limit + index + 1}
                         </th>
-                        <td className="px-6 py-4 capitalize">
-                          {kelas.namaKelas}
+                        <td className="px-6 py-4 text-gray-900 capitalize">
+                          {user.username}
                         </td>
-                        <td className="px-6 py-4 capitalize">
-                          {validOrganisasiIds.includes(kelas.organisasi.id)
-                            ? kelas.organisasi.namaOrganisasi
-                            : "Invalid Organisasi"}
+                        <td className="px-6 py-4 text-gray-900">
+                          <a
+                            href="/cdn-cgi/l/email-protection"
+                            className="__cf_email__"
+                            data-cfemail="5a363b23363b1a3d373b333674393537">
+                            {user.email}
+                          </a>
                         </td>
-                        <td className="py-3">
+                        <td className="px-6 py-4 text-gray-900 capitalize">
+                          {user.admin.username}
+                        </td>
+                        <td className=" py-3">
                           <div className="flex items-center -space-x-4 ml-12">
-                            <a href={`/admin/editkelas/${kelas.id}`}>
+                            <a href={`/admin/detailK/${user.id}`}>
+                              <button className="z-20 block rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
+                                <span className="relative inline-block">
+                                  <FontAwesomeIcon
+                                    icon={faInfo}
+                                    className="h-4 w-4"
+                                  />
+                                </span>
+                              </button>
+                            </a>
+                            <a href={`/admin/editK/${user.id}`}>
                               <button className="z-30 block rounded-full border-2 border-white bg-yellow-100 p-4 text-yellow-700 active:bg-red-50">
                                 <span className="relative inline-block">
                                   <FontAwesomeIcon
@@ -240,9 +243,10 @@ function KelasSiswa() {
                                 </span>
                               </button>
                             </a>
+
                             <button
                               className="z-30 block rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-red-50"
-                              onClick={() => deleteData(kelas.id)}>
+                              onClick={() => deleteData(user.id)}>
                               <span className="relative inline-block">
                                 <FontAwesomeIcon
                                   icon={faTrash}
@@ -250,17 +254,6 @@ function KelasSiswa() {
                                 />
                               </span>
                             </button>
-                            <Link
-                              to={`/admin/siswa/kelas/${kelas.id}`}
-                              title="list siswa"
-                              className="z-30 block rounded-full border-2 border-white  bg-blue-100 active:bg-blue-50 p-4 text-blue-700">
-                              <span className="relative inline-block">
-                                <FontAwesomeIcon
-                                  icon={faUser}
-                                  className="h-4 w-4"
-                                />
-                              </span>
-                            </Link>
                           </div>
                         </td>
                       </tr>
@@ -284,4 +277,4 @@ function KelasSiswa() {
   );
 }
 
-export default KelasSiswa;
+export default SiswaperKelas;
