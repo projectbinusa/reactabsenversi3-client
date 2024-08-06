@@ -69,9 +69,7 @@ function AddUser() {
     try {
       const response = await axios.get(
 
-        `${API_DUMMY}/api/shift/getall`
-
-        `http://localhost:2024/api/shift/getBySuper/${idSuperAdmin}`
+        `${API_DUMMY}/api/shift/getBySuper/${idSuperAdmin}`
 
       );
       setShiftList(response.data);
