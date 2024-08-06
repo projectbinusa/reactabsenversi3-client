@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Logo from "../components/absensii.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useLocation } from "react-router-dom";
 import {
   faAddressCard,
   faBriefcase,
@@ -36,6 +37,7 @@ function SidebarNavbar() {
   const [rekapanOpen, setRekapanOpen] = useState(false);
   const [absenOpen, setAbsenOpen] = useState(false);
   const sidebarRef = useRef(null);
+  const location = useLocation();
 
   // Fungsi untuk menampilkan atau menyembunyikan dropdown master data
   const toggleMasterData = () => {
@@ -51,6 +53,9 @@ function SidebarNavbar() {
   const toggleAbsen = () => {
     setAbsenOpen(!absenOpen);
   };
+
+    // Fungsi untuk memeriksa apakah URL saat ini cocok dengan href
+    const isActive = (path) => location.pathname === path;
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -457,7 +462,7 @@ function SidebarNavbar() {
                     <li>
                       <a
                         href="/user/dashboard"
-                        className="flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group"
+                        className={`flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group ${isActive("/user/dashboard") ? "bg-blue-100 dark:bg-blue-700" : "" }`}
                       >
                         <FontAwesomeIcon
                           className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
@@ -469,7 +474,7 @@ function SidebarNavbar() {
                     <li>
                       <a
                         href="/user/history_absen"
-                        className="flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group"
+                        className={`flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group ${isActive("/user/history_absen") ? "bg-blue-100 dark:bg-blue-700" : "" }`}
                       >
                         <FontAwesomeIcon
                           className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
