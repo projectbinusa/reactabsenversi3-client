@@ -105,7 +105,7 @@ function Informasi() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${API_DUMMY}/api/notifications/` + id, {
+          await axios.delete(`${API_DUMMY}/api/notifications/delete/` + id, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },

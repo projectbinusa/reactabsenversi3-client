@@ -12,6 +12,7 @@ function AddInformasi() {
   const [namaAcara, setNamaAcara] = useState("");
   const [tanggalAcara, setTanggalAcara] = useState("");
   const [tempatAcara, setTempatAcara] = useState("");
+  const [createdAt, setCreatedAt] = useState(new Date().toISOString());
   const idAdmin = localStorage.getItem("adminId");
 
   const TambahInformasi = async (e) => {
@@ -21,6 +22,7 @@ function AddInformasi() {
       message: message,
       tanggalAcara: tanggalAcara,
       tempatAcara: tempatAcara,
+      createdAt: createdAt,
     };
 
     try {

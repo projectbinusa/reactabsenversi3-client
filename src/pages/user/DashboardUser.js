@@ -3,12 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowRight,
   faArrowRightFromBracket,
-  faSearch,
+  faCircleInfo,
+  faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faCalendarDays,
   faCircleXmark,
-  faClockFour,
+  faEnvelope,
+  faMessage,
 } from "@fortawesome/free-regular-svg-icons";
 import Navbar from "../../components/NavbarUser";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
@@ -16,6 +18,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../utils/api";
 import SidebarNavbar from "../../components/SidebarNavbar";
+import Pengumuman from "../Pengumuman";
 
 function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -26,6 +29,7 @@ function Dashboard() {
   const [izin, setIzin] = useState([]);
   const [totalIzin, setTotalIzin] = useState(0);
   const [isAbsenMasuk, setIsAbsenMasuk] = useState(false);
+  const [informasi, setInformasi] = useState([]);
 
   const getUsername = async () => {
     const token = localStorage.getItem("token");
@@ -125,6 +129,19 @@ function Dashboard() {
     }
   };
 
+  const Informasi = async () => {
+    try {
+      const response = await axios.get(`${API_DUMMY}/api/notifications`);
+      setInformasi(response.data);
+    } catch (error) {
+      console.error("Error fetching informasi:", error);
+    }
+  };
+
+  useEffect(() => {
+    Informasi();
+  }, []);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentDateTime(new Date());
@@ -166,7 +183,6 @@ function Dashboard() {
     setSidebarOpen(!sidebarOpen);
   };
 
-  // Function to format date in Indonesian
   const formatDate = (dateString) => {
     const options = {
       weekday: "long",
@@ -176,6 +192,18 @@ function Dashboard() {
     };
     return new Date(dateString).toLocaleDateString("id-ID", options);
   };
+
+  // Fungsi untuk memeriksa apakah tanggal acara sudah lewat
+  const isEventExpired = (eventDate) => {
+    const today = new Date();
+    const eventDateObj = new Date(eventDate);
+    return eventDateObj < today;
+  };
+
+  // Filter informasi untuk hanya menampilkan acara yang belum lewat
+  const validInformasi = informasi.filter(
+    (item) => !isEventExpired(item.tanggalAcara)
+  );
 
   useEffect(() => {
     if (localStorage.getItem("loginSuccess") === "true") {
@@ -307,6 +335,56 @@ function Dashboard() {
               </Link> */}
             </div>
           </div>
+          <div className="dashboard-announcements p-4 bg-slate-200 rounded-lg shadow-xl mt-10">
+            <h2 className="text-3xl font-semibold text-black text-center">
+              Pengumuman Terbaru
+            </h2>
+            <div className="mt-6 grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+              {validInformasi.length > 0 ? (
+                validInformasi.map((item) => (
+                  <div
+                    key={item.id}
+                    className="informasi-item p-4 bg-white border border-gray-200 rounded-lg shadow-md transform transition-transform hover:scale-105 hover:shadow-xl"
+                  >
+                    <div className="flex items-center mb-4">
+                      <FontAwesomeIcon
+                        icon={faCircleInfo}
+                        className="h-6 w-6 text-blue-500 mr-2"
+                      />
+                      <h6 className="text-lg font-semibold text-gray-900 capitalize">
+                        {item.namaAcara}
+                      </h6>
+                    </div>
+                    <div className="mt-2 mb-2 flex items-center">
+                      <FontAwesomeIcon
+                        icon={faCalendarDays}
+                        className="h-4 w-4 text-gray-600 mr-2"
+                      />
+                      <p className="text-sm font-semibold text-gray-800">
+                        Tanggal:
+                      </p>
+                      <p className="text-sm text-gray-700 ml-2">
+                        {formatDate(item.tanggalAcara)}
+                      </p>
+                    </div>
+                    <div className="mt-4">
+                      <Link to={"/user/detail_info/" + item.id}>
+                        <button className="text-blue-500 hover:underline">
+                          Lihat Selengkapnya
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="flex items-center justify-center col-span-3">
+                  <h1 className="text-lg text-center text-gray-900 dark:text-white">
+                    Tidak Ada Pengumuman !!
+                  </h1>
+                </div>
+              )}
+            </div>
+          </div>
 
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8 mt-12">
             <div className="bg-blue-500 rounded-lg shadow-md p-4 md:w-full lg:w-auto">
@@ -337,7 +415,6 @@ function Dashboard() {
               </div>
             </div>
           </div>
-
           <div className="tabel-absen mt-12 bg-blue-100 p-5 rounded-xl shadow-xl border border-gray-300">
             <h2 className="text-xl font-bold text-black">History Presensi</h2>
             <div className="overflow-x-auto rounded-lg border border-gray-200 mt-4">
@@ -382,7 +459,6 @@ function Dashboard() {
               </button>
             </div>
           </div>
-
           {/* <div className="tabel-cuti mt-12 bg-blue-100 p-5 rounded-xl shadow-xl border border-gray-300">
             <h2 className="text-xl font-bold text-black">Permohonan Cuti</h2>
             <div className="overflow-x-auto rounded-lg border border-gray-200 mt-4">
