@@ -15,6 +15,7 @@ import {
   faCube,
   faDatabase,
   faExclamation,
+  faHandsHoldingChild,
   faKey,
   faLandmark,
   faMapLocationDot,
@@ -821,6 +822,21 @@ const Sidebar = () => {
                         Admin
                       </span>
                     </Link>
+                  </li>
+                   {/* ortu */}
+                   <li>
+                    <a
+                      href="/superadmin/ortu"
+                      className="flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
+                    >
+                      <FontAwesomeIcon
+                        className="flex-shrink-0 w-5 h-5 text-blue-500 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
+                        icon={faHandsHoldingChild} 
+                      />{" "}
+                      <span className="flex-1 ml-3 whitespace-nowrap">
+                        Orang Tua
+                      </span>
+                    </a>
                   </li>
                   {/* <!-- Menu Organisasi --> */}
                   <li>
