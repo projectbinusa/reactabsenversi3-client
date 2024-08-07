@@ -4,6 +4,7 @@ import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import axios from "axios";
 import { API_DUMMY } from "../utils/api";
 import Swal from "sweetalert2";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const Navbar = ({ toggleSidebar }) => {
   const [profileUser, setProfileUser] = useState("");
   const [userMenuOpen, setUserMenuOpen] = useState(false);
