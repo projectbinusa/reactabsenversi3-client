@@ -99,6 +99,8 @@ import AddInformasi from "./pages/admin/add/AddInformasi";
 import EditInformasi from "./pages/admin/edit/editInformasi";
 import OrangTua from "./pages/superadmin/admin/OrangTua";
 import DashboardOrtu from "./pages/orangtua/DashboardOrtu";
+import AddOrtu from "./pages/superadmin/add/AddOrtu";
+import EditOrtu from "./pages/superadmin/edit/EditOrtu";
 
 function App() {
   const role = localStorage.getItem("role");
@@ -347,6 +349,27 @@ function App() {
               />
               {/* orang tua */}
               <Route path="/superadmin/ortu" component={OrangTua} exact />
+              <Route
+                path="/superadmin/addOrtu"
+                component={AddOrtu}
+                exact
+              />
+              <Route
+                path="/superadmin/editOrtu/:id"
+                component={EditOrtu}
+                exact
+              />
+              <Route
+                path="/superadmin/detailLokasi/:idLokasi"
+                component={DetailLokasiSA}
+                exact
+              />
+              <Route path="/superadmin/absensi" component={AbsensiSA} exact />
+              <Route
+                path="/superadmin/detailAbsensi/:id"
+                component={DetailAbsensiSA}
+                exact
+              />
             </>
           )}
           {/* end superadmin */}

@@ -26,9 +26,11 @@ function OrangTua() {
 
   const getAllOrtu = async () => {
     const token = localStorage.getItem("token");
+    const idSuperAdmin = localStorage.getItem("superadminId");
+
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/orang-tua/orang-tua/all`,
+        `${API_DUMMY}/api/orang-tua/getALlBySuperAdmin/${idSuperAdmin}`,
         {
           headers: {
             Authorization: `${token}`,
@@ -54,11 +56,14 @@ function OrangTua() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${API_DUMMY}/api/orang-tua/deleteOrangTua/` + id, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          });
+          await axios.delete(
+            `${API_DUMMY}/api/orang-tua/deleteOrangTua/` + id,
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            }
+          );
 
           Swal.fire({
             icon: "success",
@@ -156,7 +161,7 @@ function OrangTua() {
                   </select>
                   <a
                     type="button"
-                    href="/superadmin/addA"
+                    href="/superadmin/addOrtu"
                     className="text-white bg-indigo-500 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800 mt-2"
                   >
                     <FontAwesomeIcon icon={faPlus} size="lg" />
@@ -190,7 +195,7 @@ function OrangTua() {
                   </thead>
                   {/* <!-- Tabel Body --> */}
                   <tbody className="text-left">
-                    {paginatedAdmin.map((admin, index) => (
+                    {paginatedAdmin.map((ortu, index) => (
                       <tr
                         className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                         key={index}
@@ -207,15 +212,13 @@ function OrangTua() {
                             className="__cf_email__"
                             data-cfemail="5a363b23363b1a3d373b333674393537"
                           >
-                            {admin.email}
+                            {ortu.email}
                           </a>
                         </td>
-                        <td className="px-6 py-4 capitalize">
-                          {admin.username}
-                        </td>
+                        <td className="px-6 py-4 capitalize">{ortu.nama}</td>
                         <td className="py-3">
                           <div className="flex items-center -space-x-4">
-                            <a href={`/superadmin/detailA/${admin.id}`}>
+                            <a href={`/superadmin/detailA/${ortu.id}`}>
                               <button className="z-20 block rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
                                 <span className="relative inline-block">
                                   <FontAwesomeIcon
@@ -225,7 +228,7 @@ function OrangTua() {
                                 </span>
                               </button>
                             </a>
-                            <a href={`/superadmin/editA/${admin.id}`}>
+                            <a href={`/superadmin/editOrtu/${ortu.id}`}>
                               <button className="z-30 block rounded-full border-2 border-white bg-yellow-100 p-4 text-yellow-700 active:bg-red-50">
                                 <span className="relative inline-block">
                                   <FontAwesomeIcon
@@ -238,7 +241,7 @@ function OrangTua() {
 
                             <button
                               className="z-30 block rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-red-50"
-                              onClick={() => deleteData(admin.id)}
+                              onClick={() => deleteData(ortu.id)}
                             >
                               <span className="relative inline-block">
                                 <FontAwesomeIcon
