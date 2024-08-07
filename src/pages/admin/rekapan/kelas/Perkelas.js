@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../../../../components/SidebarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileExport } from "@fortawesome/free-solid-svg-icons";
+import { faFileExport, faPlus } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { API_DUMMY } from "../../../../utils/api";
 import NavbarAdmin from "../../../../components/NavbarAdmin";
+import { Pagination } from "flowbite-react";
 
 function Perkelas() {
   const [listAbsensi, setListAbsensi] = useState([]);
   const [listKelas, setListKelas] = useState([]); // Daftar kelas
   const [kelasId, setKelasId] = useState(); // ID kelas yang dipilih
   const [idOrganisasi, setIdOrganisasi] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [limit, setLimit] = useState(5);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     getAllKelas();
     if (kelasId != null) {
-      getAbsensiByKelasId(kelasId);
+      getAbsensiByKelasId(kelasId, currentPage, limit);
     }
   }, [kelasId]);
 
@@ -47,15 +52,15 @@ function Perkelas() {
   };
 
   // Handle kelas selection
-  const handleKelasChange = (event) => {
-    const selectedKelasId = event.target.value;
-    setKelasId(selectedKelasId);
-    if (selectedKelasId) {
-      getAbsensiByKelasId(selectedKelasId);
-    } else {
-      setListAbsensi([]);
-    }
-  };
+  // const handleKelasChange = (event) => {
+  //   const selectedKelasId = event.target.value;
+  //   setKelasId(selectedKelasId);
+  //   if (selectedKelasId) {
+  //     getAbsensiByKelasId(selectedKelasId);
+  //   } else {
+  //     setListAbsensi([]);
+  //   }
+  // };
 
   // Export data function
   const exportPerkelas = async () => {
@@ -65,9 +70,8 @@ function Perkelas() {
     }
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/absensi/export/absensi-rekapan-perkelas`,
+        `${API_DUMMY}/api/export/absensi/by_kelas/${kelasId}`,
         {
-          params: { kelasId },
           responseType: "blob",
         }
       );
@@ -99,6 +103,42 @@ function Perkelas() {
     return new Date(dateString).toLocaleDateString("id-ID", options);
   };
 
+  useEffect(() => {
+    const filteredData = listAbsensi.filter(
+      (user) =>
+        user.username?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.admin?.username
+          ?.toLowerCase()
+          .includes(searchTerm.toLowerCase()) ||
+        user.email?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setTotalPages(Math.ceil(filteredData.length / limit));
+  }, [searchTerm, limit, listAbsensi]);
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleLimitChange = (event) => {
+    setLimit(parseInt(event.target.value));
+    setCurrentPage(1); // Reset to the first page when limit changes
+    if (kelasId != null) {
+      getAbsensiByKelasId(kelasId, 1, parseInt(event.target.value));
+    }
+  };
+
+  function onPageChange(page) {
+    setCurrentPage(page);
+  }
+
+  const filteredUser = listAbsensi.filter((user) =>
+    user.user.username?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const paginatedUser = filteredUser.slice(
+    (currentPage - 1) * limit,
+    currentPage * limit
+  );
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
@@ -110,13 +150,35 @@ function Perkelas() {
         </div>
         <div className="content-page flex-1 p-8 md:ml-64 mt-16 text-center overflow-auto">
           <div className="tabel-absen bg-white p-5 rounded-xl shadow-xl border border-gray-300">
-            <div className="flex justify-between">
+            <div className="md:flex justify-between">
               <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
                 Rekap Perkelas
               </h6>
+              <div className="flex md:mt-2 mt-4 items-center gap-2">
+                <div className="relative w-64">
+                  <input
+                    type="search"
+                    id="search-dropdown"
+                    value={searchTerm}
+                    onChange={handleSearch}
+                    className="block p-2.5 w-full z-20 text-sm rounded-l-md text-gray-900 bg-gray-50 border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                    placeholder="Search name..."
+                    required
+                  />
+                </div>
+                <select
+                  value={limit}
+                  onChange={handleLimitChange}
+                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
+                  <option value="5">05</option>
+                  <option value="10">10</option>
+                  <option value="20">20</option>
+                  <option value="50">50</option>
+                </select>
+              </div>
             </div>
             <hr />
-            <form className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-5">
+            <form className="flex justify-center items-center gap-4 mt-5">
               <select
                 id="kelas"
                 className="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -181,7 +243,7 @@ function Perkelas() {
                     </tr>
                   </thead>
                   <tbody>
-                    {listAbsensi.map((absensi, index) => (
+                    {paginatedUser.map((absensi, index) => (
                       <tr key={absensi.id}>
                         <td className="px-6 py-3 whitespace-nowrap">
                           {index + 1}
@@ -224,6 +286,14 @@ function Perkelas() {
                 </table>
               )}
             </div>
+            <Pagination
+              className="mt-5"
+              layout="table"
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={onPageChange}
+              showIcons
+            />
           </div>
         </div>
       </div>

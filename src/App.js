@@ -1,3 +1,4 @@
+import "../src/App.css"
 import Register from "./pages/Register";
 import Dashboard from "./pages/admin/Dashboard";
 import Karyawan from "./pages/admin/masterdata/Karyawan";

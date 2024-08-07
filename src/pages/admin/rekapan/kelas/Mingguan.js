@@ -11,9 +11,9 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import { API_DUMMY } from "../../../../utils/api";
 import NavbarAdmin from "../../../../components/NavbarAdmin";
+import { Pagination } from "flowbite-react";
 
 function MingguanPerkelas() {
-  const [listAbsensi, setListAbsensi] = useState([]);
   const [listKelas, setListKelas] = useState([]);
   const [idKelas, setIdKelas] = useState();
   const [bulan, setBulan] = useState("");
@@ -22,6 +22,9 @@ function MingguanPerkelas() {
   const [selectedDate, setSelectedDate] = useState("");
   const [tanggalAkhir, setTanggalAkhir] = useState("");
   const [idOrganisasi, setIdOrganisasi] = useState();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   // Fetch user data
   const getAllKelas = async () => {
@@ -70,7 +73,8 @@ function MingguanPerkelas() {
         `${API_DUMMY}/api/absensi/rekap-mingguan-per-kelas?kelasId=${idKelas}&tanggalAkhir=${tanggalAkhir}&tanggalAwal=${tanggalAwal}`
       );
       //   if (response == 200) {
-      setRekapPerbulan(response.data);
+      const data = response.data;
+      setRekapPerbulan(data);
       console.log("list rekap mingguan: ", response.data);
       //   }
     } catch (error) {
@@ -152,6 +156,18 @@ function MingguanPerkelas() {
     return new Date(dateString).toLocaleDateString("id-ID", options);
   };
 
+  // Pagination and Search Logic
+  const filteredData = Object.values(rekapPerbulan)
+    .flat()
+    .filter((item) =>
+      item.user.username.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
@@ -163,10 +179,33 @@ function MingguanPerkelas() {
         </div>
         <div className="content-page flex-1 p-8 md:ml-64 mt-16 text-center overflow-auto">
           <div className="tabel-absen bg-white p-5 rounded-xl shadow-xl border border-gray-300">
-            <div className="flex justify-between">
+            <div className="md:flex justify-between">
               <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
                 Rekap Perminggu
               </h6>
+              <div className="flex md:mt-2 mt-4 items-center gap-2">
+                <div className="relative w-64">
+                  <input
+                    type="search"
+                    id="search-dropdown"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="block p-2.5 w-full z-20 text-sm rounded-l-md text-gray-900 bg-gray-50 border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                    placeholder="Search name..."
+                    required
+                  />
+                </div>
+                <select
+                  value={itemsPerPage}
+                  onChange={(e) => setItemsPerPage(Number(e.target.value))}
+                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
+                  {[5, 10, 20, 50].map((limit) => (
+                    <option key={limit} value={limit}>
+                      {limit}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
             <hr />
             <form className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-5">
@@ -321,42 +360,46 @@ function MingguanPerkelas() {
                   </tr>
                 </thead>
                 <tbody>
-                  {Object.keys(rekapPerbulan).map((date) =>
-                    rekapPerbulan[date].map((absensi, index) => (
-                      <tr key={absensi.id}>
-                        <td className="px-6 py-3 whitespace-nowrap">
-                          {index + 1}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {absensi.user.username}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {formatDate(absensi.tanggalAbsen)}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {absensi.jamMasuk}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          <img src={absensi.fotoMasuk} alt="Foto Masuk" />
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {absensi.jamPulang}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          <img src={absensi.fotoPulang} alt="Foto Pulang" />
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {absensi.jamKerja}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {absensi.keterangan}
-                        </td>
-                      </tr>
-                    ))
-                  )}
+                  {currentItems.map((absensi, index) => (
+                    <tr key={absensi.id}>
+                      <td className="px-6 py-3 whitespace-nowrap">
+                        {index + 1}
+                      </td>
+                      <td className="px-6 py-3 whitespace-nowrap capitalize">
+                        {absensi.user.username}
+                      </td>
+                      <td className="px-6 py-3 whitespace-nowrap capitalize">
+                        {formatDate(absensi.tanggalAbsen)}
+                      </td>
+                      <td className="px-6 py-3 whitespace-nowrap capitalize">
+                        {absensi.jamMasuk}
+                      </td>
+                      <td className="px-6 py-3 whitespace-nowrap capitalize">
+                        <img src={absensi.fotoMasuk} alt="Foto Masuk" />
+                      </td>
+                      <td className="px-6 py-3 whitespace-nowrap capitalize">
+                        {absensi.jamPulang}
+                      </td>
+                      <td className="px-6 py-3 whitespace-nowrap capitalize">
+                        <img src={absensi.fotoPulang} alt="Foto Pulang" />
+                      </td>
+                      <td className="px-6 py-3 whitespace-nowrap capitalize">
+                        {absensi.jamKerja}
+                      </td>
+                      <td className="px-6 py-3 whitespace-nowrap capitalize">
+                        {absensi.keterangan}
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={(page) => setCurrentPage(page)}
+              className="mt-4"
+            />
           </div>
         </div>
       </div>
