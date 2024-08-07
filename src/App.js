@@ -1,4 +1,4 @@
-import "../src/App.css"
+import "../src/App.css";
 import Register from "./pages/Register";
 import Dashboard from "./pages/admin/Dashboard";
 import Karyawan from "./pages/admin/masterdata/Karyawan";
@@ -97,6 +97,8 @@ import MingguanPerkelas from "./pages/admin/rekapan/kelas/Mingguan";
 import Informasi from "./pages/admin/informasi/Informasi";
 import AddInformasi from "./pages/admin/add/AddInformasi";
 import EditInformasi from "./pages/admin/edit/editInformasi";
+import OrangTua from "./pages/superadmin/admin/OrangTua";
+import DashboardOrtu from "./pages/orangtua/DashboardOrtu";
 
 function App() {
   const role = localStorage.getItem("role");
@@ -123,6 +125,7 @@ function App() {
             component={ResetPasswordSup}
             exact
           />
+          <Route path="/dashboard" component={DashboardOrtu} exact />
           {/* start admin */}
           {/* Admin Routes */}
           {role === "ADMIN" && (
@@ -342,6 +345,8 @@ function App() {
                 component={DetailAbsensiSA}
                 exact
               />
+              {/* orang tua */}
+              <Route path="/superadmin/ortu" component={OrangTua} exact />
             </>
           )}
           {/* end superadmin */}
