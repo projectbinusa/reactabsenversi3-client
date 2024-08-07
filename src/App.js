@@ -1,3 +1,4 @@
+import "../src/App.css";
 import Register from "./pages/Register";
 import Dashboard from "./pages/admin/Dashboard";
 import Karyawan from "./pages/admin/masterdata/Karyawan";
@@ -93,6 +94,11 @@ import BulanPerkelas from "./pages/admin/rekapan/kelas/Bulanan";
 import HarianPerkelas from "./pages/admin/rekapan/kelas/HarianPerkelas";
 import SiswaperKelas from "./pages/admin/masterdata/SiswaperKelas";
 import MingguanPerkelas from "./pages/admin/rekapan/kelas/Mingguan";
+import Informasi from "./pages/admin/informasi/Informasi";
+import AddInformasi from "./pages/admin/add/AddInformasi";
+import EditInformasi from "./pages/admin/edit/editInformasi";
+import OrangTua from "./pages/superadmin/admin/OrangTua";
+import DashboardOrtu from "./pages/orangtua/DashboardOrtu";
 
 function App() {
   const role = localStorage.getItem("role");
@@ -119,6 +125,7 @@ function App() {
             component={ResetPasswordSup}
             exact
           />
+          <Route path="/dashboard" component={DashboardOrtu} exact />
           {/* start admin */}
           {/* Admin Routes */}
           {role === "ADMIN" && (
@@ -132,6 +139,7 @@ function App() {
               <Route path="/admin/shift" component={Shift} exact />
               <Route path="/admin/lokasi" component={Lokasi} exact />
               <Route path="/admin/organisasi" component={Organisasi} exact />
+              <Route path="/admin/informasi" component={Informasi} exact />
               <Route
                 path="/admin/detailK/:id"
                 component={DetailKaryawan}
@@ -159,12 +167,18 @@ function App() {
               <Route path="/admin/addlok" component={AddLokasi} exact />
               <Route path="/admin/addor" component={AddOrganisasi} exact />
               <Route path="/admin/addkelas" component={AddKelas} exact />
+              <Route
+                path="/admin/addinformasi"
+                component={AddInformasi}
+                exact
+              />
               <Route path="/admin/editK/:id" component={EditKaryawan} exact />
               <Route path="/admin/editJ/:id" component={EditJabatan} exact />
               <Route path="/admin/editL/:id" component={EditLokasi} exact />
               <Route path="/admin/editO/:id" component={EditOrganisasi} exact />
               <Route path="/admin/editS/:id" component={EditShift} exact />
               <Route path="/admin/editkelas/:id" component={EditKelas} exact />
+              <Route path="/admin/editI/:id" component={EditInformasi} exact />
               {/* rekapan */}
               <Route path="/admin/simpel" component={Simpel} exact />
               <Route path="/admin/perkaryawan" component={Perkaryawan} exact />
@@ -331,6 +345,8 @@ function App() {
                 component={DetailAbsensiSA}
                 exact
               />
+              {/* orang tua */}
+              <Route path="/superadmin/ortu" component={OrangTua} exact />
             </>
           )}
           {/* end superadmin */}
