@@ -53,7 +53,7 @@ const Sidebar = () => {
       return paths.some((path) => location.pathname.startsWith(path));
     };
 
-    if (isActive(["/superadmin/data-user", "/superadmin/absensi"])) {
+    if (isActive(["/superadmin/data-user", "/superadmin/absensi", "/admin/master-data", "/admin/rekapann", "/admin/rekapann/perkelas", "/admin/data-presensi"])) {
       setRekapanOpen(true);
     } else {
       setRekapanOpen(false);
@@ -74,11 +74,34 @@ const Sidebar = () => {
         "/superadmin/shift",
         "/superadmin/lokasi",
         "/superadmin/ortu",
+        "/admin/karyawan",
+        "/admin/jabatan",
+        "/admin/shift",
+        "/admin/lokasi",
+        "/admin/organisasi",
+        "/admin/kelas",
+        "/admin/simpel",
+        "/admin/perkaryawan",
+        "/admin/harian",
+        "/admin/mingguan",
+        "/admin/bulanan",
+        "/admin/perkelas",
+        "/admin/harian/perkelas",
+        "/admin/mingguan/perkelas",
+        "/admin/bulanan/perkelas",
+        "/admin/absensi",
+        "/admin/kehadiran",
       ])
     ) {
       setMasterDataOpen(true);
+      setRekapanOpen(true);
+      setRekapanOpenPerkelas(true);
+      setAbsenOpen(true);
     } else {
       setMasterDataOpen(false);
+      setRekapanOpen(false);
+      setRekapanOpenPerkelas(false);
+      setAbsenOpen(false);
     }
   }, [location.pathname]);
 
@@ -674,6 +697,108 @@ const Sidebar = () => {
                         Kehadiran
                       </span>
                     </Link>
+
+                    <ul
+                  // id="dropdown-masterdata"
+                  className={`${
+                    rekapanOpen ? "" : "hidden" // Tampilkan atau sembunyikan dropdown berdasarkan state masterDataOpen
+                  } py-2 space-y-2`}
+                >
+                  {/* <!-- Menu Simpel --> */}
+                  <li>
+                    <Link
+                      to="/admin/master-data"
+                      className={`flex items-center p-2 rounded-lg  ml-9 pl-3 ${
+                        isActive(["/admin/master-data"])
+                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
+                          : "text-blue-900 transition duration-75group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
+                      }`}
+                    >
+                      <FontAwesomeIcon
+                        className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
+                          isActive(["/admin/master-data"])
+                            ? "text-white"
+                            : "text-blue-500"
+                        }`}
+                        icon={faUsers}
+                      />{" "}
+                      <span className="flex-1 ml-3 whitespace-nowrap">
+                        User
+                      </span>
+                    </Link>
+                  </li>
+                  {/* <!-- Menu Rekapan --> */}
+                  <li>
+                    <Link
+                      to="/admin/rekapann"
+                      className={`flex items-center p-2 rounded-lg  ml-9 pl-3 ${
+                        isActive(["/admin/rekapann"])
+                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
+                          : "text-blue-900 transition duration-75group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
+                      }`}
+                    >
+                      <FontAwesomeIcon
+                        className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
+                          isActive(["/admin/rekapann"])
+                            ? "text-white"
+                            : "text-blue-500"
+                        }`}
+                        icon={faUsers}
+                      />{" "}
+                      <span className="flex-1 ml-3 whitespace-nowrap">
+                        User
+                      </span>
+                    </Link>
+                  </li>
+                  {/* <!-- Menu Perkelas --> */}
+                  <li>
+                    <Link
+                      to="/admin/rekapann/perkelas"
+                      className={`flex items-center p-2 rounded-lg  ml-9 pl-3 ${
+                        isActive(["/admin/rekapann/perkelas"])
+                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
+                          : "text-blue-900 transition duration-75group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
+                      }`}
+                    >
+                      <FontAwesomeIcon
+                        className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
+                          isActive(["/admin/rekapann/perkelas"])
+                            ? "text-white"
+                            : "text-blue-500"
+                        }`}
+                        icon={faUsers}
+                      />{" "}
+                      <span className="flex-1 ml-3 whitespace-nowrap">
+                        User
+                      </span>
+                    </Link>
+                  </li>
+                  {/* <!-- Menu Presensi --> */}
+                  <li>
+                    <Link
+                      to="/admin/data-presensi"
+                      className={`flex items-center p-2 rounded-lg  ml-9 pl-3 ${
+                        isActive(["/admin/data-presensi"])
+                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
+                          : "text-blue-900 transition duration-75group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
+                      }`}
+                    >
+                      <FontAwesomeIcon
+                        className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
+                          isActive(["/admin/data-presensi"])
+                            ? "text-white"
+                            : "text-blue-500"
+                        }`}
+                        icon={faUsers}
+                      />{" "}
+                      <span className="flex-1 ml-3 whitespace-nowrap">
+                        User
+                      </span>
+                    </Link>
+                  </li>
+                </ul>
+              </li>
+            </ul>
                   </li>
                   {/* <!-- Menu Mingguan --> */}
                   {/* <li>
@@ -695,8 +820,6 @@ const Sidebar = () => {
                     </Link>
                   </li> */}
                 </ul>
-              </li>
-            </ul>
           )}
           {role === "USER" && (
             <ul>
@@ -708,17 +831,19 @@ const Sidebar = () => {
                     isActive(["/user/dashboard"])
                       ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                       : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
-                  } flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group`}
+                  } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}
                 >
                   <FontAwesomeIcon
-                    className={`flex-shrink-0 w-5 h-5 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
+                    className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                       isActive(["/user/dashboard"])
                         ? "text-white"
                         : "text-blue-500"
                     }`}
-                    icon={faCube}
-                  />
-                  <span className="ms-3">Dashboard</span>
+                    icon={faUserCheck}
+                  />{" "}
+                  <span className="flex-1 ml-3 whitespace-nowrap">
+                    Kehadiran
+                  </span>
                 </Link>
               </li>
               <li>
