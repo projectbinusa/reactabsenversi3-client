@@ -70,7 +70,7 @@ function Perkelas() {
     }
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/export/absensi/by_kelas/${kelasId}`,
+        `${API_DUMMY}/api/export/absensi/by-kelas/${kelasId}`,
         {
           responseType: "blob",
         }
