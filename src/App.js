@@ -101,7 +101,8 @@ import OrangTua from "./pages/superadmin/admin/OrangTua";
 import DashboardOrtu from "./pages/orangtua/DashboardOrtu";
 import AddOrtu from "./pages/superadmin/add/AddOrtu";
 import EditOrtu from "./pages/superadmin/edit/EditOrtu";
-import Pengumuman from "./pages/Pengumuman";
+import Pengumuman from "./pages/user/Pengumuman";
+import DetailPengumuman from "./pages/orangtua/DetailPengumuman";
 
 function App() {
   const role = localStorage.getItem("role");
@@ -128,7 +129,12 @@ function App() {
             component={ResetPasswordSup}
             exact
           />
-          <Route path="/dashboard" component={DashboardOrtu} exact />
+          <Route path="/walimurid/dashboard" component={DashboardOrtu} exact />
+          <Route
+            path="/walimurid/detail_info/:id"
+            component={DetailPengumuman}
+            exact
+          />
           {/* start admin */}
           {/* Admin Routes */}
           {role === "ADMIN" && (
@@ -222,6 +228,14 @@ function App() {
             </>
           )}
           {/* end admin */}
+          {/* {role === "USER" && "Wali Murid" ? (
+            <> */}
+          <Route path="/user/detail_absen/:id" component={DetailAbsen} exact />
+          {/* </>
+          ) : (
+            <></>
+          )} */}
+
           {/* /* start user */}
           {role === "USER" && (
             <>
@@ -239,11 +253,6 @@ function App() {
               <Route path="/user/profile" component={Profile} exact />
               <Route path="/user/absen" component={AbsenMasuk} exact />
               <Route path="/user/pulang" component={AbsenPulang} exact />
-              <Route
-                path="/user/detail_absen/:id"
-                component={DetailAbsen}
-                exact
-              />
               <Route
                 path="/user/detail_info/:id"
                 component={Pengumuman}

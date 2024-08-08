@@ -4,13 +4,11 @@ import Sidebar from "../../../components/SidebarUser";
 import axios from "axios";
 import { Pagination } from "flowbite-react";
 import { API_DUMMY } from "../../../utils/api";
-import {
-  faPenToSquare,
-  faPlus,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Swal from "sweetalert2";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Informasi() {
   const [informasi, setInformasi] = useState([]);
@@ -141,6 +139,42 @@ function Informasi() {
     return new Date(dateString).toLocaleDateString("id-ID", options);
   };
 
+  const requestNotificationPermission = async () => {
+    if (Notification.permission === 'default') {
+      const permission = await Notification.requestPermission();
+      if (permission === 'granted') {
+        console.log("Notification permission granted.");
+      } else {
+        console.log("Notification permission denied.");
+      }
+    } else {
+      console.log("Notification permission already granted or denied.");
+    }
+  };
+
+  const showNotification = (informasi) => {
+    if (Notification.permission === 'granted') {
+      const options = {
+        body: `Acara: ${informasi.namaAcara}\nPesan: ${informasi.message}\nTanggal: ${formatDate(informasi.tanggalAcara)}\nTempat: ${informasi.tempatAcara}`,
+        icon: 'https://via.placeholder.com/150'
+      };
+  
+      const notification = new Notification('Pengumuman Informasi', options);
+  
+      notification.onclick = () => {
+        console.log('Notification clicked');
+        // You can also open a specific URL here
+        window.open('http://localhost:3000', '_blank');
+      };
+    } else {
+      console.log("Notification permission not granted.");
+    }
+  };
+
+  useEffect(() => {
+    requestNotificationPermission();
+  }, []);
+
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
@@ -207,13 +241,16 @@ function Informasi() {
                           Pesan
                         </th>
                         <th scope="col" className="px-6 py-3">
-                          Tanggal Acara
+                          Tanggal
                         </th>
                         <th scope="col" className="px-6 py-3">
-                          Tempat Acara
+                          Tempat
                         </th>
-                        <th scope="col" className="px-6 py-3">
+                        <th scope="col" className="py-4 text-center">
                           Aksi
+                        </th>
+                        <th scope="col" className="py-4 text-center">
+                          Notifikasi
                         </th>
                       </tr>
                     </thead>
@@ -262,6 +299,14 @@ function Informasi() {
                               </button>
                             </div>
                           </td>
+                          <td className="py-4 text-center">
+                            <button
+                              className="rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50"
+                              onClick={() => showNotification(informasi)}
+                            >
+                              Notifikasi
+                            </button>
+                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -280,6 +325,7 @@ function Informasi() {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }

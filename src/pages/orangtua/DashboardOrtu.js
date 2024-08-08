@@ -7,9 +7,13 @@ import {
   faUsers,
   faClipboardUser,
   faUser,
+  faInfo,
+  faCircleInfo,
+  faCalendarDays,
 } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../utils/api";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 function DashboardOrtu() {
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
@@ -22,7 +26,8 @@ function DashboardOrtu() {
   const [username, setUsername] = useState("");
   const token = localStorage.getItem("token");
   const idSuperAdmin = localStorage.getItem("superadminId");
-  const id = localStorage.getItem("superadminId");
+  const id = localStorage.getItem("id_orangtua");
+  const [informasi, setInformasi] = useState([]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -70,34 +75,31 @@ function DashboardOrtu() {
   const getLokasi = () =>
     fetchData(`${API_DUMMY}/api/lokasi/getall`, setLokasiData);
   const getOrganisasi = () =>
-    fetchData(
-      `${API_DUMMY}/api/organisasi/superadmin/${id}`,
-      setOrganisasiData
-    );
+    fetchData(`${API_DUMMY}/api/absensi/by-orang-tua/${id}`, setOrganisasiData);
 
-  const getUsername = async () => {
-    try {
-      const response = await axios.get(
-        `${API_DUMMY}/api/superadmin/getbyid/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setUsername(response.data.username);
-    } catch (error) {
-      console.error("Error fetching username:", error);
-    }
-  };
+  // const getUsername = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `${API_DUMMY}/api/superadmin/getbyid/${id}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
+  //     setUsername(response.data.username);
+  //   } catch (error) {
+  //     console.error("Error fetching username:", error);
+  //   }
+  // };
 
   const getAdmin = async () => {
     const token = localStorage.getItem("token");
-    const idSuperAdmin = localStorage.getItem("superadminId");
+    const id_orangtua = localStorage.getItem("id_orangtua");
 
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/admin/get-all-by-super/${idSuperAdmin}`,
+        `${API_DUMMY}/api/absensi/izin/by-orangTua/${id_orangtua}`,
         {
           headers: {
             Authorization: `${token}`,
@@ -111,13 +113,13 @@ function DashboardOrtu() {
     }
   };
 
-  const getOrganisasiSA = async () => {
-    const idSuperAdmin = localStorage.getItem("superadminId");
+  const getPresensiByWaliMurid = async () => {
+    const idWaliMurid = localStorage.getItem("id_orangtua");
     const token = localStorage.getItem("token");
 
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/organisasi/superadmin/${idSuperAdmin}`,
+        `${API_DUMMY}/api/absensi/by-orang-tua/${idWaliMurid}`,
         {
           headers: {
             Authorization: `${token}`,
@@ -126,6 +128,7 @@ function DashboardOrtu() {
       );
 
       setOrganisasiData(response.data);
+      console.log("list terlambat", response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -140,15 +143,40 @@ function DashboardOrtu() {
     });
   };
 
+  // Fungsi untuk memeriksa apakah tanggal acara sudah lewat
+  const isEventExpired = (eventDate) => {
+    const today = new Date();
+    const eventDateObj = new Date(eventDate);
+    return eventDateObj < today;
+  };
+
+  // Filter informasi untuk hanya menampilkan acara yang belum lewat
+  const validInformasi = informasi.filter(
+    (item) => !isEventExpired(item.tanggalAcara)
+  );
+
+  const Informasi = async () => {
+    try {
+      const response = await axios.get(`${API_DUMMY}/api/notifications`);
+      setInformasi(response.data);
+    } catch (error) {
+      console.error("Error fetching informasi:", error);
+    }
+  };
+
+  useEffect(() => {
+    Informasi();
+  }, []);
+
   useEffect(() => {
     getUser();
     getAbsensi();
-    getUsername();
+    // getUsername();
     getJabatan();
     getLokasi();
     getOrganisasi();
     getAdmin();
-    getOrganisasiSA();
+    getPresensiByWaliMurid();
   }, []);
 
   useEffect(() => {
@@ -160,6 +188,7 @@ function DashboardOrtu() {
       localStorage.removeItem("loginSuccess");
     }
   }, []);
+
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
@@ -207,14 +236,65 @@ function DashboardOrtu() {
             <div className="pl-2 h-32 bg-indigo-500 rounded-lg shadow-md md:w-auto">
               <div className="flex w-full h-full py-2 px-4 bg-gray-100 rounded-lg justify-between">
                 <div className="my-auto">
-                  <p className="font-bold">Tanpa Keterangan</p>
-                  <p className="text-lg">Jumlah Tanpa Keterangan</p>
+                  <p className="font-bold">Terlambat</p>
+                  <p className="text-lg">Jumlah Terlambat</p>
                   <p className="text-lg">{userData.length}</p>
                 </div>
                 <div className="my-auto">
                   <FontAwesomeIcon icon={faUser} size="2x" />
                 </div>
               </div>
+            </div>
+          </div>
+
+          <div className="dashboard-announcements p-4 bg-slate-200 rounded-lg shadow-xl mt-10">
+            <h2 className="text-3xl font-semibold text-black text-center">
+              Pengumuman Terbaru
+            </h2>
+            <div className="mt-6 grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+              {validInformasi.length > 0 ? (
+                validInformasi.map((item) => (
+                  <div
+                    key={item.id}
+                    className="informasi-item p-4 bg-white border border-gray-200 rounded-lg shadow-md transform transition-transform hover:scale-105 hover:shadow-xl"
+                  >
+                    <div className="flex items-center mb-4">
+                      <FontAwesomeIcon
+                        icon={faCircleInfo}
+                        className="h-6 w-6 text-blue-500 mr-2"
+                      />
+                      <h6 className="text-lg font-semibold text-gray-900 capitalize">
+                        {item.namaAcara}
+                      </h6>
+                    </div>
+                    <div className="mt-2 mb-2 flex items-center">
+                      <FontAwesomeIcon
+                        icon={faCalendarDays}
+                        className="h-4 w-4 text-gray-600 mr-2"
+                      />
+                      <p className="text-sm font-semibold text-gray-800">
+                        Tanggal:
+                      </p>
+                      <p className="text-sm text-gray-700 ml-2">
+                        {formatDate(item.tanggalAcara)}
+                      </p>
+                    </div>
+                    <div className="mt-4">
+                      <Link to={"/walimurid/detail_info/" + item.id}>
+                        <button className="text-blue-500 hover:underline">
+                          Lihat Selengkapnya
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="flex items-center justify-center col-span-3">
+                  <h1 className="text-lg text-center text-gray-900 dark:text-white">
+                    Tidak Ada Pengumuman !!
+                  </h1>
+                </div>
+              )}
             </div>
           </div>
 
@@ -240,19 +320,22 @@ function DashboardOrtu() {
                       No
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      Admin
-                    </th>
-                    <th scope="col" className="px-6 py-3">
                       Nama
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      Alamat
+                      Tanggal Presensi
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      Telepon
+                      Jam Masuk
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      Email
+                      Jam Pulang
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Status Presensi
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Aksi
                     </th>
                   </tr>
                 </thead>
@@ -270,14 +353,27 @@ function DashboardOrtu() {
                         {index + 1}
                       </th>
                       <td className="px-6 py-4 capitalize">
-                        {admin.admin.username}
+                        {admin.user.username}
                       </td>
                       <td className="px-6 py-4 capitalize">
-                        {admin.namaOrganisasi}
+                        {admin.tanggalAbsen}
                       </td>
-                      <td className="px-6 py-4 capitalize">{admin.alamat}</td>
-                      <td className="px-6 py-4">{admin.nomerTelepon}</td>
-                      <td className="px-6 py-4">{admin.emailOrganisasi}</td>
+                      <td className="px-6 py-4 capitalize">{admin.jamMasuk}</td>
+                      <td className="px-6 py-4">{admin.jamPulang}</td>
+                      <td className="px-6 py-4">{admin.statusAbsen}</td>
+                      <td className="px-6 py-4">
+                        {" "}
+                        <Link to={"/user/detail_absen/" + admin.id}>
+                          <button className="z-20 block rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
+                            <span className="relative inline-block">
+                              <FontAwesomeIcon
+                                icon={faInfo}
+                                className="h-4 w-4"
+                              />
+                            </span>
+                          </button>
+                        </Link>
+                      </td>
                     </tr>
                   ))}
                 </tbody>

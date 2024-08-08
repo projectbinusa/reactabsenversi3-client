@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { API_DUMMY } from "../utils/api";
-import SidebarNavbar from "../components/SidebarNavbar";
-import Navbar from "../components/NavbarUser";
+import { API_DUMMY } from "../../utils/api";
+import SidebarNavbar from "../../components/SidebarNavbar";
+import Navbar from "../../components/NavbarUser";
 import { useParams, Link } from "react-router-dom";
 import {
   faArrowLeft,
@@ -43,6 +43,9 @@ function Pengumuman() {
       year: "numeric",
       month: "long",
       day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      timeZone: "UTC",
     };
     return new Date(dateString).toLocaleDateString("id-ID", options);
   };
@@ -71,39 +74,45 @@ function Pengumuman() {
                         <h3 className="text-xl font-semibold text-black capitalize">
                           {info.namaAcara}
                         </h3>
-                        <div className="mt-2 flex items-center">
-                          <FontAwesomeIcon
-                            icon={faCalendarDays}
-                            className="h-4 w-4 text-gray-600 mr-2"
-                          />
-                          <p className="text-sm font-medium text-black">
-                            Tanggal:
-                          </p>
-                          <p className="text-sm text-black ml-2">
+                        <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:space-x-4">
+                          <div className="flex items-center sm:justify-start">
+                            <FontAwesomeIcon
+                              icon={faCalendarDays}
+                              className="h-4 w-4 text-gray-600 mr-2"
+                            />
+                            <p className="text-sm font-medium text-black">
+                              Tanggal:
+                            </p>
+                          </div>
+                          <p className="text-sm text-black sm:ml-2">
                             {formatDate(info.tanggalAcara)}
                           </p>
                         </div>
-                        <div className="mt-2 flex items-center">
-                          <FontAwesomeIcon
-                            icon={faMapMarkerAlt}
-                            className="h-4 w-4 text-gray-600 mr-2"
-                          />
-                          <p className="text-sm font-medium text-black">
-                            Tempat:
-                          </p>
-                          <p className="text-sm text-black ml-2 capitalize">
+                        <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:space-x-4">
+                          <div className="flex items-center sm:justify-start">
+                            <FontAwesomeIcon
+                              icon={faMapMarkerAlt}
+                              className="h-4 w-4 text-gray-600 mr-2"
+                            />
+                            <p className="text-sm font-medium text-black">
+                              Tempat:
+                            </p>
+                          </div>
+                          <p className="text-sm text-black sm:ml-2">
                             {info.tempatAcara}
                           </p>
                         </div>
-                        <div className="mt-2 flex items-center">
-                          <FontAwesomeIcon
-                            icon={faEnvelope}
-                            className="h-4 w-4 text-gray-600 mr-2"
-                          />
-                          <p className="text-sm font-medium text-black">
-                            Pesan:
-                          </p>
-                          <p className="text-sm text-black ml-2 capitalize">
+                        <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:space-x-4">
+                          <div className="flex items-center sm:justify-start">
+                            <FontAwesomeIcon
+                              icon={faEnvelope}
+                              className="h-4 w-4 text-gray-600 mr-2"
+                            />
+                            <p className="text-sm font-medium text-black">
+                              Pesan:
+                            </p>
+                          </div>
+                          <p className="text-sm text-black sm:ml-2">
                             {info.message}
                           </p>
                         </div>
