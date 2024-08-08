@@ -8,6 +8,8 @@ import {
   faClipboardUser,
   faUser,
   faInfo,
+  faCircleInfo,
+  faCalendarDays,
 } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../utils/api";
@@ -25,6 +27,7 @@ function DashboardOrtu() {
   const token = localStorage.getItem("token");
   const idSuperAdmin = localStorage.getItem("superadminId");
   const id = localStorage.getItem("id_orangtua");
+  const [informasi, setInformasi] = useState([]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -140,6 +143,31 @@ function DashboardOrtu() {
     });
   };
 
+  // Fungsi untuk memeriksa apakah tanggal acara sudah lewat
+  const isEventExpired = (eventDate) => {
+    const today = new Date();
+    const eventDateObj = new Date(eventDate);
+    return eventDateObj < today;
+  };
+
+  // Filter informasi untuk hanya menampilkan acara yang belum lewat
+  const validInformasi = informasi.filter(
+    (item) => !isEventExpired(item.tanggalAcara)
+  );
+
+  const Informasi = async () => {
+    try {
+      const response = await axios.get(`${API_DUMMY}/api/notifications`);
+      setInformasi(response.data);
+    } catch (error) {
+      console.error("Error fetching informasi:", error);
+    }
+  };
+
+  useEffect(() => {
+    Informasi();
+  }, []);
+
   useEffect(() => {
     getUser();
     getAbsensi();
@@ -219,6 +247,57 @@ function DashboardOrtu() {
             </div>
           </div>
 
+          <div className="dashboard-announcements p-4 bg-slate-200 rounded-lg shadow-xl mt-10">
+            <h2 className="text-3xl font-semibold text-black text-center">
+              Pengumuman Terbaru
+            </h2>
+            <div className="mt-6 grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+              {validInformasi.length > 0 ? (
+                validInformasi.map((item) => (
+                  <div
+                    key={item.id}
+                    className="informasi-item p-4 bg-white border border-gray-200 rounded-lg shadow-md transform transition-transform hover:scale-105 hover:shadow-xl"
+                  >
+                    <div className="flex items-center mb-4">
+                      <FontAwesomeIcon
+                        icon={faCircleInfo}
+                        className="h-6 w-6 text-blue-500 mr-2"
+                      />
+                      <h6 className="text-lg font-semibold text-gray-900 capitalize">
+                        {item.namaAcara}
+                      </h6>
+                    </div>
+                    <div className="mt-2 mb-2 flex items-center">
+                      <FontAwesomeIcon
+                        icon={faCalendarDays}
+                        className="h-4 w-4 text-gray-600 mr-2"
+                      />
+                      <p className="text-sm font-semibold text-gray-800">
+                        Tanggal:
+                      </p>
+                      <p className="text-sm text-gray-700 ml-2">
+                        {formatDate(item.tanggalAcara)}
+                      </p>
+                    </div>
+                    <div className="mt-4">
+                      <Link to={"/walimurid/detail_info/" + item.id}>
+                        <button className="text-blue-500 hover:underline">
+                          Lihat Selengkapnya
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="flex items-center justify-center col-span-3">
+                  <h1 className="text-lg text-center text-gray-900 dark:text-white">
+                    Tidak Ada Pengumuman !!
+                  </h1>
+                </div>
+              )}
+            </div>
+          </div>
+
           <br />
           <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700 mt-10">
             <div className="flex justify-between">
@@ -232,7 +311,8 @@ function DashboardOrtu() {
             <div className="relative overflow-x-auto mt-5">
               <table
                 id="dataKaryawan"
-                className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+              >
                 {/* <!-- Tabel Head --> */}
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
@@ -264,10 +344,12 @@ function DashboardOrtu() {
                   {organisasiData.map((admin, index) => (
                     <tr
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                      key={index}>
+                      key={index}
+                    >
                       <th
                         scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
                         {index + 1}
                       </th>
                       <td className="px-6 py-4 capitalize">

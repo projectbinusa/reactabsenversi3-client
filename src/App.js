@@ -101,7 +101,8 @@ import OrangTua from "./pages/superadmin/admin/OrangTua";
 import DashboardOrtu from "./pages/orangtua/DashboardOrtu";
 import AddOrtu from "./pages/superadmin/add/AddOrtu";
 import EditOrtu from "./pages/superadmin/edit/EditOrtu";
-import Pengumuman from "./pages/Pengumuman";
+import Pengumuman from "./pages/user/Pengumuman";
+import DetailPengumuman from "./pages/orangtua/DetailPengumuman";
 
 function App() {
   const role = localStorage.getItem("role");
@@ -129,6 +130,11 @@ function App() {
             exact
           />
           <Route path="/walimurid/dashboard" component={DashboardOrtu} exact />
+          <Route
+            path="/walimurid/detail_info/:id"
+            component={DetailPengumuman}
+            exact
+          />
           {/* start admin */}
           {/* Admin Routes */}
           {role === "ADMIN" && (
