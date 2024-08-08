@@ -7,9 +7,11 @@ import {
   faUsers,
   faClipboardUser,
   faUser,
+  faInfo,
 } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../utils/api";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 function DashboardOrtu() {
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
@@ -22,7 +24,7 @@ function DashboardOrtu() {
   const [username, setUsername] = useState("");
   const token = localStorage.getItem("token");
   const idSuperAdmin = localStorage.getItem("superadminId");
-  const id = localStorage.getItem("superadminId");
+  const id = localStorage.getItem("id_orangtua");
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -70,34 +72,31 @@ function DashboardOrtu() {
   const getLokasi = () =>
     fetchData(`${API_DUMMY}/api/lokasi/getall`, setLokasiData);
   const getOrganisasi = () =>
-    fetchData(
-      `${API_DUMMY}/api/organisasi/superadmin/${id}`,
-      setOrganisasiData
-    );
+    fetchData(`${API_DUMMY}/api/absensi/by-orang-tua/${id}`, setOrganisasiData);
 
-  const getUsername = async () => {
-    try {
-      const response = await axios.get(
-        `${API_DUMMY}/api/superadmin/getbyid/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setUsername(response.data.username);
-    } catch (error) {
-      console.error("Error fetching username:", error);
-    }
-  };
+  // const getUsername = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `${API_DUMMY}/api/superadmin/getbyid/${id}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
+  //     setUsername(response.data.username);
+  //   } catch (error) {
+  //     console.error("Error fetching username:", error);
+  //   }
+  // };
 
   const getAdmin = async () => {
     const token = localStorage.getItem("token");
-    const idSuperAdmin = localStorage.getItem("superadminId");
+    const id_orangtua = localStorage.getItem("id_orangtua");
 
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/admin/get-all-by-super/${idSuperAdmin}`,
+        `${API_DUMMY}/api/absensi/izin/by-orangTua/${id_orangtua}`,
         {
           headers: {
             Authorization: `${token}`,
@@ -111,13 +110,13 @@ function DashboardOrtu() {
     }
   };
 
-  const getOrganisasiSA = async () => {
-    const idSuperAdmin = localStorage.getItem("superadminId");
+  const getPresensiByWaliMurid = async () => {
+    const idWaliMurid = localStorage.getItem("id_orangtua");
     const token = localStorage.getItem("token");
 
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/organisasi/superadmin/${idSuperAdmin}`,
+        `${API_DUMMY}/api/absensi/by-orang-tua/${idWaliMurid}`,
         {
           headers: {
             Authorization: `${token}`,
@@ -126,6 +125,7 @@ function DashboardOrtu() {
       );
 
       setOrganisasiData(response.data);
+      console.log("list terlambat", response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -143,12 +143,12 @@ function DashboardOrtu() {
   useEffect(() => {
     getUser();
     getAbsensi();
-    getUsername();
+    // getUsername();
     getJabatan();
     getLokasi();
     getOrganisasi();
     getAdmin();
-    getOrganisasiSA();
+    getPresensiByWaliMurid();
   }, []);
 
   useEffect(() => {
@@ -160,6 +160,7 @@ function DashboardOrtu() {
       localStorage.removeItem("loginSuccess");
     }
   }, []);
+
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
@@ -207,8 +208,8 @@ function DashboardOrtu() {
             <div className="pl-2 h-32 bg-indigo-500 rounded-lg shadow-md md:w-auto">
               <div className="flex w-full h-full py-2 px-4 bg-gray-100 rounded-lg justify-between">
                 <div className="my-auto">
-                  <p className="font-bold">Tanpa Keterangan</p>
-                  <p className="text-lg">Jumlah Tanpa Keterangan</p>
+                  <p className="font-bold">Terlambat</p>
+                  <p className="text-lg">Jumlah Terlambat</p>
                   <p className="text-lg">{userData.length}</p>
                 </div>
                 <div className="my-auto">
@@ -231,8 +232,7 @@ function DashboardOrtu() {
             <div className="relative overflow-x-auto mt-5">
               <table
                 id="dataKaryawan"
-                className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
-              >
+                className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 {/* <!-- Tabel Head --> */}
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
@@ -240,19 +240,22 @@ function DashboardOrtu() {
                       No
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      Admin
-                    </th>
-                    <th scope="col" className="px-6 py-3">
                       Nama
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      Alamat
+                      Tanggal Presensi
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      Telepon
+                      Jam Masuk
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      Email
+                      Jam Pulang
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Status Presensi
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Aksi
                     </th>
                   </tr>
                 </thead>
@@ -261,23 +264,34 @@ function DashboardOrtu() {
                   {organisasiData.map((admin, index) => (
                     <tr
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                      key={index}
-                    >
+                      key={index}>
                       <th
                         scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                      >
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {index + 1}
                       </th>
                       <td className="px-6 py-4 capitalize">
-                        {admin.admin.username}
+                        {admin.user.username}
                       </td>
                       <td className="px-6 py-4 capitalize">
-                        {admin.namaOrganisasi}
+                        {admin.tanggalAbsen}
                       </td>
-                      <td className="px-6 py-4 capitalize">{admin.alamat}</td>
-                      <td className="px-6 py-4">{admin.nomerTelepon}</td>
-                      <td className="px-6 py-4">{admin.emailOrganisasi}</td>
+                      <td className="px-6 py-4 capitalize">{admin.jamMasuk}</td>
+                      <td className="px-6 py-4">{admin.jamPulang}</td>
+                      <td className="px-6 py-4">{admin.statusAbsen}</td>
+                      <td className="px-6 py-4">
+                        {" "}
+                        <Link to={"/user/detail_absen/" + admin.id}>
+                          <button className="z-20 block rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
+                            <span className="relative inline-block">
+                              <FontAwesomeIcon
+                                icon={faInfo}
+                                className="h-4 w-4"
+                              />
+                            </span>
+                          </button>
+                        </Link>
+                      </td>
                     </tr>
                   ))}
                 </tbody>

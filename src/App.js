@@ -128,7 +128,7 @@ function App() {
             component={ResetPasswordSup}
             exact
           />
-          <Route path="/dashboard" component={DashboardOrtu} exact />
+          <Route path="/walimurid/dashboard" component={DashboardOrtu} exact />
           {/* start admin */}
           {/* Admin Routes */}
           {role === "ADMIN" && (
@@ -222,6 +222,14 @@ function App() {
             </>
           )}
           {/* end admin */}
+          {/* {role === "USER" && "Wali Murid" ? (
+            <> */}
+          <Route path="/user/detail_absen/:id" component={DetailAbsen} exact />
+          {/* </>
+          ) : (
+            <></>
+          )} */}
+
           {/* /* start user */}
           {role === "USER" && (
             <>
@@ -239,11 +247,6 @@ function App() {
               <Route path="/user/profile" component={Profile} exact />
               <Route path="/user/absen" component={AbsenMasuk} exact />
               <Route path="/user/pulang" component={AbsenPulang} exact />
-              <Route
-                path="/user/detail_absen/:id"
-                component={DetailAbsen}
-                exact
-              />
               <Route
                 path="/user/detail_info/:id"
                 component={Pengumuman}

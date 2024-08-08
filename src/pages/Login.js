@@ -42,8 +42,13 @@ function Login() {
         localStorage.setItem("role", data.data.role);
         localStorage.setItem("superadminId", data.data.id);
         localStorage.setItem("loginSuccess", "true");
-
         window.location.href = "/superadmin/dashboard";
+      } else if (data.data.role === "Wali Murid") {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("role", data.data.role);
+        localStorage.setItem("id_orangtua", data.data.id);
+        localStorage.setItem("loginSuccess", "true");
+        window.location.href = "/walimurid/dashboard";
       }
     } catch (error) {
       Swal.fire({
@@ -73,6 +78,7 @@ function Login() {
         break;
     }
   };
+
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
       <div className="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1">
@@ -117,8 +123,7 @@ function Login() {
                       stroke="currentColor"
                       strokeWidth="2"
                       strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
+                      strokeLinejoin="round">
                       <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
                       <circle cx="8.5" cy="7" r="4" />
                       <path d="M20 8v6M23 11h-6" />
@@ -128,8 +133,7 @@ function Login() {
                   <div className="text-center mt-6">
                     <a
                       className="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
-                      onClick={() => setShowForgot(true)}
-                    >
+                      onClick={() => setShowForgot(true)}>
                       Tidak ingat kata sandi?
                     </a>
                     {showForgot && (
@@ -137,10 +141,9 @@ function Login() {
                         <select
                           className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                           onChange={handleForgotPasswordChange}
-                          required
-                        >
+                          required>
                           <option value="" disabled selected>
-                           Pilih Role Untuk Forgot Password
+                            Pilih Role Untuk Forgot Password
                           </option>
                           <option value="user">User</option>
                           <option value="admin">Admin</option>
@@ -152,8 +155,7 @@ function Login() {
                     <br />
                     <Link
                       className="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
-                      to="/registerUser"
-                    >
+                      to="/registerUser">
                       Tidak memiliki akun? Register
                     </Link>
                   </div>
@@ -177,8 +179,7 @@ function Login() {
             style={{
               backgroundImage:
                 "url('https://storage.googleapis.com/devitary-image-host.appspot.com/15848031292911696601-undraw_designer_life_w96d.svg')",
-            }}
-          ></div>
+            }}></div>
         </div>
       </div>
     </div>
