@@ -21,10 +21,10 @@ function AbsenPulang() {
 
   // Batas koordinat yang diizinkan
   const allowedCoordinates = {
-    north: -6.975496541825257, // Pojok Masjid
-    south: -6.976353915653226, // Pojok Bootcamp
-    west: 110.30093865296837, // Pojok R. Guru
-    east: 110.30157620693905, // Pojok Satpam
+    northWest: { lat: -6.975496541825257, lon: 110.3009736968416 }, // Pojok Masjid
+    northEast: { lat: -6.975529487096709, lon: 110.30157620693905 }, // Pojok Satpam
+    southWest: { lat: -6.976339400207557, lon: 110.30093865296837 }, // Pojok R. Guru
+    southEast: { lat: -6.976353915653226, lon: 110.30154539936574 }, // Pojok Bootcamp
   };
 
   const isWithinAllowedCoordinates = (latitude, longitude) => {
