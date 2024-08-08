@@ -218,7 +218,7 @@ function OrangTua() {
                         <td className="px-6 py-4 capitalize">{ortu.nama}</td>
                         <td className="py-3">
                           <div className="flex items-center -space-x-4">
-                            <a href={`/superadmin/detailA/${ortu.id}`}>
+                            <a href={`/superadmin/detailOrtu/${ortu.id}`}>
                               <button className="z-20 block rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
                                 <span className="relative inline-block">
                                   <FontAwesomeIcon

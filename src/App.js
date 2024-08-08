@@ -103,6 +103,7 @@ import AddOrtu from "./pages/superadmin/add/AddOrtu";
 import EditOrtu from "./pages/superadmin/edit/EditOrtu";
 import Pengumuman from "./pages/user/Pengumuman";
 import DetailPengumuman from "./pages/orangtua/DetailPengumuman";
+import DetailOrtu from "./pages/superadmin/detail/DetailOrtu";
 
 function App() {
   const role = localStorage.getItem("role");
@@ -371,14 +372,8 @@ function App() {
                 exact
               />
               <Route
-                path="/superadmin/detailLokasi/:idLokasi"
-                component={DetailLokasiSA}
-                exact
-              />
-              <Route path="/superadmin/absensi" component={AbsensiSA} exact />
-              <Route
-                path="/superadmin/detailAbsensi/:id"
-                component={DetailAbsensiSA}
+                path="/superadmin/detailOrtu/:id"
+                component={DetailOrtu}
                 exact
               />
             </>
