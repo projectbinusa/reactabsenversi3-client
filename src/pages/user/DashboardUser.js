@@ -4,13 +4,10 @@ import {
   faArrowRight,
   faArrowRightFromBracket,
   faCircleInfo,
-  faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faCalendarDays,
   faCircleXmark,
-  faEnvelope,
-  faMessage,
 } from "@fortawesome/free-regular-svg-icons";
 import Navbar from "../../components/NavbarUser";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
@@ -18,7 +15,6 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../utils/api";
 import SidebarNavbar from "../../components/SidebarNavbar";
-import Pengumuman from "../Pengumuman";
 
 function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
