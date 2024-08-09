@@ -30,9 +30,9 @@ function BulanPerkelas() {
       console.log("list kelas: ", response.data);
       console.log(
         "orpganisasi di dalam kelas: ",
-        response.data.map((dt) => dt.organisasi.id)
+        response.data.slice().reverse().map((dt) => dt.organisasi.id)
       );
-      const dataOrganisasi = response.data.map((dt) => dt.organisasi.id);
+      const dataOrganisasi = response.data.slice().reverse().map((dt) => dt.organisasi.id);
 
       if (dataOrganisasi.length > 0) {
         setIdOrganisasi(dataOrganisasi[0]);
@@ -163,7 +163,7 @@ function BulanPerkelas() {
         <div className="fixed h-full">
           <Sidebar />
         </div>
-        <div className="content-page flex-1 p-8 md:ml-64 mt-16 text-center overflow-auto">
+        <div className="content-page flex-1 p-8 md:ml-72 mt-16 text-center overflow-auto">
           <div className="tabel-absen bg-white p-5 rounded-xl shadow-xl border border-gray-300">
             <div className="md:flex justify-between">
               <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
@@ -185,7 +185,7 @@ function BulanPerkelas() {
                   value={itemsPerPage}
                   onChange={(e) => setItemsPerPage(Number(e.target.value))}
                   className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
-                  {[5, 10, 20, 50].map((limit) => (
+                  {[5, 10, 20, 50].slice().reverse().map((limit) => (
                     <option key={limit} value={limit}>
                       {limit}
                     </option>
@@ -201,7 +201,7 @@ function BulanPerkelas() {
                 value={idKelas}
                 onChange={(e) => setIdKelas(e.target.value)}>
                 <option selected>Pilih Kelas</option>
-                {listKelas.map((data) => (
+                {listKelas.slice().reverse().map((data) => (
                   <option value={data.id}>{data.namaKelas}</option>
                 ))}
               </select>
@@ -256,7 +256,7 @@ function BulanPerkelas() {
                   </tr>
                 </thead>
                 <tbody>
-                  {currentItems.map((absensi, index) => (
+                  {currentItems.slice().reverse().map((absensi, index) => (
                     <tr key={absensi.id}>
                       <td className="px-6 py-3 whitespace-nowrap">
                         {index + 1}

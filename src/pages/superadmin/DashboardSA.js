@@ -170,7 +170,7 @@ function DashboardSA() {
         <div className="fixed">
           <Sidebar />
         </div>
-        <div className="content-page container p-8 ml-0 md:ml-64 mt-12">
+        <div className="content-page container p-8 ml-0 md:ml-72 mt-12">
           <div className="mt-5 w-full">
             <div className="p-4 text-center bg-indigo-300 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
               <h2 className="text-2xl font-semibold mb-4">
@@ -255,7 +255,7 @@ function DashboardSA() {
                 </thead>
                 {/* <!-- Tabel Body --> */}
                 <tbody className="text-left">
-                  {admin.map((admin, index) => (
+                  {admin.slice().reverse().map((admin, index) => (
                     <tr
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                       key={index}
@@ -321,7 +321,7 @@ function DashboardSA() {
                 </thead>
                 {/* <!-- Tabel Body --> */}
                 <tbody className="text-left">
-                  {organisasiData.map((admin, index) => (
+                  {organisasiData.slice().reverse().map((admin, index) => (
                     <tr
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                       key={index}
