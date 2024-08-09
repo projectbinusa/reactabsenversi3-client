@@ -15,8 +15,12 @@ function EditUser() {
   const [username, setUsername] = useState("");
   const [idJabatan, setIdJabatan] = useState("");
   const [idShift, setIdShift] = useState("");
+  const [idOrangTua, setIdOrangTua] = useState("");
+  const [idKelas, setIdKelas] = useState("");
   const [jabatanOptions, setJabatanOptions] = useState([]);
   const [shiftOptions, setShiftOptions] = useState([]);
+  const [orangTuaOptions, setOrangTuaOptions] = useState([]);
+  const [kelasOptions, setKelasOptions] = useState([]);
   const { id } = useParams();
   const idSuperAdmin = localStorage.getItem("superadminId");
   const [adminId, setAdminId] = useState(null);
@@ -24,12 +28,12 @@ function EditUser() {
 
   const getUser = async () => {
     try {
-      const res = await axios.get(
-        `${API_DUMMY}/api/user/getUserBy/${id}`
-      );
+      const res = await axios.get(`${API_DUMMY}/api/user/getUserBy/${id}`);
       setUsername(res.data.username);
       setIdJabatan(res.data.jabatan ? res.data.jabatan.idJabatan : "");
       setIdShift(res.data.shift ? res.data.shift.id : "");
+      setIdOrangTua(res.data.orangTua ? res.data.orangTua.id : "");
+      setIdKelas(res.data.kelas ? res.data.kelas.id : "");
     } catch (error) {
       console.log(error);
     }
@@ -57,17 +61,39 @@ function EditUser() {
     }
   };
 
+  const getOrangTuaOptions = async () => {
+    try {
+      const res = await axios.get(
+        `${API_DUMMY}/api/orang-tua/getALlBySuperAdmin/${idSuperAdmin}`
+      );
+      setOrangTuaOptions(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getKelasOptions = async () => {
+    try {
+      const res = await axios.get(`${API_DUMMY}/api/kelas/kelas/all`);
+      setKelasOptions(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getUser();
     getJabatanOptions();
     getShiftOptions();
+    getOrangTuaOptions();
+    getKelasOptions();
   }, [id, adminId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await axios.put(
-        `${API_DUMMY}/api/user/edit-kar/${id}?idJabatan=${idJabatan}&idShift=${idShift}`,
+        `${API_DUMMY}/api/user/edit-kar/${id}?idJabatan=${idJabatan}&idShift=${idShift}&idOrangTua=${idOrangTua}&idKelas=${idKelas}`,
         {
           username: username,
         }
@@ -86,15 +112,6 @@ function EditUser() {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    if (jabatanOptions.length > 0) {
-      setIdJabatan(jabatanOptions[0].idJabatan);
-    }
-    if (shiftOptions.length > 0) {
-      setIdShift(shiftOptions[0].id);
-    }
-  }, [jabatanOptions, shiftOptions]);
 
   return (
     <div className="flex flex-col h-screen">
@@ -150,8 +167,7 @@ function EditUser() {
                           onChange={(e) => setIdJabatan(e.target.value)}
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                         >
-                          {/* <option value="">Belum memiliki</option> */}
-                          {jabatanOptions.slice().reverse().map((option) => (
+                            {jabatanOptions.slice().reverse().map((option) => (
                             <option
                               key={option.idJabatan}
                               value={option.idJabatan}
@@ -174,28 +190,75 @@ function EditUser() {
                           onChange={(e) => setIdShift(e.target.value)}
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                         >
-                          {/* <option value="">Belum memiliki</option> */}
                           {shiftOptions &&
                             shiftOptions.slice().reverse().map((option) => (
-                              <option key={option.id} value={option.id}>
-                                {option.namaShift}
-                              </option>
-                            ))}
+                            <option key={option.id} value={option.id}>
+                              {option.namaShift}
+                            </option>
+                          ))}
                         </select>
                       </div>
                     </div>
+                    <div className="grid md:grid-cols-2 md:gap-6 mb-6">
+                      <div className="relative z-0 w-full mb-6 group">
+                        <label
+                          htmlFor="id_orang_tua"
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                        >
+                          Orang Tua
+                        </label>
+                        <select
+                          name="idOrangTua"
+                          value={idOrangTua}
+                          onChange={(e) => setIdOrangTua(e.target.value)}
+                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                        >
+                          {orangTuaOptions.slice().reverse().map((option) => (
+                            <option key={option.id} value={option.id}>
+                              {option.nama}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="relative z-0 w-full mb-6 group">
+                        <label
+                          htmlFor="id_kelas"
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                        >
+                          Kelas
+                        </label>
+                        <select
+                          name="idKelas"
+                          value={idKelas}
+                          onChange={(e) => setIdKelas(e.target.value)}
+                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                        >
+                          {kelasOptions.slice().reverse().map((option) => (
+                            <option key={option.id} value={option.id}>
+                              {option.namaKelas}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+
                     <div className="flex justify-between">
-                      <a
-                        className="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                        href="/superadmin/data-user"
+                      <button
+                        onClick={() => history.goBack()}
+                        className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
                       >
-                        <FontAwesomeIcon icon={faArrowLeft} />
-                      </a>
+                        <FontAwesomeIcon icon={faArrowLeft} className="mr-1" />
+                        Kembali
+                      </button>
                       <button
                         type="submit"
-                        className="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800"
+                        className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800"
                       >
-                        <FontAwesomeIcon icon={faFloppyDisk} />
+                        <FontAwesomeIcon
+                          icon={faFloppyDisk}
+                          className="mr-2"
+                        />
+                        Simpan
                       </button>
                     </div>
                   </form>
