@@ -69,7 +69,7 @@ function Login() {
         window.location.href = "/forgotpass";
         break;
       case "admin":
-        window.location.href = "/forgot-password-admin";
+        window.location.href = "/forgotpass-admin";
         break;
       case "superadmin":
         window.location.href = "/forgotpassSup";

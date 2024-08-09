@@ -104,6 +104,9 @@ import EditOrtu from "./pages/superadmin/edit/EditOrtu";
 import Pengumuman from "./pages/user/Pengumuman";
 import DetailPengumuman from "./pages/orangtua/DetailPengumuman";
 import DetailOrtu from "./pages/superadmin/detail/DetailOrtu";
+import ForgotPassAdmin from "./pages/admin/ForgotPassAdmin";
+import VerifyCodeAdmin from "./pages/admin/VerifyCodeAdmin";
+import ResetPasswordAdmin from "./pages/admin/ResetPassAdmin";
 
 function App() {
   const role = localStorage.getItem("role");
@@ -115,11 +118,20 @@ function App() {
           <Route path="/register" component={Register} exact />
           <Route path="/registerUser" component={RegisterUser} exact />
           <Route path="/registerSA" component={RegisterSuperadmin} exact />
-          <Route path="/forgotpass" component={ForgotPass} exact />
+            {/* user */}
+            <Route path="/forgotpass" component={ForgotPass} exact />
           <Route path="/verify-code" component={VerifyCode} exact />
           <Route
             path="/reset-password/:token"
             component={ResetPassword}
+            exact
+          />
+          {/* admin */}
+          <Route path="/forgotpass-admin" component={ForgotPassAdmin} exact />
+          <Route path="/verify-code-admin" component={VerifyCodeAdmin} exact />
+          <Route
+            path="/reset-password-admin/:token"
+            component={ResetPasswordAdmin}
             exact
           />
           {/* superadmin */}
