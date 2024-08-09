@@ -150,7 +150,7 @@ function AbsenPulang() {
           const currentTime = new Date();
           const currentHours = currentTime.getHours();
           const currentMinutes = currentTime.getMinutes();
-          const [shiftHours, shiftMinutes] = waktuPulang.split(":").map(Number);
+          const [shiftHours, shiftMinutes] = waktuPulang.split(":").slice().reverse().map(Number);
           if (isUserAlreadyAbsenToday) {
             if (
               currentHours > shiftHours ||

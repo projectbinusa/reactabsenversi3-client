@@ -123,7 +123,7 @@ function AddLokasiSA() {
                           <option value="" disabled>
                             Pilih Organisasi
                           </option>
-                          {organisasiList.map((org) => (
+                          {organisasiList.slice().reverse().map((org) => (
                             <option key={org.id} value={org.id}>
                               {org.namaOrganisasi}
                             </option>

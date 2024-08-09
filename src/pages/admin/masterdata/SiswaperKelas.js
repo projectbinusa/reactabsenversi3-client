@@ -38,7 +38,7 @@ function SiswaperKelas() {
       );
       setUserData(response.data);
       //   console.log(response.data);
-      const dataKelas = response.data.map((data) => data.kelas.namaKelas);
+      const dataKelas = response.data.slice().reverse().map((data) => data.kelas.namaKelas);
       setNamaKelas(dataKelas[0]);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -198,7 +198,7 @@ function SiswaperKelas() {
                   </thead>
                   {/* <!-- Tabel Body --> */}
                   <tbody className="text-left">
-                    {paginatedUser.map((user, index) => (
+                    {paginatedUser.slice().reverse().map((user, index) => (
                       <tr
                         className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                         key={index}>

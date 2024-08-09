@@ -148,7 +148,7 @@ function Perkelas() {
         <div className="fixed h-full">
           <Sidebar />
         </div>
-        <div className="content-page flex-1 p-8 md:ml-64 mt-16 text-center overflow-auto">
+        <div className="content-page flex-1 p-8 md:ml-72 mt-16 text-center overflow-auto">
           <div className="tabel-absen bg-white p-5 rounded-xl shadow-xl border border-gray-300">
             <div className="md:flex justify-between">
               <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
@@ -169,7 +169,8 @@ function Perkelas() {
                 <select
                   value={limit}
                   onChange={handleLimitChange}
-                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
+                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+                >
                   <option value="5">05</option>
                   <option value="10">10</option>
                   <option value="20">20</option>
@@ -183,9 +184,10 @@ function Perkelas() {
                 id="kelas"
                 className="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 value={kelasId}
-                onChange={(e) => setKelasId(e.target.value)}>
+                onChange={(e) => setKelasId(e.target.value)}
+              >
                 <option>Pilih Kelas</option>
-                {listKelas.map((data) => (
+                {listKelas.slice().reverse().map((data) => (
                   <option key={data.id} value={data.id}>
                     {data.namaKelas}
                   </option>
@@ -196,7 +198,8 @@ function Perkelas() {
                 <button
                   type="button"
                   className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto"
-                  onClick={exportPerkelas}>
+                  onClick={exportPerkelas}
+                >
                   <FontAwesomeIcon icon={faFileExport} />
                 </button>
               </div>
@@ -243,7 +246,7 @@ function Perkelas() {
                     </tr>
                   </thead>
                   <tbody>
-                    {paginatedUser.map((absensi, index) => (
+                    {paginatedUser.slice().reverse().map((absensi, index) => (
                       <tr key={absensi.id}>
                         <td className="px-6 py-3 whitespace-nowrap">
                           {index + 1}

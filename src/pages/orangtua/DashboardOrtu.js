@@ -253,7 +253,7 @@ function DashboardOrtu() {
             </h2>
             <div className="mt-6 grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               {validInformasi.length > 0 ? (
-                validInformasi.map((item) => (
+                validInformasi.slice().reverse().map((item) => (
                   <div
                     key={item.id}
                     className="informasi-item p-4 bg-white border border-gray-200 rounded-lg shadow-md transform transition-transform hover:scale-105 hover:shadow-xl"
@@ -341,7 +341,7 @@ function DashboardOrtu() {
                 </thead>
                 {/* <!-- Tabel Body --> */}
                 <tbody className="text-left">
-                  {organisasiData.map((admin, index) => (
+                  {organisasiData.slice().reverse().map((admin, index) => (
                     <tr
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                       key={index}

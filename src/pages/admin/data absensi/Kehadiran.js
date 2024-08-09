@@ -59,7 +59,7 @@ function Kehadiran() {
   };
 
   useEffect(() => {
-    const userAbsensiCounts = kehadiran.map((user) => ({
+    const userAbsensiCounts = kehadiran.slice().reverse().map((user) => ({
       userId: user.id,
       lateCount: getAbsensiByUserId(user.id, "Terlambat"),
       earlyCount: getAbsensiByUserId(user.id, "Lebih Awal"),
@@ -69,7 +69,7 @@ function Kehadiran() {
 
 
     setKehadiran((prevUsers) =>
-      prevUsers.map((user) => {
+      prevUsers.slice().reverse().map((user) => {
         const updatedCounts = userAbsensiCounts.find(
           (u) => u.userId === user.id
         );
@@ -193,7 +193,7 @@ function Kehadiran() {
                       </tr>
                     </thead>
                     <tbody className="text-left">
-                      {paginatedKehadiran.map((kehadiran, index) => (
+                      {paginatedKehadiran.slice().reverse().map((kehadiran, index) => (
                         <tr
                           key={index}
                           className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"

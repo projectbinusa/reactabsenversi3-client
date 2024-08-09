@@ -118,7 +118,7 @@ function DetailAbsen() {
                   <hr />
                 </div>
                 <div className="mt-7 text-left">
-                  {absensi.map((item, index) => (
+                  {absensi.slice().reverse().map((item, index) => (
                     <div key={index} className="grid md:grid-cols-2 md:gap-6">
                       <div className="relative z-0 w-full mb-6 group">
                         <input

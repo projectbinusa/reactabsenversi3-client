@@ -103,9 +103,15 @@ import EditOrtu from "./pages/superadmin/edit/EditOrtu";
 import Pengumuman from "./pages/user/Pengumuman";
 import DetailPengumuman from "./pages/orangtua/DetailPengumuman";
 import DetailOrtu from "./pages/superadmin/detail/DetailOrtu";
+// <<<<<<< nisafe
+// import ForgotPasswordAdmin from "./pages/admin/ForgotPasswordAdmin";
+// import VerifyCodeAdmin from "./pages/admin/VerifyCodeAdmin";
+// import ResetPasswordAdmin from "./pages/admin/ResetPasswordAdmin";
+// =======
 import ForgotPassAdmin from "./pages/admin/ForgotPassAdmin";
 import VerifyCodeAdmin from "./pages/admin/VerifyCodeAdmin";
 import ResetPasswordAdmin from "./pages/admin/ResetPassAdmin";
+// >>>>>>> develop
 
 import PrivateRoute from "./utils/PrivateRoute";
 
@@ -121,6 +127,11 @@ function App() {
           <Route path="/registerSA" component={RegisterSuperadmin} exact />
           {/* Forgot Pass User */}
           <Route path="/forgotpass" component={ForgotPass} exact />
+// <<<<<<< nisafe
+//           {/* fg user */}
+//           <Route path="/forgotpass" component={ForgotPass} exact />
+            {/* user */}
+//             <Route path="/forgotpass" component={ForgotPass} exact />
           <Route path="/verify-code" component={VerifyCode} exact />
           <Route
             path="/reset-password/:token"
@@ -128,6 +139,14 @@ function App() {
             exact
           />
           {/* Forgot Pass Superadmin */}
+          <Route path="/forgotpass-admin" component={ForgotPassAdmin} exact />
+          <Route path="/verify-code-admin" component={VerifyCodeAdmin} exact />
+          <Route
+            path="/reset-password-admin/:token"
+            component={ResetPasswordAdmin}
+            exact
+          />
+          {/* superadmin */}
           <Route path="/forgotpassSup" component={ForgotPassSup} exact />
           <Route path="/verify-code-sup" component={VerifyCodeSup} exact />
           <Route
@@ -138,6 +157,15 @@ function App() {
           {/* Forgot Pass Admin */}
           <Route path="/forgotpass-admin" component={ForgotPassAdmin} exact />
           <Route path="/verify-code-admin" component={VerifyCodeAdmin} exact />
+//           {/* fg admin */}
+//            <Route path="/forgot-password-admin" component={ForgotPasswordAdmin} exact />
+//               <Route path="/verify-code-admin" component={VerifyCodeAdmin} exact />
+//               <Route
+//                 path="/reset-password-admin/:token"
+//                 component={ResetPasswordAdmin}
+//                 exact
+//               />
+//           <Route path="/walimurid/dashboard" component={DashboardOrtu} exact />
           <Route
             path="/reset-password-admin/:token"
             component={ResetPasswordAdmin}
