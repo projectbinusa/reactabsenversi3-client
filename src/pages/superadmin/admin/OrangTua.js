@@ -195,7 +195,7 @@ function OrangTua() {
                   </thead>
                   {/* <!-- Tabel Body --> */}
                   <tbody className="text-left">
-                    {paginatedAdmin.map((ortu, index) => (
+                    {paginatedAdmin.slice().reverse().map((ortu, index) => (
                       <tr
                         className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                         key={index}

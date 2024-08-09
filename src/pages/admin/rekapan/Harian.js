@@ -118,7 +118,7 @@ function Harian() {
         <div className="fixed h-full">
           <Sidebar />
         </div>
-        <div className="content-page flex-1 p-8 md:ml-64 mt-16 text-center overflow-auto">
+        <div className="content-page flex-1 p-8 md:ml-72 mt-16 text-center overflow-auto">
           <div className="tabel-absen bg-white p-5 rounded-xl shadow-xl border border-gray-300">
             <div className="flex justify-between">
               <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
@@ -201,7 +201,7 @@ function Harian() {
                     </tr>
                   </thead>
                   <tbody>
-                    {absensiData.map((absensi, index) => (
+                    {absensiData.slice().reverse().map((absensi, index) => (
                       <tr key={index}>
                         <td className="px-5 py-3 whitespace-nowrap">
                           {index + 1}

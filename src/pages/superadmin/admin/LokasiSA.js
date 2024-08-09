@@ -187,7 +187,7 @@ function LokasiSA() {
                     </tr>
                   </thead>
                   <tbody className="text-left">
-                    {paginatedLokasi.map((lokasi, index) => (
+                    {paginatedLokasi.slice().reverse().map((lokasi, index) => (
                       <tr
                         key={lokasi.idLokasi}
                         className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"

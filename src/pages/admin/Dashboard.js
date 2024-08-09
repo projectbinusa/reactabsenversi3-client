@@ -138,7 +138,7 @@ function Dashboard() {
         <div className="fixed">
           <Sidebar />
         </div>
-        <div className="content-page container p-8 ml-0 md:ml-64 mt-12">
+        <div className="content-page container p-8 md:ml-72 mt-12">
           <div className="mt-5 w-full">
             <div className="p-4 text-center bg-indigo-300 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
               <h2 className="text-2xl font-semibold mb-4 capitalize">
@@ -213,7 +213,7 @@ function Dashboard() {
                   </tr>
                 </thead>
                 <tbody className="text-center">
-                  {absenData.map((absen, index) => (
+                  {absenData.slice().reverse().map((absen, index) => (
                     <tr
                       key={index}
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
@@ -278,7 +278,7 @@ function Dashboard() {
                   </tr>
                 </thead>
                 <tbody className="text-center">
-                  {cutiData.map((cuti, index) => (
+                  {cutiData.slice().reverse().map((cuti, index) => (
                     <tr
                       key={index}
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
@@ -329,7 +329,7 @@ function Dashboard() {
                   </tr>
                 </thead>
                 <tbody className="text-center">
-                  {jabatanData.map((jabatan, index) => (
+                  {jabatanData.slice().reverse().map((jabatan, index) => (
                     <tr
                       key={index}
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
@@ -382,7 +382,7 @@ function Dashboard() {
                   </tr>
                 </thead>
                 <tbody className="text-center">
-                  {lokasiData.map((lokasi, index) => (
+                  {lokasiData.slice().reverse().map((lokasi, index) => (
                     <tr
                       key={index}
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
@@ -434,7 +434,7 @@ function Dashboard() {
                   </tr>
                 </thead>
                 <tbody className="text-center">
-                  {organisasiData.map((organisasi, index) => (
+                  {organisasiData.slice().reverse().map((organisasi, index) => (
                     <tr
                       key={index}
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"

@@ -171,7 +171,7 @@ function AddKaryawan() {
                           Pilih Organisasi
                         </option>
                         {organisasiList &&
-                          organisasiList.map((org) => (
+                          organisasiList.slice().reverse().map((org) => (
                             <option key={org.id} value={org.id}>
                               {org.namaOrganisasi}
                             </option>
@@ -195,7 +195,7 @@ function AddKaryawan() {
                         <option value="" disabled>
                           Pilih Jabatan
                         </option>
-                        {jabatanList.map((jab) => (
+                        {jabatanList.slice().reverse().map((jab) => (
                           <option key={jab.idJabatan} value={jab.idJabatan}>
                             {jab.namaJabatan}
                           </option>
@@ -218,7 +218,7 @@ function AddKaryawan() {
                         <option value="" disabled>
                           Pilih Shift
                         </option>
-                        {shiftList.map((sft) => (
+                        {shiftList.slice().reverse().map((sft) => (
                           <option key={sft.id} value={sft.id}>
                             {sft.namaShift}
                           </option>

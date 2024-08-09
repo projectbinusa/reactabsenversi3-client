@@ -214,7 +214,7 @@ function TabelLembur() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                  {paginatedLembur.map((lemburData, index) => (
+                  {paginatedLembur.slice().reverse().map((lemburData, index) => (
                     <tr key={index}>
                       <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-center">
                         {(currentPage - 1) * limit + index + 1}

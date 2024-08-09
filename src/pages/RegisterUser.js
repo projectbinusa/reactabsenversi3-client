@@ -140,7 +140,7 @@ function RegisterUser() {
                     <option value="" disabled>
                       Pilih Organisasi
                     </option>
-                    {organisasiList.map((org) => (
+                    {organisasiList.slice().reverse().map((org) => (
                       <option key={org.id} value={org.id}>
                         {org.namaOrganisasi}
                       </option>
@@ -160,7 +160,7 @@ function RegisterUser() {
                       <option value="" disabled>
                         Pilih Shift
                       </option>
-                      {shiftList.map((shift) => (
+                      {shiftList.slice().reverse().map((shift) => (
                         <option key={shift.id} value={shift.id}>
                           {shift.namaShift}
                         </option>

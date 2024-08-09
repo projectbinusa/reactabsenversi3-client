@@ -337,7 +337,7 @@ function Dashboard() {
             </h2>
             <div className="mt-6 grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               {validInformasi.length > 0 ? (
-                validInformasi.map((item) => (
+                validInformasi.slice().reverse().map((item) => (
                   <div
                     key={item.id}
                     className="informasi-item p-4 bg-white border border-gray-200 rounded-lg shadow-md transform transition-transform hover:scale-105 hover:shadow-xl"
@@ -430,7 +430,7 @@ function Dashboard() {
                 </thead>
 
                 <tbody className="divide-y divide-gray-200">
-                  {absensi.map((absenData, index) => (
+                  {absensi.slice().reverse().map((absenData, index) => (
                     <tr key={index}>
                       <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-center">
                         {index + 1}
@@ -471,7 +471,7 @@ function Dashboard() {
                 </thead>
 
                 <tbody className="divide-y divide-gray-200">
-                  {cuti.map((item, index) => (
+                  {cuti.slice().reverse().map((item, index) => (
                     <tr key={index}>
                       <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-center">
                         {index + 1}

@@ -104,9 +104,15 @@ import EditOrtu from "./pages/superadmin/edit/EditOrtu";
 import Pengumuman from "./pages/user/Pengumuman";
 import DetailPengumuman from "./pages/orangtua/DetailPengumuman";
 import DetailOrtu from "./pages/superadmin/detail/DetailOrtu";
+// <<<<<<< nisafe
+// import ForgotPasswordAdmin from "./pages/admin/ForgotPasswordAdmin";
+// import VerifyCodeAdmin from "./pages/admin/VerifyCodeAdmin";
+// import ResetPasswordAdmin from "./pages/admin/ResetPasswordAdmin";
+// =======
 import ForgotPassAdmin from "./pages/admin/ForgotPassAdmin";
 import VerifyCodeAdmin from "./pages/admin/VerifyCodeAdmin";
 import ResetPasswordAdmin from "./pages/admin/ResetPassAdmin";
+// >>>>>>> develop
 
 function App() {
   const role = localStorage.getItem("role");
@@ -118,14 +124,22 @@ function App() {
           <Route path="/register" component={Register} exact />
           <Route path="/registerUser" component={RegisterUser} exact />
           <Route path="/registerSA" component={RegisterSuperadmin} exact />
+// <<<<<<< nisafe
+//           {/* fg user */}
+//           <Route path="/forgotpass" component={ForgotPass} exact />
+// =======
             {/* user */}
             <Route path="/forgotpass" component={ForgotPass} exact />
+// >>>>>>> develop
           <Route path="/verify-code" component={VerifyCode} exact />
           <Route
             path="/reset-password/:token"
             component={ResetPassword}
             exact
           />
+// <<<<<<< nisafe
+//           {/* fg superadmin */}
+// =======
           {/* admin */}
           <Route path="/forgotpass-admin" component={ForgotPassAdmin} exact />
           <Route path="/verify-code-admin" component={VerifyCodeAdmin} exact />
@@ -135,6 +149,7 @@ function App() {
             exact
           />
           {/* superadmin */}
+// >>>>>>> develop
           <Route path="/forgotpassSup" component={ForgotPassSup} exact />
           <Route path="/verify-code-sup" component={VerifyCodeSup} exact />
           <Route
@@ -142,6 +157,14 @@ function App() {
             component={ResetPasswordSup}
             exact
           />
+//           {/* fg admin */}
+//            <Route path="/forgot-password-admin" component={ForgotPasswordAdmin} exact />
+//               <Route path="/verify-code-admin" component={VerifyCodeAdmin} exact />
+//               <Route
+//                 path="/reset-password-admin/:token"
+//                 component={ResetPasswordAdmin}
+//                 exact
+//               />
           <Route path="/walimurid/dashboard" component={DashboardOrtu} exact />
           <Route
             path="/walimurid/detail_info/:id"

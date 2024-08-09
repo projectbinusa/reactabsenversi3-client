@@ -46,10 +46,10 @@ function KelasSiswa() {
   };
 
   const validateOrganisasiIds = () => {
-    const validIds = organisasiData.map((org) => org.id);
+    const validIds = organisasiData.slice().reverse().map((org) => org.id);
     const validKelasIds = userData
       .filter((kelas) => validIds.includes(kelas.organisasi.id))
-      .map((kelas) => kelas.organisasi.id);
+      .slice().reverse().map((kelas) => kelas.organisasi.id);
     setValidOrganisasiIds(validKelasIds);
   };
 
@@ -211,7 +211,7 @@ function KelasSiswa() {
                   </thead>
                   {/* <!-- Tabel Body --> */}
                   <tbody className="text-left">
-                    {paginatedKelas.map((kelas, index) => (
+                    {paginatedKelas.slice().reverse().map((kelas, index) => (
                       <tr
                         className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                         key={index}>

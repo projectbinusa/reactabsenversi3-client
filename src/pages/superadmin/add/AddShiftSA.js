@@ -170,7 +170,7 @@ function AddShift() {
                             Pilih Admin
                           </option>
                           {adminList &&
-                            adminList.map((org) => (
+                            adminList.slice().reverse().map((org) => (
                               <option key={org.id} value={org.id}>
                                 {org.username}
                               </option>
