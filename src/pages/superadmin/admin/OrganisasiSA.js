@@ -197,7 +197,7 @@ function OrganisasiSA() {
                         Admin
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        Nama
+                        Nama Organisasi
                       </th>
                       <th scope="col" className="px-6 py-3">
                         Alamat

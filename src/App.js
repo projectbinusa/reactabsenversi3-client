@@ -107,6 +107,7 @@ import DetailOrtu from "./pages/superadmin/detail/DetailOrtu";
 import ForgotPassAdmin from "./pages/admin/ForgotPassAdmin";
 import VerifyCodeAdmin from "./pages/admin/VerifyCodeAdmin";
 import ResetPasswordAdmin from "./pages/admin/ResetPassAdmin";
+import ProfileOrtu from "./pages/orangtua/Profile";
 
 function App() {
   const role = localStorage.getItem("role");
@@ -143,12 +144,6 @@ function App() {
             exact
           />
 
-          <Route path="/walimurid/dashboard" component={DashboardOrtu} exact />
-          <Route
-            path="/walimurid/detail_info/:id"
-            component={DetailPengumuman}
-            exact
-          />
           {/* start admin */}
           {/* Admin Routes */}
           {role === "ADMIN" && (
@@ -392,6 +387,13 @@ function App() {
             </>
           )}
           {/* end superadmin */}
+          <Route path="/walimurid/dashboard" component={DashboardOrtu} exact />
+          <Route
+            path="/walimurid/detail_info/:id"
+            component={DetailPengumuman}
+            exact
+          />
+          <Route path="/walimurid/profile/:id" component={ProfileOrtu} exact />
         </Switch>
       </main>
     </BrowserRouter>
