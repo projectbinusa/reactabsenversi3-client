@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation, Redirect } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 
 function PrivateRoute({ children, roles }) {
   const location = useLocation();
@@ -7,11 +7,11 @@ function PrivateRoute({ children, roles }) {
   const userRole = localStorage.getItem("role");
 
   if (!token) {
-    return <Redirect to="/" state={{ from: location }} />;
+    return <Navigate to="/" state={{ from: location }} />;
   }
 
   if (roles && !roles.includes(userRole)) {
-    return <Redirect to="/" state={{ from: location }} />;
+    return <Navigate to="/" state={{ from: location }} />;
   }
 
   return children;

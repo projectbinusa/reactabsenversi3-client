@@ -55,14 +55,11 @@ function AddOrganisasiSA() {
         provinsi: provinsi,
         nomerTelepon: nomerTelepon,
         emailOrganisasi: emailOrganisasi,
-       };
-
-
+      };
 
       const response = await axios.post(
         `${API_DUMMY}/api/organisasi/tambahByIdSuperAdmin/${idSuperAdmin}?idAdmin=${idAdmin}`,
-        organisasi,
-
+        organisasi
       );
       Swal.fire("Berhasil", "Berhasil menambahkan data", "success");
       window.location.href = "/superadmin/organisasi";
@@ -237,7 +234,7 @@ function AddOrganisasiSA() {
                         for="kabupaten"
                         class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                       >
-                        Kabupaten
+                        Kota/Kabupaten
                       </label>
                     </div>
                   </div>
@@ -277,11 +274,14 @@ function AddOrganisasiSA() {
                           Pilih Admin
                         </option>
                         {adminList &&
-                          adminList.slice().reverse().map((admin) => (
-                            <option key={admin.id} value={admin.id}>
-                              {admin.username}
-                            </option>
-                          ))}
+                          adminList
+                            .slice()
+                            .reverse()
+                            .map((admin) => (
+                              <option key={admin.id} value={admin.id}>
+                                {admin.username}
+                              </option>
+                            ))}
                       </select>
                     </div>
                   </div>
