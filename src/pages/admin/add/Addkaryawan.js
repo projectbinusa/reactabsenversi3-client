@@ -14,12 +14,16 @@ function AddKaryawan() {
   const [idOrganisasi, setIdOrganisasi] = useState("");
   const [idJabatan, setIdJabatan] = useState("");
   const [idShift, setIdShift] = useState("");
+  const [idOrangTua, setIdOrangTua] = useState(null);
+  const [idKelas, setIdKelas] = useState(null);
   const [password, setPassword] = useState("");
   const idAdmin = localStorage.getItem("adminId");
   const adminId = localStorage.getItem("adminId");
   const [organisasiList, setOrganisasiList] = useState([]);
   const [jabatanList, setJabatanList] = useState([]);
   const [shiftList, setShiftList] = useState([]);
+  const [orangTuaList, setOrangTuaList] = useState([]);
+  const [kelasList, setKelasList] = useState([]);
 
   const handleShowPasswordChange = () => {
     setShowPassword(!showPassword);
@@ -29,6 +33,8 @@ function AddKaryawan() {
     GetAllOrganisasi();
     GetAllJabatan();
     GetAllShift();
+    GetAllOrangTua();
+    GetAllKelas();
   }, []);
 
   const GetAllOrganisasi = async () => {
@@ -64,6 +70,33 @@ function AddKaryawan() {
     }
   };
 
+  const GetAllOrangTua = async () => {
+    try {
+      const response = await axios.get(
+
+        `${API_DUMMY}/api/orang-tua/all`
+
+      );
+      setOrangTuaList(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const GetAllKelas = async () => {
+    try {
+      const response = await axios.get(
+
+       `${API_DUMMY}/api/kelas/getALlByAdmin/${idAdmin}`
+
+      );
+      setKelasList(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
   const tambahKaryawan = async (e) => {
     e.preventDefault();
 
@@ -74,7 +107,7 @@ function AddKaryawan() {
         password: password,
       };
       const response = await axios.post(
-        `${API_DUMMY}/api/user/tambahkaryawan/${idAdmin}?idOrganisasi=${idOrganisasi}&idJabatan=${idJabatan}&idShift=${idShift}`,
+        `${API_DUMMY}/api/user/tambahkaryawan/${idAdmin}?idOrganisasi=${idOrganisasi}&idJabatan=${idJabatan}&idShift=${idShift}&idOrangTua=${idOrangTua}&idKelas=${idKelas}`,
         newUser
       );
       Swal.fire({
@@ -221,6 +254,52 @@ function AddKaryawan() {
                         {shiftList.slice().reverse().map((sft) => (
                           <option key={sft.id} value={sft.id}>
                             {sft.namaShift}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="relative z-0 w-full mb-6 group">
+                      <label
+                        htmlFor="id_kelas"
+                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                      >
+                        Kelas
+                      </label>
+                      <select
+                        name="id_kelas"
+                        value={idKelas || ""}
+                        onChange={(e) => setIdKelas(Number(e.target.value))}
+                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                      >
+                        <option value="" disabled selected>
+                          Pilih Kelas
+                        </option>
+                        {kelasList.slice().reverse().map((kls) => (
+                          <option key={kls.id} value={kls.id}>
+                            {kls.namaKelas}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="relative z-0 w-full mb-6 group">
+                      <label
+                        htmlFor="id_orang_tua"
+                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                      >
+                        Wali Murid
+                      </label>
+                      <select
+                        name="id_orang_tua"
+                        value={idOrangTua || ""}
+                        onChange={(e) => setIdOrangTua(Number(e.target.value))}
+                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                      >
+                        <option value="" disabled selected>
+                          Pilih Wali Murid
+                        </option>
+                        {orangTuaList.slice().reverse().map((ortu) => (
+                          <option key={ortu.id} value={ortu.id}>
+                            {ortu.nama}
                           </option>
                         ))}
                       </select>
