@@ -78,7 +78,6 @@ import DetailLokasiSA from "./pages/superadmin/detail/DetailLokasiSA";
 import AbsensiSA from "./pages/superadmin/admin/AbsensiSA";
 import DetailOrganisasiSA from "./pages/superadmin/detail/DetailOrganisasiSA";
 import DetailAbsensiSA from "./pages/superadmin/detail/DetailAbsensiSA";
-import ProfileSA from "./pages/superadmin/ProfilSA";
 import ProfilSA from "./pages/superadmin/ProfilSA";
 import ForgotPass from "./pages/ForgotPass";
 import VerifyCode from "./pages/VerifyCode";
@@ -108,6 +107,8 @@ import ForgotPassAdmin from "./pages/admin/ForgotPassAdmin";
 import VerifyCodeAdmin from "./pages/admin/VerifyCodeAdmin";
 import ResetPasswordAdmin from "./pages/admin/ResetPassAdmin";
 
+import PrivateRoute from "./utils/PrivateRoute";
+
 function App() {
   const role = localStorage.getItem("role");
   return (
@@ -118,23 +119,15 @@ function App() {
           <Route path="/register" component={Register} exact />
           <Route path="/registerUser" component={RegisterUser} exact />
           <Route path="/registerSA" component={RegisterSuperadmin} exact />
-            {/* user */}
-            <Route path="/forgotpass" component={ForgotPass} exact />
+          {/* Forgot Pass User */}
+          <Route path="/forgotpass" component={ForgotPass} exact />
           <Route path="/verify-code" component={VerifyCode} exact />
           <Route
             path="/reset-password/:token"
             component={ResetPassword}
             exact
           />
-          {/* admin */}
-          <Route path="/forgotpass-admin" component={ForgotPassAdmin} exact />
-          <Route path="/verify-code-admin" component={VerifyCodeAdmin} exact />
-          <Route
-            path="/reset-password-admin/:token"
-            component={ResetPasswordAdmin}
-            exact
-          />
-          {/* superadmin */}
+          {/* Forgot Pass Superadmin */}
           <Route path="/forgotpassSup" component={ForgotPassSup} exact />
           <Route path="/verify-code-sup" component={VerifyCodeSup} exact />
           <Route
@@ -142,255 +135,326 @@ function App() {
             component={ResetPasswordSup}
             exact
           />
-          <Route path="/walimurid/dashboard" component={DashboardOrtu} exact />
+          {/* Forgot Pass Admin */}
+          <Route path="/forgotpass-admin" component={ForgotPassAdmin} exact />
+          <Route path="/verify-code-admin" component={VerifyCodeAdmin} exact />
           <Route
-            path="/walimurid/detail_info/:id"
-            component={DetailPengumuman}
+            path="/reset-password-admin/:token"
+            component={ResetPasswordAdmin}
             exact
           />
-          {/* start admin */}
-          {/* Admin Routes */}
-          {role === "ADMIN" && (
-            <>
-              <Route path="/admin/dashboard" component={Dashboard} exact />
-              <Route path="/admin/profil" component={Profil} exact />
-              {/* master data */}
-              <Route path="/admin/karyawan" component={Karyawan} exact />
-              <Route path="/admin/kelas" component={KelasSiswa} exact />
-              <Route path="/admin/jabatan" component={Jabatan} exact />
-              <Route path="/admin/shift" component={Shift} exact />
-              <Route path="/admin/lokasi" component={Lokasi} exact />
-              <Route path="/admin/organisasi" component={Organisasi} exact />
-              <Route path="/admin/informasi" component={Informasi} exact />
-              <Route
-                path="/admin/detailK/:id"
-                component={DetailKaryawan}
-                exact
-              />
-              <Route
-                path="/admin/detailLembur/:id"
-                component={DetailLembur}
-                exact
-              />
-              <Route path="/admin/detailL/:id" component={DetailLokasi} exact />
-              <Route
-                path="/admin/detailO/:id"
-                component={DetailOrganisasi}
-                exact
-              />
-              <Route
-                path="/admin/detailA/:id"
-                component={DetailAbsensi}
-                exact
-              />
-              <Route path="/admin/addkary" component={Addkaryawan} exact />
-              <Route path="/admin/addjab" component={AddJabatan} exact />
-              <Route path="/admin/addshift" component={AddShift} exact />
-              <Route path="/admin/addlok" component={AddLokasi} exact />
-              <Route path="/admin/addor" component={AddOrganisasi} exact />
-              <Route path="/admin/addkelas" component={AddKelas} exact />
-              <Route
-                path="/admin/addinformasi"
-                component={AddInformasi}
-                exact
-              />
-              <Route path="/admin/editK/:id" component={EditKaryawan} exact />
-              <Route path="/admin/editJ/:id" component={EditJabatan} exact />
-              <Route path="/admin/editL/:id" component={EditLokasi} exact />
-              <Route path="/admin/editO/:id" component={EditOrganisasi} exact />
-              <Route path="/admin/editS/:id" component={EditShift} exact />
-              <Route path="/admin/editkelas/:id" component={EditKelas} exact />
-              <Route path="/admin/editI/:id" component={EditInformasi} exact />
-              {/* rekapan */}
-              <Route path="/admin/simpel" component={Simpel} exact />
-              <Route path="/admin/perkaryawan" component={Perkaryawan} exact />
-              <Route path="/admin/harian" component={Harian} exact />
-              <Route path="/admin/mingguan" component={Mingguan} exact />
-              <Route path="/admin/bulanan" component={Bulanan} exact />
-              <Route path="/admin/perkelas" component={Perkelas} exact />
-              <Route
-                path="/admin/bulanan/perkelas"
-                component={BulanPerkelas}
-                exact
-              />
-              <Route
-                path="/admin/harian/perkelas"
-                component={HarianPerkelas}
-                exact
-              />
-              {/* data absensi */}
-              <Route path="/admin/absensi" component={Absensi} exact />
-              <Route path="/admin/cuti" component={Cuti} exact />
-              <Route path="/admin/kehadiran" component={Kehadiran} exact />
-              <Route path="/admin/lembur" component={Lembur} exact />
-              <Route
-                path="/admin/siswa/kelas/:id"
-                component={SiswaperKelas}
-                exact
-              />
-              <Route
-                path="/admin/bulanan/perkelas"
-                component={BulanPerkelas}
-                exact
-              />
-              <Route
-                path="/admin/mingguan/perkelas"
-                component={MingguanPerkelas}
-                exact
-              />
-            </>
-          )}
-          {/* end admin */}
-          {/* {role === "USER" && "Wali Murid" ? (
-            <> */}
-          <Route path="/user/detail_absen/:id" component={DetailAbsen} exact />
-          {/* </>
-          ) : (
-            <></>
-          )} */}
+          {/* Private Routes */}
+          {/* Wali Murid Routes */}
+          <PrivateRoute path="/walimurid/dashboard" roles={["Wali Murid"]}>
+            <DashboardOrtu />
+          </PrivateRoute>
 
-          {/* /* start user */}
-          {role === "USER" && (
-            <>
-              <Route path="/user/dashboard" component={DashboardUser} exact />
-              <Route path="/user/history_absen" component={TabelAbsen} exact />
-              <Route path="/user/history_cuti" component={TabelCuti} exact />
-              <Route
-                path="/user/history_lembur"
-                component={TabelLembur}
-                exact
-              />
-              <Route path="/user/cuti" component={AddCuti} exact />
-              <Route path="/user/lembur" component={AddLembur} exact />
-              <Route path="/user/izin" component={AddIzin} exact />
-              <Route path="/user/profile" component={Profile} exact />
-              <Route path="/user/absen" component={AbsenMasuk} exact />
-              <Route path="/user/pulang" component={AbsenPulang} exact />
-              <Route
-                path="/user/detail_info/:id"
-                component={Pengumuman}
-                exact
-              />
-              <Route path="/user/izin_absen" component={IzinAbsen} exact />
-            </>
-          )}
-          {/* end user */}
-          {/* start superadmin */}
-          {/* superadmin Routes */}
-          {role === "SUPERADMIN" && (
-            <>
-              <Route
-                path="/superadmin/dashboard"
-                component={DashboardSA}
-                exact
-              />
-              {/* admin */}
-              <Route path="/superadmin/admin" component={Admin} exact />
-              <Route path="/superadmin/addA" component={AddAdmin} exact />
-              <Route
-                path="/superadmin/detailA/:id"
-                component={DetailAdmin}
-                exact
-              />
-              <Route path="/superadmin/editA/:id" component={EditAdmin} exact />
-              {/* organisasi */}
-              <Route
-                path="/superadmin/organisasi"
-                component={OrganisasiSA}
-                exact
-              />
-              <Route path="/superadmin/profile" component={ProfilSA} exact />
-              <Route
-                path="/superadmin/addO"
-                component={AddOrganisasiSA}
-                exact
-              />
-              <Route
-                path="/superadmin/detailO/:id"
-                component={DetailOrganisasiSA}
-                exact
-              />
-              <Route
-                path="/superadmin/editO/:id"
-                component={EditOrganisasiSA}
-                exact
-              />
-              {/* jabatan */}
-              <Route path="/superadmin/jabatan" component={JabatanSA} exact />
-              <Route path="/superadmin/addJ" component={AddJabatanSA} exact />
-              <Route
-                path="/superadmin/detailJ/:id"
-                component={DetailJabatanSA}
-                exact
-              />
-              <Route
-                path="/superadmin/editJ/:idJabatan"
-                component={EditJabatanSA}
-                exact
-              />
-              {/* shift */}
-              <Route path="/superadmin/shift" component={ShiftSA} exact />
-              <Route
-                path="/superadmin/detailS/:id"
-                component={DetailShiftSA}
-                exact
-              />
-              <Route
-                path="/superadmin/add-shift"
-                component={AddShiftSA}
-                exact
-              />
-              <Route
-                path="/superadmin/editS/:id"
-                component={EditShiftSA}
-                exact
-              />
-              <Route path="/superadmin/data-user" component={User} exact />
-              <Route path="/superadmin/addU" component={AddUser} exact />
-              <Route path="/superadmin/editU/:id" component={EditUser} exact />
-              <Route
-                path="/superadmin/detailU/:id"
-                component={DetailUser}
-                exact
-              />
-              <Route path="/superadmin/lokasi" component={LokasiSA} exact />
-              <Route
-                path="/superadmin/addLokasi"
-                component={AddLokasiSA}
-                exact
-              />
-              <Route
-                path="/superadmin/editLokasi/:idLokasi"
-                component={EditLokasiSA}
-                exact
-              />
-              <Route
-                path="/superadmin/detailLokasi/:idLokasi"
-                component={DetailLokasiSA}
-                exact
-              />
-              <Route path="/superadmin/absensi" component={AbsensiSA} exact />
-              <Route
-                path="/superadmin/detailAbsensi/:id"
-                component={DetailAbsensiSA}
-                exact
-              />
-              {/* orang tua */}
-              <Route path="/superadmin/ortu" component={OrangTua} exact />
-              <Route path="/superadmin/addOrtu" component={AddOrtu} exact />
-              <Route
-                path="/superadmin/editOrtu/:id"
-                component={EditOrtu}
-                exact
-              />
-              <Route
-                path="/superadmin/detailOrtu/:id"
-                component={DetailOrtu}
-                exact
-              />
-            </>
-          )}
-          {/* end superadmin */}
+          <PrivateRoute
+            path="/walimurid/detail_info/:id"
+            roles={["Wali Murid"]}
+          >
+            <DetailPengumuman />
+          </PrivateRoute>
+
+          {/* Private Routes */}
+          {/* Admin Routes */}
+          <PrivateRoute path="/admin/dashboard" roles={["ADMIN"]}>
+            <Dashboard />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/profil" roles={["ADMIN"]}>
+            <Profil />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/karyawan" roles={["ADMIN"]}>
+            <Karyawan />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/kelas" roles={["ADMIN"]}>
+            <KelasSiswa />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/jabatan" roles={["ADMIN"]}>
+            <Jabatan />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/shift" roles={["ADMIN"]}>
+            <Shift />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/lokasi" roles={["ADMIN"]}>
+            <Lokasi />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/organisasi" roles={["ADMIN"]}>
+            <Organisasi />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/informasi" roles={["ADMIN"]}>
+            <Informasi />
+          </PrivateRoute>
+          {/* Detail Admin */}
+          <PrivateRoute path="/admin/detailK/:id" roles={["ADMIN"]}>
+            <DetailKaryawan />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/detailLembur/:id" roles={["ADMIN"]}>
+            <DetailLembur />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/detailL/:id" roles={["ADMIN"]}>
+            <DetailLokasi />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/detailO/:id" roles={["ADMIN"]}>
+            <DetailOrganisasi />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/detailA/:id" roles={["ADMIN"]}>
+            <DetailAbsensi />
+          </PrivateRoute>
+          {/* Add Admin */}
+          <PrivateRoute path="/admin/addkary" roles={["ADMIN"]}>
+            <Addkaryawan />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/addjab" roles={["ADMIN"]}>
+            <AddJabatan />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/addshift" roles={["ADMIN"]}>
+            <AddShift />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/addlok" roles={["ADMIN"]}>
+            <AddLokasi />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/addor" roles={["ADMIN"]}>
+            <AddOrganisasi />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/addkelas" roles={["ADMIN"]}>
+            <AddKelas />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/addinformasi" roles={["ADMIN"]}>
+            <AddInformasi />
+          </PrivateRoute>
+          {/* Edit Admin */}
+          <PrivateRoute path="/admin/editK/:id" roles={["ADMIN"]}>
+            <EditKaryawan />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/editJ/:id" roles={["ADMIN"]}>
+            <EditJabatan />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/editL/:id" roles={["ADMIN"]}>
+            <EditLokasi />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/editO/:id" roles={["ADMIN"]}>
+            <EditOrganisasi />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/editS/:id" roles={["ADMIN"]}>
+            <EditShift />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/editkelas/:id" roles={["ADMIN"]}>
+            <EditKelas />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/editI/:id" roles={["ADMIN"]}>
+            <EditInformasi />
+          </PrivateRoute>
+          {/* Rekapan Admin */}
+          <PrivateRoute path="/admin/simpel" roles={["ADMIN"]}>
+            <Simpel />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/perkaryawan" roles={["ADMIN"]}>
+            <Perkaryawan />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/harian" roles={["ADMIN"]}>
+            <Harian />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/mingguan" roles={["ADMIN"]}>
+            <Mingguan />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/bulanan" roles={["ADMIN"]}>
+            <Bulanan />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/perkelas" roles={["ADMIN"]}>
+            <Perkelas />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/bulanan/perkelas" roles={["ADMIN"]}>
+            <BulanPerkelas />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/harian/perkelas" roles={["ADMIN"]}>
+            <HarianPerkelas />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/siswa/kelas/:id" roles={["ADMIN"]}>
+            <SiswaperKelas />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/mingguan/perkelas" roles={["ADMIN"]}>
+            <MingguanPerkelas />
+          </PrivateRoute>
+          {/* Data Absensi Admin */}
+          <PrivateRoute path="/admin/absensi" roles={["ADMIN"]}>
+            <Absensi />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/cuti" roles={["ADMIN"]}>
+            <Cuti />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/kehadiran" roles={["ADMIN"]}>
+            <Kehadiran />
+          </PrivateRoute>
+          <PrivateRoute path="/admin/lembur" roles={["ADMIN"]}>
+            <Lembur />
+          </PrivateRoute>
+          {/* End Admin Routes */}
+
+          {/* User Routes */}
+          <PrivateRoute path="/user/dashboard" roles={["USER"]}>
+            <DashboardUser />
+          </PrivateRoute>
+          <PrivateRoute path="/user/history_absen" roles={["USER"]}>
+            <TabelAbsen />
+          </PrivateRoute>
+          <PrivateRoute path="/user/history_cuti" roles={["USER"]}>
+            <TabelCuti />
+          </PrivateRoute>
+          <PrivateRoute path="/user/history_lembur" roles={["USER"]}>
+            <TabelLembur />
+          </PrivateRoute>
+          <PrivateRoute path="/user/cuti" roles={["USER"]}>
+            <AddCuti />
+          </PrivateRoute>
+          <PrivateRoute path="/user/lembur" roles={["USER"]}>
+            <AddLembur />
+          </PrivateRoute>
+          <PrivateRoute path="/user/izin" roles={["USER"]}>
+            <AddIzin />
+          </PrivateRoute>
+          <PrivateRoute path="/user/profile" roles={["USER"]}>
+            <Profile />
+          </PrivateRoute>
+          <PrivateRoute path="/user/absen" roles={["USER"]}>
+            <AbsenMasuk />
+          </PrivateRoute>
+          <PrivateRoute path="/user/pulang" roles={["USER"]}>
+            <AbsenPulang />
+          </PrivateRoute>
+          <PrivateRoute path="/user/izin_absen" roles={["USER"]}>
+            <IzinAbsen />
+          </PrivateRoute>
+          <PrivateRoute path="/user/detail_info/:id" roles={["USER"]}>
+            <Pengumuman />
+          </PrivateRoute>
+          <PrivateRoute path="/user/detail_absen/:id" roles={["USER"]}>
+            <DetailAbsen />
+          </PrivateRoute>
+          {/* End User Routes */}
+
+          {/* Superadmin Routes */}
+          <PrivateRoute path="/superadmin/dashboard" roles={["SUPERADMIN"]}>
+            <DashboardSA />
+          </PrivateRoute>
+          <PrivateRoute path="/superadmin/profile" roles={["SUPERADMIN"]}>
+            <ProfilSA />
+          </PrivateRoute>
+          {/* Page Admin */}
+          <PrivateRoute path="/superadmin/admin" roles={["SUPERADMIN"]}>
+            <Admin />
+          </PrivateRoute>
+          <PrivateRoute path="/superadmin/addA" roles={["SUPERADMIN"]}>
+            <AddAdmin />
+          </PrivateRoute>
+          <PrivateRoute path="/superadmin/detailA/:id" roles={["SUPERADMIN"]}>
+            <DetailAdmin />
+          </PrivateRoute>
+          <PrivateRoute path="/superadmin/editA/:id" roles={["SUPERADMIN"]}>
+            <EditAdmin />
+          </PrivateRoute>
+          {/* Page Organisasi */}
+          <PrivateRoute path="/superadmin/organisasi" roles={["SUPERADMIN"]}>
+            <OrganisasiSA />
+          </PrivateRoute>
+          <PrivateRoute path="/superadmin/addO" roles={["SUPERADMIN"]}>
+            <AddOrganisasiSA />
+          </PrivateRoute>
+          <PrivateRoute path="/superadmin/detailO/:id" roles={["SUPERADMIN"]}>
+            <DetailOrganisasiSA />
+          </PrivateRoute>
+          <PrivateRoute path="/superadmin/editO/:id" roles={["SUPERADMIN"]}>
+            <EditOrganisasiSA />
+          </PrivateRoute>
+          {/* Page Jabatan */}
+          <PrivateRoute path="/superadmin/jabatan" roles={["SUPERADMIN"]}>
+            <JabatanSA />
+          </PrivateRoute>
+          <PrivateRoute path="/superadmin/addJ" roles={["SUPERADMIN"]}>
+            <AddJabatanSA />
+          </PrivateRoute>
+          <PrivateRoute path="/superadmin/detailJ/:id" roles={["SUPERADMIN"]}>
+            <DetailJabatanSA />
+          </PrivateRoute>
+          <PrivateRoute
+            path="/superadmin/editJ/:idJabatan"
+            roles={["SUPERADMIN"]}
+          >
+            <EditJabatanSA />
+          </PrivateRoute>
+          {/* Page Shift */}
+          <PrivateRoute path="/superadmin/shift" roles={["SUPERADMIN"]}>
+            <ShiftSA />
+          </PrivateRoute>
+          <PrivateRoute path="/superadmin/detailS/:id" roles={["SUPERADMIN"]}>
+            <DetailShiftSA />
+          </PrivateRoute>
+          <PrivateRoute path="/superadmin/add-shift" roles={["SUPERADMIN"]}>
+            <AddShiftSA />
+          </PrivateRoute>
+          <PrivateRoute path="/superadmin/editS/:id" roles={["SUPERADMIN"]}>
+            <EditShiftSA />
+          </PrivateRoute>
+          {/* Page User */}
+          <PrivateRoute path="/superadmin/data-user" roles={["SUPERADMIN"]}>
+            <User />
+          </PrivateRoute>
+          <PrivateRoute path="/superadmin/addU" roles={["SUPERADMIN"]}>
+            <AddUser />
+          </PrivateRoute>
+          <PrivateRoute path="/superadmin/editU/:id" roles={["SUPERADMIN"]}>
+            <EditUser />
+          </PrivateRoute>
+          <PrivateRoute path="/superadmin/detailU/:id" roles={["SUPERADMIN"]}>
+            <DetailUser />
+          </PrivateRoute>
+          {/* Page Lokasi */}
+          <PrivateRoute path="/superadmin/lokasi" roles={["SUPERADMIN"]}>
+            <LokasiSA />
+          </PrivateRoute>
+          <PrivateRoute path="/superadmin/addLokasi" roles={["SUPERADMIN"]}>
+            <AddLokasiSA />
+          </PrivateRoute>
+          <PrivateRoute
+            path="/superadmin/editLokasi/:idLokasi"
+            roles={["SUPERADMIN"]}
+          >
+            <EditLokasiSA />
+          </PrivateRoute>
+          <PrivateRoute
+            path="/superadmin/detailLokasi/:idLokasi"
+            roles={["SUPERADMIN"]}
+          >
+            <DetailLokasiSA />
+          </PrivateRoute>
+          {/* Page Absensi */}
+          <PrivateRoute path="/superadmin/absensi" roles={["SUPERADMIN"]}>
+            <AbsensiSA />
+          </PrivateRoute>
+          <PrivateRoute
+            path="/superadmin/detailAbsensi/:id"
+            roles={["SUPERADMIN"]}
+          >
+            <DetailAbsensiSA />
+          </PrivateRoute>
+          {/* Page Ortu */}
+          <PrivateRoute path="/superadmin/ortu" roles={["SUPERADMIN"]}>
+            <OrangTua />
+          </PrivateRoute>
+          <PrivateRoute path="/superadmin/addOrtu" roles={["SUPERADMIN"]}>
+            <AddOrtu />
+          </PrivateRoute>
+          <PrivateRoute path="/superadmin/editOrtu/:id" roles={["SUPERADMIN"]}>
+            <EditOrtu />
+          </PrivateRoute>
+          <PrivateRoute
+            path="/superadmin/detailOrtu/:id"
+            roles={["SUPERADMIN"]}
+          >
+            <DetailOrtu />
+          </PrivateRoute>
+          {/* End Superadmin Routes */}
+          {/* End Private Routes */}
         </Switch>
       </main>
     </BrowserRouter>
