@@ -12,8 +12,12 @@ function EditKaryawan() {
   const [username, setUsername] = useState("");
   const [idJabatan, setIdJabatan] = useState("");
   const [idShift, setIdShift] = useState("");
+  const [idOrangTua, setIdOrangTua] = useState("");
+  const [idKelas, setIdKelas] = useState("");
   const [jabatanOptions, setJabatanOptions] = useState([]);
   const [shiftOptions, setShiftOptions] = useState([]);
+  const [orangTuaOptions, setOrangTuaOptions] = useState([]);
+  const [kelasOptions, setKelasOptions] = useState([]);
   const { id } = useParams();
   const adminId = localStorage.getItem("adminId");
   const history = useHistory();
@@ -24,6 +28,8 @@ function EditKaryawan() {
       setUsername(res.data.username);
       setIdJabatan(res.data.jabatan ? res.data.jabatan.idJabatan : "");
       setIdShift(res.data.shift ? res.data.shift.id : "");
+      setIdOrangTua(res.data.orangTua ? res.data.orangTua.id : "");
+      setIdKelas(res.data.kelas ? res.data.kelas.id : "");
     } catch (error) {
       console.log(error);
     }
@@ -51,17 +57,39 @@ function EditKaryawan() {
     }
   };
 
+  const getOrangTuaOptions = async () => {
+    try {
+      const res = await axios.get(
+        `${API_DUMMY}/api/orang-tua/all`
+      );
+      setOrangTuaOptions(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getKelasOptions = async () => {
+    try {
+      const res = await axios.get(`${API_DUMMY}/api/kelas/getALlByAdmin/${adminId}`);
+      setKelasOptions(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getUser();
     getJabatanOptions();
     getShiftOptions();
+    getOrangTuaOptions();
+    getKelasOptions();
   }, [id, adminId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await axios.put(
-        `${API_DUMMY}/api/user/edit-kar/${id}?idJabatan=${idJabatan}&idShift=${idShift}`,
+        `${API_DUMMY}/api/user/edit-kar/${id}?idJabatan=${idJabatan}&idShift=${idShift}&idOrangTua=${idOrangTua}&idKelas=${idKelas}`,
         {
           username: username,
         }
@@ -164,6 +192,48 @@ function EditKaryawan() {
                           {shiftOptions.slice().reverse().map((option) => (
                             <option key={option.id} value={option.id}>
                               {option.namaShift}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                    <div className="grid md:grid-cols-2 md:gap-6 mb-6">
+                      <div className="relative z-0 w-full mb-6 group">
+                        <label
+                          htmlFor="id_orang_tua"
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                        >
+                          Orang Tua
+                        </label>
+                        <select
+                          name="idOrangTua"
+                          value={idOrangTua}
+                          onChange={(e) => setIdOrangTua(e.target.value)}
+                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                        >
+                          {orangTuaOptions.slice().reverse().map((option) => (
+                            <option key={option.id} value={option.id}>
+                              {option.nama}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="relative z-0 w-full mb-6 group">
+                        <label
+                          htmlFor="id_kelas"
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                        >
+                          Kelas
+                        </label>
+                        <select
+                          name="idKelas"
+                          value={idKelas}
+                          onChange={(e) => setIdKelas(e.target.value)}
+                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                        >
+                          {kelasOptions.slice().reverse().map((option) => (
+                            <option key={option.id} value={option.id}>
+                              {option.namaKelas}
                             </option>
                           ))}
                         </select>
