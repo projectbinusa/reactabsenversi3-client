@@ -53,7 +53,7 @@ const Sidebar = () => {
       return paths.some((path) => location.pathname.startsWith(path));
     };
 
-    if (isActive(["/superadmin/data-user", "/superadmin/absensi", "/admin/master-data", "/admin/rekapann", "/admin/rekapann/perkelas", "/admin/data-presensi"])) {
+    if (isActive(["/superadmin/data-user", "/superadmin/absensi", "/admin/master-data", "/admin/rekapann", "/admin/rekapann/perkelas", "/admin/data-cuti"])) {
       setRekapanOpen(true);
     } else {
       setRekapanOpen(false);
@@ -714,17 +714,6 @@ const Sidebar = () => {
                           : "text-blue-900 transition duration-75group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
                       }`}
                     >
-                      <FontAwesomeIcon
-                        className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
-                          isActive(["/admin/master-data"])
-                            ? "text-white"
-                            : "text-blue-500"
-                        }`}
-                        icon={faUsers}
-                      />{" "}
-                      <span className="flex-1 ml-3 whitespace-nowrap">
-                        User
-                      </span>
                     </Link>
                   </li>
                   {/* <!-- Menu Rekapan --> */}
@@ -737,17 +726,6 @@ const Sidebar = () => {
                           : "text-blue-900 transition duration-75group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
                       }`}
                     >
-                      <FontAwesomeIcon
-                        className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
-                          isActive(["/admin/rekapann"])
-                            ? "text-white"
-                            : "text-blue-500"
-                        }`}
-                        icon={faUsers}
-                      />{" "}
-                      <span className="flex-1 ml-3 whitespace-nowrap">
-                        User
-                      </span>
                     </Link>
                   </li>
                   {/* <!-- Menu Perkelas --> */}
@@ -760,40 +738,18 @@ const Sidebar = () => {
                           : "text-blue-900 transition duration-75group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
                       }`}
                     >
-                      <FontAwesomeIcon
-                        className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
-                          isActive(["/admin/rekapann/perkelas"])
-                            ? "text-white"
-                            : "text-blue-500"
-                        }`}
-                        icon={faUsers}
-                      />{" "}
-                      <span className="flex-1 ml-3 whitespace-nowrap">
-                        User
-                      </span>
                     </Link>
                   </li>
                   {/* <!-- Menu Presensi --> */}
                   <li>
                     <Link
-                      to="/admin/data-presensi"
+                      to="/admin/data-cuti"
                       className={`flex items-center p-2 rounded-lg  ml-9 pl-3 ${
-                        isActive(["/admin/data-presensi"])
+                        isActive(["/admin/data-cuti"])
                           ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                           : "text-blue-900 transition duration-75group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
                       }`}
                     >
-                      <FontAwesomeIcon
-                        className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
-                          isActive(["/admin/data-presensi"])
-                            ? "text-white"
-                            : "text-blue-500"
-                        }`}
-                        icon={faUsers}
-                      />{" "}
-                      <span className="flex-1 ml-3 whitespace-nowrap">
-                        User
-                      </span>
                     </Link>
                   </li>
                 </ul>
