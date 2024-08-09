@@ -185,7 +185,7 @@ function Admin() {
                         Email
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        Username
+                        Nama Admin
                       </th>
                       <th scope="col" className="px-6 py-3">
                         Aksi

@@ -53,7 +53,17 @@ const Sidebar = () => {
       return paths.some((path) => location.pathname.startsWith(path));
     };
 
-    if (isActive(["/superadmin/data-user", "/superadmin/absensi", "/admin/master-data", "/admin/rekapann", "/admin/rekapann/perkelas", "/admin/data-cuti"])) {
+    if (
+      isActive([
+        "/admin/simpel",
+        "/admin/perkaryawan",
+        "/admin/harian",
+        "/admin/mingguan",
+        "/admin/bulanan",
+        "/superadmin/data-user",
+        "/superadmin/absensi",
+      ])
+    ) {
       setRekapanOpen(true);
     } else {
       setRekapanOpen(false);
@@ -66,42 +76,58 @@ const Sidebar = () => {
       return paths.some((path) => location.pathname.startsWith(path));
     };
 
+    if (isActive(["/admin/absensi", "/admin/kehadiran"])) {
+      setAbsenOpen(true);
+    } else {
+      setAbsenOpen(false);
+    }
+  }, [location.pathname]);
+
+  useEffect(() => {
+    // Check if any link inside dropdown is active and open the dropdown if it is
+    const isActive = (paths) => {
+      return paths.some((path) => location.pathname.startsWith(path));
+    };
+
     if (
       isActive([
-        "/superadmin/admin",
-        "/superadmin/organisasi",
-        "/superadmin/jabatan",
-        "/superadmin/shift",
-        "/superadmin/lokasi",
-        "/superadmin/ortu",
+        "/admin/perkelas",
+        "/admin/harian/perkelas",
+        "/admin/mingguan/perkelas",
+        "/admin/bulanan/perkelas",
+      ])
+    ) {
+      setRekapanOpenPerkelas(true);
+    } else {
+      setRekapanOpenPerkelas(false);
+    }
+  }, [location.pathname]);
+
+  useEffect(() => {
+    // Check if any link inside dropdown is active and open the dropdown if it is
+    const isActive = (paths) => {
+      return paths.some((path) => location.pathname.startsWith(path));
+    };
+
+    if (
+      isActive([
         "/admin/karyawan",
         "/admin/jabatan",
         "/admin/shift",
         "/admin/lokasi",
         "/admin/organisasi",
         "/admin/kelas",
-        "/admin/simpel",
-        "/admin/perkaryawan",
-        "/admin/harian",
-        "/admin/mingguan",
-        "/admin/bulanan",
-        "/admin/perkelas",
-        "/admin/harian/perkelas",
-        "/admin/mingguan/perkelas",
-        "/admin/bulanan/perkelas",
-        "/admin/absensi",
-        "/admin/kehadiran",
+        "/superadmin/admin",
+        "/superadmin/ortu",
+        "/superadmin/jabatan",
+        "/superadmin/shift",
+        "/superadmin/lokasi",
+        "/superadmin/organisasi",
       ])
     ) {
       setMasterDataOpen(true);
-      setRekapanOpen(true);
-      setRekapanOpenPerkelas(true);
-      setAbsenOpen(true);
     } else {
       setMasterDataOpen(false);
-      setRekapanOpen(false);
-      setRekapanOpenPerkelas(false);
-      setAbsenOpen(false);
     }
   }, [location.pathname]);
 
@@ -128,8 +154,7 @@ const Sidebar = () => {
     <aside
       id="logo-sidebar"
       className="fixed top-0 left-0 z-40 w-72 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-blue-200 sm:translate-x-0 dark:bg-blue-800 dark:border-blue-700"
-      aria-label="Sidebar"
-    >
+      aria-label="Sidebar">
       <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-blue-800">
         <ul className="space-y-2 font-medium">
           {role === "ADMIN" && (
@@ -141,8 +166,7 @@ const Sidebar = () => {
                     isActive(["/admin/dashboard"])
                       ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                       : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
-                  } flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group`}
-                >
+                  } flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group`}>
                   <FontAwesomeIcon
                     className={`flex-shrink-0 w-5 h-5 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                       isActive(["/admin/dashboard"])
@@ -161,8 +185,7 @@ const Sidebar = () => {
                     isActive(["/admin/informasi"])
                       ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                       : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
-                  } flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group`}
-                >
+                  } flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group`}>
                   <FontAwesomeIcon
                     className={`flex-shrink-0 w-5 h-5 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                       isActive(["/admin/informasi"])
@@ -181,8 +204,7 @@ const Sidebar = () => {
                   className="flex items-center w-full p-2 text-base text-blue-900 transition duration-75 rounded-lg group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
                   // aria-controls="dropdown-masterdata"
                   // data-dropdown-toggle="dropdown-masterdata"
-                  onClick={toggleMasterData}
-                >
+                  onClick={toggleMasterData}>
                   <FontAwesomeIcon
                     className={`flex-shrink-0 w-5 h-5 transition duration-75 text-blue-500 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white
                     `}
@@ -200,8 +222,7 @@ const Sidebar = () => {
                   // id="dropdown-masterdata"
                   className={`${
                     masterDataOpen ? "" : "hidden" // Tampilkan atau sembunyikan dropdown berdasarkan state masterDataOpen
-                  } py-2 space-y-2`}
-                >
+                  } py-2 space-y-2`}>
                   {/* <!-- Menu Karyawan --> */}
                   <li>
                     <Link
@@ -210,8 +231,7 @@ const Sidebar = () => {
                         isActive(["/admin/karyawan"])
                           ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                           : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
-                      } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}
-                    >
+                      } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/admin/karyawan"])
@@ -234,8 +254,7 @@ const Sidebar = () => {
                         isActive(["/admin/jabatan"])
                           ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                           : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
-                      } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}
-                    >
+                      } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/admin/jabatan"])
@@ -258,8 +277,7 @@ const Sidebar = () => {
                         isActive(["/admin/shift"])
                           ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                           : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
-                      } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}
-                    >
+                      } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/amdin/shift"])
@@ -282,8 +300,7 @@ const Sidebar = () => {
                         isActive(["/admin/lokasi"])
                           ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                           : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
-                      } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}
-                    >
+                      } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/admin/lokasi"])
@@ -306,8 +323,7 @@ const Sidebar = () => {
                         isActive(["/admin/organisasi"])
                           ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                           : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
-                      } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}
-                    >
+                      } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/admin/organisasi"])
@@ -330,8 +346,7 @@ const Sidebar = () => {
                         isActive(["/admin/kelas"])
                           ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                           : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
-                      } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}
-                    >
+                      } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/admin/kelas"])
@@ -354,8 +369,7 @@ const Sidebar = () => {
                   className="flex items-center w-full p-2 text-base text-blue-900 transition duration-75 rounded-lg group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
                   // aria-controls="dropdown-example"
                   // data-collapse-toggle="dropdown-example"
-                  onClick={toggleRekapan}
-                >
+                  onClick={toggleRekapan}>
                   <FontAwesomeIcon
                     className={`flex-shrink-0 w-5 h-5 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white text-blue-500`}
                     icon={faSignal}
@@ -373,8 +387,7 @@ const Sidebar = () => {
                   // id="dropdown-masterdata"
                   className={`${
                     rekapanOpen ? "" : "hidden" // Tampilkan atau sembunyikan dropdown berdasarkan state masterDataOpen
-                  } py-2 space-y-2`}
-                >
+                  } py-2 space-y-2`}>
                   {/* <!-- Menu Simpel --> */}
                   <li>
                     <Link
@@ -383,8 +396,7 @@ const Sidebar = () => {
                         isActive(["/admin/simpel"])
                           ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                           : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
-                      } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}
-                    >
+                      } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/admin/simpel"])
@@ -406,8 +418,7 @@ const Sidebar = () => {
                         isActive(["/admin/perkaryawan"])
                           ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                           : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
-                      } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}
-                    >
+                      } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/admin/perkaryawan"])
@@ -426,8 +437,7 @@ const Sidebar = () => {
                     <button
                       type="button"
                       onClick={toggleRekapanPerkelas}
-                      className="flex gap-3 w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                    >
+                      className="flex gap-3 w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700">
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-0 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white text-blue-500`}
                         icon={faUsers}
@@ -441,8 +451,7 @@ const Sidebar = () => {
                     <ul
                       className={`${
                         rekapanOpenPerkelas ? "" : "hidden" // Tampilkan atau sembunyikan dropdown berdasarkan state masterDataOpen
-                      } py-2 space-y-2`}
-                    >
+                      } py-2 space-y-2`}>
                       <li>
                         <Link
                           to="/admin/perkelas"
@@ -450,8 +459,7 @@ const Sidebar = () => {
                             isActive(["/admin/perkelas"])
                               ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                               : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
-                          } flex ml-3 items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700 `}
-                        >
+                          } flex ml-3 items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700 `}>
                           <FontAwesomeIcon
                             className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                               isActive(["/admin/perkelas"])
@@ -472,8 +480,7 @@ const Sidebar = () => {
                             isActive(["/admin/harian/perkelas"])
                               ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                               : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
-                          } flex ml-3 items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700 `}
-                        >
+                          } flex ml-3 items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700 `}>
                           <FontAwesomeIcon
                             className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                               isActive(["/admin/harian/perkelas"])
@@ -494,8 +501,7 @@ const Sidebar = () => {
                             isActive(["/admin/mingguan/perkelas"])
                               ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                               : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
-                          } flex ml-3 items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700 `}
-                        >
+                          } flex ml-3 items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700 `}>
                           <FontAwesomeIcon
                             className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                               isActive(["/admin/mingguan/perkelas"])
@@ -516,8 +522,7 @@ const Sidebar = () => {
                             isActive(["/admin/bulanan/perkelas"])
                               ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                               : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
-                          }`}
-                        >
+                          }`}>
                           <FontAwesomeIcon
                             className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                               isActive(["/admin/bulanan/perkelas"])
@@ -541,8 +546,7 @@ const Sidebar = () => {
                         isActive(["/admin/harian"])
                           ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                           : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
-                      } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}
-                    >
+                      } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/admin/harian"])
@@ -564,8 +568,7 @@ const Sidebar = () => {
                         isActive(["/admin/mingguan"])
                           ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                           : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
-                      } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}
-                    >
+                      } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/admin/mingguan"])
@@ -587,8 +590,7 @@ const Sidebar = () => {
                         isActive(["/admin/bulanan"])
                           ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                           : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
-                      } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}
-                    >
+                      } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/admin/bulanan"])
@@ -612,8 +614,7 @@ const Sidebar = () => {
                   className="flex items-center w-full p-2 text-base text-blue-900 transition duration-75 rounded-lg group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
                   // aria-controls="dropdown-data"
                   // data-collapse-toggle="dropdown-data"
-                  onClick={toggleAbsen}
-                >
+                  onClick={toggleAbsen}>
                   <FontAwesomeIcon
                     className={`flex-shrink-0 w-5 h-5 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white text-blue-500`}
                     icon={faTable}
@@ -631,8 +632,7 @@ const Sidebar = () => {
                   id="dropdown-masterdata"
                   className={`${
                     absenOpen ? "" : "hidden" // Tampilkan atau sembunyikan dropdown berdasarkan state masterDataOpen
-                  } py-2 space-y-2`}
-                >
+                  } py-2 space-y-2`}>
                   {/* <!-- Menu Absensi --> */}
                   <li>
                     <Link
@@ -641,8 +641,7 @@ const Sidebar = () => {
                         isActive(["/admin/absensi"])
                           ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                           : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
-                      } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}
-                    >
+                      } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/admin/absensi"])
@@ -683,8 +682,7 @@ const Sidebar = () => {
                         isActive(["/admin/kehadiran"])
                           ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                           : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
-                      } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}
-                    >
+                      } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/admin/kehadiran"])
@@ -699,65 +697,56 @@ const Sidebar = () => {
                     </Link>
 
                     <ul
-                  // id="dropdown-masterdata"
-                  className={`${
-                    rekapanOpen ? "" : "hidden" // Tampilkan atau sembunyikan dropdown berdasarkan state masterDataOpen
-                  } py-2 space-y-2`}
-                >
-                  {/* <!-- Menu Simpel --> */}
-                  <li>
-                    <Link
-                      to="/admin/master-data"
-                      className={`flex items-center p-2 rounded-lg  ml-9 pl-3 ${
-                        isActive(["/admin/master-data"])
-                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                          : "text-blue-900 transition duration-75group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                      }`}
-                    >
-                    </Link>
-                  </li>
-                  {/* <!-- Menu Rekapan --> */}
-                  <li>
-                    <Link
-                      to="/admin/rekapann"
-                      className={`flex items-center p-2 rounded-lg  ml-9 pl-3 ${
-                        isActive(["/admin/rekapann"])
-                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                          : "text-blue-900 transition duration-75group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                      }`}
-                    >
-                    </Link>
-                  </li>
-                  {/* <!-- Menu Perkelas --> */}
-                  <li>
-                    <Link
-                      to="/admin/rekapann/perkelas"
-                      className={`flex items-center p-2 rounded-lg  ml-9 pl-3 ${
-                        isActive(["/admin/rekapann/perkelas"])
-                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                          : "text-blue-900 transition duration-75group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                      }`}
-                    >
-                    </Link>
-                  </li>
-                  {/* <!-- Menu Presensi --> */}
-                  <li>
-                    <Link
-                      to="/admin/data-cuti"
-                      className={`flex items-center p-2 rounded-lg  ml-9 pl-3 ${
-                        isActive(["/admin/data-cuti"])
-                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                          : "text-blue-900 transition duration-75group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                      }`}
-                    >
-                    </Link>
+                      // id="dropdown-masterdata"
+                      className={`${
+                        rekapanOpen ? "" : "hidden" // Tampilkan atau sembunyikan dropdown berdasarkan state masterDataOpen
+                      } py-2 space-y-2`}>
+                      {/* <!-- Menu Simpel --> */}
+                      <li>
+                        <Link
+                          to="/admin/master-data"
+                          className={`flex items-center p-2 rounded-lg  ml-9 pl-3 ${
+                            isActive(["/admin/master-data"])
+                              ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
+                              : "text-blue-900 transition duration-75group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
+                          }`}></Link>
+                      </li>
+                      {/* <!-- Menu Rekapan --> */}
+                      <li>
+                        <Link
+                          to="/admin/rekapann"
+                          className={`flex items-center p-2 rounded-lg  ml-9 pl-3 ${
+                            isActive(["/admin/rekapann"])
+                              ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
+                              : "text-blue-900 transition duration-75group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
+                          }`}></Link>
+                      </li>
+                      {/* <!-- Menu Perkelas --> */}
+                      <li>
+                        <Link
+                          to="/admin/rekapann/perkelas"
+                          className={`flex items-center p-2 rounded-lg  ml-9 pl-3 ${
+                            isActive(["/admin/rekapann/perkelas"])
+                              ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
+                              : "text-blue-900 transition duration-75group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
+                          }`}></Link>
+                      </li>
+                      {/* <!-- Menu Presensi --> */}
+                      <li>
+                        <Link
+                          to="/admin/data-cuti"
+                          className={`flex items-center p-2 rounded-lg  ml-9 pl-3 ${
+                            isActive(["/admin/data-cuti"])
+                              ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
+                              : "text-blue-900 transition duration-75group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
+                          }`}></Link>
+                      </li>
+                    </ul>
                   </li>
                 </ul>
               </li>
-            </ul>
-                  </li>
-                  {/* <!-- Menu Mingguan --> */}
-                  {/* <li>
+              {/* <!-- Menu Mingguan --> */}
+              {/* <li>
                     <Link
                       to="/admin/lembur"
                       className={`${
@@ -775,7 +764,7 @@ const Sidebar = () => {
                       </span>
                     </Link>
                   </li> */}
-                </ul>
+            </ul>
           )}
           {role === "USER" && (
             <ul>
@@ -787,8 +776,7 @@ const Sidebar = () => {
                     isActive(["/user/dashboard"])
                       ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                       : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
-                  } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}
-                >
+                  } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
                   <FontAwesomeIcon
                     className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                       isActive(["/user/dashboard"])
@@ -809,8 +797,7 @@ const Sidebar = () => {
                     isActive(["/user/history_absen"])
                       ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                       : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
-                  } flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group`}
-                >
+                  } flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group`}>
                   <FontAwesomeIcon
                     className={`flex-shrink-0 w-5 h-5 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                       isActive(["/user/history_absen"])
@@ -831,8 +818,7 @@ const Sidebar = () => {
                     isActive(["/user/history_cuti"])
                       ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                       : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
-                  } flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group`}
-                >
+                  } flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group`}>
                   <FontAwesomeIcon
                     className={`flex-shrink-0 w-5 h-5 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                       isActive(["/user/history_cuti"])
@@ -851,8 +837,7 @@ const Sidebar = () => {
                     isActive(["/user/history_lembur"])
                       ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                       : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
-                  } flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group`}
-                >
+                  } flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group`}>
                   <FontAwesomeIcon
                     className={`flex-shrink-0 w-5 h-5 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                       isActive(["/user/history_lembur"])
@@ -875,8 +860,7 @@ const Sidebar = () => {
                     isActive(["/superadmin/dashboard"])
                       ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                       : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
-                  }`}
-                >
+                  }`}>
                   <FontAwesomeIcon
                     className={`flex-shrink-0 w-5 h-5 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                       isActive(["/superadmin/dashboard"])
@@ -895,8 +879,7 @@ const Sidebar = () => {
                   className="flex items-center w-full p-2 text-base text-blue-900 transition duration-75 rounded-lg group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
                   // aria-controls="dropdown-masterdata"
                   // data-dropdown-toggle="dropdown-masterdata"
-                  onClick={toggleMasterData}
-                >
+                  onClick={toggleMasterData}>
                   <FontAwesomeIcon
                     className={`flex-shrink-0 w-5 h-5 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white text-blue-500`}
                     icon={faUserTie}
@@ -913,8 +896,7 @@ const Sidebar = () => {
                   // id="dropdown-masterdata"
                   className={`${
                     masterDataOpen ? "" : "hidden" // Tampilkan atau sembunyikan dropdown berdasarkan state masterDataOpen
-                  } py-2 space-y-2`}
-                >
+                  } py-2 space-y-2`}>
                   {/* <!-- Menu superadmin --> */}
                   <li>
                     <Link
@@ -923,8 +905,7 @@ const Sidebar = () => {
                         isActive(["/superadmin/admin"])
                           ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                           : "text-blue-900 transition duration-75group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                      }`}
-                    >
+                      }`}>
                       {/* // className="flex items-center w-full p-2 text-blue-900
                       transition duration-75 rounded-lg pl-11 group
                       hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"> */}
@@ -949,8 +930,7 @@ const Sidebar = () => {
                         isActive(["/superadmin/ortu"])
                           ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                           : "text-blue-900 transition duration-75group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                      }`}
-                    >
+                      }`}>
                       {/* // className="flex items-center w-full p-2 text-blue-900
                       transition duration-75 rounded-lg pl-11 group
                       hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"> */}
@@ -975,8 +955,7 @@ const Sidebar = () => {
                         isActive(["/superadmin/organisasi"])
                           ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                           : "text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                      }`}
-                    >
+                      }`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/superadmin/organisasi"])
@@ -998,8 +977,7 @@ const Sidebar = () => {
                         isActive(["/superadmin/jabatan"])
                           ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                           : "text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                      }`}
-                    >
+                      }`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/superadmin/jabatan"])
@@ -1022,8 +1000,7 @@ const Sidebar = () => {
                         isActive(["/superadmin/shift"])
                           ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                           : "text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                      }`}
-                    >
+                      }`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/superadmin/shift"])
@@ -1046,8 +1023,7 @@ const Sidebar = () => {
                         isActive(["/superadmin/lokasi"])
                           ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                           : "text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                      }`}
-                    >
+                      }`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/superadmin/lokasi"])
@@ -1070,8 +1046,7 @@ const Sidebar = () => {
                   className="flex items-center w-full p-2 text-base text-blue-900 transition duration-75 rounded-lg group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
                   // aria-controls="dropdown-example"
                   // data-collapse-toggle="dropdown-example"
-                  onClick={toggleRekapan}
-                >
+                  onClick={toggleRekapan}>
                   <FontAwesomeIcon
                     className={`flex-shrink-0 w-5 h-5 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white text-blue-500`}
                     icon={faUserPlus}
@@ -1089,8 +1064,7 @@ const Sidebar = () => {
                   // id="dropdown-masterdata"
                   className={`${
                     rekapanOpen ? "" : "hidden" // Tampilkan atau sembunyikan dropdown berdasarkan state masterDataOpen
-                  } py-2 space-y-2`}
-                >
+                  } py-2 space-y-2`}>
                   {/* <!-- Menu Simpel --> */}
                   <li>
                     <Link
@@ -1099,8 +1073,7 @@ const Sidebar = () => {
                         isActive(["/superadmin/data-user"])
                           ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                           : "text-blue-900 transition duration-75group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                      }`}
-                    >
+                      }`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/superadmin/data-user"])
@@ -1122,8 +1095,7 @@ const Sidebar = () => {
                         isActive(["/superadmin/absensi"])
                           ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                           : "text-blue-900 transition duration-75group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                      }`}
-                    >
+                      }`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/superadmin/absensi"])

@@ -186,7 +186,7 @@ function OrangTua() {
                         Email
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        Username
+                        Nama Orangtua
                       </th>
                       <th scope="col" className="px-6 py-3">
                         Aksi

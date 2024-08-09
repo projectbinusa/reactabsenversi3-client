@@ -184,7 +184,7 @@ function Karyawan() {
                         No
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        Username
+                        Nama Siswa
                       </th>
                       <th scope="col" className="px-6 py-3">
                         Email

@@ -247,7 +247,7 @@ function Absensi() {
                           No
                         </th>
                         <th scope="col" className="px-4 py-3">
-                          Username
+                          Nama Siswa
                         </th>
                         <th scope="col" className="px-4 py-3">
                           Tanggal
