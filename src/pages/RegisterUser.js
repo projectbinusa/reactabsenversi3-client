@@ -19,7 +19,7 @@ function RegisterUser() {
   const [noShiftsError, setNoShiftsError] = useState(false);
 
   useEffect(() => {
-   
+
     GetALLOrganisasi();
   }, []);
 
@@ -158,7 +158,7 @@ function RegisterUser() {
                       required
                     >
                       <option value="" disabled>
-                        Pilih Shift
+                        Pilih Waktu Pembelajaran
                       </option>
                       {shiftList.slice().reverse().map((shift) => (
                         <option key={shift.id} value={shift.id}>

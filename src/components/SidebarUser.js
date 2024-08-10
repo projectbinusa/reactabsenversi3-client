@@ -62,6 +62,7 @@ const Sidebar = () => {
         "/admin/bulanan",
         "/superadmin/data-user",
         "/superadmin/absensi",
+        "/admin/perkelas",
       ])
     ) {
       setRekapanOpen(true);
@@ -83,25 +84,25 @@ const Sidebar = () => {
     }
   }, [location.pathname]);
 
-  useEffect(() => {
-    // Check if any link inside dropdown is active and open the dropdown if it is
-    const isActive = (paths) => {
-      return paths.some((path) => location.pathname.startsWith(path));
-    };
+  // useEffect(() => {
+  //   // Check if any link inside dropdown is active and open the dropdown if it is
+  //   const isActive = (paths) => {
+  //     return paths.some((path) => location.pathname.startsWith(path));
+  //   };
 
-    if (
-      isActive([
-        "/admin/perkelas",
-        "/admin/harian/perkelas",
-        "/admin/mingguan/perkelas",
-        "/admin/bulanan/perkelas",
-      ])
-    ) {
-      setRekapanOpenPerkelas(true);
-    } else {
-      setRekapanOpenPerkelas(false);
-    }
-  }, [location.pathname]);
+  //   if (
+  //     isActive([
+  //       "/admin/perkelas",
+  //       "/admin/harian/perkelas",
+  //       "/admin/mingguan/perkelas",
+  //       "/admin/bulanan/perkelas",
+  //     ])
+  //   ) {
+  //     setRekapanOpenPerkelas(true);
+  //   } else {
+  //     setRekapanOpenPerkelas(false);
+  //   }
+  // }, [location.pathname]);
 
   useEffect(() => {
     // Check if any link inside dropdown is active and open the dropdown if it is
@@ -117,8 +118,8 @@ const Sidebar = () => {
         "/admin/lokasi",
         "/admin/organisasi",
         "/admin/kelas",
+        "/admin/ortu",
         "/superadmin/admin",
-        "/superadmin/ortu",
         "/superadmin/jabatan",
         "/superadmin/shift",
         "/superadmin/lokasi",
@@ -153,7 +154,7 @@ const Sidebar = () => {
   return (
     <aside
       id="logo-sidebar"
-      className="fixed top-0 left-0 z-40 w-[290px] h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-blue-200 sm:translate-x-0 dark:bg-blue-800 dark:border-blue-700"
+      className="fixed top-0 left-0 z-40 w-[295px] h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-blue-200 sm:translate-x-0 dark:bg-blue-800 dark:border-blue-700"
       aria-label="Sidebar">
       <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-blue-800">
         <ul className="space-y-2 font-medium">
@@ -164,13 +165,13 @@ const Sidebar = () => {
                   to="/admin/dashboard"
                   className={`${
                     isActive(["/admin/dashboard"])
-                      ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                      : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
+                      ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                      : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
                   } flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group`}>
                   <FontAwesomeIcon
                     className={`flex-shrink-0 w-5 h-5 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                       isActive(["/admin/dashboard"])
-                        ? "text-white"
+                        ? "text-white hover:text-black"
                         : "text-blue-500"
                     }`}
                     icon={faCube}
@@ -183,13 +184,13 @@ const Sidebar = () => {
                   to="/admin/informasi"
                   className={`${
                     isActive(["/admin/informasi"])
-                      ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                      : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
+                      ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                      : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
                   } flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group`}>
                   <FontAwesomeIcon
                     className={`flex-shrink-0 w-5 h-5 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                       isActive(["/admin/informasi"])
-                        ? "text-white"
+                        ? "text-white hover:text-black"
                         : "text-blue-500"
                     }`}
                     icon={faExclamation}
@@ -223,19 +224,43 @@ const Sidebar = () => {
                   className={`${
                     masterDataOpen ? "" : "hidden" // Tampilkan atau sembunyikan dropdown berdasarkan state masterDataOpen
                   } py-2 space-y-2`}>
+                  <li>
+                    <Link
+                      to="/admin/ortu"
+                      className={`flex items-center p-2 rounded-lg ml-9 pl-3 ${
+                        isActive(["/admin/ortu"])
+                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                          : "text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
+                      }`}>
+                      {/* // className="flex items-center w-full p-2 text-blue-900
+                          transition duration-75 rounded-lg pl-11 group
+                          hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"> */}
+                      <FontAwesomeIcon
+                        className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
+                          isActive(["/admin/ortu"])
+                            ? "text-white hover:text-black"
+                            : "text-blue-500"
+                        }`}
+                        icon={faHandsHoldingChild}
+                      />{" "}
+                      <span className="flex-1 ml-3 whitespace-nowrap">
+                        Orang Tua
+                      </span>
+                    </Link>
+                  </li>
                   {/* <!-- Menu Karyawan --> */}
                   <li>
                     <Link
                       to="/admin/siswa"
                       className={`${
                         isActive(["/admin/siswa"])
-                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                          : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
+                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                          : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
                       } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/admin/siswa"])
-                            ? "text-white"
+                            ? "text-white hover:text-black"
                             : "text-blue-500"
                         }`}
                         icon={faUsersGear}
@@ -252,13 +277,13 @@ const Sidebar = () => {
                       to="/admin/jabatan"
                       className={`${
                         isActive(["/admin/jabatan"])
-                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                          : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
+                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                          : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
                       } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/admin/jabatan"])
-                            ? "text-white"
+                            ? "text-white hover:text-black"
                             : "text-blue-500"
                         }`}
                         icon={faBriefcase}
@@ -275,17 +300,17 @@ const Sidebar = () => {
                       to="/admin/shift"
                       className={`${
                         isActive(["/admin/shift"])
-                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                          : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
-                      } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
-                      <FontAwesomeIcon
-                        className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
-                          isActive(["/amdin/shift"])
-                            ? "text-white"
-                            : "text-blue-500"
-                        }`}
-                        icon={faBusinessTime}
-                      />{" "}
+                        ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                        : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
+                    } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
+                    <FontAwesomeIcon
+                      className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
+                        isActive(["/admin/shift"])
+                          ? "text-white hover:text-black"
+                          : "text-blue-500"
+                      }`}
+                      icon={faBriefcase}
+                    />{" "}
                       <span className="flex-1 ml-3 whitespace-nowrap">
                         Waktu Pembelajaran
                       </span>
@@ -298,13 +323,13 @@ const Sidebar = () => {
                       to="/admin/lokasi"
                       className={`${
                         isActive(["/admin/lokasi"])
-                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                          : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
+                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                          : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
                       } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/admin/lokasi"])
-                            ? "text-white"
+                            ? "text-white hover:text-black"
                             : "text-blue-500"
                         }`}
                         icon={faMapLocationDot}
@@ -321,13 +346,13 @@ const Sidebar = () => {
                       to="/admin/organisasi"
                       className={`${
                         isActive(["/admin/organisasi"])
-                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                          : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
+                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                          : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
                       } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/admin/organisasi"])
-                            ? "text-white"
+                            ? "text-white hover:text-black"
                             : "text-blue-500"
                         }`}
                         icon={faBuilding}
@@ -344,13 +369,13 @@ const Sidebar = () => {
                       to="/admin/kelas"
                       className={`${
                         isActive(["/admin/kelas"])
-                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                          : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
+                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                          : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
                       } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/admin/kelas"])
-                            ? "text-white"
+                            ? "text-white hover:text-black"
                             : "text-blue-500"
                         }`}
                         icon={faSchool}
@@ -394,13 +419,13 @@ const Sidebar = () => {
                       to="/admin/simpel"
                       className={`${
                         isActive(["/admin/simpel"])
-                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                          : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
+                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                          : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
                       } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/admin/simpel"])
-                            ? "text-white"
+                            ? "text-white hover:text-black"
                             : "text-blue-500"
                         }`}
                         icon={faUserGear}
@@ -416,13 +441,13 @@ const Sidebar = () => {
                       to="/admin/persiswa"
                       className={`${
                         isActive(["/admin/persiswa"])
-                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                          : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
+                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                          : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
                       } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/admin/persiswa"])
-                            ? "text-white"
+                            ? "text-white hover:text-black"
                             : "text-blue-500"
                         }`}
                         icon={faUserPen}
@@ -433,7 +458,92 @@ const Sidebar = () => {
                     </Link>
                   </li> */}
                   {/* <!-- Menu Perkelas --> */}
+
                   <li>
+                    <Link
+                      to="/admin/perkelas"
+                      className={`${
+                        isActive(["/admin/perkelas"])
+                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                          : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
+                      } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
+                      <FontAwesomeIcon
+                        className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
+                          isActive(["/admin/perkelas"])
+                            ? "text-white hover:text-black"
+                            : "text-blue-500"
+                        }`}
+                        icon={faUsers}
+                      />
+                      <span className="flex-1 ml-3 whitespace-nowrap">
+                        Kelas
+                      </span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/admin/harian/perkelas"
+                      className={`${
+                        isActive(["/admin/harian/perkelas"])
+                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                          : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
+                      }  flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700 `}>
+                      <FontAwesomeIcon
+                        className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
+                          isActive(["/admin/harian/perkelas"])
+                            ? "text-white hover:text-black"
+                            : "text-blue-500"
+                        }`}
+                        icon={faCalendarDay}
+                      />
+                      <span className="flex-1 ml-3 whitespace-nowrap">
+                        Harian
+                      </span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/admin/mingguan/perkelas"
+                      className={`${
+                        isActive(["/admin/mingguan/perkelas"])
+                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                          : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
+                      }  flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700 `}>
+                      <FontAwesomeIcon
+                        className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
+                          isActive(["/admin/mingguan/perkelas"])
+                            ? "text-white hover:text-black"
+                            : "text-blue-500"
+                        }`}
+                        icon={faCalendarWeek}
+                      />
+                      <span className="flex-1 ml-3 whitespace-nowrap">
+                        Mingguan
+                      </span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/admin/bulanan/perkelas"
+                      className={` flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700 ${
+                        isActive(["/admin/bulanan/perkelas"])
+                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                          : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
+                      }`}>
+                      <FontAwesomeIcon
+                        className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
+                          isActive(["/admin/bulanan/perkelas"])
+                            ? "text-white hover:text-black"
+                            : "text-blue-500"
+                        }`}
+                        icon={faCalendar}
+                      />
+                      <span className="flex-1 ml-3 whitespace-nowrap">
+                        Bulanan
+                      </span>
+                    </Link>
+                  </li>
+                  {/* <li>
                     <button
                       type="button"
                       onClick={toggleRekapanPerkelas}
@@ -452,105 +562,21 @@ const Sidebar = () => {
                       className={`${
                         rekapanOpenPerkelas ? "" : "hidden" // Tampilkan atau sembunyikan dropdown berdasarkan state masterDataOpen
                       } py-2 space-y-2`}>
-                      <li>
-                        <Link
-                          to="/admin/perkelas"
-                          className={`${
-                            isActive(["/admin/perkelas"])
-                              ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                              : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
-                          } flex ml-3 items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700 `}>
-                          <FontAwesomeIcon
-                            className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
-                              isActive(["/admin/perkelas"])
-                                ? "text-white"
-                                : "text-blue-500"
-                            }`}
-                            icon={faUsers}
-                          />
-                          <span className="flex-1 ml-3 whitespace-nowrap">
-                            Kelas
-                          </span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to="/admin/harian/perkelas"
-                          className={`${
-                            isActive(["/admin/harian/perkelas"])
-                              ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                              : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
-                          } flex ml-3 items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700 `}>
-                          <FontAwesomeIcon
-                            className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
-                              isActive(["/admin/harian/perkelas"])
-                                ? "text-white"
-                                : "text-blue-500"
-                            }`}
-                            icon={faCalendarDay}
-                          />
-                          <span className="flex-1 ml-3 whitespace-nowrap">
-                            Harian
-                          </span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to="/admin/mingguan/perkelas"
-                          className={`${
-                            isActive(["/admin/mingguan/perkelas"])
-                              ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                              : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
-                          } flex ml-3 items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700 `}>
-                          <FontAwesomeIcon
-                            className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
-                              isActive(["/admin/mingguan/perkelas"])
-                                ? "text-white"
-                                : "text-blue-500"
-                            }`}
-                            icon={faCalendarWeek}
-                          />
-                          <span className="flex-1 ml-3 whitespace-nowrap">
-                            Mingguan
-                          </span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to="/admin/bulanan/perkelas"
-                          className={`flex ml-3 items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700 ${
-                            isActive(["/admin/bulanan/perkelas"])
-                              ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                              : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
-                          }`}>
-                          <FontAwesomeIcon
-                            className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
-                              isActive(["/admin/bulanan/perkelas"])
-                                ? "text-white"
-                                : "text-blue-500"
-                            }`}
-                            icon={faCalendar}
-                          />
-                          <span className="flex-1 ml-3 whitespace-nowrap">
-                            Bulanan
-                          </span>
-                        </Link>
-                      </li>
                     </ul>
-                  </li>
+                  </li> */}
                   {/* <!-- Menu Harian --> */}
                   {/* <li>
                     <Link
                       to="/admin/harian"
                       className={`${
                         isActive(["/admin/harian"])
-                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                          : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
+                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                          : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
                       } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/admin/harian"])
-                            ? "text-white"
+                            ? "text-white hover:text-black"
                             : "text-blue-500"
                         }`}
                         icon={faCalendarDay}
@@ -566,13 +592,13 @@ const Sidebar = () => {
                       to="/admin/mingguan"
                       className={`${
                         isActive(["/admin/mingguan"])
-                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                          : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
+                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                          : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
                       } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/admin/mingguan"])
-                            ? "text-white"
+                            ? "text-white hover:text-black"
                             : "text-blue-500"
                         }`}
                         icon={faCalendarWeek}
@@ -588,13 +614,13 @@ const Sidebar = () => {
                       to="/admin/bulanan"
                       className={`${
                         isActive(["/admin/bulanan"])
-                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                          : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
+                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                          : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
                       } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/admin/bulanan"])
-                            ? "text-white"
+                            ? "text-white hover:text-black"
                             : "text-blue-500"
                         }`}
                         icon={faCalendar}
@@ -639,13 +665,13 @@ const Sidebar = () => {
                       to="/admin/absensi"
                       className={`${
                         isActive(["/admin/absensi"])
-                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                          : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
+                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                          : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
                       } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/admin/absensi"])
-                            ? "text-white"
+                            ? "text-white hover:text-black"
                             : "text-blue-500"
                         }`}
                         icon={faAddressCard}
@@ -661,8 +687,8 @@ const Sidebar = () => {
                       to="/admin/cuti"
                       className={`${
                     isActive(["/superadmin/dashboard"])
-                      ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                      : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
+                      ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                      : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
                   } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}
                     >
                       <FontAwesomeIcon
@@ -680,13 +706,13 @@ const Sidebar = () => {
                       to="/admin/kehadiran"
                       className={`${
                         isActive(["/admin/kehadiran"])
-                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                          : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
+                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                          : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
                       } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/admin/kehadiran"])
-                            ? "text-white"
+                            ? "text-white hover:text-black"
                             : "text-blue-500"
                         }`}
                         icon={faUserCheck}
@@ -707,7 +733,7 @@ const Sidebar = () => {
                           to="/admin/master-data"
                           className={`flex items-center p-2 rounded-lg  ml-9 pl-3 ${
                             isActive(["/admin/master-data"])
-                              ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
+                              ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
                               : "text-blue-900 transition duration-75group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
                           }`}></Link>
                       </li>
@@ -717,7 +743,7 @@ const Sidebar = () => {
                           to="/admin/rekapann"
                           className={`flex items-center p-2 rounded-lg  ml-9 pl-3 ${
                             isActive(["/admin/rekapann"])
-                              ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
+                              ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
                               : "text-blue-900 transition duration-75group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
                           }`}></Link>
                       </li>
@@ -727,7 +753,7 @@ const Sidebar = () => {
                           to="/admin/rekapann/perkelas"
                           className={`flex items-center p-2 rounded-lg  ml-9 pl-3 ${
                             isActive(["/admin/rekapann/perkelas"])
-                              ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
+                              ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
                               : "text-blue-900 transition duration-75group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
                           }`}></Link>
                       </li>
@@ -737,7 +763,7 @@ const Sidebar = () => {
                           to="/admin/data-cuti"
                           className={`flex items-center p-2 rounded-lg  ml-9 pl-3 ${
                             isActive(["/admin/data-cuti"])
-                              ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
+                              ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
                               : "text-blue-900 transition duration-75group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
                           }`}></Link>
                       </li>
@@ -751,8 +777,8 @@ const Sidebar = () => {
                       to="/admin/lembur"
                       className={`${
                     isActive(["/superadmin/dashboard"])
-                      ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                      : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
+                      ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                      : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
                   } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}
                     >
                       <FontAwesomeIcon
@@ -774,13 +800,13 @@ const Sidebar = () => {
                   to="/user/dashboard"
                   className={`${
                     isActive(["/user/dashboard"])
-                      ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                      : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
+                      ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                      : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
                   } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
                   <FontAwesomeIcon
                     className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                       isActive(["/user/dashboard"])
-                        ? "text-white"
+                        ? "text-white hover:text-black"
                         : "text-blue-500"
                     }`}
                     icon={faUserCheck}
@@ -795,13 +821,13 @@ const Sidebar = () => {
                   to="/user/history_absen"
                   className={`${
                     isActive(["/user/history_absen"])
-                      ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                      : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
+                      ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                      : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
                   } flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group`}>
                   <FontAwesomeIcon
                     className={`flex-shrink-0 w-5 h-5 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                       isActive(["/user/history_absen"])
-                        ? "text-white"
+                        ? "text-white hover:text-black"
                         : "text-blue-500"
                     }`}
                     icon={faClock}
@@ -816,13 +842,13 @@ const Sidebar = () => {
                   to="/user/history_cuti"
                   className={`${
                     isActive(["/user/history_cuti"])
-                      ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                      : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
+                      ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                      : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
                   } flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group`}>
                   <FontAwesomeIcon
                     className={`flex-shrink-0 w-5 h-5 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                       isActive(["/user/history_cuti"])
-                        ? "text-white"
+                        ? "text-white hover:text-black"
                         : "text-blue-500"
                     }`}
                     icon={faCalendarDays}
@@ -835,13 +861,13 @@ const Sidebar = () => {
                   to="/user/history_lembur"
                   className={`${
                     isActive(["/user/history_lembur"])
-                      ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                      : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
+                      ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                      : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
                   } flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group`}>
                   <FontAwesomeIcon
                     className={`flex-shrink-0 w-5 h-5 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                       isActive(["/user/history_lembur"])
-                        ? "text-white"
+                        ? "text-white hover:text-black"
                         : "text-blue-500"
                     }`}
                     icon={faBusinessTime}
@@ -858,13 +884,13 @@ const Sidebar = () => {
                   to="/superadmin/dashboard"
                   className={`flex items-center p-2 rounded-lg ${
                     isActive(["/superadmin/dashboard"])
-                      ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                      : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
+                      ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                      : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
                   }`}>
                   <FontAwesomeIcon
                     className={`flex-shrink-0 w-5 h-5 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                       isActive(["/superadmin/dashboard"])
-                        ? "text-white"
+                        ? "text-white hover:text-black"
                         : "text-blue-500"
                     }`}
                     icon={faCube}
@@ -903,7 +929,7 @@ const Sidebar = () => {
                       to="/superadmin/admin"
                       className={`flex items-center p-2 rounded-lg ml-9 pl-3 ${
                         isActive(["/superadmin/admin"])
-                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
+                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
                           : "text-blue-900 transition duration-75group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
                       }`}>
                       {/* // className="flex items-center w-full p-2 text-blue-900
@@ -912,7 +938,7 @@ const Sidebar = () => {
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 dark:group-hover:text-white ${
                           isActive(["/superadmin/admin"])
-                            ? "text-white"
+                            ? "text-white hover:text-black"
                             : "text-blue-500"
                         }`}
                         icon={faChalkboardUser}
@@ -923,43 +949,19 @@ const Sidebar = () => {
                     </Link>
                   </li>
                   {/* ortu */}
-                  <li>
-                    <Link
-                      to="/superadmin/ortu"
-                      className={`flex items-center p-2 rounded-lg ml-9 pl-3 ${
-                        isActive(["/superadmin/ortu"])
-                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                          : "text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                      }`}>
-                      {/* // className="flex items-center w-full p-2 text-blue-900
-                      transition duration-75 rounded-lg pl-11 group
-                      hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"> */}
-                      <FontAwesomeIcon
-                        className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
-                          isActive(["/superadmin/ortu"])
-                            ? "text-white"
-                            : "text-blue-500"
-                        }`}
-                        icon={faHandsHoldingChild}
-                      />{" "}
-                      <span className="flex-1 ml-3 whitespace-nowrap">
-                        Orang Tua
-                      </span>
-                    </Link>
-                  </li>
                   {/* <!-- Menu Organisasi --> */}
                   <li>
                     <Link
                       to="/superadmin/organisasi"
                       className={`flex items-center p-2 rounded-lg  ml-9 pl-3 ${
                         isActive(["/superadmin/organisasi"])
-                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
+                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
                           : "text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
                       }`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/superadmin/organisasi"])
-                            ? "text-white"
+                            ? "text-white hover:text-black"
                             : "text-blue-500"
                         }`}
                         icon={faBuilding}
@@ -975,13 +977,13 @@ const Sidebar = () => {
                       to="/superadmin/jabatan"
                       className={`flex items-center p-2 rounded-lg ml-9 pl-3   ${
                         isActive(["/superadmin/jabatan"])
-                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
+                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
                           : "text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
                       }`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/superadmin/jabatan"])
-                            ? "text-white"
+                            ? "text-white hover:text-black"
                             : "text-blue-500"
                         }`}
                         icon={faBriefcase}
@@ -998,13 +1000,13 @@ const Sidebar = () => {
                       to="/superadmin/shift"
                       className={`flex items-center p-2 rounded-lg ml-9 pl-3   ${
                         isActive(["/superadmin/shift"])
-                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
+                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
                           : "text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
                       }`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/superadmin/shift"])
-                            ? "text-white"
+                            ? "text-white hover:text-black"
                             : "text-blue-500"
                         }`}
                         icon={faBusinessTime}
@@ -1021,13 +1023,13 @@ const Sidebar = () => {
                       to="/superadmin/lokasi"
                       className={`flex items-center p-2 rounded-lg ml-9 pl-3  ${
                         isActive(["/superadmin/lokasi"])
-                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
+                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
                           : "text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
                       }`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/superadmin/lokasi"])
-                            ? "text-white"
+                            ? "text-white hover:text-black"
                             : "text-blue-500"
                         }`}
                         icon={faMapLocationDot}
@@ -1071,13 +1073,13 @@ const Sidebar = () => {
                       to="/superadmin/data-user"
                       className={`flex items-center p-2 rounded-lg  ml-9 pl-3 ${
                         isActive(["/superadmin/data-user"])
-                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
+                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
                           : "text-blue-900 transition duration-75group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
                       }`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/superadmin/data-user"])
-                            ? "text-white"
+                            ? "text-white hover:text-black"
                             : "text-blue-500"
                         }`}
                         icon={faUsers}
@@ -1093,13 +1095,13 @@ const Sidebar = () => {
                       to="/superadmin/absensi"
                       className={`flex items-center p-2 rounded-lg  ml-9 pl-3 ${
                         isActive(["/superadmin/absensi"])
-                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
+                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
                           : "text-blue-900 transition duration-75group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
                       }`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/superadmin/absensi"])
-                            ? "text-white"
+                            ? "text-white hover:text-black"
                             : "text-blue-500"
                         }`}
                         icon={faAddressCard}
@@ -1122,12 +1124,12 @@ const Sidebar = () => {
               }}
               className={`${
                     isActive(["/superadmin/dashboard"])
-                      ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                      : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
+                      ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                      : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
                   } flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group`}
             >
               <FontAwesomeIcon
-                className={`flex-shrink-0 w-5 h-5 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${isActive(["/superadmin/admin"]) ? "text-white" : "text-blue-500"}`}
+                className={`flex-shrink-0 w-5 h-5 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${isActive(["/superadmin/admin"]) ? "text-white hover:text-black" : "text-blue-500"}`}
                 icon={faArrowRightFromBracket}
               />
               <span className="flex-1 ms-3 whitespace-nowrap">Logout</span>
