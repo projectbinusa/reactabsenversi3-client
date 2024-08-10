@@ -393,7 +393,7 @@ function App() {
             component={DetailPengumuman}
             exact
           />
-          <Route path="/walimurid/profile/:id" component={ProfileOrtu} exact />
+          <Route path="/walimurid/profile" component={ProfileOrtu} exact />
         </Switch>
       </main>
     </BrowserRouter>

@@ -295,6 +295,8 @@ function BulanPerkelas() {
               totalPages={totalPages}
               onPageChange={(page) => setCurrentPage(page)}
               className="mt-4"
+                previousLabel=""
+                nextLabel=""
             />
           </div>
         </div>

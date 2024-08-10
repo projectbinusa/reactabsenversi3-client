@@ -236,6 +236,8 @@ function Kehadiran() {
                   totalPages={totalPages}
                   onPageChange={onPageChange}
                   showIcons
+                  previousLabel=""
+                  nextLabel=""
                 />
               </div>
             </div>
