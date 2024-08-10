@@ -26,7 +26,7 @@ function Harian() {
       });
 
       if (response.data.length === 0) {
-        Swal.fire("Tidak ada", "Tidak ada yang absen hari ini", "info");
+        Swal.fire("Tidak ada", "Tidak ada yang presensi hari ini", "info");
       } else {
         setAbsensiData(response.data);
       }
@@ -48,7 +48,7 @@ function Harian() {
       const url = window.URL.createObjectURL(new Blob([res.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "Absensi-Harian.xlsx");
+      link.setAttribute("download", "Presensi-Harian.xlsx");
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);

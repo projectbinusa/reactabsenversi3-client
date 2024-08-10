@@ -56,7 +56,7 @@ const Sidebar = () => {
     if (
       isActive([
         "/admin/simpel",
-        "/admin/perkaryawan",
+        "/admin/persiswa",
         "/admin/harian",
         "/admin/mingguan",
         "/admin/bulanan",
@@ -153,7 +153,7 @@ const Sidebar = () => {
   return (
     <aside
       id="logo-sidebar"
-      className="fixed top-0 left-0 z-40 w-72 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-blue-200 sm:translate-x-0 dark:bg-blue-800 dark:border-blue-700"
+      className="fixed top-0 left-0 z-40 w-[290px] h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-blue-200 sm:translate-x-0 dark:bg-blue-800 dark:border-blue-700"
       aria-label="Sidebar">
       <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-blue-800">
         <ul className="space-y-2 font-medium">
@@ -413,22 +413,22 @@ const Sidebar = () => {
                   {/* <!-- Menu PerKaryawan --> */}
                   <li>
                     <Link
-                      to="/admin/perkaryawan"
+                      to="/admin/persiswa"
                       className={`${
-                        isActive(["/admin/perkaryawan"])
+                        isActive(["/admin/persiswa"])
                           ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                           : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
                       } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
-                          isActive(["/admin/perkaryawan"])
+                          isActive(["/admin/persiswa"])
                             ? "text-white"
                             : "text-blue-500"
                         }`}
                         icon={faUserPen}
                       />{" "}
                       <span className="flex-1 ml-3 whitespace-nowrap">
-                        Perkaryawan
+                        Persiswa
                       </span>
                     </Link>
                   </li>
@@ -910,10 +910,10 @@ const Sidebar = () => {
                       transition duration-75 rounded-lg pl-11 group
                       hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"> */}
                       <FontAwesomeIcon
-                        className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
+                        className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 dark:group-hover:text-white ${
                           isActive(["/superadmin/admin"])
-                            ? ""
-                            : "text-whitetext-blue-500"
+                            ? "text-white"
+                            : "text-blue-500"
                         }`}
                         icon={faChalkboardUser}
                       />{" "}
@@ -929,7 +929,7 @@ const Sidebar = () => {
                       className={`flex items-center p-2 rounded-lg ml-9 pl-3 ${
                         isActive(["/superadmin/ortu"])
                           ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
-                          : "text-blue-900 transition duration-75group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
+                          : "text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
                       }`}>
                       {/* // className="flex items-center w-full p-2 text-blue-900
                       transition duration-75 rounded-lg pl-11 group
@@ -937,8 +937,8 @@ const Sidebar = () => {
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
                           isActive(["/superadmin/ortu"])
-                            ? ""
-                            : "text-whitetext-blue-500"
+                            ? "text-white"
+                            : "text-blue-500"
                         }`}
                         icon={faHandsHoldingChild}
                       />{" "}

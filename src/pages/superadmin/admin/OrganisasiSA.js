@@ -289,6 +289,8 @@ function OrganisasiSA() {
                 totalPages={totalPages}
                 onPageChange={onPageChange}
                 showIcons
+                previousLabel=""
+                nextLabel=""
               />
             </div>
           </div>
