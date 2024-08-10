@@ -111,7 +111,7 @@ const Sidebar = () => {
 
     if (
       isActive([
-        "/admin/karyawan",
+        "/admin/siswa",
         "/admin/jabatan",
         "/admin/shift",
         "/admin/lokasi",
@@ -226,15 +226,15 @@ const Sidebar = () => {
                   {/* <!-- Menu Karyawan --> */}
                   <li>
                     <Link
-                      to="/admin/karyawan"
+                      to="/admin/siswa"
                       className={`${
-                        isActive(["/admin/karyawan"])
+                        isActive(["/admin/siswa"])
                           ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
                           : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white"
                       } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
                       <FontAwesomeIcon
                         className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
-                          isActive(["/admin/karyawan"])
+                          isActive(["/admin/siswa"])
                             ? "text-white"
                             : "text-blue-500"
                         }`}
@@ -411,7 +411,7 @@ const Sidebar = () => {
                     </Link>
                   </li>
                   {/* <!-- Menu PerKaryawan --> */}
-                  <li>
+                  {/* <li>
                     <Link
                       to="/admin/persiswa"
                       className={`${
@@ -431,7 +431,7 @@ const Sidebar = () => {
                         Persiswa
                       </span>
                     </Link>
-                  </li>
+                  </li> */}
                   {/* <!-- Menu Perkelas --> */}
                   <li>
                     <button
@@ -539,7 +539,7 @@ const Sidebar = () => {
                     </ul>
                   </li>
                   {/* <!-- Menu Harian --> */}
-                  <li>
+                  {/* <li>
                     <Link
                       to="/admin/harian"
                       className={`${
@@ -559,9 +559,9 @@ const Sidebar = () => {
                         Harian
                       </span>
                     </Link>
-                  </li>
+                  </li> */}
                   {/* <!-- Menu Mingguan --> */}
-                  <li>
+                  {/* <li>
                     <Link
                       to="/admin/mingguan"
                       className={`${
@@ -581,9 +581,9 @@ const Sidebar = () => {
                         Mingguan
                       </span>
                     </Link>
-                  </li>
+                  </li> */}
                   {/* <!-- Menu Bulanan --> */}
-                  <li>
+                  {/* <li>
                     <Link
                       to="/admin/bulanan"
                       className={`${
@@ -603,7 +603,7 @@ const Sidebar = () => {
                         Bulanan
                       </span>
                     </Link>
-                  </li>
+                  </li> */}
                 </ul>
               </li>
 

@@ -176,7 +176,7 @@ function LokasiSA() {
                         Alamat
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        Jumlah Karyawan
+                        Jumlah Siswa
                       </th>
                       <th scope="col" className="px-6 py-3">
                         Organisasi

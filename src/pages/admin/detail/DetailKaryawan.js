@@ -41,7 +41,7 @@ function DetailKaryawan() {
                 {/* <!-- Header --> */}
                 <div className="flex justify-between">
                   <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
-                    Detail Karyawan
+                    Detail Siswa
                   </h6>
                 </div>
                 <div className="mt-2 text-left">
@@ -194,7 +194,7 @@ function DetailKaryawan() {
                       <div className="flex justify-between">
                         <a
                           className="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                          href="/admin/karyawan"
+                          href="/admin/siswa"
                         >
                           <FontAwesomeIcon icon={faArrowLeft} />{" "}
                         </a>
