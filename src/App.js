@@ -148,6 +148,15 @@ function App() {
           {/* Admin Routes */}
           {role === "ADMIN" && (
             <>
+              {/* orang tua */}
+              <Route path="/admin/ortu" component={OrangTua} exact />
+              <Route path="/admin/addOrtu" component={AddOrtu} exact />
+              <Route path="/admin/editOrtu/:id" component={EditOrtu} exact />
+              <Route
+                path="/admin/detailOrtu/:id"
+                component={DetailOrtu}
+                exact
+              />
               <Route path="/admin/dashboard" component={Dashboard} exact />
               <Route path="/admin/profil" component={Profil} exact />
               {/* master data */}
@@ -369,19 +378,6 @@ function App() {
               <Route
                 path="/superadmin/detailAbsensi/:id"
                 component={DetailAbsensiSA}
-                exact
-              />
-              {/* orang tua */}
-              <Route path="/superadmin/ortu" component={OrangTua} exact />
-              <Route path="/superadmin/addOrtu" component={AddOrtu} exact />
-              <Route
-                path="/superadmin/editOrtu/:id"
-                component={EditOrtu}
-                exact
-              />
-              <Route
-                path="/superadmin/detailOrtu/:id"
-                component={DetailOrtu}
                 exact
               />
             </>
