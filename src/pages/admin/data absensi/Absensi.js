@@ -345,6 +345,8 @@ function Absensi() {
                   totalPages={totalPages}
                   onPageChange={onPageChange}
                   showIcons
+                  previousLabel=""
+                  nextLabel=""
                 />
               </div>
             </main>

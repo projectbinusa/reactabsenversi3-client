@@ -64,7 +64,10 @@ function HarianPerkelas() {
     try {
       const response = await axios.get(`${API_DUMMY}/api/kelas/kelas/all`);
       setListKelas(response.data);
-      const dataOrganisasi = response.data.slice().reverse().map((dt) => dt.organisasi.id);
+      const dataOrganisasi = response.data
+        .slice()
+        .reverse()
+        .map((dt) => dt.organisasi.id);
 
       if (dataOrganisasi.length > 0) {
         setIdOrganisasi(dataOrganisasi[0]);
@@ -252,11 +255,14 @@ function HarianPerkelas() {
                 value={kelasId}
                 onChange={handleKelasChange}>
                 <option value="">Pilih Kelas</option>
-                {listKelas.slice().reverse().map((data) => (
-                  <option key={data.id} value={data.id}>
-                    {data.namaKelas}
-                  </option>
-                ))}
+                {listKelas
+                  .slice()
+                  .reverse()
+                  .map((data) => (
+                    <option key={data.id} value={data.id}>
+                      {data.namaKelas}
+                    </option>
+                  ))}
               </select>
               <input
                 type="date"
@@ -317,37 +323,40 @@ function HarianPerkelas() {
                     </tr>
                   </thead>
                   <tbody>
-                    {paginatedUser.slice().reverse().map((absensi, index) => (
-                      <tr key={absensi.id}>
-                        <td className="px-6 py-3 whitespace-nowrap">
-                          {index + 1}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {absensi.user.username}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {formatDate(absensi.tanggalAbsen)}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {absensi.jamMasuk}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          <img src={absensi.fotoMasuk} alt="Foto Masuk" />
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {absensi.jamPulang}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          <img src={absensi.fotoPulang} alt="Foto Pulang" />
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {absensi.jamKerja}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {absensi.keterangan}
-                        </td>
-                      </tr>
-                    ))}
+                    {paginatedUser
+                      .slice()
+                      .reverse()
+                      .map((absensi, index) => (
+                        <tr key={absensi.id}>
+                          <td className="px-6 py-3 whitespace-nowrap">
+                            {index + 1}
+                          </td>
+                          <td className="px-6 py-3 whitespace-nowrap capitalize">
+                            {absensi.user.username}
+                          </td>
+                          <td className="px-6 py-3 whitespace-nowrap capitalize">
+                            {formatDate(absensi.tanggalAbsen)}
+                          </td>
+                          <td className="px-6 py-3 whitespace-nowrap capitalize">
+                            {absensi.jamMasuk}
+                          </td>
+                          <td className="px-6 py-3 whitespace-nowrap capitalize">
+                            <img src={absensi.fotoMasuk} alt="Foto Masuk" />
+                          </td>
+                          <td className="px-6 py-3 whitespace-nowrap capitalize">
+                            {absensi.jamPulang}
+                          </td>
+                          <td className="px-6 py-3 whitespace-nowrap capitalize">
+                            <img src={absensi.fotoPulang} alt="Foto Pulang" />
+                          </td>
+                          <td className="px-6 py-3 whitespace-nowrap capitalize">
+                            {absensi.jamKerja}
+                          </td>
+                          <td className="px-6 py-3 whitespace-nowrap capitalize">
+                            {absensi.keterangan}
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               )}
@@ -359,6 +368,8 @@ function HarianPerkelas() {
               totalPages={totalPages}
               onPageChange={onPageChange}
               showIcons
+              previousLabel=""
+              nextLabel=""
             />
           </div>
         </div>
