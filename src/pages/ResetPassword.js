@@ -160,9 +160,9 @@ function ResetPassword() {
                 <div className="text-center">
                   <Link
                     className="inline-block text-sm w-full text-blue-500 align-baseline hover:text-blue-800"
-                    to="/forgotpass"
+                    to="/"
                   >
-                    Code Kadarluwarsa? Kirim ulang email anda di forgot password
+                    Batal Reset Password ? Login
                   </Link>
                 </div>
               </form>
