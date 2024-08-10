@@ -169,12 +169,12 @@ function ProfilSA() {
         <Navbar />
         <div className="flex h-full">
           <Sidebar />
-          <div className="content-page container p-8 min-h-screen ml-0 md:ml-64 mt-20">
+          <div className="content-page container p-8 ml-0 md:ml-72 mt-20">
             <Tabs aria-label="Tabs with underline" style="underline">
               <Tabs.Item active title="Profile" icon={HiUserCircle}>
                 {/* Konten tab Profil */}
                 <div className="font-medium text-gray-800 dark:text-white">
-                  <div className="profile mt-12 bg-white p-5 rounded-xl shadow-xl border border-gray-300">
+                  <div className="profile mt-6 bg-white p-5 rounded-xl shadow-xl border border-gray-300">
                     <h2 className="text-xl font-bold">Profile Picture</h2>
                     <div className="flex flex-col items-center mt-4">
                       {/* Placeholder untuk menampilkan gambar profil yang dipilih */}
@@ -227,7 +227,7 @@ function ProfilSA() {
               <Tabs.Item title="Detail" icon={MdDashboard}>
                 {/* Konten tab Dashboard */}
                 <div className="font-medium text-gray-800 dark:text-white">
-                  <div className="detail-akun mt-12 bg-white p-5 rounded-xl shadow-lg border border-gray-300">
+                  <div className="detail-akun mt-6 bg-white p-5 rounded-xl shadow-lg border border-gray-300">
                     <p className="text-lg sm:text-xl font-medium mb-4 sm:mb-7">
                       Detail Akun
                     </p>
@@ -298,7 +298,7 @@ function ProfilSA() {
               </Tabs.Item>
               <Tabs.Item title="Settings" icon={HiAdjustments}>
                 <div className="font-medium text-gray-800 dark:text-white">
-                  <div className="settings mt-12 bg-white p-5 rounded-xl shadow-lg border border-gray-300">
+                  <div className="settings mt-6 bg-white p-5 rounded-xl shadow-lg border border-gray-300">
                     <p className="text-lg sm:text-xl font-medium mb-4 sm:mb-7">
                       Settings
                     </p>
