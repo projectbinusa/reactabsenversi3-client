@@ -116,6 +116,9 @@ function SidebarNavbar() {
           <div className={`bg-indigo-500 ${isOpen ? "hidden" : "block"}`}>
             <a href="" className="flex items-center p-3">
               <img src={Logo} className="h-11 me-3 text-white" alt="Logo" />
+              <span className="self-center text-xl font-semibold sm:text-xl whitespace-nowrap text-white">
+                Presensi App
+              </span>
             </a>
           </div>
           <div className="bg-white flex-1 px-3 py-4">
