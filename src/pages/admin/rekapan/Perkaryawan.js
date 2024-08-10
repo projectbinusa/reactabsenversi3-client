@@ -22,13 +22,18 @@ function Perkaryawan() {
   const getAllUserByAdmin = async () => {
     try {
       const usList = await axios.get(`${API_DUMMY}/api/user/${idAdmin}/users`);
-      const userOptions = usList.data.slice().reverse().map((user) => ({
-        value: user.id,
-        label: user.username
-          .split(" ")
-          .slice().reverse().map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(" "),
-      }));
+      const userOptions = usList.data
+        .slice()
+        .reverse()
+        .map((user) => ({
+          value: user.id,
+          label: user.username
+            .split(" ")
+            .slice()
+            .reverse()
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" "),
+        }));
       setListUser(userOptions);
     } catch (error) {
       console.log(error);
@@ -84,7 +89,7 @@ function Perkaryawan() {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "RekapPerkawryawan.xlsx");
+      link.setAttribute("download", "RekapPersiswa.xlsx");
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -126,7 +131,7 @@ function Perkaryawan() {
           <div className="tabel-absen bg-white p-5 rounded-xl shadow-xl border border-gray-300">
             <div className="flex justify-between">
               <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
-                Rekap Perkaryawan
+                Rekap Persiswa
               </h6>
             </div>
             <hr />
@@ -168,14 +173,13 @@ function Perkaryawan() {
                 <button
                   type="button"
                   className="bg-indigo-500 hover:bg-indigo text-white font-bold py-2 px-4 rounded inline-block"
-                  onClick={() => getAbsensiByUserId(selectedUser?.value)}
-                >
+                  onClick={() => getAbsensiByUserId(selectedUser?.value)}>
                   <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </button>
                 <button
+                  type="button"
                   className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto"
-                  onClick={exportPerkaryawan}
-                >
+                  onClick={exportPerkaryawan}>
                   <FontAwesomeIcon icon={faFileExport} />
                 </button>
               </div>
@@ -215,37 +219,40 @@ function Perkaryawan() {
                   </tr>
                 </thead>
                 <tbody>
-                  {listAbsensi.slice().reverse().map((absensi, index) => (
-                    <tr key={absensi.id}>
-                      <td className="px-6 py-3 whitespace-nowrap">
-                        {index + 1}
-                      </td>
-                      <td className="px-6 py-3 whitespace-nowrap capitalize">
-                        {absensi.user.username}
-                      </td>
-                      <td className="px-6 py-3 whitespace-nowrap capitalize">
-                        {formatDate(absensi.tanggalAbsen)}
-                      </td>
-                      <td className="px-6 py-3 whitespace-nowrap capitalize">
-                        {absensi.jamMasuk}
-                      </td>
-                      <td className="px-6 py-3 whitespace-nowrap capitalize">
-                        <img src={absensi.fotoMasuk} alt="Foto Masuk" />
-                      </td>
-                      <td className="px-6 py-3 whitespace-nowrap capitalize">
-                        {absensi.jamPulang}
-                      </td>
-                      <td className="px-6 py-3 whitespace-nowrap capitalize">
-                        <img src={absensi.fotoPulang} alt="Foto Pulang" />
-                      </td>
-                      <td className="px-6 py-3 whitespace-nowrap capitalize">
-                        {absensi.jamKerja}
-                      </td>
-                      <td className="px-6 py-3 whitespace-nowrap capitalize">
-                        {absensi.keterangan}
-                      </td>
-                    </tr>
-                  ))}
+                  {listAbsensi
+                    .slice()
+                    .reverse()
+                    .map((absensi, index) => (
+                      <tr key={absensi.id}>
+                        <td className="px-6 py-3 whitespace-nowrap">
+                          {index + 1}
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          {absensi.user.username}
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          {formatDate(absensi.tanggalAbsen)}
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          {absensi.jamMasuk}
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          <img src={absensi.fotoMasuk} alt="Foto Masuk" />
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          {absensi.jamPulang}
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          <img src={absensi.fotoPulang} alt="Foto Pulang" />
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          {absensi.jamKerja}
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          {absensi.keterangan}
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             </div>

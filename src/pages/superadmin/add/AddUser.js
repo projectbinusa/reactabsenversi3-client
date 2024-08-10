@@ -74,9 +74,7 @@ function AddUser() {
   const GetAllShift = async () => {
     try {
       const response = await axios.get(
-
         `${API_DUMMY}/api/shift/getBySuper/${idSuperAdmin}`
-
       );
       setShiftList(response.data);
     } catch (error) {
@@ -87,9 +85,7 @@ function AddUser() {
   const GetAllOrangTua = async () => {
     try {
       const response = await axios.get(
-
         `${API_DUMMY}/api/orang-tua/getALlBySuperAdmin/${idSuperAdmin}`
-
       );
       setOrangTuaList(response.data);
     } catch (error) {
@@ -99,11 +95,7 @@ function AddUser() {
 
   const GetAllKelas = async () => {
     try {
-      const response = await axios.get(
-
-       `${API_DUMMY}/api/kelas/kelas/all`
-
-      );
+      const response = await axios.get(`${API_DUMMY}/api/kelas/kelas/all`);
       setKelasList(response.data);
     } catch (error) {
       console.log(error);
@@ -181,8 +173,7 @@ function AddUser() {
                         />
                         <label
                           htmlFor="email"
-                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                        >
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                           Email
                         </label>
                       </div>
@@ -200,8 +191,7 @@ function AddUser() {
                         />
                         <label
                           htmlFor="username"
-                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                        >
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                           Username
                         </label>
                       </div>
@@ -209,32 +199,32 @@ function AddUser() {
                     <div className="relative z-0 w-full mb-6 group">
                       <label
                         htmlFor="id_organisasi"
-                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                      >
+                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                         Admin
                       </label>
                       <select
                         value={idAdmin || ""}
                         onChange={(e) => setIdAdmin(Number(e.target.value))}
                         name="id_organisasi"
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                      >
+                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
                         <option value="" disabled selected>
                           Pilih Admin
                         </option>
                         {adminList &&
-                          adminList.slice().reverse().map((org) => (
-                            <option key={org.id} value={org.id}>
-                              {org.username}
-                            </option>
-                          ))}
+                          adminList
+                            .slice()
+                            .reverse()
+                            .map((org) => (
+                              <option key={org.id} value={org.id}>
+                                {org.username}
+                              </option>
+                            ))}
                       </select>
                     </div>
                     <div className="relative z-0 w-full mb-6 group">
                       <label
                         htmlFor="id_organisasi"
-                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                      >
+                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                         Organisasi
                       </label>
                       <select
@@ -243,24 +233,25 @@ function AddUser() {
                           setIdOrganisasi(Number(e.target.value))
                         }
                         name="id_organisasi"
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                      >
+                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
                         <option value="" disabled selected>
                           Pilih Organisasi
                         </option>
                         {organisasiList &&
-                          organisasiList.slice().reverse().map((org) => (
-                            <option key={org.id} value={org.id}>
-                              {org.namaOrganisasi}
-                            </option>
-                          ))}
+                          organisasiList
+                            .slice()
+                            .reverse()
+                            .map((org) => (
+                              <option key={org.id} value={org.id}>
+                                {org.namaOrganisasi}
+                              </option>
+                            ))}
                       </select>
                     </div>
                     <div className="relative z-0 w-full mb-6 group">
                       <label
                         htmlFor="id_organisasi"
-                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                      >
+                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                         Jabatan
                       </label>
                       <select
@@ -268,85 +259,90 @@ function AddUser() {
                         value={idJabatan || ""}
                         onChange={(e) => setIdJabatan(Number(e.target.value))}
                         name="id_jabatan"
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                      >
+                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
                         <option value="" disabled selected>
                           Pilih Jabatan
                         </option>
-                        {jabatanList.slice().reverse().map((jab) => (
-                          <option key={jab.idJabatan} value={jab.idJabatan}>
-                            {jab.namaJabatan}
-                          </option>
-                        ))}
+                        {jabatanList
+                          .slice()
+                          .reverse()
+                          .map((jab) => (
+                            <option key={jab.idJabatan} value={jab.idJabatan}>
+                              {jab.namaJabatan}
+                            </option>
+                          ))}
                       </select>
                     </div>
                     <div className="relative z-0 w-full mb-6 group">
                       <label
                         htmlFor="id_organisasi"
-                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                      >
-                        Shift
+                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                        Waktu Pembelajaran
                       </label>
                       <select
                         name="id_shift"
                         value={idShift || ""}
                         onChange={(e) => setIdShift(Number(e.target.value))}
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                      >
+                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
                         <option value="" disabled selected>
-                          Pilih Shift
+                          Pilih Waktu Pembelajaran
                         </option>
-                        {shiftList.slice().reverse().map((sft) => (
-                          <option key={sft.id} value={sft.id}>
-                            {sft.namaShift}
-                          </option>
-                        ))}
+                        {shiftList
+                          .slice()
+                          .reverse()
+                          .map((sft) => (
+                            <option key={sft.id} value={sft.id}>
+                              {sft.namaShift}
+                            </option>
+                          ))}
                       </select>
                     </div>
                     <div className="relative z-0 w-full mb-6 group">
                       <label
                         htmlFor="id_kelas"
-                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                      >
+                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                         Kelas
                       </label>
                       <select
                         name="id_kelas"
                         value={idKelas || ""}
                         onChange={(e) => setIdKelas(Number(e.target.value))}
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                      >
+                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
                         <option value="" disabled selected>
                           Pilih Kelas
                         </option>
-                        {kelasList.slice().reverse().map((kls) => (
-                          <option key={kls.id} value={kls.id}>
-                            {kls.namaKelas}
-                          </option>
-                        ))}
+                        {kelasList
+                          .slice()
+                          .reverse()
+                          .map((kls) => (
+                            <option key={kls.id} value={kls.id}>
+                              {kls.namaKelas}
+                            </option>
+                          ))}
                       </select>
                     </div>
                     <div className="relative z-0 w-full mb-6 group">
                       <label
                         htmlFor="id_orang_tua"
-                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                      >
+                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                         Wali Murid
                       </label>
                       <select
                         name="id_orang_tua"
                         value={idOrangTua || ""}
                         onChange={(e) => setIdOrangTua(Number(e.target.value))}
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                      >
+                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
                         <option value="" disabled selected>
                           Pilih Wali Murid
                         </option>
-                        {orangTuaList.slice().reverse().map((ortu) => (
-                          <option key={ortu.id} value={ortu.id}>
-                            {ortu.nama}
-                          </option>
-                        ))}
+                        {orangTuaList
+                          .slice()
+                          .reverse()
+                          .map((ortu) => (
+                            <option key={ortu.id} value={ortu.id}>
+                              {ortu.nama}
+                            </option>
+                          ))}
                       </select>
                     </div>
                     <div className="relative z-0 w-full mb-6 group">
@@ -363,8 +359,7 @@ function AddUser() {
                       />
                       <label
                         htmlFor="password"
-                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                      >
+                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                         Password
                       </label>
                     </div>
@@ -388,8 +383,7 @@ function AddUser() {
                       </div>
                       <label
                         htmlFor="showpass"
-                        className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                      >
+                        className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                         Show Password
                       </label>
                     </div>
@@ -397,14 +391,12 @@ function AddUser() {
                   <div className="flex justify-between">
                     <a
                       className="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                      href="/superadmin/data-user"
-                    >
+                      href="/superadmin/data-user">
                       <FontAwesomeIcon icon={faArrowLeft} />
                     </a>
                     <button
                       type="submit"
-                      className="text-white bg-indigo-500 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800"
-                    >
+                      className="text-white bg-indigo-500 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
                       <FontAwesomeIcon icon={faFloppyDisk} />
                     </button>
                   </div>

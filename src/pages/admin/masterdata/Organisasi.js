@@ -280,6 +280,8 @@ function Organisasi() {
                 totalPages={totalPages}
                 onPageChange={onPageChange}
                 showIcons
+                previousLabel=""
+                nextLabel=""
               />
             </div>
           </div>

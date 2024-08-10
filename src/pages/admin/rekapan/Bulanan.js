@@ -55,7 +55,7 @@ function Bulanan() {
       link.href = url;
       link.setAttribute(
         "download",
-        `Absensi-Bulanan : ${getMonthName(bulan)}-${tahun} .xlsx`
+        `Presensi-Bulanan : ${getMonthName(bulan)}-${tahun} .xlsx`
       );
       document.body.appendChild(link);
       link.click();
@@ -131,7 +131,7 @@ function Bulanan() {
           <div className="tabel-absen bg-white p-5 rounded-xl shadow-xl border border-gray-300">
             <div className="flex justify-between">
               <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
-                Rekap Bulanan Semua Karyawan
+                Rekap Bulanan Semua Siswa
               </h6>
             </div>
             <hr />
@@ -267,7 +267,7 @@ function Bulanan() {
                     <tr>
                       <td colSpan="10" className="text-center py-3">
                         <h1 className="text-2xl font-bold text-center text-gray-900 dark:text-white mt-5 mb-3">
-                          Tidak Ada Absensi di Bulan Ini!!!
+                          Tidak Ada Presensi di Bulan Ini!!!
                         </h1>
                         <p className="text-center">
                           Silahkan pilih bulan dan tahun lain

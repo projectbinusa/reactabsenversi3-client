@@ -377,6 +377,8 @@ function Cuti() {
                 totalPages={totalPages}
                 onPageChange={onPageChange}
                 showIcons
+                previousLabel=""
+                nextLabel=""
               />
             </div>
           </div>

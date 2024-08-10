@@ -199,7 +199,7 @@ function App() {
               <Route path="/admin/editI/:id" component={EditInformasi} exact />
               {/* rekapan */}
               <Route path="/admin/simpel" component={Simpel} exact />
-              <Route path="/admin/perkaryawan" component={Perkaryawan} exact />
+              <Route path="/admin/persiswa" component={Perkaryawan} exact />
               <Route path="/admin/harian" component={Harian} exact />
               <Route path="/admin/mingguan" component={Mingguan} exact />
               <Route path="/admin/bulanan" component={Bulanan} exact />
