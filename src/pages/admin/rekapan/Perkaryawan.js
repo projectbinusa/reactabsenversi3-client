@@ -73,7 +73,7 @@ function Perkaryawan() {
     if (!selectedUser) {
       Swal.fire(
         "Peringatan",
-        "Silakan pilih karyawan terlebih dahulu",
+        "Silakan pilih siswa terlebih dahulu",
         "warning"
       );
       return;

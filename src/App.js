@@ -151,7 +151,7 @@ function App() {
               <Route path="/admin/dashboard" component={Dashboard} exact />
               <Route path="/admin/profil" component={Profil} exact />
               {/* master data */}
-              <Route path="/admin/karyawan" component={Karyawan} exact />
+              <Route path="/admin/siswa" component={Karyawan} exact />
               <Route path="/admin/kelas" component={KelasSiswa} exact />
               <Route path="/admin/jabatan" component={Jabatan} exact />
               <Route path="/admin/shift" component={Shift} exact />
