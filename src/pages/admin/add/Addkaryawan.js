@@ -72,11 +72,7 @@ function AddKaryawan() {
 
   const GetAllOrangTua = async () => {
     try {
-      const response = await axios.get(
-
-        `${API_DUMMY}/api/orang-tua/all`
-
-      );
+      const response = await axios.get(`${API_DUMMY}/api/orang-tua/all`);
       setOrangTuaList(response.data);
     } catch (error) {
       console.log(error);
@@ -86,16 +82,13 @@ function AddKaryawan() {
   const GetAllKelas = async () => {
     try {
       const response = await axios.get(
-
-       `${API_DUMMY}/api/kelas/getALlByAdmin/${idAdmin}`
-
+        `${API_DUMMY}/api/kelas/getALlByAdmin/${idAdmin}`
       );
       setKelasList(response.data);
     } catch (error) {
       console.log(error);
     }
   };
-
 
   const tambahKaryawan = async (e) => {
     e.preventDefault();
@@ -204,11 +197,14 @@ function AddKaryawan() {
                           Pilih Organisasi
                         </option>
                         {organisasiList &&
-                          organisasiList.slice().reverse().map((org) => (
-                            <option key={org.id} value={org.id}>
-                              {org.namaOrganisasi}
-                            </option>
-                          ))}
+                          organisasiList
+                            .slice()
+                            .reverse()
+                            .map((org) => (
+                              <option key={org.id} value={org.id}>
+                                {org.namaOrganisasi}
+                              </option>
+                            ))}
                       </select>
                     </div>
                     <div className="relative z-0 w-full mb-6 group">
@@ -228,11 +224,14 @@ function AddKaryawan() {
                         <option value="" disabled>
                           Pilih Jabatan
                         </option>
-                        {jabatanList.slice().reverse().map((jab) => (
-                          <option key={jab.idJabatan} value={jab.idJabatan}>
-                            {jab.namaJabatan}
-                          </option>
-                        ))}
+                        {jabatanList
+                          .slice()
+                          .reverse()
+                          .map((jab) => (
+                            <option key={jab.idJabatan} value={jab.idJabatan}>
+                              {jab.namaJabatan}
+                            </option>
+                          ))}
                       </select>
                     </div>
                     <div className="relative z-0 w-full mb-6 group">
@@ -251,34 +250,14 @@ function AddKaryawan() {
                         <option value="" disabled>
                           Pilih Shift
                         </option>
-                        {shiftList.slice().reverse().map((sft) => (
-                          <option key={sft.id} value={sft.id}>
-                            {sft.namaShift}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="relative z-0 w-full mb-6 group">
-                      <label
-                        htmlFor="id_kelas"
-                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                      >
-                        Kelas
-                      </label>
-                      <select
-                        name="id_kelas"
-                        value={idKelas || ""}
-                        onChange={(e) => setIdKelas(Number(e.target.value))}
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                      >
-                        <option value="" disabled selected>
-                          Pilih Kelas
-                        </option>
-                        {kelasList.slice().reverse().map((kls) => (
-                          <option key={kls.id} value={kls.id}>
-                            {kls.namaKelas}
-                          </option>
-                        ))}
+                        {shiftList
+                          .slice()
+                          .reverse()
+                          .map((sft) => (
+                            <option key={sft.id} value={sft.id}>
+                              {sft.namaShift}
+                            </option>
+                          ))}
                       </select>
                     </div>
                     <div className="relative z-0 w-full mb-6 group">
@@ -297,11 +276,14 @@ function AddKaryawan() {
                         <option value="" disabled selected>
                           Pilih Wali Murid
                         </option>
-                        {orangTuaList.slice().reverse().map((ortu) => (
-                          <option key={ortu.id} value={ortu.id}>
-                            {ortu.nama}
-                          </option>
-                        ))}
+                        {orangTuaList
+                          .slice()
+                          .reverse()
+                          .map((ortu) => (
+                            <option key={ortu.id} value={ortu.id}>
+                              {ortu.nama}
+                            </option>
+                          ))}
                       </select>
                     </div>
                     <div className="relative z-0 w-full mb-6 group">
