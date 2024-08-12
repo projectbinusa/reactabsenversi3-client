@@ -201,7 +201,7 @@ function Jabatan() {
                         No
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        Nama Jabatan
+                        Status
                       </th>
                       <th scope="col" className="px-6 py-3">
                         Jumlah Siswa

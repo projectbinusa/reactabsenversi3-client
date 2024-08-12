@@ -110,7 +110,7 @@ function ProfilSA() {
       setTimeout(() => {
         Swal.fire("Info", "Silahkan login kembali", "info");
         setTimeout(() => {
-          window.location.href = "/";
+          window.location.href = "/login";
         }, 1000);
       }, 2000);
     } catch (error) {
@@ -175,6 +175,7 @@ function ProfilSA() {
                 {/* Konten tab Profil */}
                 <div className="font-medium text-gray-800 dark:text-white">
                   <div className="profile mt-6 bg-white p-5 rounded-xl shadow-xl border border-gray-300">
+
                     <h2 className="text-xl font-bold">Profile Picture</h2>
                     <div className="flex flex-col items-center mt-4">
                       {/* Placeholder untuk menampilkan gambar profil yang dipilih */}
