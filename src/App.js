@@ -13,6 +13,7 @@ import DetailOrganisasi from "./pages/admin/detail/DetailOrganisasi";
 import Login from "./pages/Login";
 import {
   BrowserRouter,
+  Redirect,
   Route,
   Switch,
 } from "react-router-dom/cjs/react-router-dom.min";
@@ -108,6 +109,9 @@ import ForgotPassAdmin from "./pages/admin/ForgotPassAdmin";
 import VerifyCodeAdmin from "./pages/admin/VerifyCodeAdmin";
 import ResetPasswordAdmin from "./pages/admin/ResetPassAdmin";
 import ProfileOrtu from "./pages/orangtua/Profile";
+import IndexDashboard from "./pages/IndexDashboard";
+import PrivateRoute from "./utils/PrivateRoute";
+import NotFound from "./pages/NotFound";
 
 function App() {
   const role = localStorage.getItem("role");
@@ -115,7 +119,7 @@ function App() {
     <BrowserRouter>
       <main>
         <Switch>
-          <Route path="/" component={Login} exact />
+          <Route path="/login" component={Login} exact />
           <Route path="/register" component={Register} exact />
           <Route path="/registerUser" component={RegisterUser} exact />
           <Route path="/registerSA" component={RegisterSuperadmin} exact />
@@ -143,257 +147,423 @@ function App() {
             component={ResetPasswordAdmin}
             exact
           />
+          <PrivateRoute path="/" component={IndexDashboard} exact />
+          <Route component={NotFound} />
 
           {/* start admin */}
           {/* Admin Routes */}
-          {role === "ADMIN" && (
+          {role === "ADMIN" ? (
             <>
-              <Route path="/admin/dashboard" component={Dashboard} exact />
-              <Route path="/admin/profil" component={Profil} exact />
+              {/* orang tua */}
+              <PrivateRoute path="/admin/ortu" component={OrangTua} exact />
+              <PrivateRoute path="/admin/addOrtu" component={AddOrtu} exact />
+              <PrivateRoute
+                path="/admin/editOrtu/:id"
+                component={EditOrtu}
+                exact
+              />
+              <PrivateRoute
+                path="/admin/detailOrtu/:id"
+                component={DetailOrtu}
+                exact
+              />
+              <PrivateRoute
+                path="/admin/dashboard"
+                component={Dashboard}
+                exact
+              />
+              <PrivateRoute path="/admin/profil" component={Profil} exact />
               {/* master data */}
-              <Route path="/admin/siswa" component={Karyawan} exact />
-              <Route path="/admin/kelas" component={KelasSiswa} exact />
-              <Route path="/admin/jabatan" component={Jabatan} exact />
-              <Route path="/admin/shift" component={Shift} exact />
-              <Route path="/admin/lokasi" component={Lokasi} exact />
-              <Route path="/admin/organisasi" component={Organisasi} exact />
-              <Route path="/admin/informasi" component={Informasi} exact />
-              <Route
+              <PrivateRoute path="/admin/siswa" component={Karyawan} exact />
+              <PrivateRoute path="/admin/kelas" component={KelasSiswa} exact />
+              <PrivateRoute path="/admin/jabatan" component={Jabatan} exact />
+              <PrivateRoute path="/admin/shift" component={Shift} exact />
+              <PrivateRoute path="/admin/lokasi" component={Lokasi} exact />
+              <PrivateRoute
+                path="/admin/organisasi"
+                component={Organisasi}
+                exact
+              />
+              <PrivateRoute
+                path="/admin/informasi"
+                component={Informasi}
+                exact
+              />
+              <PrivateRoute
                 path="/admin/detailK/:id"
                 component={DetailKaryawan}
                 exact
               />
-              <Route
+              <PrivateRoute
                 path="/admin/detailLembur/:id"
                 component={DetailLembur}
                 exact
               />
-              <Route path="/admin/detailL/:id" component={DetailLokasi} exact />
-              <Route
+              <PrivateRoute
+                path="/admin/detailL/:id"
+                component={DetailLokasi}
+                exact
+              />
+              <PrivateRoute
                 path="/admin/detailO/:id"
                 component={DetailOrganisasi}
                 exact
               />
-              <Route
+              <PrivateRoute
                 path="/admin/detailA/:id"
                 component={DetailAbsensi}
                 exact
               />
-              <Route path="/admin/addkary" component={Addkaryawan} exact />
-              <Route path="/admin/addjab" component={AddJabatan} exact />
-              <Route path="/admin/addshift" component={AddShift} exact />
-              <Route path="/admin/addlok" component={AddLokasi} exact />
-              <Route path="/admin/addor" component={AddOrganisasi} exact />
-              <Route path="/admin/addkelas" component={AddKelas} exact />
-              <Route
+              <PrivateRoute
+                path="/admin/addkary"
+                component={Addkaryawan}
+                exact
+              />
+              <PrivateRoute path="/admin/addjab" component={AddJabatan} exact />
+              <PrivateRoute path="/admin/addshift" component={AddShift} exact />
+              <PrivateRoute path="/admin/addlok" component={AddLokasi} exact />
+              <PrivateRoute
+                path="/admin/addor"
+                component={AddOrganisasi}
+                exact
+              />
+              <PrivateRoute path="/admin/addkelas" component={AddKelas} exact />
+              <PrivateRoute
                 path="/admin/addinformasi"
                 component={AddInformasi}
                 exact
               />
-              <Route path="/admin/editK/:id" component={EditKaryawan} exact />
-              <Route path="/admin/editJ/:id" component={EditJabatan} exact />
-              <Route path="/admin/editL/:id" component={EditLokasi} exact />
-              <Route path="/admin/editO/:id" component={EditOrganisasi} exact />
-              <Route path="/admin/editS/:id" component={EditShift} exact />
-              <Route path="/admin/editkelas/:id" component={EditKelas} exact />
-              <Route path="/admin/editI/:id" component={EditInformasi} exact />
+              <PrivateRoute
+                path="/admin/editK/:id"
+                component={EditKaryawan}
+                exact
+              />
+              <PrivateRoute
+                path="/admin/editJ/:id"
+                component={EditJabatan}
+                exact
+              />
+              <PrivateRoute
+                path="/admin/editL/:id"
+                component={EditLokasi}
+                exact
+              />
+              <PrivateRoute
+                path="/admin/editO/:id"
+                component={EditOrganisasi}
+                exact
+              />
+              <PrivateRoute
+                path="/admin/editS/:id"
+                component={EditShift}
+                exact
+              />
+              <PrivateRoute
+                path="/admin/editkelas/:id"
+                component={EditKelas}
+                exact
+              />
+              <PrivateRoute
+                path="/admin/editI/:id"
+                component={EditInformasi}
+                exact
+              />
               {/* rekapan */}
-              <Route path="/admin/simpel" component={Simpel} exact />
-              <Route path="/admin/persiswa" component={Perkaryawan} exact />
-              <Route path="/admin/harian" component={Harian} exact />
-              <Route path="/admin/mingguan" component={Mingguan} exact />
-              <Route path="/admin/bulanan" component={Bulanan} exact />
-              <Route path="/admin/perkelas" component={Perkelas} exact />
-              <Route
+              <PrivateRoute path="/admin/simpel" component={Simpel} exact />
+              <PrivateRoute
+                path="/admin/persiswa"
+                component={Perkaryawan}
+                exact
+              />
+              <PrivateRoute path="/admin/harian" component={Harian} exact />
+              <PrivateRoute path="/admin/mingguan" component={Mingguan} exact />
+              <PrivateRoute path="/admin/bulanan" component={Bulanan} exact />
+              <PrivateRoute path="/admin/perkelas" component={Perkelas} exact />
+              <PrivateRoute
                 path="/admin/bulanan/perkelas"
                 component={BulanPerkelas}
                 exact
               />
-              <Route
+              <PrivateRoute
                 path="/admin/harian/perkelas"
                 component={HarianPerkelas}
                 exact
               />
               {/* data absensi */}
-              <Route path="/admin/absensi" component={Absensi} exact />
-              <Route path="/admin/cuti" component={Cuti} exact />
-              <Route path="/admin/kehadiran" component={Kehadiran} exact />
-              <Route path="/admin/lembur" component={Lembur} exact />
-              <Route
+              <PrivateRoute path="/admin/absensi" component={Absensi} exact />
+              <PrivateRoute path="/admin/cuti" component={Cuti} exact />
+              <PrivateRoute
+                path="/admin/kehadiran"
+                component={Kehadiran}
+                exact
+              />
+              <PrivateRoute path="/admin/lembur" component={Lembur} exact />
+              <PrivateRoute
                 path="/admin/siswa/kelas/:id"
                 component={SiswaperKelas}
                 exact
               />
-              <Route
+              <PrivateRoute
                 path="/admin/bulanan/perkelas"
                 component={BulanPerkelas}
                 exact
               />
-              <Route
+              <PrivateRoute
                 path="/admin/mingguan/perkelas"
                 component={MingguanPerkelas}
                 exact
+              />
+            </>
+          ) : (
+            <>
+              <Redirect
+                to={{
+                  pathname: "/page/notfound",
+                }}
               />
             </>
           )}
           {/* end admin */}
           {/* {role === "USER" && "Wali Murid" ? (
             <> */}
-          <Route path="/user/detail_absen/:id" component={DetailAbsen} exact />
+          <PrivateRoute
+            path="/user/detail_absen/:id"
+            component={DetailAbsen}
+            exact
+          />
           {/* </>
           ) : (
             <></>
           )} */}
 
           {/* /* start user */}
-          {role === "USER" && (
+          {role === "USER" ? (
             <>
-              <Route path="/user/dashboard" component={DashboardUser} exact />
-              <Route path="/user/history_absen" component={TabelAbsen} exact />
-              <Route path="/user/history_cuti" component={TabelCuti} exact />
-              <Route
+              <PrivateRoute
+                path="/user/dashboard"
+                component={DashboardUser}
+                exact
+              />
+              <PrivateRoute
+                path="/user/history_absen"
+                component={TabelAbsen}
+                exact
+              />
+              <PrivateRoute
+                path="/user/history_cuti"
+                component={TabelCuti}
+                exact
+              />
+              <PrivateRoute
                 path="/user/history_lembur"
                 component={TabelLembur}
                 exact
               />
-              <Route path="/user/cuti" component={AddCuti} exact />
-              <Route path="/user/lembur" component={AddLembur} exact />
-              <Route path="/user/izin" component={AddIzin} exact />
-              <Route path="/user/profile" component={Profile} exact />
-              <Route path="/user/absen" component={AbsenMasuk} exact />
-              <Route path="/user/pulang" component={AbsenPulang} exact />
-              <Route
+              <PrivateRoute path="/user/cuti" component={AddCuti} exact />
+              <PrivateRoute path="/user/lembur" component={AddLembur} exact />
+              <PrivateRoute path="/user/izin" component={AddIzin} exact />
+              <PrivateRoute path="/user/profile" component={Profile} exact />
+              <PrivateRoute path="/user/absen" component={AbsenMasuk} exact />
+              <PrivateRoute path="/user/pulang" component={AbsenPulang} exact />
+              <PrivateRoute
                 path="/user/detail_info/:id"
                 component={Pengumuman}
                 exact
               />
-              <Route path="/user/izin_absen" component={IzinAbsen} exact />
+              <PrivateRoute
+                path="/user/izin_absen"
+                component={IzinAbsen}
+                exact
+              />
+            </>
+          ) : (
+            <>
+              <Redirect
+                to={{
+                  pathname: "/page/notfound",
+                }}
+              />
             </>
           )}
           {/* end user */}
           {/* start superadmin */}
           {/* superadmin Routes */}
-          {role === "SUPERADMIN" && (
+          {role === "SUPERADMIN" ? (
             <>
-              <Route
+              <PrivateRoute
                 path="/superadmin/dashboard"
                 component={DashboardSA}
                 exact
               />
               {/* admin */}
-              <Route path="/superadmin/admin" component={Admin} exact />
-              <Route path="/superadmin/addA" component={AddAdmin} exact />
-              <Route
+              <PrivateRoute path="/superadmin/admin" component={Admin} exact />
+              <PrivateRoute
+                path="/superadmin/addA"
+                component={AddAdmin}
+                exact
+              />
+              <PrivateRoute
                 path="/superadmin/detailA/:id"
                 component={DetailAdmin}
                 exact
               />
-              <Route path="/superadmin/editA/:id" component={EditAdmin} exact />
+              <PrivateRoute
+                path="/superadmin/editA/:id"
+                component={EditAdmin}
+                exact
+              />
               {/* organisasi */}
-              <Route
+              <PrivateRoute
                 path="/superadmin/organisasi"
                 component={OrganisasiSA}
                 exact
               />
-              <Route path="/superadmin/profile" component={ProfilSA} exact />
-              <Route
+              <PrivateRoute
+                path="/superadmin/profile"
+                component={ProfilSA}
+                exact
+              />
+              <PrivateRoute
                 path="/superadmin/addO"
                 component={AddOrganisasiSA}
                 exact
               />
-              <Route
+              <PrivateRoute
                 path="/superadmin/detailO/:id"
                 component={DetailOrganisasiSA}
                 exact
               />
-              <Route
+              <PrivateRoute
                 path="/superadmin/editO/:id"
                 component={EditOrganisasiSA}
                 exact
               />
               {/* jabatan */}
-              <Route path="/superadmin/jabatan" component={JabatanSA} exact />
-              <Route path="/superadmin/addJ" component={AddJabatanSA} exact />
-              <Route
+              <PrivateRoute
+                path="/superadmin/jabatan"
+                component={JabatanSA}
+                exact
+              />
+              <PrivateRoute
+                path="/superadmin/addJ"
+                component={AddJabatanSA}
+                exact
+              />
+              <PrivateRoute
                 path="/superadmin/detailJ/:id"
                 component={DetailJabatanSA}
                 exact
               />
-              <Route
+              <PrivateRoute
                 path="/superadmin/editJ/:idJabatan"
                 component={EditJabatanSA}
                 exact
               />
               {/* shift */}
-              <Route path="/superadmin/shift" component={ShiftSA} exact />
-              <Route
+              <PrivateRoute
+                path="/superadmin/shift"
+                component={ShiftSA}
+                exact
+              />
+              <PrivateRoute
                 path="/superadmin/detailS/:id"
                 component={DetailShiftSA}
                 exact
               />
-              <Route
+              <PrivateRoute
                 path="/superadmin/add-shift"
                 component={AddShiftSA}
                 exact
               />
-              <Route
+              <PrivateRoute
                 path="/superadmin/editS/:id"
                 component={EditShiftSA}
                 exact
               />
-              <Route path="/superadmin/data-user" component={User} exact />
-              <Route path="/superadmin/addU" component={AddUser} exact />
-              <Route path="/superadmin/editU/:id" component={EditUser} exact />
-              <Route
+              <PrivateRoute
+                path="/superadmin/data-user"
+                component={User}
+                exact
+              />
+              <PrivateRoute path="/superadmin/addU" component={AddUser} exact />
+              <PrivateRoute
+                path="/superadmin/editU/:id"
+                component={EditUser}
+                exact
+              />
+              <PrivateRoute
                 path="/superadmin/detailU/:id"
                 component={DetailUser}
                 exact
               />
-              <Route path="/superadmin/lokasi" component={LokasiSA} exact />
-              <Route
+              <PrivateRoute
+                path="/superadmin/lokasi"
+                component={LokasiSA}
+                exact
+              />
+              <PrivateRoute
                 path="/superadmin/addLokasi"
                 component={AddLokasiSA}
                 exact
               />
-              <Route
+              <PrivateRoute
                 path="/superadmin/editLokasi/:idLokasi"
                 component={EditLokasiSA}
                 exact
               />
-              <Route
+              <PrivateRoute
                 path="/superadmin/detailLokasi/:idLokasi"
                 component={DetailLokasiSA}
                 exact
               />
-              <Route path="/superadmin/absensi" component={AbsensiSA} exact />
-              <Route
+              <PrivateRoute
+                path="/superadmin/absensi"
+                component={AbsensiSA}
+                exact
+              />
+              <PrivateRoute
                 path="/superadmin/detailAbsensi/:id"
                 component={DetailAbsensiSA}
                 exact
               />
-              {/* orang tua */}
-              <Route path="/superadmin/ortu" component={OrangTua} exact />
-              <Route path="/superadmin/addOrtu" component={AddOrtu} exact />
-              <Route
-                path="/superadmin/editOrtu/:id"
-                component={EditOrtu}
-                exact
-              />
-              <Route
-                path="/superadmin/detailOrtu/:id"
-                component={DetailOrtu}
-                exact
+            </>
+          ) : (
+            <>
+              <Redirect
+                to={{
+                  pathname: "/page/notfound",
+                }}
               />
             </>
           )}
           {/* end superadmin */}
-          <Route path="/walimurid/dashboard" component={DashboardOrtu} exact />
-          <Route
-            path="/walimurid/detail_info/:id"
-            component={DetailPengumuman}
-            exact
-          />
-          <Route path="/walimurid/profile" component={ProfileOrtu} exact />
+          {role == "Wali Murid" ? (
+            <>
+              <PrivateRoute
+                path="/walimurid/dashboard"
+                component={DashboardOrtu}
+                exact
+              />
+              <PrivateRoute
+                path="/walimurid/detail_info/:id"
+                component={DetailPengumuman}
+                exact
+              />
+              <PrivateRoute
+                path="/walimurid/profile"
+                component={ProfileOrtu}
+                exact
+              />
+            </>
+          ) : (
+            <>
+              <Redirect
+                to={{
+                  pathname: "/page/notfound",
+                }}
+              />
+            </>
+          )}
         </Switch>
       </main>
     </BrowserRouter>

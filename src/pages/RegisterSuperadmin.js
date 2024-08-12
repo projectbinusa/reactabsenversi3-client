@@ -74,7 +74,7 @@ function RegisterSuperadmin() {
             showConfirmButton: false,
             timer: 1500,
           });
-          history.push("/");
+          history.push("/login");
           setTimeout(() => {
             window.location.reload();
           }, 1500);
@@ -157,7 +157,7 @@ function RegisterSuperadmin() {
                 </button>
                 <p className="mt-6 text-base text-gray-600 text-center">
                   Sudah mempunyai akun?
-                  <a href="/" className="border-b border-gray-500 border-dotted">
+                  <a href="/login" className="border-b border-gray-500 border-dotted">
                     Login
                   </a>
                 </p>

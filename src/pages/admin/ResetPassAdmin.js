@@ -40,7 +40,7 @@ function ResetPasswordAdmin() {
           showConfirmButton: false,
           timer: 1500,
         });
-        window.location.href = "/";
+        window.location.href = "/login";
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {

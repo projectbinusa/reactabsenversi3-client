@@ -29,26 +29,26 @@ function Login() {
         localStorage.setItem("adminId", data.data.id);
         localStorage.setItem("loginSuccess", "true");
 
-        window.location.href = "/admin/dashboard";
+        window.location.href = "/";
       } else if (data.data.role === "USER") {
         localStorage.setItem("token", data.token);
         localStorage.setItem("role", data.data.role);
         localStorage.setItem("userId", data.data.id);
         localStorage.setItem("loginSuccess", "true");
 
-        window.location.href = "/user/dashboard";
+        window.location.href = "/";
       } else if (data.data.role === "SUPERADMIN") {
         localStorage.setItem("token", data.token);
         localStorage.setItem("role", data.data.role);
         localStorage.setItem("superadminId", data.data.id);
         localStorage.setItem("loginSuccess", "true");
-        window.location.href = "/superadmin/dashboard";
+        window.location.href = "/";
       } else if (data.data.role === "Wali Murid") {
         localStorage.setItem("token", data.token);
         localStorage.setItem("role", data.data.role);
         localStorage.setItem("id_orangtua", data.data.id);
         localStorage.setItem("loginSuccess", "true");
-        window.location.href = "/walimurid/dashboard";
+        window.location.href = "/";
       }
     } catch (error) {
       Swal.fire({

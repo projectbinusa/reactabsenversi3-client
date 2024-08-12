@@ -110,7 +110,7 @@ function ProfilSA() {
       setTimeout(() => {
         Swal.fire("Info", "Silahkan login kembali", "info");
         setTimeout(() => {
-          window.location.href = "/";
+          window.location.href = "/login";
         }, 1000);
       }, 2000);
     } catch (error) {
@@ -170,11 +170,14 @@ function ProfilSA() {
         <div className="flex h-full">
           <Sidebar />
           <div className="content-page container p-8 ml-0 md:ml-72 mt-20">
+          <div className="content-page container p-8 min-h-screen ml-0 md:ml-64 mt-10">
             <Tabs aria-label="Tabs with underline" style="underline">
               <Tabs.Item active title="Profile" icon={HiUserCircle}>
                 {/* Konten tab Profil */}
                 <div className="font-medium text-gray-800 dark:text-white">
                   <div className="profile mt-6 bg-white p-5 rounded-xl shadow-xl border border-gray-300">
+                  <div className="profile bg-white p-5 rounded-xl shadow-xl border border-gray-300">
+
                     <h2 className="text-xl font-bold">Profile Picture</h2>
                     <div className="flex flex-col items-center mt-4">
                       {/* Placeholder untuk menampilkan gambar profil yang dipilih */}
@@ -221,6 +224,7 @@ function ProfilSA() {
                       </button>
                     </div>
                   </div>
+                </div>
                 </div>
               </Tabs.Item>
 
@@ -379,6 +383,7 @@ function ProfilSA() {
             </Tabs>
           </div>
         </div>
+      </div>
       </div>
     </>
   );
