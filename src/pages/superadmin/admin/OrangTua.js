@@ -178,7 +178,7 @@ function OrangTua() {
   const downloadTemplate = async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/orangtua/download/template-orang-tua`,
+        `${API_DUMMY}/api/orang-tua/download/template-orang-tua`,
         {
           responseType: "blob",
         }
