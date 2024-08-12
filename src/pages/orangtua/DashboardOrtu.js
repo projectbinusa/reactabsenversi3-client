@@ -128,7 +128,7 @@ function DashboardOrtu() {
       );
 
       setOrganisasiData(response.data);
-      console.log("list terlambat", response.data);
+      console.log("list terlambat", response.data.user.orangtua.map((dt) => dt.nama));
     } catch (error) {
       console.error("Error fetching data:", error);
     }
