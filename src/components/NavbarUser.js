@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Logo from "../components/logo.png";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Link, useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import axios from "axios";
 import { API_DUMMY } from "../utils/api";
 import Swal from "sweetalert2";
@@ -10,6 +10,10 @@ const Navbar = ({ toggleSidebar }) => {
   const [profileOrtu, setProfileOrtu] = useState([]);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const id_ortu = localStorage.getItem("id_orangtua");
+  const location = useLocation();
+  const isActive = (paths) => {
+    return paths.some((path) => location.pathname.startsWith(path));
+  };
 
   const role = localStorage.getItem("role");
 
@@ -65,7 +69,7 @@ const Navbar = ({ toggleSidebar }) => {
           showConfirmButton: false,
           timer: 1000,
         }).then(() => {
-          window.location.href = "/";
+          window.location.href = "/login";
         });
       }
     });
@@ -131,24 +135,44 @@ const Navbar = ({ toggleSidebar }) => {
                     tabIndex="-1">
                     {localStorage.getItem("role") == "USER" ? (
                       <>
-                        <Link to="/user/profile">
+                        <Link
+                          to="/user/profile"
+                          className={`block text-sm text-gray-700 dark:text-white ${
+                            isActive(["/user/profile"])
+                              ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                              : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
+                          }`}>
                           <button
                             role="menuitem"
                             tabIndex="-1"
                             id="user-menu-item-0"
-                            className="block px-4 py-2 text-sm text-gray-700 dark:text-white">
+                            className={`block px-4 py-2 text-sm text-gray-700 dark:text-white ${
+                              isActive(["/user/profile"])
+                                ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                                : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
+                            }`}>
                             Profile
                           </button>
                         </Link>
                       </>
                     ) : localStorage.getItem("role") == "Wali Murid" ? (
                       <>
-                        <Link to="/walimurid/profile">
+                        <Link
+                          to="/walimurid/profile"
+                          className={`block text-sm text-gray-700 dark:text-white ${
+                            isActive(["/walimurid/profile"])
+                              ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                              : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
+                          }`}>
                           <button
                             role="menuitem"
                             tabIndex="-1"
                             id="user-menu-item-0"
-                            className="block px-4 py-2 text-sm text-gray-700 dark:text-white">
+                            className={`block px-4 py-2 text-sm text-gray-700 dark:text-white ${
+                              isActive(["/walimurid/profile"])
+                                ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                                : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
+                            }`}>
                             Profile
                           </button>
                         </Link>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Logo from "../components/logo.png";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Link, useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import axios from "axios";
 import { API_DUMMY } from "../utils/api";
 import Swal from "sweetalert2";
@@ -12,6 +12,10 @@ const NavbarSuper = () => {
   const role = localStorage.getItem("role");
   const id = localStorage.getItem("superadminId");
   const id_ortu = localStorage.getItem("id_orangtua");
+  const location = useLocation();
+  const isActive = (paths) => {
+    return paths.some((path) => location.pathname.startsWith(path));
+  };
 
   const getSu = async () => {
     try {
@@ -66,7 +70,7 @@ const NavbarSuper = () => {
           showConfirmButton: false,
           timer: 1000,
         }).then(() => {
-          window.location.href = "/";
+          window.location.href = "/login";
         });
       }
     });
@@ -82,21 +86,18 @@ const NavbarSuper = () => {
               data-drawer-toggle="logo-sidebar"
               aria-controls="logo-sidebar"
               type="button"
-              className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-indigo-500 dark:focus:ring-gray-600"
-            >
+              className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-indigo-500 dark:focus:ring-gray-600">
               <span className="sr-only">Open sidebar</span>
               <svg
                 className="w-6 h-6"
                 aria-hidden="true"
                 fill="currentColor"
                 viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
+                xmlns="http://www.w3.org/2000/svg">
                 <path
                   clipRule="evenodd"
                   fillRule="evenodd"
-                  d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
-                ></path>
+                  d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
               </svg>
             </button>
             <a href="" className="flex ms-2 md:me-24">
@@ -115,8 +116,7 @@ const NavbarSuper = () => {
                   onClick={toggleUserMenu}
                   id="user-menu-button"
                   aria-expanded={userMenuOpen}
-                  aria-haspopup="true"
-                >
+                  aria-haspopup="true">
                   <span className="sr-only">Open user menu</span>
                   {localStorage.getItem("role") == "SUPERADMIN" ? (
                     <>
@@ -154,30 +154,47 @@ const NavbarSuper = () => {
                     aria-orientation="vertical"
                     aria-labelledby="user-menu-button"
                     className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1"
-                    tabIndex="-1"
-                  >
+                    tabIndex="-1">
                     {localStorage.getItem("role") == "SUPERADMIN" ? (
                       <>
-                        <Link to="/superadmin/profile">
+                        <Link
+                          to="/superadmin/profile"
+                          className={`block text-sm text-gray-700 dark:text-white ${
+                            isActive(["/superadmin/profile"])
+                              ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                              : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
+                          }`}>
                           <button
                             role="menuitem"
                             tabIndex="-1"
                             id="user-menu-item-0"
-                            className="block px-4 py-2 text-sm text-gray-700 dark:text-white"
-                          >
+                            className={`block px-4 py-2 text-sm text-gray-700 dark:text-white ${
+                              isActive(["/superadmin/profile"])
+                                ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                                : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
+                            }`}>
                             Profile
                           </button>
                         </Link>
                       </>
                     ) : localStorage.getItem("role") == "Wali Murid" ? (
                       <>
-                        <Link to="/walimurid/profile">
+                        <Link
+                          className={`block text-sm text-gray-700 dark:text-white ${
+                            isActive(["/walimurid/profile"])
+                              ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                              : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
+                          }`}
+                          to="/walimurid/profile">
                           <button
                             role="menuitem"
                             tabIndex="-1"
                             id="user-menu-item-0"
-                            className="block px-4 py-2 text-sm text-gray-700 dark:text-white"
-                          >
+                            className={`block px-4 py-2 text-sm text-gray-700 dark:text-white ${
+                              isActive(["/walimurid/profile"])
+                                ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                                : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
+                            }`}>
                             Profile
                           </button>
                         </Link>
@@ -190,8 +207,7 @@ const NavbarSuper = () => {
                       role="menuitem"
                       tabIndex="-1"
                       id="user-menu-item-2"
-                      className="block px-4 py-2 text-sm text-gray-700 dark:text-white w-full text-left"
-                    >
+                      className="block px-4 py-2 text-sm text-gray-700 dark:text-white w-full text-left">
                       Keluar
                     </button>
                   </div>

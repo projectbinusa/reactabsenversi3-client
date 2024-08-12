@@ -300,17 +300,17 @@ const Sidebar = () => {
                       to="/admin/shift"
                       className={`${
                         isActive(["/admin/shift"])
-                        ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
-                        : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
-                    } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
-                    <FontAwesomeIcon
-                      className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
-                        isActive(["/admin/shift"])
-                          ? "text-white hover:text-black"
-                          : "text-blue-500"
-                      }`}
-                      icon={faBriefcase}
-                    />{" "}
+                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                          : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
+                      } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
+                      <FontAwesomeIcon
+                        className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
+                          isActive(["/admin/shift"])
+                            ? "text-white hover:text-black"
+                            : "text-blue-500"
+                        }`}
+                        icon={faBriefcase}
+                      />{" "}
                       <span className="flex-1 ml-3 whitespace-nowrap">
                         Waktu Pembelajaran
                       </span>
@@ -1041,9 +1041,31 @@ const Sidebar = () => {
                   </li>
                 </ul>
               </li>
+                {/* <!-- Menu PerKaryawan --> */}
+                <li>
+                  <Link
+                    to="/superadmin/absensi"
+                    className={`flex items-center p-2 rounded-lg ${
+                      isActive(["/superadmin/absensi"])
+                        ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                        : "text-blue-900 transition duration-75group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
+                    }`}>
+                    <FontAwesomeIcon
+                      className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
+                        isActive(["/superadmin/absensi"])
+                          ? "text-white hover:text-black"
+                          : "text-blue-500"
+                      }`}
+                      icon={faAddressCard}
+                    />{" "}
+                    <span className="flex-1 ml-3 whitespace-nowrap">
+                      Presensi
+                    </span>
+                  </Link>
+                </li>
               {/* <!-- Dropdown user --> */}
-              <li>
-                <button
+              {/* <li> */}
+                {/* <button
                   type="button"
                   className="flex items-center w-full p-2 text-base text-blue-900 transition duration-75 rounded-lg group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
                   // aria-controls="dropdown-example"
@@ -1060,15 +1082,15 @@ const Sidebar = () => {
                     icon={rekapanOpen ? faChevronUp : faChevronDown}
                     className="flex-shrink-0 w-4 h-4 text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
                   />
-                </button>
+                </button> */}
 
-                <ul
+                {/* <ul
                   // id="dropdown-masterdata"
                   className={`${
                     rekapanOpen ? "" : "hidden" // Tampilkan atau sembunyikan dropdown berdasarkan state masterDataOpen
-                  } py-2 space-y-2`}>
-                  {/* <!-- Menu Simpel --> */}
-                  <li>
+                  } py-2 space-y-2`}> */}
+                {/* <!-- Menu Simpel --> */}
+                {/* <li>
                     <Link
                       to="/superadmin/data-user"
                       className={`flex items-center p-2 rounded-lg  ml-9 pl-3 ${
@@ -1088,36 +1110,14 @@ const Sidebar = () => {
                         User
                       </span>
                     </Link>
-                  </li>
-                  {/* <!-- Menu PerKaryawan --> */}
-                  <li>
-                    <Link
-                      to="/superadmin/absensi"
-                      className={`flex items-center p-2 rounded-lg  ml-9 pl-3 ${
-                        isActive(["/superadmin/absensi"])
-                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
-                          : "text-blue-900 transition duration-75group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                      }`}>
-                      <FontAwesomeIcon
-                        className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
-                          isActive(["/superadmin/absensi"])
-                            ? "text-white hover:text-black"
-                            : "text-blue-500"
-                        }`}
-                        icon={faAddressCard}
-                      />{" "}
-                      <span className="flex-1 ml-3 whitespace-nowrap">
-                        Presensi
-                      </span>
-                    </Link>
-                  </li>
-                </ul>
-              </li>
+                  </li> */}
+                {/* </ul> */}
+              {/* </li> */}
             </ul>
           )}
           {/* <li>
             <Link
-              to="/"
+              to="/login"
               onClick={(e) => {
                 e.preventDefault();
                 logout();
