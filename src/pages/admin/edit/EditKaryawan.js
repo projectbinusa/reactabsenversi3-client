@@ -89,7 +89,7 @@ function EditKaryawan() {
     e.preventDefault();
     try {
       await axios.put(
-        `${API_DUMMY}/api/user/edit-kar/${id}?idJabatan=${idJabatan}&idShift=${idShift}&idOrangTua=${idOrangTua}&idKelas=${idKelas}`,
+        `${API_DUMMY}/api/user/editBYSuper/${id}?idJabatan=${idJabatan}&idShift=${idShift}&idOrangTua=${idOrangTua}&idKelas=${idKelas}`,
         {
           username: username,
         }
