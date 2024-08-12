@@ -148,11 +148,10 @@ function App() {
             exact
           />
           <PrivateRoute path="/" component={IndexDashboard} exact />
-          <Route component={NotFound} />
 
           {/* start admin */}
           {/* Admin Routes */}
-          {role === "ADMIN" ? (
+          {role === "ADMIN" && (
             <>
               {/* orang tua */}
               <PrivateRoute path="/admin/ortu" component={OrangTua} exact />
@@ -314,14 +313,14 @@ function App() {
                 exact
               />
             </>
-          ) : (
-            <>
-              <Redirect
-                to={{
-                  pathname: "/page/notfound",
-                }}
-              />
-            </>
+            // ) : (
+            //   <>
+            //     <Redirect
+            //       to={{
+            //         pathname: "/page/notfound",
+            //       }}
+            //     />
+            //   </>
           )}
           {/* end admin */}
           {/* {role === "USER" && "Wali Murid" ? (
@@ -337,7 +336,7 @@ function App() {
           )} */}
 
           {/* /* start user */}
-          {role === "USER" ? (
+          {role === "USER" && (
             <>
               <PrivateRoute
                 path="/user/dashboard"
@@ -376,19 +375,19 @@ function App() {
                 exact
               />
             </>
-          ) : (
-            <>
-              <Redirect
-                to={{
-                  pathname: "/page/notfound",
-                }}
-              />
-            </>
+            // ) : (
+            //   <>
+            //     <Redirect
+            //       to={{
+            //         pathname: "/page/notfound",
+            //       }}
+            //     />
+            //   </>
           )}
           {/* end user */}
           {/* start superadmin */}
           {/* superadmin Routes */}
-          {role === "SUPERADMIN" ? (
+          {role === "SUPERADMIN" && (
             <>
               <PrivateRoute
                 path="/superadmin/dashboard"
@@ -527,17 +526,17 @@ function App() {
                 exact
               />
             </>
-          ) : (
-            <>
-              <Redirect
-                to={{
-                  pathname: "/page/notfound",
-                }}
-              />
-            </>
+            // ) : (
+            //   <>
+            //     <Redirect
+            //       to={{
+            //         pathname: "/page/notfound",
+            //       }}
+            //     />
+            //   </>
           )}
           {/* end superadmin */}
-          {role == "Wali Murid" ? (
+          {role == "Wali Murid" && (
             <>
               <PrivateRoute
                 path="/walimurid/dashboard"
@@ -555,15 +554,17 @@ function App() {
                 exact
               />
             </>
-          ) : (
-            <>
-              <Redirect
-                to={{
-                  pathname: "/page/notfound",
-                }}
-              />
-            </>
+            // ) : (
+            //   <>
+            //     <Redirect
+            //       to={{
+            //         pathname: "/page/notfound",
+            //       }}
+            //     />
+            //   </>
           )}
+
+          <Route component={NotFound} />
         </Switch>
       </main>
     </BrowserRouter>

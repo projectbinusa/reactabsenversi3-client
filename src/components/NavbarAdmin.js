@@ -150,14 +150,14 @@ const NavbarAdmin = () => {
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="user-menu-button"
-                    className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1"
+                    className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg"
                     tabIndex="-1">
                     {localStorage.getItem("role") == "ADMIN" ? (
                       <>
                         <Link
                           to="/admin/profil"
                           className={`block text-sm text-gray-700 dark:text-white ${
-                            isActive(["/admin/profile"])
+                            isActive(["/admin/profil"])
                               ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
                               : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
                           }`}>
@@ -166,7 +166,7 @@ const NavbarAdmin = () => {
                             tabIndex="-1"
                             id="user-menu-item-0"
                             className={`block px-4 py-2 text-sm text-gray-700 dark:text-white ${
-                              isActive(["/admin/profile"])
+                              isActive(["/admin/profil"])
                                 ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
                                 : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
                             }`}>
