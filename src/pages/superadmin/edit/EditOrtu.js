@@ -17,7 +17,7 @@ function EditOrtu() {
   const [password, setpassword] = useState("");
   const param = useParams();
   const history = useHistory();
-  const idSuperAdmin = localStorage.getItem("superadminId");
+  const idOrtu = localStorage.getItem("adminId");
   const [showPassword, setShowPassword] = useState(false);
 
   const handleShowPasswordChange = () => {
@@ -47,7 +47,7 @@ function EditOrtu() {
 
     try {
       const res = await axios.put(
-        `${API_DUMMY}/api/orang-tua/editOrtuById/${param.id}/${idSuperAdmin}`,
+        `${API_DUMMY}/api/orang-tua/editOrtuById/${param.id}/${idOrtu}`,
         admin,
         {
           headers: {
@@ -66,7 +66,7 @@ function EditOrtu() {
         timer: 1500,
       });
       setTimeout(() => {
-        window.location.href = "/superadmin/ortu";
+        window.location.href = "/admin/ortu";
       }, 1500);
     } catch (error) {
       console.log(error);
@@ -190,7 +190,7 @@ function EditOrtu() {
                 <div className="flex justify-between">
                   <a
                     className="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                    href="/superadmin/ortu"
+                    href="/admin/ortu"
                   >
                     <FontAwesomeIcon icon={faArrowLeft} />
                   </a>
