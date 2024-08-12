@@ -169,12 +169,12 @@ function ProfilSA() {
         <Navbar />
         <div className="flex h-full">
           <Sidebar />
-          <div className="content-page container p-8 ml-0 md:ml-72 mt-20">
+          <div className="content-page container p-8 ml-0 md:ml-72 mt-10">
             <Tabs aria-label="Tabs with underline" style="underline">
               <Tabs.Item active title="Profile" icon={HiUserCircle}>
                 {/* Konten tab Profil */}
                 <div className="font-medium text-gray-800 dark:text-white">
-                  <div className="profile mt-6 bg-white p-5 rounded-xl shadow-xl border border-gray-300">
+                  <div className="profile bg-white p-5 rounded-xl shadow-xl border border-gray-300">
 
                     <h2 className="text-xl font-bold">Profile Picture</h2>
                     <div className="flex flex-col items-center mt-4">
