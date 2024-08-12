@@ -72,7 +72,9 @@ function AddKaryawan() {
 
   const GetAllOrangTua = async () => {
     try {
-      const response = await axios.get(`${API_DUMMY}/api/orang-tua/all`);
+      const response = await axios.get(
+        `${API_DUMMY}/api/orang-tua/getALlBySuperAdmin/${idAdmin}`
+      );
       setOrangTuaList(response.data);
     } catch (error) {
       console.log(error);
@@ -100,7 +102,7 @@ function AddKaryawan() {
         password: password,
       };
       const response = await axios.post(
-        `${API_DUMMY}/api/user/tambahkaryawan/${idAdmin}?idOrganisasi=${idOrganisasi}&idJabatan=${idJabatan}&idShift=${idShift}&idOrangTua=${idOrangTua}&idKelas=${idKelas}`,
+        `${API_DUMMY}/api/user/tambahkaryawan/${idAdmin}?idJabatan=${idJabatan}&idOrangTua=${idOrangTua}&idOrganisasi=${idOrganisasi}&idShift=${idShift}`,
         newUser
       );
       Swal.fire({
