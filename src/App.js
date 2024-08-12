@@ -148,7 +148,7 @@ function App() {
             exact
           />
           <PrivateRoute path="/" component={IndexDashboard} exact />
-          <Route component={NotFound} />
+           <Route path="/page/notfound" component={NotFound} exact />
 
           {/* start admin */}
           {/* Admin Routes */}
