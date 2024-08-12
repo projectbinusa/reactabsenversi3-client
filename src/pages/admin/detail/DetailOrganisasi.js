@@ -51,6 +51,7 @@ function DetailOrganisasi() {
                   <form method="post" encType="multipart/form-data">
                     <div className="mt-5 text-center">
                       {/* <!-- Mengubah kelas "text-left" menjadi "text-center" --> */}
+                      {/* kalau tidak tampil berarti imagenya terhapus didatabase server */}
                       <img
                         className="rounded-full w-48 h-48 mx-auto"
                         src={

@@ -9,6 +9,7 @@ const NavbarAdmin = () => {
   const role = localStorage.getItem("role");
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [profileOrtu, setProfileOrtu] = useState([]);
+  const id = localStorage.getItem("adminId");
   const id_ortu = localStorage.getItem("id_orangtua");
   const location = useLocation();
   const isActive = (paths) => {
@@ -16,9 +17,8 @@ const NavbarAdmin = () => {
   };
 
   const getAdmin = async () => {
-    const id = localStorage.getItem("adminId");
     try {
-      const admin = await axios.get(`${API_DUMMY}/api/admin/getById/${1}`);
+      const admin = await axios.get(`${API_DUMMY}/api/admin/getById/${id}`);
       setProfileAdmin(admin.data.imageAdmin);
     } catch (error) {
       console.log(error);
@@ -37,9 +37,13 @@ const NavbarAdmin = () => {
   };
 
   useEffect(() => {
-    getAdmin();
-    getOrtu();
-  });
+    if (id) {
+      getAdmin();
+    }
+    if (id_ortu) {
+      getOrtu();
+    }
+  }, [id, id_ortu]);
 
   const toggleUserMenu = () => {
     setUserMenuOpen(!userMenuOpen);
