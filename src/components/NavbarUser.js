@@ -131,7 +131,7 @@ const Navbar = ({ toggleSidebar }) => {
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="user-menu-button"
-                    className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1"
+                    className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg"
                     tabIndex="-1">
                     {localStorage.getItem("role") == "USER" ? (
                       <>
