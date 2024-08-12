@@ -29,6 +29,11 @@ function Admin() {
   const id_superadmin = localStorage.getItem("superadminId");
 
   const exportData = async () => {
+    if (userData.length === 0) {
+      Swal.fire("Error", "Tidak ada data untuk diekspor", "error");
+      return;
+    }
+  
     try {
       const response = await axios.get(
         `${API_DUMMY}/api/superadmin/admin/export?superadminId=${id_superadmin}`,
@@ -36,7 +41,7 @@ function Admin() {
           responseType: "blob",
         }
       );
-
+  
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
@@ -45,7 +50,7 @@ function Admin() {
       link.click();
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
-
+  
       Swal.fire("Berhasil", "Berhasil mengunduh data", "success");
     } catch (error) {
       console.error("Error exporting data:", error);

@@ -898,171 +898,26 @@ const Sidebar = () => {
                   <span className="ms-3">Dashboard</span>
                 </Link>
               </li>
-              {/* // <!-- Dropdown Master Data --> */}
+              {/* <!-- Menu Admin --> */}
               <li>
-                <button
-                  type="button"
-                  className="flex items-center w-full p-2 text-base text-blue-900 transition duration-75 rounded-lg group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                  // aria-controls="dropdown-masterdata"
-                  // data-dropdown-toggle="dropdown-masterdata"
-                  onClick={toggleMasterData}>
+                <Link
+                  to="/superadmin/admin"
+                  className={`flex items-center p-2 rounded-lg ${
+                    isActive(["/superadmin/admin"])
+                      ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                      : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
+                  }`}>
                   <FontAwesomeIcon
-                    className={`flex-shrink-0 w-5 h-5 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white text-blue-500`}
-                    icon={faUserTie}
+                    className={`flex-shrink-0 w-5 h-5 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
+                      isActive(["/superadmin/admin"])
+                        ? "text-white hover:text-black"
+                        : "text-blue-500"
+                    }`}
+                    icon={faChalkboardUser}
                   />
-                  <span className="flex-1 ml-3 text-left whitespace-nowrap">
-                    Data Admin
-                  </span>
-                  <FontAwesomeIcon
-                    icon={masterDataOpen ? faChevronUp : faChevronDown}
-                    className="flex-shrink-0 w-4 h-4 text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white"
-                  />
-                </button>
-                <ul
-                  // id="dropdown-masterdata"
-                  className={`${
-                    masterDataOpen ? "" : "hidden" // Tampilkan atau sembunyikan dropdown berdasarkan state masterDataOpen
-                  } py-2 space-y-2`}>
-                  {/* <!-- Menu superadmin --> */}
-                  <li>
-                    <Link
-                      to="/superadmin/admin"
-                      className={`flex items-center p-2 rounded-lg ml-9 pl-3 ${
-                        isActive(["/superadmin/admin"])
-                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
-                          : "text-blue-900 transition duration-75group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                      }`}>
-                      {/* // className="flex items-center w-full p-2 text-blue-900
-                      transition duration-75 rounded-lg pl-11 group
-                      hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"> */}
-                      <FontAwesomeIcon
-                        className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 dark:group-hover:text-white ${
-                          isActive(["/superadmin/admin"])
-                            ? "text-white hover:text-black"
-                            : "text-blue-500"
-                        }`}
-                        icon={faChalkboardUser}
-                      />{" "}
-                      <span className="flex-1 ml-3 whitespace-nowrap">
-                        Admin
-                      </span>
-                    </Link>
-                  </li>
-                  {/* ortu */}
-                  {/* <!-- Menu Organisasi --> */}
-                  <li>
-                    <Link
-                      to="/superadmin/organisasi"
-                      className={`flex items-center p-2 rounded-lg  ml-9 pl-3 ${
-                        isActive(["/superadmin/organisasi"])
-                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
-                          : "text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                      }`}>
-                      <FontAwesomeIcon
-                        className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
-                          isActive(["/superadmin/organisasi"])
-                            ? "text-white hover:text-black"
-                            : "text-blue-500"
-                        }`}
-                        icon={faBuilding}
-                      />{" "}
-                      <span className="flex-1 ml-3 whitespace-nowrap">
-                        Organisasi
-                      </span>
-                    </Link>
-                  </li>
-                  {/* <!-- Menu Jabatan --> */}
-                  <li>
-                    <Link
-                      to="/superadmin/jabatan"
-                      className={`flex items-center p-2 rounded-lg ml-9 pl-3   ${
-                        isActive(["/superadmin/jabatan"])
-                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
-                          : "text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                      }`}>
-                      <FontAwesomeIcon
-                        className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
-                          isActive(["/superadmin/jabatan"])
-                            ? "text-white hover:text-black"
-                            : "text-blue-500"
-                        }`}
-                        icon={faBriefcase}
-                      />{" "}
-                      <span className="flex-1 ml-3 whitespace-nowrap">
-                        Jabatan
-                      </span>
-                    </Link>
-                  </li>
-
-                  {/* <!-- Menu Jam Kerja --> */}
-                  <li>
-                    <Link
-                      to="/superadmin/shift"
-                      className={`flex items-center p-2 rounded-lg ml-9 pl-3   ${
-                        isActive(["/superadmin/shift"])
-                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
-                          : "text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                      }`}>
-                      <FontAwesomeIcon
-                        className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
-                          isActive(["/superadmin/shift"])
-                            ? "text-white hover:text-black"
-                            : "text-blue-500"
-                        }`}
-                        icon={faBusinessTime}
-                      />{" "}
-                      <span className="flex-1 ml-3 whitespace-nowrap">
-                        Waktu Pembelajaran
-                      </span>
-                    </Link>
-                  </li>
-
-                  {/* <!-- Menu Lokasi --> */}
-                  <li>
-                    <Link
-                      to="/superadmin/lokasi"
-                      className={`flex items-center p-2 rounded-lg ml-9 pl-3  ${
-                        isActive(["/superadmin/lokasi"])
-                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
-                          : "text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                      }`}>
-                      <FontAwesomeIcon
-                        className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
-                          isActive(["/superadmin/lokasi"])
-                            ? "text-white hover:text-black"
-                            : "text-blue-500"
-                        }`}
-                        icon={faMapLocationDot}
-                      />{" "}
-                      <span className="flex-1 ml-3 whitespace-nowrap">
-                        Lokasi
-                      </span>
-                    </Link>
-                  </li>
-                </ul>
+                  <span className="ms-3">Admin</span>
+                </Link>
               </li>
-                {/* <!-- Menu PerKaryawan --> */}
-                <li>
-                  <Link
-                    to="/superadmin/absensi"
-                    className={`flex items-center p-2 rounded-lg ${
-                      isActive(["/superadmin/absensi"])
-                        ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
-                        : "text-blue-900 transition duration-75group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
-                    }`}>
-                    <FontAwesomeIcon
-                      className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
-                        isActive(["/superadmin/absensi"])
-                          ? "text-white hover:text-black"
-                          : "text-blue-500"
-                      }`}
-                      icon={faAddressCard}
-                    />{" "}
-                    <span className="flex-1 ml-3 whitespace-nowrap">
-                      Presensi
-                    </span>
-                  </Link>
-                </li>
               {/* <!-- Dropdown user --> */}
               {/* <li> */}
                 {/* <button
