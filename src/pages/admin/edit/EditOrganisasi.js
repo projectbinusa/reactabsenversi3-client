@@ -26,7 +26,7 @@ function EditOrganisasi() {
   const [fotoUrl, setFotoUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const idAdmin = localStorage.getItem("adminId");
-
+// organisasi
   useEffect(() => {
     const fetchData = async () => {
       try {
