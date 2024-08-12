@@ -40,9 +40,13 @@ const NavbarSuper = () => {
   };
 
   useEffect(() => {
-    getSu();
-    getOrtu();
-  });
+    if (id) {
+      getSu();
+    }
+    if (id_ortu) {
+      getOrtu();
+    }
+  }, [id, id_ortu]);
 
   const toggleUserMenu = () => {
     setUserMenuOpen(!userMenuOpen);

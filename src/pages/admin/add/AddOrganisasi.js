@@ -22,7 +22,6 @@ export default function AddOrganisasi() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
 
     const formData = new FormData();
     const organisasi = {
@@ -63,7 +62,6 @@ export default function AddOrganisasi() {
         }
       );
 
-      setLoading(false);
       Swal.fire({
         title: "Berhasil",
         text: "Berhasil menambahkan data",
@@ -74,8 +72,15 @@ export default function AddOrganisasi() {
         window.location.href = "/admin/organisasi";
       }, 2000);
     } catch (error) {
-      setLoading(false);
-      Swal.fire("Gagal", "Gagal Menambahkan organisasi", "error");
+      if (error.response && error.response.status === 500) {
+        Swal.fire({
+          title: "Gagal",
+          text: "Anda sudah memiliki organisasi dengan data yang sama.",
+          icon: "info",
+        });
+      } else {
+        Swal.fire("Gagal", "Gagal Menambahkan organisasi", "error");
+      }
     }
   };
 
