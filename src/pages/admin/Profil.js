@@ -76,7 +76,7 @@ function Profil() {
       setTimeout(() => {
         Swal.fire("Info", "Silahkan login kembali", "info");
         setTimeout(() => {
-          window.location.href = "/";
+          window.location.href = "/login";
         }, 1000);
       }, 2000);
     } catch (error) {

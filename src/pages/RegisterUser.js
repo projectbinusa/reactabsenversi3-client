@@ -93,7 +93,7 @@ function RegisterUser() {
         showConfirmButton: false,
         timer: 1500,
       });
-      history.push("/");
+      history.push("/login");
       setTimeout(() => {
         window.location.reload();
       }, 1500);
@@ -201,7 +201,7 @@ function RegisterUser() {
                   <p className="mt-6 text-base text-gray-600 text-center">
                     Sudah mempunyai akun?
                     <a
-                      href="/"
+                      href="/login"
                       className="border-b border-blue-500 border-dotted"
                     >
                       Login

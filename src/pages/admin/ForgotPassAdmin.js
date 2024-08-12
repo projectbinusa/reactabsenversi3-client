@@ -90,7 +90,7 @@ function ForgotPassAdmin() {
                   <div class="flex justify-center">
                     <a
                       class="w-1/2 px-4 py-2 font-bold text-white bg-rose-500 rounded-full hover:bg-rose-700 focus:outline-none focus:shadow-outline"
-                      href="/"
+                      href="/login"
                     >
                       Kembali
                     </a>

@@ -40,7 +40,7 @@ function ResetPasswordAdmin() {
           showConfirmButton: false,
           timer: 1500,
         });
-        window.location.href = "/";
+        window.location.href = "/login";
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -160,7 +160,7 @@ function ResetPasswordAdmin() {
                 <div className="text-center">
                 <Link
                     className="inline-block text-sm w-full text-blue-500 align-baseline hover:text-blue-800"
-                    to="/"
+                    to="/login"
                   >
                     Batal Reset Password ? Login
                   </Link>

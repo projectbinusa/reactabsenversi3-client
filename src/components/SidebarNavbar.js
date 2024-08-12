@@ -716,7 +716,7 @@ function SidebarNavbar() {
                 )}
                 {/* <li>
             <a
-              href="/"
+              href="/login"
               onClick={(e) => {
                 e.preventDefault();
                 logout();
