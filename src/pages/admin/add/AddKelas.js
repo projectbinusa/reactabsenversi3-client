@@ -27,29 +27,29 @@ function AddKelas() {
   const tambahKelas = async (e) => {
     e.preventDefault();
     try {
-      if (!selectedOrganisasi || !idAdmin) {
-        throw new Error("Pilih organisasi dan pastikan admin ID tersedia.");
-      }
-      const add = {
-        namaKelas,
-        organisasi: { id: selectedOrganisasi }, // Format yang benar
-        admin: { id: idAdmin }, // Format yang benar
-      };
-      await axios.post(`${API_DUMMY}/api/kelas/tambah/`, add);
-      Swal.fire({
-        title: "Berhasil",
-        text: "Berhasil menambahkan data",
-        icon: "success",
-        showConfirmButton: false,
-      });
-      setTimeout(() => {
-        window.location.href = "/admin/kelas";
-      }, 2000);
+        if (!selectedOrganisasi || !idAdmin) {
+            throw new Error("Pilih organisasi dan pastikan admin ID tersedia.");
+        }
+        const add = {
+            namaKelas: namaKelas,
+        };
+        const url = `${API_DUMMY}/api/kelas/tambah?idOrganisasi=${selectedOrganisasi}&idAdmin=${idAdmin}`;
+        await axios.post(url, add);
+        Swal.fire({
+            title: "Berhasil",
+            text: "Berhasil menambahkan data",
+            icon: "success",
+            showConfirmButton: false,
+        });
+        setTimeout(() => {
+            window.location.href = "/admin/kelas";
+        }, 2000);
     } catch (error) {
-      console.log(error);
-      Swal.fire("Error", error.message || "Gagal menambahkan data", "error");
+        console.log(error);
+        Swal.fire("Error", error.message || "Gagal menambahkan data", "error");
     }
-  };
+};
+
 
   useEffect(() => {
     getOrganisasi();
@@ -104,7 +104,7 @@ function AddKelas() {
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                           value={selectedOrganisasi}
                           onChange={(e) =>
-                            setSelectedOrganisasi(e.target.value)
+                            setSelectedOrganisasi(Number(e.target.value))
                           }
                           required
                         >
