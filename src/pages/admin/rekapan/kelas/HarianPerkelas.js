@@ -11,20 +11,26 @@ import { Pagination } from "flowbite-react";
 function HarianPerkelas() {
   const [tanggal, setTanggal] = useState("");
   const [kelasId, setKelasId] = useState("");
-  const [idOrganisasi, setIdOrganisasi] = useState(null);
   const [listKelas, setListKelas] = useState([]);
   const [absensiData, setAbsensiData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [limit, setLimit] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const adminId = localStorage.getItem("adminId");
+
+  // useEffect(() => {
+  //   getAllKelas();
+  //   if (idOrganisasi !== null) {
+  //     getAllKelasByOrganisasi(idOrganisasi);
+  //   }
+  // }, [idOrganisasi]);
 
   useEffect(() => {
-    getAllKelas();
-    if (idOrganisasi !== null) {
-      getAllKelasByOrganisasi(idOrganisasi);
+    if (adminId) {
+      getAllKelas(adminId);
     }
-  }, [idOrganisasi]);
+  }, [adminId]);
 
   const handleTanggalChange = (event) => {
     setTanggal(event.target.value);
@@ -60,33 +66,27 @@ function HarianPerkelas() {
     }
   };
 
-  const getAllKelas = async () => {
-    try {
-      const response = await axios.get(`${API_DUMMY}/api/kelas/kelas/all`);
-      setListKelas(response.data);
-      const dataOrganisasi = response.data
-        .slice()
-        .reverse()
-        .map((dt) => dt.organisasi.id);
-
-      if (dataOrganisasi.length > 0) {
-        setIdOrganisasi(dataOrganisasi[0]);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getAllKelasByOrganisasi = async () => {
+  const getAllKelas = async (adminId) => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/kelas/getALlByOrganisasi/${idOrganisasi}`
+        `${API_DUMMY}/api/kelas/getALlByAdmin/${adminId}`
       );
-      console.log("list kelas by organisasi: ", response.data);
+      setListKelas(response.data);
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching classes:", error);
     }
   };
+
+  // const getAllKelasByOrganisasi = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `${API_DUMMY}/api/kelas/getALlByOrganisasi/${idOrganisasi}`
+  //     );
+  //     console.log("list kelas by organisasi: ", response.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const handleExportClick = (e) => {
     exportPerkelas(e, tanggal, kelasId);
@@ -235,7 +235,8 @@ function HarianPerkelas() {
                 <select
                   value={limit}
                   onChange={handleLimitChange}
-                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
+                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+                >
                   <option value="5">05</option>
                   <option value="10">10</option>
                   <option value="20">20</option>
@@ -248,12 +249,14 @@ function HarianPerkelas() {
             <form
               method="get"
               id="filterForm"
-              className="flex justify-center items-center gap-4 mt-5">
+              className="flex justify-center items-center gap-4 mt-5"
+            >
               <select
                 id="small"
                 className="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 value={kelasId}
-                onChange={handleKelasChange}>
+                onChange={handleKelasChange}
+              >
                 <option value="">Pilih Kelas</option>
                 {listKelas
                   .slice()
@@ -276,7 +279,8 @@ function HarianPerkelas() {
                 <button
                   type="button"
                   className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto"
-                  onClick={handleExportClick}>
+                  onClick={handleExportClick}
+                >
                   <FontAwesomeIcon icon={faFileExport} />
                 </button>
               </div>
