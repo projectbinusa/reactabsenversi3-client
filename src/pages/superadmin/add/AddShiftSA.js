@@ -13,13 +13,14 @@ function AddShift() {
   const [waktuPulang, setWaktuPulang] = useState("");
   const [namaShift, setNamaShift] = useState("");
   const [idAdmin, setIdAdmin] = useState("");
+  const [idSuperAdmin, setIdSuperAdmin] = useState("");
   const [adminList, setadminList] = useState([]);
   const token = localStorage.getItem("token");
   const history = useHistory();
 
   const getAllAdmin = async () => {
     try {
-      const response = await axios.get(`${API_DUMMY}/api/admin/all`, {
+      const response = await axios.get(`${API_DUMMY}/api/get-all-by-super/${idSuperAdmin}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

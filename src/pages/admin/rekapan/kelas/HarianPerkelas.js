@@ -89,8 +89,16 @@ function HarianPerkelas() {
   // };
 
   const handleExportClick = (e) => {
+    e.preventDefault();
+
+    if (absensiData.length === 0) {
+      Swal.fire("Peringatan", "Data belum tersedia untuk kelas yang dipilih", "warning");
+      return;
+    }
+
     exportPerkelas(e, tanggal, kelasId);
   };
+  
 
   const exportPerkelas = async (e, tanggal, kelasId) => {
     e.preventDefault();

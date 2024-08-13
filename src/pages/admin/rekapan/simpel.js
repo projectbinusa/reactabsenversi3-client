@@ -92,6 +92,12 @@ function Simpel() {
   }
 
   const exportSimpel = async () => {
+    // Check if there is data available
+    if (absensiData.length === 0) {
+      Swal.fire("Peringatan", "Tidak ada data untuk diekspor", "warning");
+      return;
+    }
+  
     try {
       const response = await axios.get(
         `${API_DUMMY}/api/absensi/export/absensi-bulanan-simpel`,
@@ -100,7 +106,7 @@ function Simpel() {
           responseType: "blob",
         }
       );
-
+  
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
@@ -112,7 +118,7 @@ function Simpel() {
       link.click();
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
-
+  
       Swal.fire("Berhasil", "Berhasil mengunduh data", "success");
       window.location.reload();
     } catch (error) {
@@ -120,6 +126,7 @@ function Simpel() {
       console.log(error);
     }
   };
+  
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">

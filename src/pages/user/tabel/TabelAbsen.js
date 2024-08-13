@@ -182,71 +182,56 @@ function TabelAbsen() {
                 </thead>
 
                 <tbody className="divide-y divide-gray-200">
-                  {paginatedAbsen.slice().reverse().map((absenData, index) => (
-                    <tr key={index}>
-                      <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-center">
-                        {(currentPage - 1) * limit + index + 1}
-                      </td>
-                      <td className="whitespace-nowrap px-4 py-2 text-gray-700 text-center capitalize">
-                        {formatDate(absenData.tanggalAbsen)}
-                      </td>
-                      <td className="whitespace-nowrap px-4 py-2 text-gray-700 text-center capitalize">
-                        {absenData.jamMasuk}
-                      </td>
-                      <td className="whitespace-nowrap px-4 py-2 text-gray-700 text-center capitalize">
-                        {absenData.jamPulang}
-                      </td>
-                      <td className="whitespace-nowrap px-4 py-2 text-gray-700 text-center capitalize">
-                        {absenData.keteranganIzin != null
-                          ? absenData.keteranganIzin
-                          : absenData.keteranganTerlambat == null
-                          ? "-"
-                          : absenData.keteranganTerlambat}
-                      </td>
-                      <td className="whitespace-nowrap px-4 py-2 text-gray-700 text-center capitalize">
-                        {absenData.statusAbsen}
-                      </td>
-                      <td className="whitespace-nowrap text-center py-3">
-                        <div className="flex items-center -space-x-4 ml-12">
-                          <Link to={"/user/detail_absen/" + absenData.id}>
-                            <button className="z-20 block rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
-                              <span className="relative inline-block">
-                                <FontAwesomeIcon
-                                  icon={faInfo}
-                                  className="h-4 w-4"
-                                />
-                              </span>
-                            </button>
-                          </Link>
-                          {absensi.statusAbsen === "Izin" ? (
-                            <button
-                              className="z-30 block rounded-full border-2 border-white bg-gray-100 p-4 text-gray-700 active:bg-red-50"
-                              disabled
-                            >
-                              <span className="relative inline-block">
-                                <FontAwesomeIcon
-                                  className="h-4 w-4"
-                                  icon={faUserPlus}
-                                />
-                              </span>
-                            </button>
-                          ) : (
-                            <Link to="/user/izin_absen">
-                              <button className="z-30 block rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-red-50">
-                                <span className="relative inline-block">
-                                  <FontAwesomeIcon
-                                    className="h-4 w-4"
-                                    icon={faUserPlus}
-                                  />
-                                </span>
-                              </button>
-                            </Link>
-                          )}
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
+  {paginatedAbsen.slice().reverse().map((absenData, index) => (
+    <tr key={index}>
+      <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-center">
+        {(currentPage - 1) * limit + index + 1}
+      </td>
+      <td className="whitespace-nowrap px-4 py-2 text-gray-700 text-center capitalize">
+        {formatDate(absenData.tanggalAbsen)}
+      </td>
+      <td className="whitespace-nowrap px-4 py-2 text-gray-700 text-center capitalize">
+        {absenData.jamMasuk}
+      </td>
+      <td className="whitespace-nowrap px-4 py-2 text-gray-700 text-center capitalize">
+        {absenData.jamPulang}
+      </td>
+      <td className="whitespace-nowrap px-4 py-2 text-gray-700 text-center capitalize">
+        {absenData.keteranganIzin != null
+          ? absenData.keteranganIzin
+          : absenData.keteranganTerlambat == null
+          ? "-"
+          : absenData.keteranganTerlambat}
+      </td>
+      <td className="whitespace-nowrap px-4 py-2 text-gray-700 text-center capitalize">
+        {absenData.statusAbsen}
+      </td>
+      <td className="whitespace-nowrap text-center py-3">
+        <div className="flex items-center -space-x-4 ml-12">
+          <Link to={"/user/detail_absen/" + absenData.id}>
+            <button className="z-20 block rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
+              <span className="relative inline-block">
+                <FontAwesomeIcon icon={faInfo} className="h-4 w-4" />
+              </span>
+            </button>
+          </Link>
+          <button
+            className={`z-30 block rounded-full border-2 border-white p-4 ${
+              absenData.statusAbsen === "Izin"
+                ? "bg-gray-100 text-gray-700"
+                : "bg-red-100 text-red-700"
+            } active:bg-red-50`}
+            disabled={absenData.statusAbsen === "Izin"}
+          >
+            <span className="relative inline-block">
+              <FontAwesomeIcon className="h-4 w-4" icon={faUserPlus} />
+            </span>
+          </button>
+        </div>
+      </td>
+    </tr>
+  ))}
+</tbody>
               </table>
             </div>
             <Pagination
