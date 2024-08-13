@@ -28,7 +28,7 @@ function Lembur() {
         }
       );
 
-      setLembur(response.data);
+      setLembur(response.data.reverse());
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -197,7 +197,7 @@ function Lembur() {
                       </tr>
                     </thead>
                     <tbody className="text-left">
-                      {paginatedLembur.slice().reverse().map((lemburData, index) => (
+                      {paginatedLembur.map((lemburData, index) => (
                         <tr
                           key={index}
                           className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"

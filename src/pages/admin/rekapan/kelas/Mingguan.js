@@ -32,7 +32,7 @@ function MingguanPerkelas() {
       const response = await axios.get(
         `${API_DUMMY}/api/kelas/getALlByAdmin/${adminId}`
       );
-      setListKelas(response.data);
+      setListKelas(response.data.reverse());
     } catch (error) {
       console.error("Error fetching classes:", error);
     }
@@ -45,7 +45,7 @@ function MingguanPerkelas() {
       );
       //   if (response == 200) {
       const data = response.data;
-      setRekapPerbulan(data);
+      setRekapPerbulan(data.reverse());
       console.log("list rekap mingguan: ", response.data);
       //   }
     } catch (error) {
@@ -65,20 +65,16 @@ function MingguanPerkelas() {
 
   const handleExportClick = async (e) => {
     e.preventDefault();
-  
+
     // Check if data is available
     if (rekapPerbulan.length === 0) {
-      Swal.fire(
-        "Peringatan",
-        "Tidak ada data untuk diekspor",
-        "warning"
-      );
+      Swal.fire("Peringatan", "Tidak ada data untuk diekspor", "warning");
       return;
     }
-  
+
     // Extract year and month from selectedDate
     const [year, month] = selectedDate.split("-");
-  
+
     // Call the export function
     await exportPerkelas(e, month, year);
   };
@@ -199,14 +195,11 @@ function MingguanPerkelas() {
                   onChange={(e) => setItemsPerPage(Number(e.target.value))}
                   className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
                 >
-                  {[5, 10, 20, 50]
-                    .slice()
-                    .reverse()
-                    .map((limit) => (
-                      <option key={limit} value={limit}>
-                        {limit}
-                      </option>
-                    ))}
+                  {[5, 10, 20, 50].map((limit) => (
+                    <option key={limit} value={limit}>
+                      {limit}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -368,40 +361,37 @@ function MingguanPerkelas() {
                   </tr>
                 </thead>
                 <tbody>
-                  {currentItems
-                    .slice()
-                    .reverse()
-                    .map((absensi, index) => (
-                      <tr key={absensi.id}>
-                        <td className="px-6 py-3 whitespace-nowrap">
-                          {index + 1}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {absensi.user.username}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {formatDate(absensi.tanggalAbsen)}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {absensi.jamMasuk}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          <img src={absensi.fotoMasuk} alt="Foto Masuk" />
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {absensi.jamPulang}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          <img src={absensi.fotoPulang} alt="Foto Pulang" />
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {absensi.jamKerja}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {absensi.keterangan}
-                        </td>
-                      </tr>
-                    ))}
+                  {currentItems.map((absensi, index) => (
+                    <tr key={absensi.id}>
+                      <td className="px-6 py-3 whitespace-nowrap">
+                        {index + 1}
+                      </td>
+                      <td className="px-6 py-3 whitespace-nowrap capitalize">
+                        {absensi.user.username}
+                      </td>
+                      <td className="px-6 py-3 whitespace-nowrap capitalize">
+                        {formatDate(absensi.tanggalAbsen)}
+                      </td>
+                      <td className="px-6 py-3 whitespace-nowrap capitalize">
+                        {absensi.jamMasuk}
+                      </td>
+                      <td className="px-6 py-3 whitespace-nowrap capitalize">
+                        <img src={absensi.fotoMasuk} alt="Foto Masuk" />
+                      </td>
+                      <td className="px-6 py-3 whitespace-nowrap capitalize">
+                        {absensi.jamPulang}
+                      </td>
+                      <td className="px-6 py-3 whitespace-nowrap capitalize">
+                        <img src={absensi.fotoPulang} alt="Foto Pulang" />
+                      </td>
+                      <td className="px-6 py-3 whitespace-nowrap capitalize">
+                        {absensi.jamKerja}
+                      </td>
+                      <td className="px-6 py-3 whitespace-nowrap capitalize">
+                        {absensi.keterangan}
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>

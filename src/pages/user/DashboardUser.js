@@ -43,7 +43,7 @@ function Dashboard() {
         }
       );
 
-      setUsername(response.data);
+      setUsername(response.data.reverse());
     } catch (error) {
       console.error("Error fetching username:", error);
     }
@@ -92,7 +92,7 @@ function Dashboard() {
         }
       );
 
-      setIzin(response.data);
+      setIzin(response.data.reverse());
       setTotalIzin(response.data.length);
     } catch (error) {
       console.error("Error fetching izin:", error);
@@ -113,7 +113,7 @@ function Dashboard() {
         }
       );
 
-      setAbsensi(response.data);
+      setAbsensi(response.data.reverse());
     } catch (error) {
       console.error("Error fetching absensi:", error);
     }
@@ -133,7 +133,7 @@ function Dashboard() {
         }
       );
 
-      setCuti(response.data);
+      setCuti(response.data.reverse());
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -142,7 +142,7 @@ function Dashboard() {
   const Informasi = async () => {
     try {
       const response = await axios.get(`${API_DUMMY}/api/notifications`);
-      setInformasi(response.data);
+      setInformasi(response.data.reverse());
     } catch (error) {
       console.error("Error fetching informasi:", error);
     }
@@ -382,7 +382,7 @@ function Dashboard() {
             </h2>
             <div className="mt-6 grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               {validInformasi.length > 0 ? (
-                validInformasi.slice().reverse().map((item) => (
+                validInformasi.map((item) => (
                   <div
                     key={item.id}
                     className="informasi-item p-4 bg-white border border-gray-200 rounded-lg shadow-md transform transition-transform hover:scale-105 hover:shadow-xl"
@@ -475,7 +475,7 @@ function Dashboard() {
                 </thead>
 
                 <tbody className="divide-y divide-gray-200">
-                  {absensi.slice().reverse().map((absenData, index) => (
+                  {absensivalidInformasi.map((absenData, index) => (
                     <tr key={index}>
                       <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-center">
                         {index + 1}
@@ -516,7 +516,7 @@ function Dashboard() {
                 </thead>
 
                 <tbody className="divide-y divide-gray-200">
-                  {cuti.slice().reverse().map((item, index) => (
+                  {cutivalidInformasi.map((item, index) => (
                     <tr key={index}>
                       <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-center">
                         {index + 1}

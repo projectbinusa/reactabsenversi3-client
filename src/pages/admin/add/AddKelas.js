@@ -112,7 +112,7 @@ function AddKelas() {
                             Pilih Organisasi
                           </option>
                           {Array.isArray(organisasilist) &&
-                            organisasilist.slice().reverse().map((org) => (
+                            organisasilist.map((org) => (
                               <option key={org.id} value={org.id}>
                                 {org.namaOrganisasi}
                               </option>

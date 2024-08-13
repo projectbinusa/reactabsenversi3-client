@@ -31,7 +31,7 @@ function Cuti() {
         }
       );
 
-      setCuti(response.data);
+      setCuti(response.data.reverse());
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -298,7 +298,7 @@ function Cuti() {
 
                   {/* <!-- Tabel Body --> */}
                   <tbody className="text-left">
-                    {paginatedCuti.slice().reverse().map((cuti, index) => (
+                    {paginatedCuti.map((cuti, index) => (
                       <tr
                         className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                         key={index}

@@ -115,7 +115,7 @@ function AddJabatanSA() {
                       >
                         <option selected>Pilih Admin</option>
                         {adminList &&
-                          adminList.slice().reverse().map((admin) => (
+                          adminList.map((admin) => (
                             <option key={admin.id} value={admin.id}>
                               {admin.username}
                             </option>

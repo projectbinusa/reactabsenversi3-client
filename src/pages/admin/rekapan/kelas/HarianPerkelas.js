@@ -58,7 +58,7 @@ function HarianPerkelas() {
       if (response.data.length === 0) {
         Swal.fire("Tidak ada", "Tidak ada yang absen hari ini", "info");
       } else {
-        setAbsensiData(response.data);
+        setAbsensiData(response.data.reverse());
       }
     } catch (error) {
       console.error(error);
@@ -92,13 +92,16 @@ function HarianPerkelas() {
     e.preventDefault();
 
     if (absensiData.length === 0) {
-      Swal.fire("Peringatan", "Data belum tersedia untuk kelas yang dipilih", "warning");
+      Swal.fire(
+        "Peringatan",
+        "Data belum tersedia untuk kelas yang dipilih",
+        "warning"
+      );
       return;
     }
 
     exportPerkelas(e, tanggal, kelasId);
   };
-  
 
   const exportPerkelas = async (e, tanggal, kelasId) => {
     e.preventDefault();
@@ -335,40 +338,37 @@ function HarianPerkelas() {
                     </tr>
                   </thead>
                   <tbody>
-                    {paginatedUser
-                      .slice()
-                      .reverse()
-                      .map((absensi, index) => (
-                        <tr key={absensi.id}>
-                          <td className="px-6 py-3 whitespace-nowrap">
-                            {index + 1}
-                          </td>
-                          <td className="px-6 py-3 whitespace-nowrap capitalize">
-                            {absensi.user.username}
-                          </td>
-                          <td className="px-6 py-3 whitespace-nowrap capitalize">
-                            {formatDate(absensi.tanggalAbsen)}
-                          </td>
-                          <td className="px-6 py-3 whitespace-nowrap capitalize">
-                            {absensi.jamMasuk}
-                          </td>
-                          <td className="px-6 py-3 whitespace-nowrap capitalize">
-                            <img src={absensi.fotoMasuk} alt="Foto Masuk" />
-                          </td>
-                          <td className="px-6 py-3 whitespace-nowrap capitalize">
-                            {absensi.jamPulang}
-                          </td>
-                          <td className="px-6 py-3 whitespace-nowrap capitalize">
-                            <img src={absensi.fotoPulang} alt="Foto Pulang" />
-                          </td>
-                          <td className="px-6 py-3 whitespace-nowrap capitalize">
-                            {absensi.jamKerja}
-                          </td>
-                          <td className="px-6 py-3 whitespace-nowrap capitalize">
-                            {absensi.keterangan}
-                          </td>
-                        </tr>
-                      ))}
+                    {paginatedUser.map((absensi, index) => (
+                      <tr key={absensi.id}>
+                        <td className="px-6 py-3 whitespace-nowrap">
+                          {index + 1}
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          {absensi.user.username}
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          {formatDate(absensi.tanggalAbsen)}
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          {absensi.jamMasuk}
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          <img src={absensi.fotoMasuk} alt="Foto Masuk" />
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          {absensi.jamPulang}
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          <img src={absensi.fotoPulang} alt="Foto Pulang" />
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          {absensi.jamKerja}
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          {absensi.keterangan}
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               )}

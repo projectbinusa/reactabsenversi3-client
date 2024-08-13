@@ -27,7 +27,7 @@ function Pengumuman() {
           },
         }
       );
-      setInformasi([response.data]);
+      setInformasi([response.data.reverse()]);
     } catch (error) {
       console.error("Error fetching informasi:", error);
     }
@@ -69,7 +69,7 @@ function Pengumuman() {
                 <hr />
                 <div className="mt-5">
                   {informasi.length > 0 ? (
-                    informasi.slice().reverse().map((info) => (
+                    informasi.map((info) => (
                       <div key={info.id}>
                         <h3 className="text-xl font-semibold text-black capitalize">
                           {info.namaAcara}

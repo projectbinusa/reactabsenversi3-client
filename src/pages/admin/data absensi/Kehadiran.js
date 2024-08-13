@@ -31,7 +31,7 @@ function Kehadiran() {
     try {
       const abs = await axios.get(`${API_DUMMY}/api/absensi/admin/${adminId}`);
 
-      setAllAbsensi(abs.data);
+      setAllAbsensi(abs.data.reverse());
     } catch (error) {
       console.log(error);
     }
@@ -59,7 +59,7 @@ function Kehadiran() {
   };
 
   useEffect(() => {
-    const userAbsensiCounts = kehadiran.slice().reverse().map((user) => ({
+    const userAbsensiCounts = kehadiran.map((user) => ({
       userId: user.id,
       lateCount: getAbsensiByUserId(user.id, "Terlambat"),
       earlyCount: getAbsensiByUserId(user.id, "Lebih Awal"),
@@ -69,7 +69,7 @@ function Kehadiran() {
 
 
     setKehadiran((prevUsers) =>
-      prevUsers.slice().reverse().map((user) => {
+      prevUsers.map((user) => {
         const updatedCounts = userAbsensiCounts.find(
           (u) => u.userId === user.id
         );
@@ -193,7 +193,7 @@ function Kehadiran() {
                       </tr>
                     </thead>
                     <tbody className="text-left">
-                      {paginatedKehadiran.slice().reverse().map((kehadiran, index) => (
+                      {paginatedKehadiran.map((kehadiran, index) => (
                         <tr
                           key={index}
                           className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"

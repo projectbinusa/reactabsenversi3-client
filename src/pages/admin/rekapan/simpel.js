@@ -25,7 +25,7 @@ function Simpel() {
           params: { tanggalAbsen: `${tahun}-${bulan}-01` },
         }
       );
-      setAbsensiData(response.data);
+      setAbsensiData(response.data.reverse());
     } catch (error) {
       console.error(error);
       Swal.fire("Gagal", "Gagal Mengambil data", "error");
@@ -238,7 +238,7 @@ function Simpel() {
                 </thead>
                 <tbody className="text-left">
                   {absensiData.length > 0 && absensiData != null ? (
-                    absensiData.slice().reverse().map((absensi, index) => (
+                    absensiData.map((absensi, index) => (
                       <tr key={index}>
                         <td className="px-5 py-4 whitespace-nowrap">
                           {index + 1}

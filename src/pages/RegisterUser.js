@@ -26,7 +26,7 @@ function RegisterUser() {
   const GetALLOrganisasi = async () => {
     try {
       const response = await axios.get(`${API_DUMMY}/api/organisasi/all`);
-      setOrganisasiList(response.data);
+      setOrganisasiList(response.data.reverse());
     } catch (error) {
       console.log(error);
     }
@@ -53,7 +53,7 @@ function RegisterUser() {
       if (response.data.length === 0) {
         setNoShiftsError(true);
       } else {
-        setShiftList(response.data);
+        setShiftList(response.data.reverse());
         setNoShiftsError(false);
       }
     } catch (error) {
@@ -140,7 +140,7 @@ function RegisterUser() {
                     <option value="" disabled>
                       Pilih Organisasi
                     </option>
-                    {organisasiList.slice().reverse().map((org) => (
+                    {organisasiList.map((org) => (
                       <option key={org.id} value={org.id}>
                         {org.namaOrganisasi}
                       </option>
@@ -160,7 +160,7 @@ function RegisterUser() {
                       <option value="" disabled>
                         Pilih Waktu Pembelajaran
                       </option>
-                      {shiftList.slice().reverse().map((shift) => (
+                      {shiftList.map((shift) => (
                         <option key={shift.id} value={shift.id}>
                           {shift.namaShift}
                         </option>

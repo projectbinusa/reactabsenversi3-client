@@ -104,7 +104,10 @@ function Admin() {
     // formData.append("idOrganisasi", idOrganisasi);
 
     await axios
-      .post(`${API_DUMMY}/api/superadmin/import/data-admin/${id_superadmin}`, formData)
+      .post(
+        `${API_DUMMY}/api/superadmin/import/data-admin/${id_superadmin}`,
+        formData
+      )
       .then(() => {
         Swal.fire({
           title: "Sukses!",
@@ -136,7 +139,7 @@ function Admin() {
         }
       );
 
-      setUserData(response.data);
+      setUserData(response.data.reverse());
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -307,70 +310,67 @@ function Admin() {
                   </thead>
                   {/* <!-- Tabel Body --> */}
                   <tbody className="text-left">
-                    {paginatedAdmin
-                      .slice()
-                      .reverse()
-                      .map((admin, index) => (
-                        <tr
-                          className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                          key={index}
+                    {paginatedAdmin.map((admin, index) => (
+                      <tr
+                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                        key={index}
+                      >
+                        <th
+                          scope="row"
+                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                         >
-                          <th
-                            scope="row"
-                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                          {(currentPage - 1) * limit + index + 1}
+                        </th>
+                        <td className="px-6 py-4">
+                          <a
+                            href="/cdn-cgi/l/email-protection"
+                            className="__cf_email__"
+                            data-cfemail="5a363b23363b1a3d373b333674393537"
                           >
-                            {(currentPage - 1) * limit + index + 1}
-                          </th>
-                          <td className="px-6 py-4">
-                            <a
-                              href="/cdn-cgi/l/email-protection"
-                              className="__cf_email__"
-                              data-cfemail="5a363b23363b1a3d373b333674393537"
-                            >
-                              {admin.email}
-                            </a>
-                          </td>
-                          <td className="px-6 py-4 capitalize">
-                            {admin.username}
-                          </td>
-                          <td className="py-3">
-                            <div className="flex items-center -space-x-4">
-                              <a href={`/superadmin/detailA/${admin.id}`}>
-                                <button className="z-20 block rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
-                                  <span className="relative inline-block">
-                                    <FontAwesomeIcon
-                                      icon={faInfo}
-                                      className="h-4 w-4"
-                                    />
-                                  </span>
-                                </button>
-                              </a>
-                              <a href={`/superadmin/editA/${admin.id}`}>
-                                <button className="z-30 block rounded-full border-2 border-white bg-yellow-100 p-4 text-yellow-700 active:bg-red-50">
-                                  <span className="relative inline-block">
-                                    <FontAwesomeIcon
-                                      icon={faPenToSquare}
-                                      className="h-4 w-4"
-                                    />
-                                  </span>
-                                </button>
-                              </a>
-
-                              <button
-                                className="z-30 block rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-red-50"
-                                onClick={() => deleteData(admin.id)}
-                              >
+                            {admin.email}
+                          </a>
+                        </td>
+                        <td className="px-6 py-4 capitalize">
+                          {admin.username}
+                        </td>
+                        <td className="py-3">
+                          <div className="flex items-center -space-x-4">
+                            <a href={`/superadmin/detailA/${admin.id}`}>
+                              <button className="z-20 block rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
                                 <span className="relative inline-block">
                                   <FontAwesomeIcon
-                                    icon={faTrash}
+                                    icon={faInfo}
                                     className="h-4 w-4"
                                   />
                                 </span>
                               </button>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
+                            </a>
+                            <a href={`/superadmin/editA/${admin.id}`}>
+                              <button className="z-30 block rounded-full border-2 border-white bg-yellow-100 p-4 text-yellow-700 active:bg-red-50">
+                                <span className="relative inline-block">
+                                  <FontAwesomeIcon
+                                    icon={faPenToSquare}
+                                    className="h-4 w-4"
+                                  />
+                                </span>
+                              </button>
+                            </a>
+
+                            <button
+                              className="z-30 block rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-red-50"
+                              onClick={() => deleteData(admin.id)}
+                            >
+                              <span className="relative inline-block">
+                                <FontAwesomeIcon
+                                  icon={faTrash}
+                                  className="h-4 w-4"
+                                />
+                              </span>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
