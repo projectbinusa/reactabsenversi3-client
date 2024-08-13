@@ -279,11 +279,6 @@ function App() {
               <PrivateRoute path="/admin/bulanan" component={Bulanan} exact />
               <PrivateRoute path="/admin/perkelas" component={Perkelas} exact />
               <PrivateRoute
-                path="/admin/bulanan/perkelas"
-                component={BulanPerkelas}
-                exact
-              />
-              <PrivateRoute
                 path="/admin/harian/perkelas"
                 component={HarianPerkelas}
                 exact

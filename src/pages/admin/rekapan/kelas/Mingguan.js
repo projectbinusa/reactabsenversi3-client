@@ -68,6 +68,9 @@ function MingguanPerkelas() {
     exportPerkelas(e, month, year);
   };
 
+  function onPageChange(page) {
+    setCurrentPage(page);
+  }
   // Export data function
   const exportPerkelas = async (e) => {
     e.preventDefault();
@@ -388,10 +391,14 @@ function MingguanPerkelas() {
               </table>
             </div>
             <Pagination
+              className="mt-5"
+              layout="table"
               currentPage={currentPage}
               totalPages={totalPages}
-              onPageChange={(page) => setCurrentPage(page)}
-              className="mt-4"
+              onPageChange={onPageChange}
+              showIcons
+              previousLabel=""
+              nextLabel=""
             />
           </div>
         </div>
