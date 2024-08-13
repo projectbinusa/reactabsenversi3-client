@@ -27,12 +27,14 @@ function AbsenPulang() {
     southEast: { lat: -6.976353915653226, lon: 110.30154539936574 }, // Pojok Bootcamp
   };
 
-  const isWithinAllowedCoordinates = (latitude, longitude) => {
+  const isWithinAllowedCoordinates = (lat, lon) => {
+    const { northWest, northEast, southWest, southEast } = allowedCoordinates;
+
     return (
-      latitude <= allowedCoordinates.north &&
-      latitude >= allowedCoordinates.south &&
-      longitude >= allowedCoordinates.west &&
-      longitude <= allowedCoordinates.east
+      lat >= southWest.lat &&
+      lat <= northWest.lat &&
+      lon >= southWest.lon &&
+      lon <= northEast.lon
     );
   };
 
@@ -150,7 +152,11 @@ function AbsenPulang() {
           const currentTime = new Date();
           const currentHours = currentTime.getHours();
           const currentMinutes = currentTime.getMinutes();
-          const [shiftHours, shiftMinutes] = waktuPulang.split(":").slice().reverse().map(Number);
+          const [shiftHours, shiftMinutes] = waktuPulang
+            .split(":")
+            .slice()
+            .reverse()
+            .map(Number);
           if (isUserAlreadyAbsenToday) {
             if (
               currentHours > shiftHours ||

@@ -77,23 +77,23 @@ function DashboardOrtu() {
   const getOrganisasi = () =>
     fetchData(`${API_DUMMY}/api/absensi/by-orang-tua/${id}`, setOrganisasiData);
 
-  // const getUsername = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       `${API_DUMMY}/api/superadmin/getbyid/${id}`,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       }
-  //     );
-  //     setUsername(response.data.username);
-  //   } catch (error) {
-  //     console.error("Error fetching username:", error);
-  //   }
-  // };
+  const getUsername = async () => {
+    try {
+      const response = await axios.get(
+        `${API_DUMMY}/api/orang-tua/getbyid/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setUsername(response.data.nama);
+    } catch (error) {
+      console.error("Error fetching username:", error);
+    }
+  };
 
-  const getAdmin = async () => {
+  async function getAdmin() {
     const token = localStorage.getItem("token");
     const id_orangtua = localStorage.getItem("id_orangtua");
 
@@ -111,7 +111,7 @@ function DashboardOrtu() {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  };
+  }
 
   const getPresensiByWaliMurid = async () => {
     const idWaliMurid = localStorage.getItem("id_orangtua");
@@ -171,7 +171,7 @@ function DashboardOrtu() {
   useEffect(() => {
     getUser();
     getAbsensi();
-    // getUsername();
+    getUsername();
     getJabatan();
     getLokasi();
     getOrganisasi();
