@@ -192,7 +192,7 @@ function SidebarNavbar() {
                               icon={faBriefcase}
                             />{" "}
                             <span className="flex-1 ml-3 whitespace-nowrap">
-                              Jabatan
+                              Status
                             </span>
                           </a>
                         </li>
@@ -614,7 +614,7 @@ function SidebarNavbar() {
                               icon={faBriefcase}
                             />{" "}
                             <span className="flex-1 ml-3 whitespace-nowrap">
-                              Jabatan
+                              Status
                             </span>
                           </a>
                         </li>

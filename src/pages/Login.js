@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import Swal from "sweetalert2";
-import Logo from "../components/absensii.png";
+import Logo from "../components/logo.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import ikon dari react-icons
 import { API_DUMMY } from "../utils/api";
 
