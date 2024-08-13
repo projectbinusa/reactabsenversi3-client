@@ -69,7 +69,7 @@ function Admin() {
   const downloadTemplate = async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/superadmin/import/template`,
+        `${API_DUMMY}/api/superadmin/download/tamplate/import`,
         {
           responseType: "blob",
         }
@@ -78,21 +78,13 @@ function Admin() {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "TemplatAdmin.xlsx");
+      link.setAttribute("download", "TemplateExcelAdmin.xlsx");
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
 
-      Swal.fire({
-        title: "Berhasil",
-        text: "Berhasil mengunduh data",
-        icon: "success",
-        showConfirmButton: false,
-      });
-      setTimeout(() => {
-        window.location.href = "/superadmin/admin";
-      }, 3000);
+      Swal.fire("Berhasil", "Berhasil mengunduh data", "success");
     } catch (error) {
       console.error("Error exporting data:", error);
       Swal.fire("Error", "Gagal mengunduh data", "error");
@@ -112,7 +104,7 @@ function Admin() {
     // formData.append("idOrganisasi", idOrganisasi);
 
     await axios
-      .post(`${API_DUMMY}/api/superadmin/import/${id_superadmin}`, formData)
+      .post(`${API_DUMMY}/api/superadmin/import/data-admin/${id_superadmin}`, formData)
       .then(() => {
         Swal.fire({
           title: "Sukses!",
@@ -162,7 +154,7 @@ function Admin() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${API_DUMMY}/api/admin/delete/` + id, {
+          await axios.delete(`${API_DUMMY}/api/delete-admin/` + id, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
@@ -239,7 +231,7 @@ function Admin() {
             <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
               <div className="flex justify-between">
                 <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
-                  Data Admin
+                  Data Admins
                 </h6>
                 <div className="md:mt-2 mt-5 md:flex items-center gap-2">
                   <div className="relative w-64">
