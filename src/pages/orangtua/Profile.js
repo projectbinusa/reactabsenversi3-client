@@ -58,7 +58,7 @@ function Profile() {
 
     const usmail = {
       email: email,
-      username: username,
+      nama: username,
     };
     try {
       const response = await axios.put(
@@ -71,7 +71,7 @@ function Profile() {
         }
       );
 
-      setUsername(response.data.username);
+      setUsername(response.data.nama);
       setEmail(response.data.email);
       Swal.fire("Berhasil", "Berhasil mengubah username dan email", "success");
 

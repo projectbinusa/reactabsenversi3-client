@@ -16,9 +16,9 @@ const Navbar = ({ toggleSidebar }) => {
   };
 
   const role = localStorage.getItem("role");
+  const id = localStorage.getItem("userId");
 
   const getUser = async () => {
-    const id = localStorage.getItem("userId");
     try {
       const user = await axios.get(`${API_DUMMY}/api/user/getUserBy/${id}`);
       setProfileUser(user.data.fotoUser);
@@ -39,9 +39,14 @@ const Navbar = ({ toggleSidebar }) => {
   };
 
   useEffect(() => {
-    getUser();
-    getOrtu();
-  });
+    if (id) {
+      getUser();
+    }
+    if (id_ortu) {
+      getOrtu();
+    }
+  }, [id, id_ortu]);
+
 
   const toggleUserMenu = () => {
     setUserMenuOpen(!userMenuOpen);
@@ -94,7 +99,8 @@ const Navbar = ({ toggleSidebar }) => {
                   onClick={toggleUserMenu}
                   id="user-menu-button"
                   aria-expanded={userMenuOpen}
-                  aria-haspopup="true">
+                  aria-haspopup="true"
+                >
                   <span className="sr-only">Open user menu</span>
                   {localStorage.getItem("role") == "USER" ? (
                     <>
@@ -132,7 +138,8 @@ const Navbar = ({ toggleSidebar }) => {
                     aria-orientation="vertical"
                     aria-labelledby="user-menu-button"
                     className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg"
-                    tabIndex="-1">
+                    tabIndex="-1"
+                  >
                     {localStorage.getItem("role") == "USER" ? (
                       <>
                         <Link
@@ -141,7 +148,8 @@ const Navbar = ({ toggleSidebar }) => {
                             isActive(["/user/profile"])
                               ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
                               : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
-                          }`}>
+                          }`}
+                        >
                           <button
                             role="menuitem"
                             tabIndex="-1"
@@ -150,7 +158,8 @@ const Navbar = ({ toggleSidebar }) => {
                               isActive(["/user/profile"])
                                 ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
                                 : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
-                            }`}>
+                            }`}
+                          >
                             Profile
                           </button>
                         </Link>
@@ -163,7 +172,8 @@ const Navbar = ({ toggleSidebar }) => {
                             isActive(["/walimurid/profile"])
                               ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
                               : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
-                          }`}>
+                          }`}
+                        >
                           <button
                             role="menuitem"
                             tabIndex="-1"
@@ -172,7 +182,8 @@ const Navbar = ({ toggleSidebar }) => {
                               isActive(["/walimurid/profile"])
                                 ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
                                 : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
-                            }`}>
+                            }`}
+                          >
                             Profile
                           </button>
                         </Link>
@@ -185,7 +196,8 @@ const Navbar = ({ toggleSidebar }) => {
                       role="menuitem"
                       tabIndex="-1"
                       id="user-menu-item-2"
-                      className="block px-4 py-2 text-sm text-gray-700 dark:text-white w-full text-left">
+                      className="block px-4 py-2 text-sm text-gray-700 dark:text-white w-full text-left"
+                    >
                       Keluar
                     </button>
                   </div>
