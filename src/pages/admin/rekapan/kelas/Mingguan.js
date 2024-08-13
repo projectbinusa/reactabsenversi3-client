@@ -63,9 +63,24 @@ function MingguanPerkelas() {
     setTanggalAkhir(value);
   };
 
-  const handleExportClick = (e) => {
+  const handleExportClick = async (e) => {
+    e.preventDefault();
+  
+    // Check if data is available
+    if (rekapPerbulan.length === 0) {
+      Swal.fire(
+        "Peringatan",
+        "Tidak ada data untuk diekspor",
+        "warning"
+      );
+      return;
+    }
+  
+    // Extract year and month from selectedDate
     const [year, month] = selectedDate.split("-");
-    exportPerkelas(e, month, year);
+  
+    // Call the export function
+    await exportPerkelas(e, month, year);
   };
 
   function onPageChange(page) {
@@ -93,7 +108,7 @@ function MingguanPerkelas() {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "RekapPerkawryawan.xlsx");
+      link.setAttribute("download", "RekapMingguanPerKelas.xlsx");
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);

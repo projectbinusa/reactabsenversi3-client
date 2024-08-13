@@ -65,12 +65,17 @@ function Perkelas() {
   //   }
   // };
 
-  // Export data function
   const exportPerkelas = async () => {
     if (!kelasId) {
       Swal.fire("Peringatan", "Silakan pilih kelas terlebih dahulu", "warning");
       return;
     }
+  
+    if (listAbsensi.length === 0) {
+      Swal.fire("Peringatan", "Tidak ada data untuk diekspor", "warning");
+      return;
+    }
+  
     try {
       const response = await axios.get(
         `${API_DUMMY}/api/export/absensi/by-kelas/${kelasId}`,
@@ -78,7 +83,7 @@ function Perkelas() {
           responseType: "blob",
         }
       );
-
+  
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
@@ -87,7 +92,7 @@ function Perkelas() {
       link.click();
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
-
+  
       Swal.fire("Berhasil", "Berhasil mengunduh data", "success");
     } catch (error) {
       console.error("Error exporting data:", error);

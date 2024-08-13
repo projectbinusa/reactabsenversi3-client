@@ -7,8 +7,8 @@ import { API_DUMMY } from "../../../utils/api";
 import { faPenToSquare, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Swal from "sweetalert2";
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+
 
 function Informasi() {
   const [informasi, setInformasi] = useState([]);
@@ -30,7 +30,7 @@ function Informasi() {
         }
       );
 
-      setInformasi(response.data);
+      setInformasi(response.data || []);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -41,21 +41,26 @@ function Informasi() {
   }, []);
 
   useEffect(() => {
-    const filteredData = informasi.filter(
-      (informasi) =>
-        (informasi.namaAcara.toLowerCase().includes(searchTerm.toLowerCase()) ??
-          false) ||
-        (String(informasi.tanggalAcara)
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase()) ??
-          false) ||
-        (informasi.tempatAcara
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase()) ??
-          false) ||
-        (informasi.message.toLowerCase().includes(searchTerm.toLowerCase()) ??
-          false)
-    );
+    if (!Array.isArray(informasi)) return;
+
+    const filteredData = informasi.filter((item) => {
+      if (!item) return false;
+      
+      const name = item.namaAcara ? item.namaAcara.toLowerCase() : '';
+      const date = item.tanggalAcara ? String(item.tanggalAcara).toLowerCase() : '';
+      const place = item.tempatAcara ? item.tempatAcara.toLowerCase() : '';
+      const message = item.message ? item.message.toLowerCase() : '';
+
+      const search = searchTerm.toLowerCase();
+
+      return (
+        name.includes(search) ||
+        date.includes(search) ||
+        place.includes(search) ||
+        message.includes(search)
+      );
+    });
+
     setTotalPages(Math.ceil(filteredData.length / limit));
   }, [searchTerm, limit, informasi]);
 
@@ -64,7 +69,7 @@ function Informasi() {
   };
 
   const handleLimitChange = (event) => {
-    setLimit(parseInt(event.target.value));
+    setLimit(parseInt(event.target.value, 10));
     setCurrentPage(1); // Reset to the first page when limit changes
   };
 
@@ -72,19 +77,23 @@ function Informasi() {
     setCurrentPage(page);
   }
 
-  const filteredInformasi = informasi.filter(
-    (informasi) =>
-      (informasi.namaAcara.toLowerCase().includes(searchTerm.toLowerCase()) ??
-        false) ||
-      (String(informasi.tanggalAcara)
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase()) ??
-        false) ||
-      (informasi.tempatAcara.toLowerCase().includes(searchTerm.toLowerCase()) ??
-        false) ||
-      (informasi.message.toLowerCase().includes(searchTerm.toLowerCase()) ??
-        false)
-  );
+  const filteredInformasi = informasi.filter((item) => {
+    if (!item) return false;
+    
+    const name = item.namaAcara ? item.namaAcara.toLowerCase() : '';
+    const date = item.tanggalAcara ? String(item.tanggalAcara).toLowerCase() : '';
+    const place = item.tempatAcara ? item.tempatAcara.toLowerCase() : '';
+    const message = item.message ? item.message.toLowerCase() : '';
+
+    const search = searchTerm.toLowerCase();
+
+    return (
+      name.includes(search) ||
+      date.includes(search) ||
+      place.includes(search) ||
+      message.includes(search)
+    );
+  });
 
   const paginatedInformasi = filteredInformasi.slice(
     (currentPage - 1) * limit,
@@ -235,10 +244,7 @@ function Informasi() {
                           No
                         </th>
                         <th scope="col" className="px-6 py-3">
-                          Nama Acara
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                          Pesan
+                          Acara
                         </th>
                         <th scope="col" className="px-6 py-3">
                           Tanggal
@@ -246,11 +252,11 @@ function Informasi() {
                         <th scope="col" className="px-6 py-3">
                           Tempat
                         </th>
-                        <th scope="col" className="py-4 text-center">
-                          Aksi
+                        <th scope="col" className="px-6 py-3">
+                          Pesan
                         </th>
-                        <th scope="col" className="py-4 text-center">
-                          Notifikasi
+                        <th scope="col" className="px-6 py-3">
+                          Action
                         </th>
                       </tr>
                     </thead>
@@ -313,12 +319,10 @@ function Informasi() {
                   </table>
                 </div>
                 <Pagination
-                  className="mt-5"
-                  layout="table"
+                  className="mt-4"
                   currentPage={currentPage}
                   totalPages={totalPages}
                   onPageChange={onPageChange}
-                  showIcons
                 />
               </div>
             </div>
