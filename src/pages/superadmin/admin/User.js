@@ -33,7 +33,7 @@ function User() {
         }
       );
 
-      setUserData(response.data);
+      setUserData(response.data.reverse());
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -200,7 +200,7 @@ function User() {
                   </thead>
                   {/* <!-- Tabel Body --> */}
                   <tbody className="text-left">
-                    {paginatedUser.slice().reverse().map((user, index) => (
+                    {paginatedUser.map((user, index) => (
                       <tr
                         className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                         key={index}

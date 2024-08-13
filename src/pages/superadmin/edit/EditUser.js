@@ -167,7 +167,7 @@ function EditUser() {
                           onChange={(e) => setIdJabatan(e.target.value)}
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                         >
-                            {jabatanOptions.slice().reverse().map((option) => (
+                            {jabatanOptions.map((option) => (
                             <option
                               key={option.idJabatan}
                               value={option.idJabatan}
@@ -191,7 +191,7 @@ function EditUser() {
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                         >
                           {shiftOptions &&
-                            shiftOptions.slice().reverse().map((option) => (
+                            shiftOptions.map((option) => (
                             <option key={option.id} value={option.id}>
                               {option.namaShift}
                             </option>
@@ -213,7 +213,7 @@ function EditUser() {
                           onChange={(e) => setIdOrangTua(e.target.value)}
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                         >
-                          {orangTuaOptions.slice().reverse().map((option) => (
+                          {orangTuaOptions.map((option) => (
                             <option key={option.id} value={option.id}>
                               {option.nama}
                             </option>
@@ -233,7 +233,7 @@ function EditUser() {
                           onChange={(e) => setIdKelas(e.target.value)}
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                         >
-                          {kelasOptions.slice().reverse().map((option) => (
+                          {kelasOptions.map((option) => (
                             <option key={option.id} value={option.id}>
                               {option.namaKelas}
                             </option>

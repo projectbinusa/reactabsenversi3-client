@@ -36,7 +36,7 @@ function Lokasi() {
         `${API_DUMMY}/api/lokasi/get-admin/${idAdmin}`
       );
 
-      setUserData(response.data);
+      setUserData(response.data.reverse());
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -204,67 +204,64 @@ function Lokasi() {
                   </thead>
                   {/* <!-- Tabel Body --> */}
                   <tbody className="text-left">
-                    {paginatedLokasi
-                      .slice()
-                      .reverse()
-                      .map((lokasi, index) => (
-                        <tr
-                          className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                          key={index}
+                    {paginatedLokasi.map((lokasi, index) => (
+                      <tr
+                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                        key={index}
+                      >
+                        <th
+                          scope="row"
+                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                         >
-                          <th
-                            scope="row"
-                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                          >
-                            {(currentPage - 1) * limit + index + 1}
-                          </th>
-                          <td className="px-6 py-4 capitalize">
-                            {lokasi.namaLokasi}
-                          </td>
-                          <td className="px-6 py-4 capitalize">
-                            {lokasi.alamat}
-                          </td>
-                          <td className="px-6 py-4 capitalize">{karyawan} </td>
-                          <td className="px-6 py-4 capitalize">
-                            {lokasi.organisasi.namaOrganisasi}
-                          </td>
-                          <td className=" py-3">
-                            <div className="flex items-center -space-x-4 ml-12">
-                              <a href={`/admin/detailL/${lokasi.idLokasi}`}>
-                                <button className="z-20 block rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
-                                  <span className="relative inline-block">
-                                    <FontAwesomeIcon
-                                      icon={faInfo}
-                                      className="h-4 w-4"
-                                    />
-                                  </span>
-                                </button>
-                              </a>
-                              <a href={`/admin/editL/${lokasi.idLokasi}`}>
-                                <button className="z-30 block rounded-full border-2 border-white bg-yellow-100 p-4 text-yellow-700 active:bg-red-50">
-                                  <span className="relative inline-block">
-                                    <FontAwesomeIcon
-                                      icon={faPenToSquare}
-                                      className="h-4 w-4"
-                                    />
-                                  </span>
-                                </button>
-                              </a>
-                              <button
-                                className="z-30 block rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-red-50"
-                                onClick={() => deleteData(lokasi.idLokasi)}
-                              >
+                          {(currentPage - 1) * limit + index + 1}
+                        </th>
+                        <td className="px-6 py-4 capitalize">
+                          {lokasi.namaLokasi}
+                        </td>
+                        <td className="px-6 py-4 capitalize">
+                          {lokasi.alamat}
+                        </td>
+                        <td className="px-6 py-4 capitalize">{karyawan} </td>
+                        <td className="px-6 py-4 capitalize">
+                          {lokasi.organisasi.namaOrganisasi}
+                        </td>
+                        <td className=" py-3">
+                          <div className="flex items-center -space-x-4 ml-12">
+                            <a href={`/admin/detailL/${lokasi.idLokasi}`}>
+                              <button className="z-20 block rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
                                 <span className="relative inline-block">
                                   <FontAwesomeIcon
-                                    icon={faTrash}
+                                    icon={faInfo}
                                     className="h-4 w-4"
                                   />
                                 </span>
                               </button>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
+                            </a>
+                            <a href={`/admin/editL/${lokasi.idLokasi}`}>
+                              <button className="z-30 block rounded-full border-2 border-white bg-yellow-100 p-4 text-yellow-700 active:bg-red-50">
+                                <span className="relative inline-block">
+                                  <FontAwesomeIcon
+                                    icon={faPenToSquare}
+                                    className="h-4 w-4"
+                                  />
+                                </span>
+                              </button>
+                            </a>
+                            <button
+                              className="z-30 block rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-red-50"
+                              onClick={() => deleteData(lokasi.idLokasi)}
+                            >
+                              <span className="relative inline-block">
+                                <FontAwesomeIcon
+                                  icon={faTrash}
+                                  className="h-4 w-4"
+                                />
+                              </span>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>

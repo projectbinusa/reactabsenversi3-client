@@ -29,7 +29,7 @@ function Organisasi() {
         `${API_DUMMY}/api/organisasi/all-by-admin/${idAdmin}`
       );
 
-      setUserData(response.data);
+      setUserData(response.data.reverse());
     } catch (error) {
       console.log("Error fetching data:", error);
     }
@@ -203,7 +203,7 @@ function Organisasi() {
                   </thead>
                   {/* <!-- Tabel Body --> */}
                   <tbody className="text-left">
-                    {paginatedOrganisasi.slice().reverse().map((organisasi, index) => (
+                    {paginatedOrganisasi.map((organisasi, index) => (
                       <tr
                         className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                         key={index}

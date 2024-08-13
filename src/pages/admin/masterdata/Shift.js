@@ -58,7 +58,7 @@ function Shift() {
         }
       );
 
-      setUserData(response.data);
+      setUserData(response.data.reverse());
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -252,7 +252,7 @@ function Shift() {
                   </thead>
                   {/* <!-- Tabel Body --> */}
                   <tbody className="text-left">
-                    {paginatedShift.slice().reverse().map((shift, index) => (
+                    {paginatedShift.map((shift, index) => (
                       <tr
                         className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                         key={index}

@@ -106,7 +106,7 @@ function DashboardSA() {
         }
       );
 
-      setAdmin(response.data);
+      setAdmin(response.data.reverse());
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -255,34 +255,29 @@ function DashboardSA() {
                 </thead>
                 {/* <!-- Tabel Body --> */}
                 <tbody className="text-left">
-                  {admin
-                    .slice()
-                    .reverse()
-                    .map((admin, index) => (
-                      <tr
-                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                        key={index}
+                  {admin.map((admin, index) => (
+                    <tr
+                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                      key={index}
+                    >
+                      <th
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                       >
-                        <th
-                          scope="row"
-                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        {index + 1}
+                      </th>
+                      <td className="px-6 py-4">
+                        <a
+                          href="/cdn-cgi/l/email-protection"
+                          className="__cf_email__"
+                          data-cfemail="5a363b23363b1a3d373b333674393537"
                         >
-                          {index + 1}
-                        </th>
-                        <td className="px-6 py-4">
-                          <a
-                            href="/cdn-cgi/l/email-protection"
-                            className="__cf_email__"
-                            data-cfemail="5a363b23363b1a3d373b333674393537"
-                          >
-                            {admin.email}
-                          </a>
-                        </td>
-                        <td className="px-6 py-4 capitalize">
-                          {admin.username}
-                        </td>
-                      </tr>
-                    ))}
+                          {admin.email}
+                        </a>
+                      </td>
+                      <td className="px-6 py-4 capitalize">{admin.username}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>

@@ -44,7 +44,7 @@ function TabelCuti() {
         }
       );
 
-      setCuti(response.data);
+      setCuti(response.data.reverse());
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -219,7 +219,7 @@ function TabelCuti() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                  {paginatedCuti.slice().reverse().map((cutiData, index) => (
+                  {paginatedCuti.map((cutiData, index) => (
                     <tr key={index}>
                       <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-center">
                         {(currentPage - 1) * limit + index + 1}

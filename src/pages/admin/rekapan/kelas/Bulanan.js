@@ -77,7 +77,7 @@ function BulanPerkelas() {
         `${API_DUMMY}/api/absensi/bulanan/kelas/${idKelas}?bulan=${bulan}&tahun=${tahun}`
       );
       //   if (response == 200) {
-      setRekapPerbulan(response.data);
+      setRekapPerbulan(response.data.reverse());
       console.log("list rekap perbulan: ", response.data);
       //   }
     } catch (error) {
@@ -99,19 +99,26 @@ function BulanPerkelas() {
   const handleExportClick = async (e) => {
     e.preventDefault();
     if (!selectedDate || !idKelas) {
-      Swal.fire("Peringatan", "Silakan pilih kelas dan bulan, tahun terlebih dahulu", "warning");
+      Swal.fire(
+        "Peringatan",
+        "Silakan pilih kelas dan bulan, tahun terlebih dahulu",
+        "warning"
+      );
       return;
     }
-  
+
     if (rekapPerbulan.length === 0) {
-      Swal.fire("Peringatan", "Data belum tersedia untuk bulan yang dipilih", "warning");
+      Swal.fire(
+        "Peringatan",
+        "Data belum tersedia untuk bulan yang dipilih",
+        "warning"
+      );
       return;
     }
-  
+
     const [year, month] = selectedDate.split("-");
     await exportPerkelas(month, year);
   };
-  
 
   // Export data function
   const exportPerkelas = async (bulan, tahun) => {
@@ -122,20 +129,21 @@ function BulanPerkelas() {
           responseType: "blob",
         }
       );
-  
+
       // Check if the response data is a valid blob
       if (response.data.size === 0) {
         Swal.fire("Peringatan", "Tidak ada data untuk diunduh", "warning");
         return;
       }
-  
+
       // Optional: Check the content of the blob for additional validation
       const blobContent = await response.data.text();
-      if (!blobContent.includes("<html>")) { // Example check for unexpected content
+      if (!blobContent.includes("<html>")) {
+        // Example check for unexpected content
         Swal.fire("Peringatan", "Data tidak tersedia untuk ekspor", "warning");
         return;
       }
-  
+
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
@@ -144,14 +152,13 @@ function BulanPerkelas() {
       link.click();
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
-  
+
       Swal.fire("Berhasil", "Berhasil mengunduh data", "success");
     } catch (error) {
       Swal.fire("Error", "Gagal mengunduh data", "error");
       console.log(error);
     }
   };
-  
 
   // Format date
   const formatDate = (dateString) => {
@@ -208,14 +215,11 @@ function BulanPerkelas() {
                   onChange={(e) => setItemsPerPage(Number(e.target.value))}
                   className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
                 >
-                  {[5, 10, 20, 50]
-                    .slice()
-                    .reverse()
-                    .map((limit) => (
-                      <option key={limit} value={limit}>
-                        {limit}
-                      </option>
-                    ))}
+                  {[5, 10, 20, 50].map((limit) => (
+                    <option key={limit} value={limit}>
+                      {limit}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -287,40 +291,37 @@ function BulanPerkelas() {
                   </tr>
                 </thead>
                 <tbody>
-                  {currentItems
-                    .slice()
-                    .reverse()
-                    .map((absensi, index) => (
-                      <tr key={absensi.id}>
-                        <td className="px-6 py-3 whitespace-nowrap">
-                          {index + 1}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {absensi.user.username}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {formatDate(absensi.tanggalAbsen)}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {absensi.jamMasuk}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          <img src={absensi.fotoMasuk} alt="Foto Masuk" />
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {absensi.jamPulang}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          <img src={absensi.fotoPulang} alt="Foto Pulang" />
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {absensi.jamKerja}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {absensi.keterangan}
-                        </td>
-                      </tr>
-                    ))}
+                  {currentItems.map((absensi, index) => (
+                    <tr key={absensi.id}>
+                      <td className="px-6 py-3 whitespace-nowrap">
+                        {index + 1}
+                      </td>
+                      <td className="px-6 py-3 whitespace-nowrap capitalize">
+                        {absensi.user.username}
+                      </td>
+                      <td className="px-6 py-3 whitespace-nowrap capitalize">
+                        {formatDate(absensi.tanggalAbsen)}
+                      </td>
+                      <td className="px-6 py-3 whitespace-nowrap capitalize">
+                        {absensi.jamMasuk}
+                      </td>
+                      <td className="px-6 py-3 whitespace-nowrap capitalize">
+                        <img src={absensi.fotoMasuk} alt="Foto Masuk" />
+                      </td>
+                      <td className="px-6 py-3 whitespace-nowrap capitalize">
+                        {absensi.jamPulang}
+                      </td>
+                      <td className="px-6 py-3 whitespace-nowrap capitalize">
+                        <img src={absensi.fotoPulang} alt="Foto Pulang" />
+                      </td>
+                      <td className="px-6 py-3 whitespace-nowrap capitalize">
+                        {absensi.jamKerja}
+                      </td>
+                      <td className="px-6 py-3 whitespace-nowrap capitalize">
+                        {absensi.keterangan}
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>

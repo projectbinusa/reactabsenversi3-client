@@ -165,7 +165,7 @@ function EditKaryawan() {
                           className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
                         >
                           <option value="">Belum memiliki</option>
-                          {jabatanOptions.slice().reverse().map((option) => (
+                          {jabatanOptions.map((option) => (
                             <option
                               key={option.idJabatan}
                               value={option.idJabatan}
@@ -189,7 +189,7 @@ function EditKaryawan() {
                           className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
                         >
                           <option value="">Belum memiliki</option>
-                          {shiftOptions.slice().reverse().map((option) => (
+                          {shiftOptions.map((option) => (
                             <option key={option.id} value={option.id}>
                               {option.namaShift}
                             </option>
@@ -211,7 +211,7 @@ function EditKaryawan() {
                           onChange={(e) => setIdOrangTua(e.target.value)}
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                         >
-                          {orangTuaOptions.slice().reverse().map((option) => (
+                          {orangTuaOptions.map((option) => (
                             <option key={option.id} value={option.id}>
                               {option.nama}
                             </option>
@@ -231,7 +231,7 @@ function EditKaryawan() {
                           onChange={(e) => setIdKelas(e.target.value)}
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                         >
-                          {kelasOptions.slice().reverse().map((option) => (
+                          {kelasOptions.map((option) => (
                             <option key={option.id} value={option.id}>
                               {option.namaKelas}
                             </option>

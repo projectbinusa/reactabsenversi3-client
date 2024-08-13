@@ -222,7 +222,7 @@ function Bulanan() {
                 </thead>
                 <tbody>
                   {absensiData.length > 0 ? (
-                    absensiData.slice().reverse().map((absensi, index) => (
+                    absensiData.map((absensi, index) => (
                       <tr key={index}>
                         <td className="px-5 py-3">{index + 1}</td>
                         <td className="px-5 py-3 capitalize whitespace-nowrap">

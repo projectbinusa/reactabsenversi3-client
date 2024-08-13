@@ -36,7 +36,7 @@ function Perkelas() {
       const response = await axios.get(
         `${API_DUMMY}/api/kelas/getALlByAdmin/${adminId}`
       );
-      setListKelas(response.data);
+      setListKelas(response.data.reverse());
     } catch (error) {
       console.error("Error fetching classes:", error);
     }
@@ -258,8 +258,7 @@ function Perkelas() {
                   </thead>
                   <tbody>
                     {paginatedUser
-                      .slice()
-                      .reverse()
+                     
                       .map((absensi, index) => (
                         <tr key={absensi.id}>
                           <td className="px-6 py-3 whitespace-nowrap">

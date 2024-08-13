@@ -127,7 +127,7 @@ function DashboardOrtu() {
         }
       );
 
-      setOrganisasiData(response.data);
+      setOrganisasiData(response.data.reverse());
       console.log("list terlambat", response.data.user.orangtua.map((dt) => dt.nama));
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -158,7 +158,7 @@ function DashboardOrtu() {
   const Informasi = async () => {
     try {
       const response = await axios.get(`${API_DUMMY}/api/notifications`);
-      setInformasi(response.data);
+      setInformasi(response.data.reverse());
     } catch (error) {
       console.error("Error fetching informasi:", error);
     }
@@ -253,7 +253,7 @@ function DashboardOrtu() {
             </h2>
             <div className="mt-6 grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               {validInformasi.length > 0 ? (
-                validInformasi.slice().reverse().map((item) => (
+                validInformasi.map((item) => (
                   <div
                     key={item.id}
                     className="informasi-item p-4 bg-white border border-gray-200 rounded-lg shadow-md transform transition-transform hover:scale-105 hover:shadow-xl"
@@ -341,7 +341,7 @@ function DashboardOrtu() {
                 </thead>
                 {/* <!-- Tabel Body --> */}
                 <tbody className="text-left">
-                  {organisasiData.slice().reverse().map((admin, index) => (
+                  {organisasiData.map((admin, index) => (
                     <tr
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                       key={index}
