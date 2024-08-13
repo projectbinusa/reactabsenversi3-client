@@ -456,7 +456,7 @@ function Dashboard() {
               </div>
             </div>
           </div>
-          <div className="tabel-absen mt-12 bg-blue-100 p-5 rounded-xl shadow-xl border border-gray-300">
+          {/* <div className="tabel-absen mt-12 bg-blue-100 p-5 rounded-xl shadow-xl border border-gray-300">
             <h2 className="text-xl font-bold text-black">History Presensi</h2>
             <div className="overflow-x-auto rounded-lg border border-gray-200 mt-4">
               <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm border border-gray-300">
@@ -499,7 +499,7 @@ function Dashboard() {
                 <FontAwesomeIcon icon={faArrowRight} />
               </button>
             </div>
-          </div>
+          </div> */}
           {/* <div className="tabel-cuti mt-12 bg-blue-100 p-5 rounded-xl shadow-xl border border-gray-300">
             <h2 className="text-xl font-bold text-black">Permohonan Cuti</h2>
             <div className="overflow-x-auto rounded-lg border border-gray-200 mt-4">

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import NavbarAdmin from "../../../components/NavbarAdmin";
 import Sidebar from "../../../components/SidebarUser";
 import {
+  faFileExport,
+  faFileImport,
   faPenToSquare,
   faPlus,
   faTrash,
@@ -10,7 +12,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { Pagination } from "flowbite-react";
+import { Button, Modal, Pagination } from "flowbite-react";
 import { API_DUMMY } from "../../../utils/api";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
@@ -23,6 +25,103 @@ function KelasSiswa() {
   const [limit, setLimit] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [openModal, setOpenModal] = useState(false);
+
+  const exportData = async () => {
+    if (userData.length === 0) {
+      Swal.fire("Error", "Tidak ada data untuk diekspor", "error");
+      return;
+    }
+
+    try {
+      const response = await axios.get(
+        `${API_DUMMY}/api/admin/kelas/export?idAdmin=${idAdmin}`,
+        {
+          responseType: "blob",
+        }
+      );
+
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "DataKelas.xlsx");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      Swal.fire({
+        title: "Berhasil",
+        text: "Berhasil mengunduh data",
+        icon: "success",
+        showConfirmButton: false,
+      });
+      setTimeout(() => {
+        // window.location.href = "/superadmin/admin";
+      }, 3000);
+    } catch (error) {
+      console.error("Error exporting data:", error);
+      Swal.fire("Error", "Gagal mengunduh data", "error");
+    }
+  };
+
+  const downloadTemplate = async () => {
+    try {
+      const response = await axios.get(
+        `${API_DUMMY}/api/admin/kelas/templateKelas`,
+        {
+          responseType: "blob",
+        }
+      );
+
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "TemplateExcelKelas.xlsx");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      Swal.fire("Berhasil", "Berhasil mengunduh data", "success");
+    } catch (error) {
+      console.error("Error exporting data:", error);
+      Swal.fire("Error", "Gagal mengunduh data", "error");
+    }
+  };
+
+  const [file, setFile] = useState("");
+
+  const importData = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    formData.append("file", file);
+    // formData.append("idJabatan", idJabatan);
+    // formData.append("idOrangTua", idOrangTua);
+    // formData.append("idShift", idShift);
+    // formData.append("idOrganisasi", idOrganisasi);
+
+    await axios
+      .post(`${API_DUMMY}/api/admin/importKelas/${idAdmin}`, formData)
+      .then(() => {
+        Swal.fire({
+          title: "Sukses!",
+          text: "Berhasil menambahkan",
+          icon: "success",
+          timer: 3000,
+          showConfirmButton: false,
+        });
+        setOpenModal(false);
+        getAllKelasbyAdmin();
+      })
+
+      .catch((err) => {
+        console.log(err);
+        Swal.fire("Error", "Anda belum memilih file untuk diimport!.", "error");
+      });
+  };
 
   const getAllKelasbyAdmin = async () => {
     const token = localStorage.getItem("token");
@@ -159,7 +258,7 @@ function KelasSiswa() {
                 <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
                   Data Kelas
                 </h6>
-                <div className="flex items-center gap-2 mt-2">
+                <div className="md:flex items-center gap-2 mt-2">
                   <div className="relative w-64">
                     <input
                       type="search"
@@ -174,8 +273,7 @@ function KelasSiswa() {
                   <select
                     value={limit}
                     onChange={handleLimitChange}
-                    className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
-                  >
+                    className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
                     <option value="5">05</option>
                     <option value="10">10</option>
                     <option value="20">20</option>
@@ -184,10 +282,21 @@ function KelasSiswa() {
                   <a
                     type="button"
                     href="/admin/addkelas"
-                    className="text-white bg-indigo-500 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800 mt-2"
-                  >
+                    className="text-white bg-indigo-500 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800 mt-2">
                     <FontAwesomeIcon icon={faPlus} size="lg" />
                   </a>
+                  <button
+                    type="button"
+                    className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded-lg inline-block ml-auto"
+                    onClick={exportData}>
+                    <FontAwesomeIcon icon={faFileExport} />
+                  </button>
+                  <button
+                    type="button"
+                    className="imp bg-blue-500 hover:bg-blue text-white font-bold py-2 px-4 rounded-lg inline-block ml-auto"
+                    onClick={() => setOpenModal(true)}>
+                    <FontAwesomeIcon icon={faFileImport} />
+                  </button>
                 </div>
               </div>
               <hr />
@@ -196,8 +305,7 @@ function KelasSiswa() {
               <div className="relative overflow-x-auto mt-5">
                 <table
                   id="dataKelas"
-                  className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
-                >
+                  className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                   {/* <!-- Tabel Head --> */}
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -212,8 +320,7 @@ function KelasSiswa() {
                       </th>
                       <th
                         scope="col"
-                        className="px-6 py-3 whitespace-nowrap text-center"
-                      >
+                        className="px-6 py-3 whitespace-nowrap text-center">
                         Aksi
                       </th>
                     </tr>
@@ -223,12 +330,10 @@ function KelasSiswa() {
                     {paginatedKelas.map((kelas, index) => (
                       <tr
                         className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                        key={index}
-                      >
+                        key={index}>
                         <th
                           scope="row"
-                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                        >
+                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                           {(currentPage - 1) * limit + index + 1}
                         </th>
                         <td className="px-6 py-4 capitalize">
@@ -254,8 +359,7 @@ function KelasSiswa() {
                             <Link
                               to={`/admin/siswa/kelas/${kelas.id}`}
                               title="list siswa"
-                              className="z-30 block rounded-full border-2 border-white  bg-blue-100 active:bg-blue-50 p-4 text-blue-700"
-                            >
+                              className="z-30 block rounded-full border-2 border-white  bg-blue-100 active:bg-blue-50 p-4 text-blue-700">
                               <span className="relative inline-block">
                                 <FontAwesomeIcon
                                   icon={faUser}
@@ -265,8 +369,7 @@ function KelasSiswa() {
                             </Link>
                             <button
                               className="z-30 block rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-red-50"
-                              onClick={() => deleteData(kelas.id)}
-                            >
+                              onClick={() => deleteData(kelas.id)}>
                               <span className="relative inline-block">
                                 <FontAwesomeIcon
                                   icon={faTrash}
@@ -281,6 +384,41 @@ function KelasSiswa() {
                   </tbody>
                 </table>
               </div>
+              <Modal
+                popup
+                className="w-fit ml-auto mr-auto fixed inset-0 flex items-center justify-center"
+                show={openModal}
+                onClose={() => setOpenModal(false)}>
+                <Modal.Header>Import Data Kelas</Modal.Header>
+                <hr />
+                <Modal.Body>
+                  <form className="space-y-6">
+                    <Button
+                      className="mb-3 bg-green-500 text-white"
+                      type="submit"
+                      onClick={downloadTemplate}>
+                      Download Template
+                    </Button>
+                    <input
+                      required
+                      autoComplete="off"
+                      type="file"
+                      accept=".xlsx"
+                      onChange={(e) => setFile(e.target.files[0])}
+                    />
+                  </form>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button
+                    className="bg-red-500"
+                    onClick={() => setOpenModal(false)}>
+                    Batal
+                  </Button>
+                  <Button color="blue" type="submit" onClick={importData}>
+                    Simpan
+                  </Button>
+                </Modal.Footer>
+              </Modal>
               <Pagination
                 className="mt-5"
                 layout="table"
