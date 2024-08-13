@@ -85,6 +85,9 @@ function BulanPerkelas() {
     }
   };
 
+  function onPageChange(page) {
+    setCurrentPage(page);
+  }
   const handleDateChange = (event) => {
     const value = event.target.value;
     setSelectedDate(value);
@@ -307,8 +310,8 @@ function BulanPerkelas() {
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}
-              onPageChange={(page) => setCurrentPage(page)}
-              className="mt-4"
+              onPageChange={onPageChange}
+              showIcons
               previousLabel=""
               nextLabel=""
             />

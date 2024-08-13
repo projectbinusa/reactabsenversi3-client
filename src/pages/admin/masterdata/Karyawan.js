@@ -108,7 +108,7 @@ function Karyawan() {
 
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/user/byAdmin/${idAdmin}`,
+        `${API_DUMMY}/api/user/${idAdmin}/users`,
         {
           headers: {
             Authorization: `${token}`,
