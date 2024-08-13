@@ -12,32 +12,35 @@ function Perkelas() {
   const [listAbsensi, setListAbsensi] = useState([]);
   const [listKelas, setListKelas] = useState([]); // Daftar kelas
   const [kelasId, setKelasId] = useState(); // ID kelas yang dipilih
-  const [idOrganisasi, setIdOrganisasi] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [limit, setLimit] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const adminId = localStorage.getItem("adminId");
 
   useEffect(() => {
-    getAllKelas();
+    if (adminId) {
+      getAllKelas(adminId);
+    }
+  }, [adminId]);
+
+  useEffect(() => {
     if (kelasId != null) {
       getAbsensiByKelasId(kelasId, currentPage, limit);
     }
-  }, [kelasId]);
+  }, [kelasId, currentPage, limit]);
 
   // Fetch kelas data
-  const getAllKelas = async () => {
+  const getAllKelas = async (adminId) => {
     try {
-      const response = await axios.get(`${API_DUMMY}/api/kelas/kelas/all`);
+      const response = await axios.get(
+        `${API_DUMMY}/api/kelas/getALlByAdmin/${adminId}`
+      );
       setListKelas(response.data);
-      if (response.data.length > 0) {
-        setIdOrganisasi(response.data[0].organisasi.id);
-      }
     } catch (error) {
       console.error("Error fetching classes:", error);
     }
   };
-
   // Fetch absensi data by kelas id
   const getAbsensiByKelasId = async () => {
     try {
@@ -187,11 +190,14 @@ function Perkelas() {
                 onChange={(e) => setKelasId(e.target.value)}
               >
                 <option>Pilih Kelas</option>
-                {listKelas.slice().reverse().map((data) => (
-                  <option key={data.id} value={data.id}>
-                    {data.namaKelas}
-                  </option>
-                ))}
+                {listKelas
+                  .slice()
+                  .reverse()
+                  .map((data) => (
+                    <option key={data.id} value={data.id}>
+                      {data.namaKelas}
+                    </option>
+                  ))}
               </select>
 
               <div className="flex sm:flex-row gap-4 mx-auto items-center">
@@ -246,45 +252,48 @@ function Perkelas() {
                     </tr>
                   </thead>
                   <tbody>
-                    {paginatedUser.slice().reverse().map((absensi, index) => (
-                      <tr key={absensi.id}>
-                        <td className="px-6 py-3 whitespace-nowrap">
-                          {index + 1}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {absensi.user.username}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {formatDate(absensi.tanggalAbsen)}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {absensi.jamMasuk}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          <img
-                            src={absensi.fotoMasuk}
-                            alt="Foto Masuk"
-                            className="w-16 h-16 object-cover"
-                          />
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {absensi.jamPulang}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          <img
-                            src={absensi.fotoPulang}
-                            alt="Foto Pulang"
-                            className="w-16 h-16 object-cover"
-                          />
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {absensi.jamKerja}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {absensi.keterangan}
-                        </td>
-                      </tr>
-                    ))}
+                    {paginatedUser
+                      .slice()
+                      .reverse()
+                      .map((absensi, index) => (
+                        <tr key={absensi.id}>
+                          <td className="px-6 py-3 whitespace-nowrap">
+                            {index + 1}
+                          </td>
+                          <td className="px-6 py-3 whitespace-nowrap capitalize">
+                            {absensi.user.username}
+                          </td>
+                          <td className="px-6 py-3 whitespace-nowrap capitalize">
+                            {formatDate(absensi.tanggalAbsen)}
+                          </td>
+                          <td className="px-6 py-3 whitespace-nowrap capitalize">
+                            {absensi.jamMasuk}
+                          </td>
+                          <td className="px-6 py-3 whitespace-nowrap capitalize">
+                            <img
+                              src={absensi.fotoMasuk}
+                              alt="Foto Masuk"
+                              className="w-16 h-16 object-cover"
+                            />
+                          </td>
+                          <td className="px-6 py-3 whitespace-nowrap capitalize">
+                            {absensi.jamPulang}
+                          </td>
+                          <td className="px-6 py-3 whitespace-nowrap capitalize">
+                            <img
+                              src={absensi.fotoPulang}
+                              alt="Foto Pulang"
+                              className="w-16 h-16 object-cover"
+                            />
+                          </td>
+                          <td className="px-6 py-3 whitespace-nowrap capitalize">
+                            {absensi.jamKerja}
+                          </td>
+                          <td className="px-6 py-3 whitespace-nowrap capitalize">
+                            {absensi.keterangan}
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               )}

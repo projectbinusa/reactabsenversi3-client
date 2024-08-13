@@ -18,43 +18,58 @@ function BulanPerkelas() {
   const [idKelas, setIdKelas] = useState();
   const [rekapPerbulan, setRekapPerbulan] = useState([]);
   const [selectedDate, setSelectedDate] = useState("");
-  const [idOrganisasi, setIdOrganisasi] = useState();
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  // Fetch user data
-  const getAllKelas = async () => {
-    try {
-      const response = await axios.get(`${API_DUMMY}/api/kelas/kelas/all`);
-      setListKelas(response.data);
-      console.log("list kelas: ", response.data);
-      console.log(
-        "orpganisasi di dalam kelas: ",
-        response.data.slice().reverse().map((dt) => dt.organisasi.id)
-      );
-      const dataOrganisasi = response.data.slice().reverse().map((dt) => dt.organisasi.id);
+  const adminId = localStorage.getItem("adminId");
 
-      if (dataOrganisasi.length > 0) {
-        setIdOrganisasi(dataOrganisasi[0]);
-        // idOrganisasi = dataOrganisasi[0];
-        console.log("id organisasi: ", dataOrganisasi[0]);
-        return idOrganisasi;
-      }
-    } catch (error) {
-      console.log(error);
+  // Initialize data on component mount
+  // useEffect(() => {
+  //   getAllKelas();
+  //   if (idKelas != null) {
+  //     getRekapPresensiPerkelasSetiapBulan();
+  //   }
+  //   // getAllOrganisasi();
+  //   if (idOrganisasi != null) {
+  //     getAllKelasByOrganisasi(idOrganisasi);
+  //   }
+  //   // console.log("bulan: ", bulan);
+  // }, [idOrganisasi]);
+
+  useEffect(() => {
+    if (adminId) {
+      getAllKelas(adminId);
     }
-  };
+  }, [adminId]);
 
-  const getAllKelasByOrganisasi = async () => {
+  useEffect(() => {
+    if (idKelas != null) {
+      getRekapPresensiPerkelasSetiapBulan(idKelas, currentPage);
+    }
+  }, [idKelas, currentPage]);
+
+  // Fetch user data
+  const getAllKelas = async (adminId) => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/kelas/getALlByOrganisasi/${idOrganisasi}`
+        `${API_DUMMY}/api/kelas/getALlByAdmin/${adminId}`
       );
-      console.log("list kelas by organisasi: ", response.data);
+      setListKelas(response.data);
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching classes:", error);
     }
   };
+
+  // const getAllKelasByOrganisasi = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `${API_DUMMY}/api/kelas/getALlByOrganisasi/${idOrganisasi}`
+  //     );
+  //     console.log("list kelas by organisasi: ", response.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const getRekapPresensiPerkelasSetiapBulan = async (bulan, tahun) => {
     try {
@@ -118,19 +133,6 @@ function BulanPerkelas() {
     }
   };
 
-  // Initialize data on component mount
-  useEffect(() => {
-    getAllKelas();
-    if (idKelas != null) {
-      getRekapPresensiPerkelasSetiapBulan();
-    }
-    // getAllOrganisasi();
-    if (idOrganisasi != null) {
-      getAllKelasByOrganisasi(idOrganisasi);
-    }
-    // console.log("bulan: ", bulan);
-  }, [idOrganisasi]);
-
   // Format date
   const formatDate = (dateString) => {
     const options = {
@@ -184,12 +186,16 @@ function BulanPerkelas() {
                 <select
                   value={itemsPerPage}
                   onChange={(e) => setItemsPerPage(Number(e.target.value))}
-                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
-                  {[5, 10, 20, 50].slice().reverse().map((limit) => (
-                    <option key={limit} value={limit}>
-                      {limit}
-                    </option>
-                  ))}
+                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+                >
+                  {[5, 10, 20, 50]
+                    .slice()
+                    .reverse()
+                    .map((limit) => (
+                      <option key={limit} value={limit}>
+                        {limit}
+                      </option>
+                    ))}
                 </select>
               </div>
             </div>
@@ -199,11 +205,15 @@ function BulanPerkelas() {
                 id="small"
                 class="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 value={idKelas}
-                onChange={(e) => setIdKelas(e.target.value)}>
+                onChange={(e) => setIdKelas(e.target.value)}
+              >
                 <option selected>Pilih Kelas</option>
-                {listKelas.slice().reverse().map((data) => (
-                  <option value={data.id}>{data.namaKelas}</option>
-                ))}
+                {listKelas
+                  .slice()
+                  .reverse()
+                  .map((data) => (
+                    <option value={data.id}>{data.namaKelas}</option>
+                  ))}
               </select>
               <input
                 value={selectedDate}
@@ -216,7 +226,8 @@ function BulanPerkelas() {
                 <button
                   type="submit"
                   className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto"
-                  onClick={handleExportClick}>
+                  onClick={handleExportClick}
+                >
                   <FontAwesomeIcon icon={faFileExport} />
                 </button>
               </div>
@@ -256,37 +267,40 @@ function BulanPerkelas() {
                   </tr>
                 </thead>
                 <tbody>
-                  {currentItems.slice().reverse().map((absensi, index) => (
-                    <tr key={absensi.id}>
-                      <td className="px-6 py-3 whitespace-nowrap">
-                        {index + 1}
-                      </td>
-                      <td className="px-6 py-3 whitespace-nowrap capitalize">
-                        {absensi.user.username}
-                      </td>
-                      <td className="px-6 py-3 whitespace-nowrap capitalize">
-                        {formatDate(absensi.tanggalAbsen)}
-                      </td>
-                      <td className="px-6 py-3 whitespace-nowrap capitalize">
-                        {absensi.jamMasuk}
-                      </td>
-                      <td className="px-6 py-3 whitespace-nowrap capitalize">
-                        <img src={absensi.fotoMasuk} alt="Foto Masuk" />
-                      </td>
-                      <td className="px-6 py-3 whitespace-nowrap capitalize">
-                        {absensi.jamPulang}
-                      </td>
-                      <td className="px-6 py-3 whitespace-nowrap capitalize">
-                        <img src={absensi.fotoPulang} alt="Foto Pulang" />
-                      </td>
-                      <td className="px-6 py-3 whitespace-nowrap capitalize">
-                        {absensi.jamKerja}
-                      </td>
-                      <td className="px-6 py-3 whitespace-nowrap capitalize">
-                        {absensi.keterangan}
-                      </td>
-                    </tr>
-                  ))}
+                  {currentItems
+                    .slice()
+                    .reverse()
+                    .map((absensi, index) => (
+                      <tr key={absensi.id}>
+                        <td className="px-6 py-3 whitespace-nowrap">
+                          {index + 1}
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          {absensi.user.username}
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          {formatDate(absensi.tanggalAbsen)}
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          {absensi.jamMasuk}
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          <img src={absensi.fotoMasuk} alt="Foto Masuk" />
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          {absensi.jamPulang}
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          <img src={absensi.fotoPulang} alt="Foto Pulang" />
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          {absensi.jamKerja}
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          {absensi.keterangan}
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             </div>
@@ -295,8 +309,8 @@ function BulanPerkelas() {
               totalPages={totalPages}
               onPageChange={(page) => setCurrentPage(page)}
               className="mt-4"
-                previousLabel=""
-                nextLabel=""
+              previousLabel=""
+              nextLabel=""
             />
           </div>
         </div>

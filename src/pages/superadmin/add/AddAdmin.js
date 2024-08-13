@@ -36,7 +36,7 @@ function AddAdmin() {
       });
       setTimeout(() => {
         window.location.href = "/superadmin/admin";
-      }, 2000);
+      }, 3000);
     } catch (error) {
       console.log(error);
       Swal.fire("Error", "Gagal menambahkan data", "error");
