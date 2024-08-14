@@ -24,10 +24,10 @@ function DashboardOrtu() {
   const [lokasiData, setLokasiData] = useState([]);
   const [organisasiData, setOrganisasiData] = useState([]);
   const [username, setUsername] = useState("");
-  const token = localStorage.getItem("token");
-  const idSuperAdmin = localStorage.getItem("superadminId");
-  const id = localStorage.getItem("id_orangtua");
   const [informasi, setInformasi] = useState([]);
+
+  const token = localStorage.getItem("token");
+  const id = localStorage.getItem("id_orangtua");
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -53,7 +53,6 @@ function DashboardOrtu() {
     addLeadingZero(currentDateTime.getSeconds());
 
   const fetchData = async (url, setter) => {
-    const token = localStorage.getItem("token");
     try {
       const response = await axios.get(url);
       setter(response.data);
@@ -77,11 +76,6 @@ function DashboardOrtu() {
     try {
       const response = await axios.get(
         `${API_DUMMY}/api/orang-tua/getbyid/${id}`
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // }
       );
       setUsername(response.data.nama);
     } catch (error) {
@@ -89,47 +83,39 @@ function DashboardOrtu() {
     }
   };
 
-  async function getAdmin() {
-    const token = localStorage.getItem("token");
-    const id_orangtua = localStorage.getItem("id_orangtua");
-
+  const getAdmin = async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/absensi/izin/by-orangTua/${id_orangtua}`
-        // {
-        //   headers: {
-        //     Authorization: `${token}`,
-        //   },
-        // }
+        `${API_DUMMY}/api/orang-tua/${id}/admin`
       );
-
-      setAdmin(response.data);
+      setAdmin(response.data); // Set the admin data
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching admin:", error);
     }
-  }
+  };
+
+  const getInformasi = async () => {
+    try {
+      if (admin && admin.id) {
+        const response = await axios.get(
+          `${API_DUMMY}/api/notifications/user/getByAdmin/${admin.id}`
+        );
+        console.log(response.data);
+        setInformasi(response.data.reverse());
+      }
+    } catch (error) {
+      console.error("Error fetching informasi:", error);
+    }
+  };
 
   const getPresensiByWaliMurid = async () => {
-    const idWaliMurid = localStorage.getItem("id_orangtua");
-    const token = localStorage.getItem("token");
-
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/absensi/by-orang-tua/${idWaliMurid}`
-        // {
-        //   headers: {
-        //     Authorization: `${token}`,
-        //   },
-        // }
+        `${API_DUMMY}/api/absensi/by-orang-tua/${id}`
       );
-
       setOrganisasiData(response.data.reverse());
-      console.log(
-        "list terlambat",
-        response.data.user.orangtua.map((dt) => dt.nama)
-      );
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching presensi:", error);
     }
   };
 
@@ -142,30 +128,15 @@ function DashboardOrtu() {
     });
   };
 
-  // Fungsi untuk memeriksa apakah tanggal acara sudah lewat
   const isEventExpired = (eventDate) => {
     const today = new Date();
     const eventDateObj = new Date(eventDate);
     return eventDateObj < today;
   };
 
-  // Filter informasi untuk hanya menampilkan acara yang belum lewat
   const validInformasi = informasi.filter(
     (item) => !isEventExpired(item.tanggalAcara)
   );
-
-  const Informasi = async () => {
-    try {
-      const response = await axios.get(`${API_DUMMY}/api/notifications`);
-      setInformasi(response.data.reverse());
-    } catch (error) {
-      console.error("Error fetching informasi:", error);
-    }
-  };
-
-  useEffect(() => {
-    Informasi();
-  }, []);
 
   useEffect(() => {
     getUser();
@@ -173,10 +144,16 @@ function DashboardOrtu() {
     getUsername();
     getJabatan();
     getLokasi();
-    getOrganisasi();
     getAdmin();
+    getOrganisasi();
     getPresensiByWaliMurid();
   }, []);
+
+  useEffect(() => {
+    if (admin) {
+      getInformasi();
+    }
+  }, [admin]);
 
   useEffect(() => {
     if (localStorage.getItem("loginSuccess") === "true") {
@@ -187,7 +164,6 @@ function DashboardOrtu() {
       localStorage.removeItem("loginSuccess");
     }
   }, []);
-
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
@@ -255,7 +231,8 @@ function DashboardOrtu() {
                 validInformasi.map((item) => (
                   <div
                     key={item.id}
-                    className="informasi-item p-4 bg-white border border-gray-200 rounded-lg shadow-md transform transition-transform hover:scale-105 hover:shadow-xl">
+                    className="informasi-item p-4 bg-white border border-gray-200 rounded-lg shadow-md transform transition-transform hover:scale-105 hover:shadow-xl"
+                  >
                     <div className="flex items-center mb-4">
                       <FontAwesomeIcon
                         icon={faCircleInfo}
@@ -309,7 +286,8 @@ function DashboardOrtu() {
             <div className="relative overflow-x-auto mt-5">
               <table
                 id="dataKaryawan"
-                className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+              >
                 {/* <!-- Tabel Head --> */}
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
@@ -341,10 +319,12 @@ function DashboardOrtu() {
                   {organisasiData.map((admin, index) => (
                     <tr
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                      key={index}>
+                      key={index}
+                    >
                       <th
                         scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
                         {index + 1}
                       </th>
                       <td className="px-6 py-4 capitalize">
