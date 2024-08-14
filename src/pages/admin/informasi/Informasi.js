@@ -4,11 +4,14 @@ import Sidebar from "../../../components/SidebarUser";
 import axios from "axios";
 import { Pagination } from "flowbite-react";
 import { API_DUMMY } from "../../../utils/api";
-import { faPenToSquare, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPenToSquare,
+  faPlus,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Swal from "sweetalert2";
-import { ToastContainer } from 'react-toastify';
-
+import { ToastContainer } from "react-toastify";
 
 function Informasi() {
   const [informasi, setInformasi] = useState([]);
@@ -22,12 +25,12 @@ function Informasi() {
   const getAllInformasi = async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/notifications/user/getByAdmin/${idAdmin}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `${API_DUMMY}/api/notifications/user/getByAdmin/${idAdmin}`
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // }
       );
 
       setInformasi(response.data.reverse() || []);
@@ -45,11 +48,13 @@ function Informasi() {
 
     const filteredData = informasi.filter((item) => {
       if (!item) return false;
-      
-      const name = item.namaAcara ? item.namaAcara.toLowerCase() : '';
-      const date = item.tanggalAcara ? String(item.tanggalAcara).toLowerCase() : '';
-      const place = item.tempatAcara ? item.tempatAcara.toLowerCase() : '';
-      const message = item.message ? item.message.toLowerCase() : '';
+
+      const name = item.namaAcara ? item.namaAcara.toLowerCase() : "";
+      const date = item.tanggalAcara
+        ? String(item.tanggalAcara).toLowerCase()
+        : "";
+      const place = item.tempatAcara ? item.tempatAcara.toLowerCase() : "";
+      const message = item.message ? item.message.toLowerCase() : "";
 
       const search = searchTerm.toLowerCase();
 
@@ -79,11 +84,13 @@ function Informasi() {
 
   const filteredInformasi = informasi.filter((item) => {
     if (!item) return false;
-    
-    const name = item.namaAcara ? item.namaAcara.toLowerCase() : '';
-    const date = item.tanggalAcara ? String(item.tanggalAcara).toLowerCase() : '';
-    const place = item.tempatAcara ? item.tempatAcara.toLowerCase() : '';
-    const message = item.message ? item.message.toLowerCase() : '';
+
+    const name = item.namaAcara ? item.namaAcara.toLowerCase() : "";
+    const date = item.tanggalAcara
+      ? String(item.tanggalAcara).toLowerCase()
+      : "";
+    const place = item.tempatAcara ? item.tempatAcara.toLowerCase() : "";
+    const message = item.message ? item.message.toLowerCase() : "";
 
     const search = searchTerm.toLowerCase();
 
@@ -112,11 +119,7 @@ function Informasi() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${API_DUMMY}/api/notifications/delete/` + id, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          });
+          await axios.delete(`${API_DUMMY}/api/notifications/delete/` + id);
 
           Swal.fire({
             icon: "success",
@@ -149,9 +152,9 @@ function Informasi() {
   };
 
   const requestNotificationPermission = async () => {
-    if (Notification.permission === 'default') {
+    if (Notification.permission === "default") {
       const permission = await Notification.requestPermission();
-      if (permission === 'granted') {
+      if (permission === "granted") {
         console.log("Notification permission granted.");
       } else {
         console.log("Notification permission denied.");
@@ -162,18 +165,22 @@ function Informasi() {
   };
 
   const showNotification = (informasi) => {
-    if (Notification.permission === 'granted') {
+    if (Notification.permission === "granted") {
       const options = {
-        body: `Acara: ${informasi.namaAcara}\nPesan: ${informasi.message}\nTanggal: ${formatDate(informasi.tanggalAcara)}\nTempat: ${informasi.tempatAcara}`,
-        icon: 'https://via.placeholder.com/150'
+        body: `Acara: ${informasi.namaAcara}\nPesan: ${
+          informasi.message
+        }\nTanggal: ${formatDate(informasi.tanggalAcara)}\nTempat: ${
+          informasi.tempatAcara
+        }`,
+        icon: "https://via.placeholder.com/150",
       };
-  
-      const notification = new Notification('Pengumuman Informasi', options);
-  
+
+      const notification = new Notification("Pengumuman Informasi", options);
+
       notification.onclick = () => {
-        console.log('Notification clicked');
+        console.log("Notification clicked");
         // You can also open a specific URL here
-        window.open('http://localhost:3000', '_blank');
+        window.open("http://localhost:3000", "_blank");
       };
     } else {
       console.log("Notification permission not granted.");
@@ -216,8 +223,7 @@ function Informasi() {
                     <select
                       value={limit}
                       onChange={handleLimitChange}
-                      className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
-                    >
+                      className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
                       <option value="5">05</option>
                       <option value="10">10</option>
                       <option value="20">20</option>
@@ -226,8 +232,7 @@ function Informasi() {
                     <a
                       type="button"
                       href="/admin/addinformasi"
-                      className="text-white bg-indigo-500 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800 mt-2"
-                    >
+                      className="text-white bg-indigo-500 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800 mt-2">
                       <FontAwesomeIcon icon={faPlus} size="lg" />
                     </a>
                   </div>
@@ -236,8 +241,7 @@ function Informasi() {
                 <div className="relative overflow-x-auto mt-5">
                   <table
                     id="dataInformasi"
-                    className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
-                  >
+                    className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                       <tr>
                         <th scope="col" className="px-6 py-3">
@@ -264,12 +268,10 @@ function Informasi() {
                       {paginatedInformasi.map((informasi, index) => (
                         <tr
                           key={index}
-                          className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                        >
+                          className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                           <th
                             scope="row"
-                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                          >
+                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {(currentPage - 1) * limit + index + 1}
                           </th>
                           <td className="px-6 py-4 text-gray-700 capitalize">
@@ -296,8 +298,7 @@ function Informasi() {
                               </a>
                               <button
                                 className="rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-red-50"
-                                onClick={() => deleteData(informasi.id)}
-                              >
+                                onClick={() => deleteData(informasi.id)}>
                                 <FontAwesomeIcon
                                   icon={faTrash}
                                   className="h-4 w-4"
@@ -308,8 +309,7 @@ function Informasi() {
                           <td className="py-4 text-center">
                             <button
                               className="rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50"
-                              onClick={() => showNotification(informasi)}
-                            >
+                              onClick={() => showNotification(informasi)}>
                               Notifikasi
                             </button>
                           </td>

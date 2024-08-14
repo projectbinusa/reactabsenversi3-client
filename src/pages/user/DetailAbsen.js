@@ -17,12 +17,12 @@ function DetailAbsen() {
 
     try {
       const absensiResponse = await axios.get(
-        `${API_DUMMY}/api/absensi/getData/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `${API_DUMMY}/api/absensi/getData/${id}`
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // }
       );
 
       if (

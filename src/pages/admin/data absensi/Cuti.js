@@ -9,10 +9,10 @@ import { Pagination } from "flowbite-react";
 import { API_DUMMY } from "../../../utils/api";
 
 function Cuti() {
-   const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState([]);
   const adminId = localStorage.getItem("adminId");
 
-   const [cuti, setCuti] = useState([]);
+  const [cuti, setCuti] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [limit, setLimit] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
@@ -54,9 +54,9 @@ function Cuti() {
             url: `${API_DUMMY}/api/cuti/download-pdf/${id}`,
             method: "GET",
             responseType: "blob",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            // headers: {
+            //   Authorization: `Bearer ${token}`,
+            // },
           });
 
           const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -90,11 +90,7 @@ function Cuti() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.put(`${API_DUMMY}/api/cuti/terima-cuti/` + id, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          });
+          await axios.put(`${API_DUMMY}/api/cuti/terima-cuti/` + id);
           setTimeout(() => {
             window.location.reload();
           }, 1500);
@@ -120,11 +116,7 @@ function Cuti() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.put(`${API_DUMMY}/api/cuti/tolak-cuti/` + id, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          });
+          await axios.put(`${API_DUMMY}/api/cuti/tolak-cuti/` + id);
           setTimeout(() => {
             window.location.reload();
           }, 1500);
@@ -249,8 +241,7 @@ function Cuti() {
                   <select
                     value={limit}
                     onChange={handleLimitChange}
-                    className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
-                  >
+                    className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
                     <option value="5">05</option>
                     <option value="10">10</option>
                     <option value="20">20</option>
@@ -264,8 +255,7 @@ function Cuti() {
               <div className=" overflow-x-auto mt-5">
                 <table
                   id="dataCuti"
-                  className="w-full text-center text-sm  text-gray-500 dark:text-gray-400"
-                >
+                  className="w-full text-center text-sm  text-gray-500 dark:text-gray-400">
                   {/* <!-- Tabel Head --> */}
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -301,12 +291,10 @@ function Cuti() {
                     {paginatedCuti.map((cuti, index) => (
                       <tr
                         className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                        key={index}
-                      >
+                        key={index}>
                         <th
                           scope="row"
-                          className="px-2 py-4 font-medium text-gray-900 dark:text-white"
-                        >
+                          className="px-2 py-4 font-medium text-gray-900 dark:text-white">
                           {(currentPage - 1) * limit + index + 1}
                         </th>
                         <td className="px-2 py-2 text-gray-700 text-center capitalize">
@@ -331,8 +319,7 @@ function Cuti() {
                           <div className="flex items-center -space-x-4 ml-12">
                             <button
                               className="z-20 block rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50"
-                              onClick={() => konfirmasiSetujuCuti(cuti.id)}
-                            >
+                              onClick={() => konfirmasiSetujuCuti(cuti.id)}>
                               <span className="relative inline-block">
                                 <FontAwesomeIcon
                                   icon={faCheck}
@@ -343,8 +330,7 @@ function Cuti() {
 
                             <button
                               className="z-30 block rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-red-50"
-                              onClick={() => BatalkanCuti(cuti.id)}
-                            >
+                              onClick={() => BatalkanCuti(cuti.id)}>
                               <span className="relative inline-block">
                                 <FontAwesomeIcon
                                   icon={faXmark}

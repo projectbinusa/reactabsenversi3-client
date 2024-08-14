@@ -36,12 +36,12 @@ function Profile() {
   const getProfile = async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/orang-tua/getbyid/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `${API_DUMMY}/api/orang-tua/getbyid/${id}`
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // }
       );
 
       setProfile(response.data);
@@ -63,12 +63,12 @@ function Profile() {
     try {
       const response = await axios.put(
         `${API_DUMMY}/api/orang-tua/orang-tua/edit-email-username/${id}`,
-        usmail,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        usmail
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // }
       );
 
       setUsername(response.data.nama);
@@ -116,12 +116,12 @@ function Profile() {
           old_password: passwordLama,
           new_password: passwordBaru,
           confirm_new_password: confirmPassword,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
         }
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // }
       );
 
       Swal.fire("Berhasil", "Password berhasil diubah", "success");
@@ -148,7 +148,7 @@ function Profile() {
         formData,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            // Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",
           },
         }

@@ -57,11 +57,7 @@ function SiswaperKelas() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${API_DUMMY}/api/user/delete-user/` + id, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          });
+          await axios.delete(`${API_DUMMY}/api/user/delete-user/` + id);
 
           Swal.fire({
             icon: "success",

@@ -35,12 +35,12 @@ function Dashboard() {
 
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/user/getUserBy/${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `${API_DUMMY}/api/user/getUserBy/${userId}`
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // }
       );
 
       setUsername(response.data.reverse());
@@ -64,19 +64,18 @@ function Dashboard() {
         `${API_DUMMY}/api/absensi/getizin/${userId}`
       );
       const hasTakenLeave = izinCheckResponse.data.some(
-        (izin) => new Date(izin.tanggal).toDateString() === new Date().toDateString()
+        (izin) =>
+          new Date(izin.tanggal).toDateString() === new Date().toDateString()
       );
 
       // Disable buttons based on absensi and izin status
       setIsAbsenMasuk(isUserAlreadyAbsenToday);
       setIsPulangDisabled(isUserAlreadyAbsenToday || hasTakenLeave);
       setIsIzinDisabled(isUserAlreadyAbsenToday && hasTakenLeave);
-
     } catch (error) {
       console.error("Error checking absensi or izin:", error);
     }
   };
-
 
   const getIzin = async () => {
     const token = localStorage.getItem("token");
@@ -84,12 +83,12 @@ function Dashboard() {
 
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/absensi/getizin/${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `${API_DUMMY}/api/absensi/getizin/${userId}`
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // }
       );
 
       setIzin(response.data.reverse());
@@ -105,12 +104,12 @@ function Dashboard() {
 
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/absensi/getByUserId/${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `${API_DUMMY}/api/absensi/getByUserId/${userId}`
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // }
       );
 
       setAbsensi(response.data.reverse());
@@ -125,12 +124,12 @@ function Dashboard() {
 
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/cuti/getByUser/${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `${API_DUMMY}/api/cuti/getByUser/${userId}`
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // }
       );
 
       setCuti(response.data.reverse());
@@ -246,30 +245,30 @@ function Dashboard() {
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8 mt-7">
               <Link to={isAbsenMasuk ? "#" : "/user/absen"}>
                 <div
-                  className={`pl-2 h-24 rounded-lg shadow-md md:w-auto ${isAbsenMasuk
+                  className={`pl-2 h-24 rounded-lg shadow-md md:w-auto ${
+                    isAbsenMasuk
                       ? "bg-gray-500 cursor-not-allowed"
                       : "bg-blue-500"
-                    }`}
-                >
+                  }`}>
                   <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                     <div className="my-auto">
                       <p
-                        className={`font-bold ${isAbsenMasuk ? "text-gray-400" : "text-black"
-                          }`}
-                      >
+                        className={`font-bold ${
+                          isAbsenMasuk ? "text-gray-400" : "text-black"
+                        }`}>
                         Masuk
                       </p>
                       <p
-                        className={`text-lg ${isAbsenMasuk ? "text-gray-400" : "text-black"
-                          }`}
-                      >
+                        className={`text-lg ${
+                          isAbsenMasuk ? "text-gray-400" : "text-black"
+                        }`}>
                         Presensi masuk.
                       </p>
                     </div>
                     <div
-                      className={`my-auto ${isAbsenMasuk ? "text-gray-400" : "text-black"
-                        }`}
-                    >
+                      className={`my-auto ${
+                        isAbsenMasuk ? "text-gray-400" : "text-black"
+                      }`}>
                       <FontAwesomeIcon
                         icon={faArrowRightFromBracket}
                         size="2x"
@@ -281,28 +280,30 @@ function Dashboard() {
 
               <Link to={isPulangDisabled ? "#" : "/user/pulang"}>
                 <div
-                  className={`pl-2 h-24 rounded-lg shadow-md md:w-auto ${isPulangDisabled ? "bg-gray-500 cursor-not-allowed" : "bg-green-500"
-                    }`}
-                >
+                  className={`pl-2 h-24 rounded-lg shadow-md md:w-auto ${
+                    isPulangDisabled
+                      ? "bg-gray-500 cursor-not-allowed"
+                      : "bg-green-500"
+                  }`}>
                   <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                     <div className="my-auto">
                       <p
-                        className={`font-bold ${isPulangDisabled ? "text-gray-400" : "text-black"
-                          }`}
-                      >
+                        className={`font-bold ${
+                          isPulangDisabled ? "text-gray-400" : "text-black"
+                        }`}>
                         Pulang
                       </p>
                       <p
-                        className={`text-lg ${isPulangDisabled ? "text-gray-400" : "text-black"
-                          }`}
-                      >
+                        className={`text-lg ${
+                          isPulangDisabled ? "text-gray-400" : "text-black"
+                        }`}>
                         Presensi pulang
                       </p>
                     </div>
                     <div
-                      className={`my-auto ${isPulangDisabled ? "text-gray-400" : "text-black"
-                        }`}
-                    >
+                      className={`my-auto ${
+                        isPulangDisabled ? "text-gray-400" : "text-black"
+                      }`}>
                       <FontAwesomeIcon
                         icon={faArrowRightFromBracket}
                         size="2x"
@@ -314,32 +315,31 @@ function Dashboard() {
 
               <Link to={isIzinDisabled ? "#" : "/user/izin"}>
                 <div
-                  className={`pl-2 h-24 rounded-lg shadow-md md:w-auto ${isIzinDisabled ? "bg-gray-500 cursor-not-allowed" : "bg-orange-500"
-                    }`}
-                >
+                  className={`pl-2 h-24 rounded-lg shadow-md md:w-auto ${
+                    isIzinDisabled
+                      ? "bg-gray-500 cursor-not-allowed"
+                      : "bg-orange-500"
+                  }`}>
                   <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                     <div className="my-auto">
                       <p
-                        className={`font-bold ${isIzinDisabled ? "text-gray-400" : "text-black"
-                          }`}
-                      >
+                        className={`font-bold ${
+                          isIzinDisabled ? "text-gray-400" : "text-black"
+                        }`}>
                         izin
                       </p>
                       <p
-                        className={`text-lg ${isIzinDisabled ? "text-gray-400" : "text-black"
-                          }`}
-                      >
+                        className={`text-lg ${
+                          isIzinDisabled ? "text-gray-400" : "text-black"
+                        }`}>
                         Permohonan Izin
                       </p>
                     </div>
                     <div
-                      className={`my-auto ${isIzinDisabled ? "text-gray-400" : "text-black"
-                        }`}
-                    >
-                      <FontAwesomeIcon
-                        icon={faCircleXmark}
-                        size="2x"
-                      />
+                      className={`my-auto ${
+                        isIzinDisabled ? "text-gray-400" : "text-black"
+                      }`}>
+                      <FontAwesomeIcon icon={faCircleXmark} size="2x" />
                     </div>
                   </div>
                 </div>
@@ -385,8 +385,7 @@ function Dashboard() {
                 validInformasi.map((item) => (
                   <div
                     key={item.id}
-                    className="informasi-item p-4 bg-white border border-gray-200 rounded-lg shadow-md transform transition-transform hover:scale-105 hover:shadow-xl"
-                  >
+                    className="informasi-item p-4 bg-white border border-gray-200 rounded-lg shadow-md transform transition-transform hover:scale-105 hover:shadow-xl">
                     <div className="flex items-center mb-4">
                       <FontAwesomeIcon
                         icon={faCircleInfo}

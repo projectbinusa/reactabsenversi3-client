@@ -46,11 +46,11 @@ function EditInformasi() {
       await axios.put(
         `${API_DUMMY}/api/notifications/editbyId/${id}`,
         informasi,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // }
       );
       Swal.fire({
         title: "Berhasil",

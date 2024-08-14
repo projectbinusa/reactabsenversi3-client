@@ -32,11 +32,7 @@ function Profil() {
 
   const getProfile = async () => {
     try {
-      const response = await axios.get(`${API_DUMMY}/api/admin/getById/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(`${API_DUMMY}/api/admin/getById/${id}`);
 
       setProfile(response.data);
       setImageAdmin(response.data.imageAdmin);
@@ -59,11 +55,11 @@ function Profil() {
         `${API_DUMMY}/api/admin/edit-email-username/${id}`,
         usmail,
 
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // }
       );
 
       setUsername(response.data.username);
@@ -112,11 +108,11 @@ function Profil() {
           new_password: passwordBaru,
           confirm_new_password: confirmPassword,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // }
       );
 
       Swal.fire("Berhasil", "Password berhasil diubah", "success");
@@ -143,7 +139,7 @@ function Profil() {
         formData,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            // Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",
           },
         }

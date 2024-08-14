@@ -20,12 +20,12 @@ function Lembur() {
 
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/lembur/getall`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `${API_DUMMY}/api/lembur/getall`
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // }
       );
 
       setLembur(response.data.reverse());
@@ -51,11 +51,17 @@ function Lembur() {
   useEffect(() => {
     const filteredData = lembur.filter(
       (lembur) =>
-        (lembur.user?.username.toLowerCase().includes(searchTerm.toLowerCase()) ??
+        (lembur.user?.username
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()) ??
           false) ||
-        (lembur.keteranganLembur?.toLowerCase().includes(searchTerm.toLowerCase()) ??
+        (lembur.keteranganLembur
+          ?.toLowerCase()
+          .includes(searchTerm.toLowerCase()) ??
           false) ||
-        (formatDate(lembur.tanggalLembur)?.toLowerCase().includes(searchTerm.toLowerCase()) ??
+        (formatDate(lembur.tanggalLembur)
+          ?.toLowerCase()
+          .includes(searchTerm.toLowerCase()) ??
           false)
     );
     setTotalPages(Math.ceil(filteredData.length / limit));
@@ -78,9 +84,13 @@ function Lembur() {
     (lembur) =>
       (lembur.user?.username.toLowerCase().includes(searchTerm.toLowerCase()) ??
         false) ||
-      (lembur.keteranganLembur?.toLowerCase().includes(searchTerm.toLowerCase()) ??
+      (lembur.keteranganLembur
+        ?.toLowerCase()
+        .includes(searchTerm.toLowerCase()) ??
         false) ||
-      (formatDate(lembur.tanggalLembur)?.toLowerCase().includes(searchTerm.toLowerCase()) ??
+      (formatDate(lembur.tanggalLembur)
+        ?.toLowerCase()
+        .includes(searchTerm.toLowerCase()) ??
         false)
   );
 
@@ -105,9 +115,9 @@ function Lembur() {
             url: `${API_DUMMY}/api/lembur/download-pdf/${id}`,
             method: "GET",
             responseType: "blob",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            // headers: {
+            //   Authorization: `Bearer ${token}`,
+            // },
           });
 
           const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -160,8 +170,7 @@ function Lembur() {
                     <select
                       value={limit}
                       onChange={handleLimitChange}
-                      className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
-                    >
+                      className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
                       <option value="5">05</option>
                       <option value="10">10</option>
                       <option value="20">20</option>
@@ -175,8 +184,7 @@ function Lembur() {
                 <div className="relative overflow-x-auto mt-5">
                   <table
                     id="dataKehadiran"
-                    className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
-                  >
+                    className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                       <tr>
                         <th scope="col" className="px-6 py-3">
@@ -200,12 +208,10 @@ function Lembur() {
                       {paginatedLembur.map((lemburData, index) => (
                         <tr
                           key={index}
-                          className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                        >
+                          className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                           <th
                             scope="row"
-                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                          >
+                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {(currentPage - 1) * limit + index + 1}
                           </th>
                           <td className="px-6 py-4 capitalize">
@@ -232,8 +238,7 @@ function Lembur() {
                               <button
                                 type="button"
                                 onClick={() => generatePdf(lemburData.id)}
-                                className="z-30 block rounded-full border-2 border-white bg-yellow-100 p-4 text-yellow-700 active:bg-red-50"
-                              >
+                                className="z-30 block rounded-full border-2 border-white bg-yellow-100 p-4 text-yellow-700 active:bg-red-50">
                                 <span className="relative inline-block">
                                   <FontAwesomeIcon
                                     icon={faPrint}
