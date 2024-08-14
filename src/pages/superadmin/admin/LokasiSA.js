@@ -123,7 +123,7 @@ function LokasiSA() {
                   Data Lokasi
                 </h6>
                 <div className="flex items-center gap-2 mt-2">
-                  <div className="relative w-64">
+                  <div className=" w-64">
                     <input
                       type="search"
                       id="search-dropdown"
@@ -155,7 +155,7 @@ function LokasiSA() {
               </div>
               <hr />
 
-              <div className="relative overflow-x-auto mt-5">
+              <div className=" overflow-x-auto mt-5">
                 <table
                   id="dataJabatan"
                   className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
@@ -208,7 +208,7 @@ function LokasiSA() {
                               href={`/superadmin/detailLokasi/${lokasi.idLokasi}`}
                             >
                               <button className="z-20 block rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
-                                <span className="relative inline-block">
+                                <span className=" inline-block">
                                   <FontAwesomeIcon
                                     icon={faInfo}
                                     className="h-4 w-4"
@@ -220,7 +220,7 @@ function LokasiSA() {
                               href={`/superadmin/editLokasi/${lokasi.idLokasi}`}
                             >
                               <button className="z-30 block rounded-full border-2 border-white bg-yellow-100 p-4 text-yellow-700 active:bg-red-50">
-                                <span className="relative inline-block">
+                                <span className=" inline-block">
                                   <FontAwesomeIcon
                                     icon={faPenToSquare}
                                     className="h-4 w-4"
@@ -232,7 +232,7 @@ function LokasiSA() {
                               onClick={() => deleteLokasi(lokasi.idLokasi)}
                               className="z-30 block rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-red-50"
                             >
-                              <span className="relative inline-block">
+                              <span className=" inline-block">
                                 <FontAwesomeIcon
                                   icon={faTrash}
                                   className="h-4 w-4"

@@ -199,7 +199,7 @@ function BulanPerkelas() {
                 Rekap Perbulan
               </h6>
               <div className="flex md:mt-2 mt-4 items-center gap-2">
-                <div className="relative w-64">
+                <div className=" w-64">
                   <input
                     type="search"
                     id="search-dropdown"
@@ -257,7 +257,7 @@ function BulanPerkelas() {
               </div>
             </form>
 
-            <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+            <div className=" overflow-x-auto shadow-md sm:rounded-lg mt-5">
               <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead className="text-xs text-left text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>

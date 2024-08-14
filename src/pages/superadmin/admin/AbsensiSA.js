@@ -103,7 +103,7 @@ function Absensi() {
                 Detail History Presensi
               </h6>
               <div className="flex items-center gap-2 mt-5">
-                <div className="relative w-64">
+                <div className=" w-64">
                   <input
                     type="search"
                     id="search-dropdown"
@@ -128,7 +128,7 @@ function Absensi() {
             </div>
 
             <hr className="mt-4" />
-            <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-3">
+            <div className=" overflow-x-auto shadow-md sm:rounded-lg mt-3">
               <table
                 id="rekapSimple"
                 className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
@@ -224,7 +224,7 @@ function Absensi() {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <a href={`/superadmin/detailAbsensi/${absenData.id}`}>
                           <button className="z-20 block rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
-                            <span className="relative inline-block">
+                            <span className=" inline-block">
                               <FontAwesomeIcon
                                 icon={faInfo}
                                 className="h-4 w-4"

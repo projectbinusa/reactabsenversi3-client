@@ -182,7 +182,7 @@ function Shift() {
                   Data Waktu Pembelajaran
                 </h6>
                 <div className="flex items-center gap-2 mt-2">
-                  <div className="relative w-64">
+                  <div className=" w-64">
                     <input
                       type="search"
                       id="search-dropdown"
@@ -196,7 +196,8 @@ function Shift() {
                   <select
                     value={limit}
                     onChange={handleLimitChange}
-                    className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
+                    className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+                  >
                     <option value="5">05</option>
                     <option value="10">10</option>
                     <option value="20">20</option>
@@ -205,7 +206,8 @@ function Shift() {
                   <a
                     type="button"
                     href="/admin/addshift"
-                    className="text-white bg-indigo-500 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800 mt-2">
+                    className="text-white bg-indigo-500 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800 mt-2"
+                  >
                     <FontAwesomeIcon icon={faPlus} size="lg" />
                   </a>
                 </div>
@@ -213,10 +215,11 @@ function Shift() {
               <hr />
 
               {/* <!-- Tabel --> */}
-              <div className="relative overflow-x-auto mt-5">
+              <div className=" overflow-x-auto mt-5">
                 <table
                   id="dataJabatan"
-                  className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                  className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+                >
                   {/* <!-- Tabel Head --> */}
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -248,10 +251,12 @@ function Shift() {
                     {paginatedShift.map((shift, index) => (
                       <tr
                         className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                        key={index}>
+                        key={index}
+                      >
                         <th
                           scope="row"
-                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        >
                           {(currentPage - 1) * limit + index + 1}
                         </th>
                         <td className="px-6 py-4 capitalize">
@@ -275,7 +280,7 @@ function Shift() {
                           <div className="flex items-center -space-x-4 ml-12">
                             <a href={`/admin/editS/${shift.id}`}>
                               <button className="z-30 block rounded-full border-2 border-white bg-yellow-100 p-4 text-yellow-700 active:bg-red-50">
-                                <span className="relative inline-block">
+                                <span className=" inline-block">
                                   <FontAwesomeIcon
                                     icon={faPenToSquare}
                                     className="h-4 w-4"
@@ -286,8 +291,9 @@ function Shift() {
 
                             <button
                               className="z-30 block rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-red-50"
-                              onClick={() => deleteData(shift.id)}>
-                              <span className="relative inline-block">
+                              onClick={() => deleteData(shift.id)}
+                            >
+                              <span className=" inline-block">
                                 <FontAwesomeIcon
                                   icon={faTrash}
                                   className="h-4 w-4"

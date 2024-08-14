@@ -227,7 +227,7 @@ function Cuti() {
                   Permohonan Cuti
                 </h6>
                 <div className="flex items-center gap-2 mt-2">
-                  <div className="relative w-64">
+                  <div className=" w-64">
                     <input
                       type="search"
                       id="search-dropdown"
@@ -320,7 +320,7 @@ function Cuti() {
                             <button
                               className="z-20 block rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50"
                               onClick={() => konfirmasiSetujuCuti(cuti.id)}>
-                              <span className="relative inline-block">
+                              <span className=" inline-block">
                                 <FontAwesomeIcon
                                   icon={faCheck}
                                   className="h-4 w-4"
@@ -331,7 +331,7 @@ function Cuti() {
                             <button
                               className="z-30 block rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-red-50"
                               onClick={() => BatalkanCuti(cuti.id)}>
-                              <span className="relative inline-block">
+                              <span className=" inline-block">
                                 <FontAwesomeIcon
                                   icon={faXmark}
                                   className="h-4 w-4"
@@ -341,7 +341,7 @@ function Cuti() {
 
                             <a onClick={() => DownloadPdfCuti(cuti.id)}>
                               <button className="z-30 block rounded-full border-2 border-white  bg-yellow-100 p-4 text-yellow-700 active:bg-red-50">
-                                <span className="relative inline-block">
+                                <span className=" inline-block">
                                   <FontAwesomeIcon
                                     icon={faPrint}
                                     className="h-4 w-4"

@@ -163,7 +163,7 @@ function TabelCuti() {
             <div className="flex justify-between">
               <h2 className="text-xl font-bold">History Cuti</h2>
               <div className="flex items-center gap-2 mt-2">
-                <div className="relative w-64">
+                <div className=" w-64">
                   <input
                     type="search"
                     id="search-dropdown"
@@ -240,7 +240,7 @@ function TabelCuti() {
                             className="z-20 block rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-blue-50"
                             onClick={() => BatalCuti(cutiData.id)} // Pemanggilan fungsi saat tombol ditekan dengan meneruskan ID cuti
                           >
-                            <span className="relative inline-block">
+                            <span className=" inline-block">
                               <FontAwesomeIcon
                                 icon={faCircleXmark}
                                 className="h-4 w-4"

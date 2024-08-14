@@ -230,7 +230,7 @@ function DashboardSA() {
             <hr />
 
             {/* <!-- Tabel --> */}
-            <div className="relative overflow-x-auto mt-5">
+            <div className=" overflow-x-auto mt-5">
               <table
                 id="dataKaryawan"
                 className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
