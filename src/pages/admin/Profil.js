@@ -11,6 +11,7 @@ import axios from "axios";
 import Loader from "../../components/Loader";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../utils/api";
+import SidebarNavbar from "../../components/SidebarNavbar";
 function Profil() {
   const [showPassword, setShowPassword] = useState(false);
   const [imageAdmin, setImageAdmin] = useState("");
@@ -53,7 +54,7 @@ function Profil() {
     try {
       const response = await axios.put(
         `${API_DUMMY}/api/admin/edit-email-username/${id}`,
-        usmail,
+        usmail
 
         // {
         //   headers: {
@@ -107,7 +108,7 @@ function Profil() {
           old_password: passwordLama,
           new_password: passwordBaru,
           confirm_new_password: confirmPassword,
-        },
+        }
         // {
         //   headers: {
         //     Authorization: `Bearer ${token}`,
@@ -161,9 +162,13 @@ function Profil() {
     <>
       {loading && <Loader />}
       <div className="flex flex-col h-screen">
-        <Navbar />
+        <div className="sticky top-0 z-50">
+          <SidebarNavbar />
+        </div>
         <div className="flex h-full">
-          <Sidebar />
+          <div className="sticky top-16 z-40">
+            <Navbar />
+          </div>
           <div className="content-page container p-8 ml-0 md:ml-72 mt-20">
             <Tabs aria-label="Tabs with underline" style="underline">
               <Tabs.Item active title="Profile" icon={HiUserCircle}>

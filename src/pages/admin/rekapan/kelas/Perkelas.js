@@ -7,6 +7,7 @@ import axios from "axios";
 import { API_DUMMY } from "../../../../utils/api";
 import NavbarAdmin from "../../../../components/NavbarAdmin";
 import { Pagination } from "flowbite-react";
+import SidebarNavbar from "../../../../components/SidebarNavbar";
 
 function Perkelas() {
   const [listAbsensi, setListAbsensi] = useState([]);
@@ -70,12 +71,12 @@ function Perkelas() {
       Swal.fire("Peringatan", "Silakan pilih kelas terlebih dahulu", "warning");
       return;
     }
-  
+
     if (listAbsensi.length === 0) {
       Swal.fire("Peringatan", "Tidak ada data untuk diekspor", "warning");
       return;
     }
-  
+
     try {
       const response = await axios.get(
         `${API_DUMMY}/api/export/absensi/by-kelas/${kelasId}`,
@@ -83,7 +84,7 @@ function Perkelas() {
           responseType: "blob",
         }
       );
-  
+
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
@@ -92,7 +93,7 @@ function Perkelas() {
       link.click();
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
-  
+
       Swal.fire("Berhasil", "Berhasil mengunduh data", "success");
     } catch (error) {
       console.error("Error exporting data:", error);
@@ -150,11 +151,11 @@ function Perkelas() {
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
-        <NavbarAdmin />
+        <SidebarNavbar />
       </div>
-      <div className="flex h-full pt-5">
-        <div className="fixed h-full">
-          <Sidebar />
+      <div className="flex h-full">
+        <div className="sticky top-16 z-40">
+          <NavbarAdmin />
         </div>
         <div className="content-page flex-1 p-8 md:ml-72 mt-16 text-center overflow-auto">
           <div className="tabel-absen bg-white p-5 rounded-xl shadow-xl border border-gray-300">
@@ -257,47 +258,45 @@ function Perkelas() {
                     </tr>
                   </thead>
                   <tbody>
-                    {paginatedUser
-                     
-                      .map((absensi, index) => (
-                        <tr key={absensi.id}>
-                          <td className="px-6 py-3 whitespace-nowrap">
-                            {index + 1}
-                          </td>
-                          <td className="px-6 py-3 whitespace-nowrap capitalize">
-                            {absensi.user.username}
-                          </td>
-                          <td className="px-6 py-3 whitespace-nowrap capitalize">
-                            {formatDate(absensi.tanggalAbsen)}
-                          </td>
-                          <td className="px-6 py-3 whitespace-nowrap capitalize">
-                            {absensi.jamMasuk}
-                          </td>
-                          <td className="px-6 py-3 whitespace-nowrap capitalize">
-                            <img
-                              src={absensi.fotoMasuk}
-                              alt="Foto Masuk"
-                              className="w-16 h-16 object-cover"
-                            />
-                          </td>
-                          <td className="px-6 py-3 whitespace-nowrap capitalize">
-                            {absensi.jamPulang}
-                          </td>
-                          <td className="px-6 py-3 whitespace-nowrap capitalize">
-                            <img
-                              src={absensi.fotoPulang}
-                              alt="Foto Pulang"
-                              className="w-16 h-16 object-cover"
-                            />
-                          </td>
-                          <td className="px-6 py-3 whitespace-nowrap capitalize">
-                            {absensi.jamKerja}
-                          </td>
-                          <td className="px-6 py-3 whitespace-nowrap capitalize">
-                            {absensi.keterangan}
-                          </td>
-                        </tr>
-                      ))}
+                    {paginatedUser.map((absensi, index) => (
+                      <tr key={absensi.id}>
+                        <td className="px-6 py-3 whitespace-nowrap">
+                          {index + 1}
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          {absensi.user.username}
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          {formatDate(absensi.tanggalAbsen)}
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          {absensi.jamMasuk}
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          <img
+                            src={absensi.fotoMasuk}
+                            alt="Foto Masuk"
+                            className="w-16 h-16 object-cover"
+                          />
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          {absensi.jamPulang}
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          <img
+                            src={absensi.fotoPulang}
+                            alt="Foto Pulang"
+                            className="w-16 h-16 object-cover"
+                          />
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          {absensi.jamKerja}
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          {absensi.keterangan}
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               )}

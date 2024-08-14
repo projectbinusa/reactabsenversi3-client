@@ -3,7 +3,6 @@ import { Tabs } from "flowbite-react";
 import { HiAdjustments, HiClipboardList, HiUserCircle } from "react-icons/hi";
 import { MdDashboard } from "react-icons/md";
 import Navbar from "../../components/NavbarSuper";
-import Sidebar from "../../components/SidebarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
@@ -11,6 +10,7 @@ import axios from "axios";
 import Loader from "../../components/Loader";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../utils/api";
+import SidebarNavbar from "../../components/SidebarNavbar";
 
 function ProfilSA() {
   const [showPassword, setShowPassword] = useState(false);
@@ -166,9 +166,13 @@ function ProfilSA() {
     <>
       {loading && <Loader />}
       <div className="flex flex-col h-screen">
-        <Navbar />
+        <div className="sticky top-0 z-50">
+          <SidebarNavbar />
+        </div>
         <div className="flex h-full">
-          <Sidebar />
+          <div className="sticky top-16 z-40">
+            <Navbar />
+          </div>
           <div className="content-page container p-8 ml-0 md:ml-72 mt-20">
             <Tabs aria-label="Tabs with underline" style="underline">
               <Tabs.Item active title="Profile" icon={HiUserCircle}>
@@ -215,7 +219,8 @@ function ProfilSA() {
                         type="submit"
                         className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50"
                         onClick={handleImageUpload}
-                        disabled={loading || !selectedFile}>
+                        disabled={loading || !selectedFile}
+                      >
                         {loading ? "Uploading..." : "Simpan"}
                       </button>
                     </div>
@@ -267,7 +272,8 @@ function ProfilSA() {
                           <button
                             type="button"
                             onClick={() => setUbahUsername(true)}
-                            className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
+                            className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50"
+                          >
                             Ubah
                           </button>
                         )}
@@ -276,13 +282,15 @@ function ProfilSA() {
                             <button
                               type="button"
                               onClick={() => setUbahUsername(false)}
-                              className="z-20 block rounded-xl border-2 border-white bg-rose-100 p-4 text-rose-500 active:bg-rose-50">
+                              className="z-20 block rounded-xl border-2 border-white bg-rose-100 p-4 text-rose-500 active:bg-rose-50"
+                            >
                               Batal
                             </button>
 
                             <button
                               type="submit"
-                              className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
+                              className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50"
+                            >
                               Simpan
                             </button>
                           </>
@@ -363,7 +371,8 @@ function ProfilSA() {
                       <div className="flex justify-between mt-6">
                         <button
                           type="submit"
-                          className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
+                          className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50"
+                        >
                           Simpan
                         </button>
                       </div>

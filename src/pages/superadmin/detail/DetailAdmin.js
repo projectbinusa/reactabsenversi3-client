@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../../../components/NavbarSuper";
-import Sidebar from "../../../components/SidebarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { API_DUMMY } from "../../../utils/api";
+import SidebarNavbar from "../../../components/SidebarNavbar";
 
 function DetailAdmin() {
   const { id } = useParams();
@@ -16,9 +16,7 @@ function DetailAdmin() {
 
   const getUserData = async () => {
     try {
-      const res = await axios.get(
-        `${API_DUMMY}/api/admin/getById/${id}`
-      );
+      const res = await axios.get(`${API_DUMMY}/api/admin/getById/${id}`);
       setAdmin(res.data);
     } catch (error) {
       console.log(error);
@@ -32,11 +30,11 @@ function DetailAdmin() {
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
-        <Navbar />
+        <SidebarNavbar />
       </div>
       <div className="flex h-full">
-        <div className="fixed">
-          <Sidebar />
+        <div className="sticky top-16 z-40">
+          <Navbar />
         </div>
       </div>
       <div className="sm:ml-64 content-page p-8 ml-14 md:ml-64 mb-14">

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../../components/NavbarSuper";
-import Sidebar from "../../components/SidebarUser";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -10,6 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../utils/api";
+import SidebarNavbar from "../../components/SidebarNavbar";
 // import jwt from 'jsonwebtoken';
 
 function DashboardSA() {
@@ -160,11 +160,11 @@ function DashboardSA() {
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
-        <Navbar />
+        <SidebarNavbar />
       </div>
       <div className="flex h-full">
-        <div className="fixed">
-          <Sidebar />
+        <div className="sticky top-16 z-40">
+          <Navbar />
         </div>
         <div className="content-page container p-8 ml-0 md:ml-72 mt-12">
           <div className="mt-5 w-full">
@@ -233,7 +233,8 @@ function DashboardSA() {
             <div className=" overflow-x-auto mt-5">
               <table
                 id="dataKaryawan"
-                className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+              >
                 {/* <!-- Tabel Head --> */}
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
@@ -253,17 +254,20 @@ function DashboardSA() {
                   {admin.map((admin, index) => (
                     <tr
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                      key={index}>
+                      key={index}
+                    >
                       <th
                         scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
                         {index + 1}
                       </th>
                       <td className="px-6 py-4">
                         <a
                           href="/cdn-cgi/l/email-protection"
                           className="__cf_email__"
-                          data-cfemail="5a363b23363b1a3d373b333674393537">
+                          data-cfemail="5a363b23363b1a3d373b333674393537"
+                        >
                           {admin.email}
                         </a>
                       </td>

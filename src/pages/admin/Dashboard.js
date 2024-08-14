@@ -10,6 +10,7 @@ import Navbar from "../../components/NavbarAdmin";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../utils/api";
+import SidebarNavbar from "../../components/SidebarNavbar";
 
 function Dashboard() {
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
@@ -124,11 +125,11 @@ function Dashboard() {
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
-        <Navbar />
+        <SidebarNavbar />
       </div>
       <div className="flex h-full">
-        <div className="fixed">
-          <Sidebar />
+        <div className="sticky top-16 z-40">
+          <Navbar />
         </div>
         <div className="content-page container p-8 md:ml-72 mt-12">
           <div className="mt-5 w-full">
@@ -208,10 +209,12 @@ function Dashboard() {
                   {absenData.map((absen, index) => (
                     <tr
                       key={index}
-                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                    >
                       <th
                         scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
                         {index + 1}
                       </th>
                       <td className="px-6 py-4 capitalize">
@@ -322,10 +325,12 @@ function Dashboard() {
                   {jabatanData.map((jabatan, index) => (
                     <tr
                       key={index}
-                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                    >
                       <th
                         scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
                         {index + 1}
                       </th>
                       <td className="px-6 py-4 capitalize">
@@ -373,10 +378,12 @@ function Dashboard() {
                   {lokasiData.map((lokasi, index) => (
                     <tr
                       key={index}
-                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                    >
                       <th
                         scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
                         {index + 1}
                       </th>
                       <td className="px-6 py-4 capitalize">
@@ -423,10 +430,12 @@ function Dashboard() {
                   {organisasiData.map((organisasi, index) => (
                     <tr
                       key={index}
-                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                    >
                       <th
                         scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
                         {index + 1}
                       </th>
                       <td className="px-6 py-4 capitalize">
