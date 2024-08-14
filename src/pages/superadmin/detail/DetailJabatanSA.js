@@ -34,7 +34,7 @@ function DetailJabatanSA() {
           <Sidebar />
         </div>
       </div>
-      <div className=" sm:ml-64 content-page p-8  ml-14 md:ml-64 mb-12">
+      <div className=" sm:ml-64 content-page md:p-8 md:ml-64 mb-12">
         <div className="p-4">
           <div className="p-5 mb-44">
             {/* // <!-- Card --> */}

@@ -11,6 +11,7 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../../utils/api";
 import NavbarAdmin from "../../../components/NavbarAdmin";
+import SidebarNavbar from "../../../components/SidebarNavbar";
 
 function Simpel() {
   const [bulan, setBulan] = useState("");
@@ -97,7 +98,7 @@ function Simpel() {
       Swal.fire("Peringatan", "Tidak ada data untuk diekspor", "warning");
       return;
     }
-  
+
     try {
       const response = await axios.get(
         `${API_DUMMY}/api/absensi/export/absensi-bulanan-simpel`,
@@ -106,7 +107,7 @@ function Simpel() {
           responseType: "blob",
         }
       );
-  
+
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
@@ -118,7 +119,7 @@ function Simpel() {
       link.click();
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
-  
+
       Swal.fire("Berhasil", "Berhasil mengunduh data", "success");
       window.location.reload();
     } catch (error) {
@@ -126,11 +127,11 @@ function Simpel() {
       console.log(error);
     }
   };
-  
+
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
-        <NavbarAdmin />
+        <SidebarNavbar />
       </div>
       <div className="flex h-full pt-5">
         <div className="fixed h-full">
