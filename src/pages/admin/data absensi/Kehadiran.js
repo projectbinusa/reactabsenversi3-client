@@ -209,7 +209,7 @@ function Kehadiran() {
                           <td className="px-6 py-4 text-gray-700 capitalize">
                             {kehadiran.jabatan
                               ? kehadiran.jabatan.namaJabatan
-                              : "Tidak ada jabatan"}
+                              : "Tidak ada Status"}
                           </td>
                           <td className="px-6 py-4 text-gray-700 capitalize">
                             {kehadiran.lateCount}
