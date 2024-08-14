@@ -48,7 +48,6 @@ const Sidebar = () => {
   };
 
   useEffect(() => {
-    // Check if any link inside dropdown is active and open the dropdown if it is
     const isActive = (paths) => {
       return paths.some((path) => location.pathname.startsWith(path));
     };
@@ -84,28 +83,7 @@ const Sidebar = () => {
     }
   }, [location.pathname]);
 
-  // useEffect(() => {
-  //   // Check if any link inside dropdown is active and open the dropdown if it is
-  //   const isActive = (paths) => {
-  //     return paths.some((path) => location.pathname.startsWith(path));
-  //   };
-
-  //   if (
-  //     isActive([
-  //       "/admin/perkelas",
-  //       "/admin/harian/perkelas",
-  //       "/admin/mingguan/perkelas",
-  //       "/admin/bulanan/perkelas",
-  //     ])
-  //   ) {
-  //     setRekapanOpenPerkelas(true);
-  //   } else {
-  //     setRekapanOpenPerkelas(false);
-  //   }
-  // }, [location.pathname]);
-
   useEffect(() => {
-    // Check if any link inside dropdown is active and open the dropdown if it is
     const isActive = (paths) => {
       return paths.some((path) => location.pathname.startsWith(path));
     };
