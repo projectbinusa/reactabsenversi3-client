@@ -167,7 +167,30 @@ function KelasSiswa() {
     validateOrganisasiIds();
   }, [userData, organisasiData]);
 
+  const checkIfHasRelations = async (id) => {
+    try {
+      const response = await axios.get(`${API_DUMMY}/api/kelas/hasRelations/${id}`);
+      console.log('Relation check response:', response.data); 
+      return response.data;
+    } catch (error) {
+      console.error('Error checking relations:', error);
+      return false;
+    }
+  };
+
   const deleteData = async (id) => {
+    const hasRelations = await checkIfHasRelations(id);
+    
+    if (hasRelations) {
+      Swal.fire({
+        title: "Data Tidak Dapat Dihapus",
+        text: "Data ini memiliki relasi dengan tabel lain.",
+        icon: "warning",
+        confirmButtonText: "OK",
+      });
+      return;
+    }
+    
     Swal.fire({
       title: "Anda Ingin Menghapus Data ?",
       icon: "warning",
@@ -179,23 +202,35 @@ function KelasSiswa() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${API_DUMMY}/api/kelas/deleteKelas/` + id);
-
+          await axios.delete(`${API_DUMMY}/api/kelas/deleteKelas/` + id, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          });
+  
           Swal.fire({
             icon: "success",
             title: "Dihapus!",
             showConfirmButton: false,
           });
-
+  
           setTimeout(() => {
             window.location.reload();
           }, 1500);
         } catch (error) {
-          console.error(error);
-          Swal.fire({
-            icon: "error",
-            title: "Gagal Menghapus Data",
-          });
+          if (error.response && error.response.data && error.response.data.error) {
+            Swal.fire({
+              icon: "error",
+              title: "Gagal Menghapus Data",
+              text: error.response.data.error,
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Gagal Menghapus Data",
+              text: "Terjadi kesalahan yang tidak diketahui.",
+            });
+          }
         }
       }
     });
