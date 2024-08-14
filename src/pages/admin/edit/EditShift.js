@@ -38,11 +38,11 @@ function EditShift() {
       await axios.put(
         `${API_DUMMY}/api/shift/editbyId/${id}?idAdmin=${idAdmin}`,
         shift,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+        // {
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        // }
       );
       Swal.fire({
         title: "Berhasil",
