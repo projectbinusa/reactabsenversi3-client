@@ -194,7 +194,7 @@ function Simpel() {
               </div>
             </form>
 
-            <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+            <div className=" overflow-x-auto shadow-md sm:rounded-lg mt-5">
               <table
                 id="rekapSimple"
                 className="w-full text-sm text-left text-gray-500 dark:text-gray-400"

@@ -137,7 +137,7 @@ function Kehadiran() {
                     Data Kehadiran
                   </h6>
                   <div className="flex items-center gap-2 mt-2">
-                    <div className="relative w-64">
+                    <div className=" w-64">
                       <input
                         type="search"
                         id="search-dropdown"
@@ -161,7 +161,7 @@ function Kehadiran() {
                   </div>
                 </div>
                 <hr className="mt-3" />
-                <div className="relative overflow-x-auto mt-5">
+                <div className=" overflow-x-auto mt-5">
                   <table
                     id="dataKehadiran"
                     className="w-full text-sm text-left text-gray-500 dark:text-gray-400"

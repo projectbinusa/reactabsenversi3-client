@@ -232,7 +232,7 @@ function HarianPerkelas() {
                 Rekap Harian
               </h6>
               <div className="flex md:mt-2 mt-4 items-center gap-2">
-                <div className="relative w-64">
+                <div className=" w-64">
                   <input
                     type="search"
                     id="search-dropdown"
@@ -296,7 +296,7 @@ function HarianPerkelas() {
                 </button>
               </div>
             </form>
-            <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-5 py-3">
+            <div className=" overflow-x-auto shadow-md sm:rounded-lg mt-5 py-3">
               {absensiData.length === 0 ? (
                 <>
                   <h1 className="text-2xl font-bold text-center text-gray-900 dark:text-white mt-5 mb-3">
