@@ -12,6 +12,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Swal from "sweetalert2";
 import { ToastContainer } from "react-toastify";
+import SidebarNavbar from "../../../components/SidebarNavbar";
 
 function Informasi() {
   const [informasi, setInformasi] = useState([]);
@@ -194,11 +195,11 @@ function Informasi() {
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
-        <Navbar />
+        <SidebarNavbar />
       </div>
       <div className="flex h-full">
-        <div className="fixed">
-          <Sidebar />
+        <div className="sticky top-16 z-40">
+          <Navbar />
         </div>
         <div className="sm:ml-64 content-page container p-8 ml-0 md:ml-64 mt-12">
           <div className="p-4">
@@ -223,7 +224,8 @@ function Informasi() {
                     <select
                       value={limit}
                       onChange={handleLimitChange}
-                      className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
+                      className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+                    >
                       <option value="5">05</option>
                       <option value="10">10</option>
                       <option value="20">20</option>
@@ -232,7 +234,8 @@ function Informasi() {
                     <a
                       type="button"
                       href="/admin/addinformasi"
-                      className="text-white bg-indigo-500 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800 mt-2">
+                      className="text-white bg-indigo-500 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800 mt-2"
+                    >
                       <FontAwesomeIcon icon={faPlus} size="lg" />
                     </a>
                   </div>
@@ -241,7 +244,8 @@ function Informasi() {
                 <div className=" overflow-x-auto mt-5">
                   <table
                     id="dataInformasi"
-                    className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+                  >
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                       <tr>
                         <th scope="col" className="px-6 py-3">
@@ -268,10 +272,12 @@ function Informasi() {
                       {paginatedInformasi.map((informasi, index) => (
                         <tr
                           key={index}
-                          className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                          className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                        >
                           <th
                             scope="row"
-                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                          >
                             {(currentPage - 1) * limit + index + 1}
                           </th>
                           <td className="px-6 py-4 text-gray-700 capitalize">
@@ -298,7 +304,8 @@ function Informasi() {
                               </a>
                               <button
                                 className="rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-red-50"
-                                onClick={() => deleteData(informasi.id)}>
+                                onClick={() => deleteData(informasi.id)}
+                              >
                                 <FontAwesomeIcon
                                   icon={faTrash}
                                   className="h-4 w-4"
@@ -309,7 +316,8 @@ function Informasi() {
                           <td className="py-4 text-center">
                             <button
                               className="rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50"
-                              onClick={() => showNotification(informasi)}>
+                              onClick={() => showNotification(informasi)}
+                            >
                               Notifikasi
                             </button>
                           </td>

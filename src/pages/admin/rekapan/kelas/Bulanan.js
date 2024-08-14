@@ -12,6 +12,7 @@ import axios from "axios";
 import { API_DUMMY } from "../../../../utils/api";
 import NavbarAdmin from "../../../../components/NavbarAdmin";
 import { Pagination } from "flowbite-react";
+import SidebarNavbar from "../../../../components/SidebarNavbar";
 
 function BulanPerkelas() {
   const [listKelas, setListKelas] = useState([]);
@@ -186,11 +187,11 @@ function BulanPerkelas() {
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
-        <NavbarAdmin />
+        <SidebarNavbar />
       </div>
-      <div className="flex h-full pt-5">
-        <div className="fixed h-full">
-          <Sidebar />
+      <div className="flex h-full">
+        <div className="sticky top-16 z-40">
+          <NavbarAdmin />
         </div>
         <div className="content-page flex-1 p-8 md:ml-72 mt-16 text-center overflow-auto">
           <div className="tabel-absen bg-white p-5 rounded-xl shadow-xl border border-gray-300">

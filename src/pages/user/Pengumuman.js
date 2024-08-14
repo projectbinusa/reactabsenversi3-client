@@ -13,21 +13,21 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Pengumuman() {
-  const [informasi, setInformasi] = useState([]);
+  const [informasi, setInformasi] = useState(null);
   const { id } = useParams();
   const token = localStorage.getItem("token");
 
   const fetchInformasi = async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/notifications/user/getById/${id}`
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // }
+        `${API_DUMMY}/api/notifications/user/getById/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
-      setInformasi([response.data.reverse()]);
+      setInformasi(response.data);
     } catch (error) {
       console.error("Error fetching informasi:", error);
     }
@@ -37,7 +37,7 @@ function Pengumuman() {
     fetchInformasi();
   }, [id]);
 
-  const formatDate = (dateString) => {
+  const formatDate = (timestamp) => {
     const options = {
       weekday: "long",
       year: "numeric",
@@ -47,7 +47,7 @@ function Pengumuman() {
       minute: "2-digit",
       timeZone: "UTC",
     };
-    return new Date(dateString).toLocaleDateString("id-ID", options);
+    return new Date(timestamp).toLocaleDateString("id-ID", options);
   };
 
   return (
@@ -68,56 +68,54 @@ function Pengumuman() {
                 </h2>
                 <hr />
                 <div className="mt-5">
-                  {informasi.length > 0 ? (
-                    informasi.map((info) => (
-                      <div key={info.id}>
-                        <h3 className="text-xl font-semibold text-black capitalize">
-                          {info.namaAcara}
-                        </h3>
-                        <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:space-x-4">
-                          <div className="flex items-center sm:justify-start">
-                            <FontAwesomeIcon
-                              icon={faCalendarDays}
-                              className="h-4 w-4 text-gray-600 mr-2"
-                            />
-                            <p className="text-sm font-medium text-black">
-                              Tanggal:
-                            </p>
-                          </div>
-                          <p className="text-sm text-black sm:ml-2">
-                            {formatDate(info.tanggalAcara)}
+                  {informasi ? (
+                    <div>
+                      <h3 className="text-xl font-semibold text-black capitalize">
+                        {informasi.namaAcara}
+                      </h3>
+                      <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:space-x-4">
+                        <div className="flex items-center sm:justify-start">
+                          <FontAwesomeIcon
+                            icon={faCalendarDays}
+                            className="h-4 w-4 text-gray-600 mr-2"
+                          />
+                          <p className="text-sm font-medium text-black">
+                            Tanggal:
                           </p>
                         </div>
-                        <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:space-x-4">
-                          <div className="flex items-center sm:justify-start">
-                            <FontAwesomeIcon
-                              icon={faMapMarkerAlt}
-                              className="h-4 w-4 text-gray-600 mr-2"
-                            />
-                            <p className="text-sm font-medium text-black">
-                              Tempat:
-                            </p>
-                          </div>
-                          <p className="text-sm text-black sm:ml-2">
-                            {info.tempatAcara}
-                          </p>
-                        </div>
-                        <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:space-x-4">
-                          <div className="flex items-center sm:justify-start">
-                            <FontAwesomeIcon
-                              icon={faEnvelope}
-                              className="h-4 w-4 text-gray-600 mr-2"
-                            />
-                            <p className="text-sm font-medium text-black">
-                              Pesan:
-                            </p>
-                          </div>
-                          <p className="text-sm text-black sm:ml-2">
-                            {info.message}
-                          </p>
-                        </div>
+                        <p className="text-sm text-black sm:ml-2">
+                          {formatDate(informasi.tanggalAcara)}
+                        </p>
                       </div>
-                    ))
+                      <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:space-x-4">
+                        <div className="flex items-center sm:justify-start">
+                          <FontAwesomeIcon
+                            icon={faMapMarkerAlt}
+                            className="h-4 w-4 text-gray-600 mr-2"
+                          />
+                          <p className="text-sm font-medium text-black">
+                            Tempat:
+                          </p>
+                        </div>
+                        <p className="text-sm text-black sm:ml-2">
+                          {informasi.tempatAcara}
+                        </p>
+                      </div>
+                      <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:space-x-4">
+                        <div className="flex items-center sm:justify-start">
+                          <FontAwesomeIcon
+                            icon={faEnvelope}
+                            className="h-4 w-4 text-gray-600 mr-2"
+                          />
+                          <p className="text-sm font-medium text-black">
+                            Pesan:
+                          </p>
+                        </div>
+                        <p className="text-sm text-black sm:ml-2">
+                          {informasi.message}
+                        </p>
+                      </div>
+                    </div>
                   ) : (
                     <p className="text-black">Tidak ada pengumuman.</p>
                   )}
@@ -128,7 +126,8 @@ function Pengumuman() {
                       <div className="flex justify-between">
                         <Link
                           className="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                          to="/user/dashboard">
+                          to="/user/dashboard"
+                        >
                           <FontAwesomeIcon icon={faArrowLeft} />
                         </Link>
                       </div>

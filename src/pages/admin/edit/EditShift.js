@@ -7,6 +7,7 @@ import axios from "axios";
 import { useParams, useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../../utils/api";
+import SidebarNavbar from "../../../components/SidebarNavbar";
 
 function EditShift() {
   const [namaShift, setNamaShift] = useState("");
@@ -18,9 +19,7 @@ function EditShift() {
 
   const getShift = async () => {
     try {
-      const res = await axios.get(
-        `${API_DUMMY}/api/shift/getbyId/${id}`
-      );
+      const res = await axios.get(`${API_DUMMY}/api/shift/getbyId/${id}`);
       setNamaShift(res.data.namaShift);
       setWaktuMasuk(res.data.waktuMasuk);
       setWaktuPulang(res.data.waktuPulang);
@@ -67,11 +66,11 @@ function EditShift() {
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
-        <Navbar />
+        <SidebarNavbar />
       </div>
       <div className="flex h-full">
-        <div className="fixed">
-          <Sidebar />
+        <div className="sticky top-16 z-40">
+          <Navbar />
         </div>
         <div className="sm:ml-64 content-page container p-8 ml-14 md:ml-64 mt-12">
           <div className="p-4">
