@@ -51,11 +51,7 @@ function DashboardSA() {
   const fetchData = async (url, setter) => {
     const token = localStorage.getItem("token");
     try {
-      const response = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(url);
       setter(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -79,12 +75,12 @@ function DashboardSA() {
   const getUsername = async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/superadmin/getbyid/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `${API_DUMMY}/api/superadmin/getbyid/${id}`
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // }
       );
       setUsername(response.data.username);
     } catch (error) {
@@ -237,8 +233,7 @@ function DashboardSA() {
             <div className="relative overflow-x-auto mt-5">
               <table
                 id="dataKaryawan"
-                className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
-              >
+                className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 {/* <!-- Tabel Head --> */}
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
@@ -258,20 +253,17 @@ function DashboardSA() {
                   {admin.map((admin, index) => (
                     <tr
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                      key={index}
-                    >
+                      key={index}>
                       <th
                         scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                      >
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {index + 1}
                       </th>
                       <td className="px-6 py-4">
                         <a
                           href="/cdn-cgi/l/email-protection"
                           className="__cf_email__"
-                          data-cfemail="5a363b23363b1a3d373b333674393537"
-                        >
+                          data-cfemail="5a363b23363b1a3d373b333674393537">
                           {admin.email}
                         </a>
                       </td>

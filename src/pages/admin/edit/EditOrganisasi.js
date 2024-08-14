@@ -26,20 +26,20 @@ function EditOrganisasi() {
   const [fotoUrl, setFotoUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const idAdmin = localStorage.getItem("adminId");
-// organisasi
+  // organisasi
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("token");
-        const config = {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        };
+        // const config = {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // };
 
         const response = await axios.get(
-          `${API_DUMMY}/api/organisasi/getById/${id}`,
-          config
+          `${API_DUMMY}/api/organisasi/getById/${id}`
+          // config
         );
         const dataOrganisasi = response.data;
 
@@ -143,8 +143,7 @@ function EditOrganisasi() {
                   <form
                     id="updateForm"
                     onSubmit={handleSubmit}
-                    encType="multipart/form-data"
-                  >
+                    encType="multipart/form-data">
                     <div className="mt-5 text-center">
                       <img
                         className="mb-5 rounded-full w-48 h-48 mx-auto"
@@ -186,8 +185,7 @@ function EditOrganisasi() {
                         />
                         <label
                           htmlFor="nama_organisasi"
-                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                        >
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                           Nama Organisasi
                         </label>
                       </div>
@@ -205,8 +203,7 @@ function EditOrganisasi() {
                         />
                         <label
                           htmlFor="alamat"
-                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                        >
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                           Alamat
                         </label>
                       </div>
@@ -226,8 +223,7 @@ function EditOrganisasi() {
                         />
                         <label
                           htmlFor="kecamatan"
-                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                        >
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                           Kecamatan
                         </label>
                       </div>
@@ -245,8 +241,7 @@ function EditOrganisasi() {
                         />
                         <label
                           htmlFor="kabupaten"
-                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                        >
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                           Kota/Kabupaten
                         </label>
                       </div>
@@ -266,8 +261,7 @@ function EditOrganisasi() {
                         />
                         <label
                           htmlFor="provinsi"
-                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                        >
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                           Provinsi
                         </label>
                       </div>
@@ -285,8 +279,7 @@ function EditOrganisasi() {
                         />
                         <label
                           htmlFor="email_organisasi"
-                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                        >
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                           Email
                         </label>
                       </div>
@@ -305,22 +298,19 @@ function EditOrganisasi() {
                       />
                       <label
                         htmlFor="nomer_telepon"
-                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                      >
+                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                         Nomer Telepon
                       </label>
                     </div>
                     <div className="flex justify-between">
                       <a
                         href="/admin/organisasi"
-                        className="text-white focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 bg-red-600 hover:bg-red-800 focus:outline-none focus:ring-red-300"
-                      >
+                        className="text-white focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 bg-red-600 hover:bg-red-800 focus:outline-none focus:ring-red-300">
                         <FontAwesomeIcon icon={faArrowLeft} /> &nbsp;Batal
                       </a>
                       <button
                         type="submit"
-                        className="text-white focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-blue-300"
-                      >
+                        className="text-white focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-blue-300">
                         <FontAwesomeIcon icon={faFloppyDisk} /> &nbsp;Simpan
                       </button>
                     </div>

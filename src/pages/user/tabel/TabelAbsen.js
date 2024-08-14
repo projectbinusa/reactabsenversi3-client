@@ -35,12 +35,12 @@ function TabelAbsen() {
 
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/absensi/getByUserId/${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `${API_DUMMY}/api/absensi/getByUserId/${userId}`
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // }
       );
 
       setAbsensi(response.data.reverse());
@@ -144,8 +144,7 @@ function TabelAbsen() {
                 <select
                   value={limit}
                   onChange={handleLimitChange}
-                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
-                >
+                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
                   <option value="5">05</option>
                   <option value="10">10</option>
                   <option value="20">20</option>
@@ -224,8 +223,7 @@ function TabelAbsen() {
                                 ? "bg-gray-100 text-gray-700"
                                 : "bg-red-100 text-red-700"
                             } active:bg-red-50`}
-                            disabled={absenData.statusAbsen === "Izin"}
-                          >
+                            disabled={absenData.statusAbsen === "Izin"}>
                             <span className="relative inline-block">
                               <FontAwesomeIcon
                                 className="h-4 w-4"

@@ -20,11 +20,7 @@ function AddShift() {
 
   const getAllAdmin = async () => {
     try {
-      const response = await axios.get(`${API_DUMMY}/api/get-all-by-super/${idSuperAdmin}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(`${API_DUMMY}/api/get-all-by-super/${idSuperAdmin}`);
 
       setadminList(response.data);
     } catch (error) {

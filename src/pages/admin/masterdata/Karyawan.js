@@ -109,11 +109,11 @@ function Karyawan() {
     try {
       const response = await axios.get(
         `${API_DUMMY}/api/user/${idAdmin}/users`,
-        {
-          headers: {
-            Authorization: `${token}`,
-          },
-        }
+        // {
+        //   headers: {
+        //     Authorization: `${token}`,
+        //   },
+        // }
       );
 
       setUserData(response.data.reverse());
@@ -134,11 +134,7 @@ function Karyawan() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${API_DUMMY}/api/user/delete-user/` + id, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          });
+          await axios.delete(`${API_DUMMY}/api/user/delete-user/` + id);
 
           Swal.fire({
             icon: "success",

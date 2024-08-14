@@ -178,11 +178,7 @@ function KelasSiswa() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${API_DUMMY}/api/kelas/deleteKelas/` + id, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          });
+          await axios.delete(`${API_DUMMY}/api/kelas/deleteKelas/` + id);
 
           Swal.fire({
             icon: "success",

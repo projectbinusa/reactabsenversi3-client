@@ -25,12 +25,12 @@ function Jabatan() {
   const getAllJabatan = async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/jabatan/getByAdmin/${idAdmin}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `${API_DUMMY}/api/jabatan/getByAdmin/${idAdmin}`
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // }
       );
 
       setUserData(response.data.reverse());
@@ -42,12 +42,12 @@ function Jabatan() {
   const getAllUser = async (idJabatan) => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/user/byJabatan/${idJabatan}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `${API_DUMMY}/api/user/byJabatan/${idJabatan}`
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // }
       );
 
       setJumlahKaryawan((prevState) => ({
@@ -71,11 +71,7 @@ function Jabatan() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${API_DUMMY}/api/jabatan/delete/` + id, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+          await axios.delete(`${API_DUMMY}/api/jabatan/delete/` + id);
 
           Swal.fire({
             icon: "success",
@@ -173,8 +169,7 @@ function Jabatan() {
                   <select
                     value={limit}
                     onChange={handleLimitChange}
-                    className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
-                  >
+                    className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
                     <option value="5">05</option>
                     <option value="10">10</option>
                     <option value="20">20</option>
@@ -183,8 +178,7 @@ function Jabatan() {
                   <a
                     type="button"
                     href="/admin/addjab"
-                    className="text-white bg-indigo-500 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800 mt-2"
-                  >
+                    className="text-white bg-indigo-500 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800 mt-2">
                     <FontAwesomeIcon icon={faPlus} size="lg" />
                   </a>
                 </div>
@@ -193,8 +187,7 @@ function Jabatan() {
               <div className="relative overflow-x-auto mt-5">
                 <table
                   id="dataJabatan"
-                  className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
-                >
+                  className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                       <th scope="col" className="px-6 py-3">
@@ -218,12 +211,10 @@ function Jabatan() {
                     {paginatedJabatan.map((jabatan, index) => (
                       <tr
                         className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                        key={index}
-                      >
+                        key={index}>
                         <th
                           scope="row"
-                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                        >
+                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                           {(currentPage - 1) * limit + index + 1}
                         </th>
                         <td className="px-6 py-4 capitalize">
@@ -252,8 +243,7 @@ function Jabatan() {
 
                             <button
                               className="z-30 block rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-red-50"
-                              onClick={() => deleteData(jabatan.idJabatan)}
-                            >
+                              onClick={() => deleteData(jabatan.idJabatan)}>
                               <span className="relative inline-block">
                                 <FontAwesomeIcon
                                   icon={faTrash}

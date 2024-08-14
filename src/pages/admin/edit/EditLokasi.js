@@ -64,7 +64,7 @@ function EditLokasi() {
       await axios.put(`${API_DUMMY}/api/lokasi/Update/${id}`, lokasi, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          // Authorization: `Bearer ${token}`,
         },
       });
       Swal.fire({

@@ -37,12 +37,12 @@ function TabelLembur() {
 
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/lembur/getByuserId/${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `${API_DUMMY}/api/lembur/getByuserId/${userId}`
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // }
       );
 
       setLembur(response.data.reverse());
@@ -66,11 +66,7 @@ function TabelLembur() {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`${API_DUMMY}/api/lembur/delete/${id}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
+          .delete(`${API_DUMMY}/api/lembur/delete/${id}`)
           .then(() => {
             Swal.fire({
               position: "center",
@@ -179,8 +175,7 @@ function TabelLembur() {
                 <select
                   value={limit}
                   onChange={handleLimitChange}
-                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
-                >
+                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
                   <option value="5">05</option>
                   <option value="10">10</option>
                   <option value="20">20</option>
@@ -235,8 +230,7 @@ function TabelLembur() {
                         <div className="flex items-center -space-x-4 ml-12">
                           <button
                             className="z-20 block rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-blue-50"
-                            onClick={() => BatalLembur(lemburData.id)}
-                          >
+                            onClick={() => BatalLembur(lemburData.id)}>
                             <span className="relative inline-block">
                               <FontAwesomeIcon
                                 icon={faCircleXmark}

@@ -96,7 +96,7 @@ function EditKaryawan() {
       );
       Swal.fire({
         title: "Berhasil",
-        text: "Berhasil mengubah data karyawan",
+        text: "Berhasil mengubah data siswa",
         icon: "success",
         showConfirmButton: false,
       });

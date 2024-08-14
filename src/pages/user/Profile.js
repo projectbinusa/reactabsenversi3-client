@@ -36,12 +36,12 @@ function Profile() {
   const getProfile = async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/user/getUserBy/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `${API_DUMMY}/api/user/getUserBy/${id}`
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // }
       );
 
       setProfile(response.data);
@@ -65,13 +65,13 @@ function Profile() {
     try {
       const response = await axios.put(
         `${API_DUMMY}/api/user/edit-email-username/${id}`,
-        usmail,
+        usmail
 
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // }
       );
 
       setUsername(response.data.username);
@@ -119,12 +119,12 @@ function Profile() {
           old_password: passwordLama,
           new_password: passwordBaru,
           confirm_new_password: confirmPassword,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
         }
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // }
       );
 
       Swal.fire("Berhasil", "Password berhasil diubah", "success");
@@ -151,7 +151,7 @@ function Profile() {
         formData,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            // Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",
           },
         }
@@ -225,8 +225,7 @@ function Profile() {
                         type="submit"
                         className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50"
                         onClick={handleImageUpload}
-                        disabled={loading || !selectedFile}
-                      >
+                        disabled={loading || !selectedFile}>
                         {loading ? "Uploading..." : "Simpan"}
                       </button>
                     </div>
@@ -293,8 +292,7 @@ function Profile() {
                           <button
                             type="button"
                             onClick={() => setUbahUsername(true)}
-                            className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50"
-                          >
+                            className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
                             Ubah
                           </button>
                         )}
@@ -303,15 +301,13 @@ function Profile() {
                             <button
                               type="button"
                               onClick={() => setUbahUsername(false)}
-                              className="z-20 block rounded-xl border-2 border-white bg-rose-100 p-4 text-rose-500 active:bg-rose-50"
-                            >
+                              className="z-20 block rounded-xl border-2 border-white bg-rose-100 p-4 text-rose-500 active:bg-rose-50">
                               Batal
                             </button>
 
                             <button
                               type="submit"
-                              className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50"
-                            >
+                              className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
                               Simpan
                             </button>
                           </>
@@ -392,8 +388,7 @@ function Profile() {
                       <div className="flex justify-between mt-6">
                         <button
                           type="submit"
-                          className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50"
-                        >
+                          className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
                           Simpan
                         </button>
                       </div>

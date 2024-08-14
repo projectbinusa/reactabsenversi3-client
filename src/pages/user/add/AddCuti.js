@@ -32,11 +32,7 @@ function AddCuti() {
     }
 
     try {
-      await axios.post(`${API_DUMMY}/api/cuti/tambahCuti/${userId}`, add, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.post(`${API_DUMMY}/api/cuti/tambahCuti/${userId}`, add);
       Swal.fire({
         position: "center",
         icon: "success",

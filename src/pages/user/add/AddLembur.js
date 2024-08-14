@@ -34,11 +34,7 @@ function AddLembur() {
     }
 
     try {
-      await axios.post(`${API_DUMMY}/api/lembur/tambahLembur/${userId}`, add, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.post(`${API_DUMMY}/api/lembur/tambahLembur/${userId}`, add);
       Swal.fire({
         position: "center",
         icon: "success",

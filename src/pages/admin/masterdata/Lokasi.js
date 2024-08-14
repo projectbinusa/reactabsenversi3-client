@@ -53,11 +53,7 @@ function Lokasi() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${API_DUMMY}/api/lokasi/delete/` + id, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          });
+          await axios.delete(`${API_DUMMY}/api/lokasi/delete/` + id);
 
           Swal.fire({
             icon: "success",

@@ -18,11 +18,7 @@ function Absensi() {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await axios.get(`${API_DUMMY}/api/absensi/getAll`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(`${API_DUMMY}/api/absensi/getAll`);
 
       setAbsensi(response.data.reverse());
     } catch (error) {
