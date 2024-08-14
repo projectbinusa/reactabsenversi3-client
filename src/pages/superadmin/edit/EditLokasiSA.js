@@ -59,7 +59,7 @@ function EditLokasiSA() {
         <div className="fixed">
           <Sidebar />
         </div>
-        <div className="sm:ml-64 content-page container p-8 ml-14 md:ml-64 mt-12">
+        <div className="sm:ml-64 content-page container md:p-8 md:ml-64 mt-12">
           <div className="p-4">
             <div className="p-5">
               {/* <!-- Card --> */}

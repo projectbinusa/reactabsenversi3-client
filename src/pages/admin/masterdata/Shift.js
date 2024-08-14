@@ -174,11 +174,11 @@ function Shift() {
         <div className="sticky top-16 z-40">
           <Navbar />
         </div>
-        <div className=" sm:ml-64 content-page container p-8  ml-0 md:ml-64 mt-5">
+        <div className=" sm:ml-64 content-page container md:p-8 md:ml-64 mt-5">
           <div className="p-5 mt-10">
             {/* <!-- Card --> */}
             <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-              <div className="flex justify-between">
+              <div className="md:flex justify-between">
                 <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
                   Data Waktu Pembelajaran
                 </h6>
@@ -197,7 +197,7 @@ function Shift() {
                   <select
                     value={limit}
                     onChange={handleLimitChange}
-                    className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+                    className="flex-shrink-0 z-10 inline-flex rounded-md md:rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
                   >
                     <option value="5">05</option>
                     <option value="10">10</option>
