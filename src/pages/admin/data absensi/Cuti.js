@@ -272,7 +272,7 @@ function Cuti() {
                         Sampai
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        Masuk Kerja
+                        Masuk Sekolah
                       </th>
                       <th scope="col" className="px-6 py-3">
                         Keperluan

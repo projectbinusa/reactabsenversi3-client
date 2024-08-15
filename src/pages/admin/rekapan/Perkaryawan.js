@@ -211,7 +211,7 @@ function Perkaryawan() {
                       Foto Pulang
                     </th>
                     <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                      Jam Kerja
+                      Jam Sekolah
                     </th>
                     <th scope="col" className="px-6 py-3 whitespace-nowrap">
                       Keterangan

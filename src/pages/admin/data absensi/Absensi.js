@@ -133,7 +133,7 @@ function Absensi() {
         showConfirmButton: false,
         timer: 1500, // Auto close after 1.5 seconds
       });
-      window.location.reload();
+      // window.location.reload();
     } catch (error) {
       Swal.fire({
         title: "Error",
@@ -272,7 +272,7 @@ function Absensi() {
                           Foto Pulang
                         </th>
                         <th scope="col" className="px-4 py-3">
-                          Jam Kerja
+                          Jam Sekolah
                         </th>
                         <th scope="col" className="px-4 py-3">
                           Aksi

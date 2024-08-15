@@ -39,21 +39,6 @@ function MingguanPerkelas() {
     }
   };
 
-  const getRekapPresensiPerkelasSetiapMinggu = async () => {
-    try {
-      const response = await axios.get(
-        `${API_DUMMY}/api/absensi/rekap-mingguan-per-kelas?kelasId=${idKelas}&tanggalAkhir=${tanggalAkhir}&tanggalAwal=${tanggalAwal}`
-      );
-      //   if (response == 200) {
-      const data = response.data;
-      setRekapPerbulan(data.reverse());
-      console.log("list rekap mingguan: ", response.data);
-      //   }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const handleTanggalAwalChange = (event) => {
     const value = event.target.value;
     setTanggalAwal(value);
@@ -83,6 +68,34 @@ function MingguanPerkelas() {
   function onPageChange(page) {
     setCurrentPage(page);
   }
+
+  useEffect(() => {
+    if (adminId) {
+      getAllKelas(adminId);
+    }
+  }, [adminId]);
+
+  useEffect(() => {
+    if (idKelas != null) {
+      getRekapPresensiPerkelasSetiapMinggu(idKelas, tanggalAwal, tanggalAkhir);
+    }
+  }, [idKelas, tanggalAwal, tanggalAkhir]);
+
+  const getRekapPresensiPerkelasSetiapMinggu = async () => {
+    try {
+      const response = await axios.get(
+        `${API_DUMMY}/api/absensi/rekap-mingguan-per-kelas?kelasId=${idKelas}&tanggalAkhir=${tanggalAkhir}&tanggalAwal=${tanggalAwal}`
+      );
+      //   if (response == 200) {
+      const data = response.data;
+      setRekapPerbulan(data);
+      console.log("list rekap mingguan: ", response.data);
+      //   }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // Export data function
   const exportPerkelas = async (e) => {
     e.preventDefault();
@@ -96,7 +109,7 @@ function MingguanPerkelas() {
     }
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/absensi/export/mingguan/by-kelas?kelasId=2&tanggalAkhir=${tanggalAkhir}&tanggalAwal=${tanggalAwal}`,
+        `${API_DUMMY}/api/absensi/export/mingguan/by-kelas?kelasId=${idKelas}&tanggalAkhir=${tanggalAkhir}&tanggalAwal=${tanggalAwal}`,
         {
           responseType: "blob",
         }
@@ -117,17 +130,6 @@ function MingguanPerkelas() {
       console.log(error);
     }
   };
-  useEffect(() => {
-    if (adminId) {
-      getAllKelas(adminId);
-    }
-  }, [adminId]);
-
-  useEffect(() => {
-    if (idKelas != null) {
-      getRekapPresensiPerkelasSetiapMinggu(idKelas, tanggalAwal, tanggalAkhir);
-    }
-  }, [idKelas, tanggalAwal, tanggalAkhir]);
   // Initialize data on component mount
   // useEffect(() => {
   //   getAllKelas();
@@ -354,7 +356,7 @@ function MingguanPerkelas() {
                       Foto Pulang
                     </th>
                     <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                      Jam Kerja
+                      Jam Sekolah
                     </th>
                     <th scope="col" className="px-6 py-3 whitespace-nowrap">
                       Keterangan

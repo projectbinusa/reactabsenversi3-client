@@ -200,7 +200,7 @@ function TabelCuti() {
                       SAMPAI
                     </th>
                     <th className="whitespace-nowrap px-4 py-2 font-medium text-center">
-                      MASUK KERJA
+                      Masuk Sekolah
                     </th>
                     <th className="whitespace-nowrap px-4 py-2 font-medium text-center">
                       KEPERLUAN
