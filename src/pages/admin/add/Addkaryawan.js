@@ -98,29 +98,36 @@ function AddKaryawan() {
     e.preventDefault();
 
     try {
-      const newUser = {
-        email: email,
-        username: username,
-        password: password,
-      };
-      const response = await axios.post(
-        `${API_DUMMY}/api/user/tambahkaryawan/${idAdmin}?idJabatan=${idJabatan}&idOrangTua=${idOrangTua}&idOrganisasi=${idOrganisasi}&idShift=${idShift}`,
-        newUser
-      );
-      Swal.fire({
-        title: "Berhasil",
-        text: "Berhasil menambahkan data",
-        icon: "success",
-        showConfirmButton: false,
-      });
-      setTimeout(() => {
-        window.location.href = "/admin/siswa";
-      }, 2000);
+        const newUser = {
+            email: email,
+            username: username,
+            password: password,
+        };
+        await axios.post(
+            `${API_DUMMY}/api/user/tambahkaryawan/${idAdmin}?idJabatan=${idJabatan}&idOrangTua=${idOrangTua}&idOrganisasi=${idOrganisasi}&idShift=${idShift}`,
+            newUser
+        );
+        Swal.fire({
+            title: "Berhasil",
+            text: "Berhasil menambahkan data",
+            icon: "success",
+            showConfirmButton: false,
+        });
+        setTimeout(() => {
+            window.location.href = "/admin/siswa";
+        }, 2000);
     } catch (error) {
-      console.log(error);
-      Swal.fire("Error", "Gagal menambahkan data", "error");
+        console.error(error);
+
+        if (error.response && error.response.status === 400 && error.response.data.includes("telah digunakan")) {
+            Swal.fire("Error", "Email atau Username telah dipakai", "error");
+        } else {
+            Swal.fire("Error", "Gagal menambahkan data", "error");
+        }
     }
-  };
+};
+
+
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
