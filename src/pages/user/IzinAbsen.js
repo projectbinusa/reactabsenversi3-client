@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../../components/NavbarUser";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { Toast } from "flowbite-react";
+// import { Toast } from "flowbite-react";
 import { API_DUMMY } from "../../utils/api";
 import SidebarNavbar from "../../components/SidebarNavbar";
+import { toast } from "react-toastify";
 
 function IzinAbsen() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -58,7 +59,7 @@ function IzinAbsen() {
       window.location.reload();
     } catch (error) {
       console.error("Error:", error);
-      Toast.error("Gagal Izin");
+      toast.error("Gagal Izin");
     }
   };
 
@@ -75,7 +76,7 @@ function IzinAbsen() {
         <div className="sticky top-16 z-40">
           <Navbar />
         </div>
-        <div className="content-page max-h-screen container p-8 min-h-screen md:ml-64">
+        <div className="md:w-full max-h-screen container p-8 min-h-screen md:ml-64">
           <div className="add-izin mt-12 bg-white p-5 rounded-xl shadow-lg border border-gray-300">
             <h1 className="text-lg sm:text-2xl font-medium mb-4 sm:mb-7">
               Izin Tengah Hari
