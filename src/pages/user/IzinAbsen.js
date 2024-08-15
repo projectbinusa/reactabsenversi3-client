@@ -48,7 +48,7 @@ function IzinAbsen() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const izin = {
-      keteranganPulangAwal: keteranganPulangAwal,
+      keterangan_pulang_awal: keteranganPulangAwal,
     };
     try {
       const response = await axios.put(
