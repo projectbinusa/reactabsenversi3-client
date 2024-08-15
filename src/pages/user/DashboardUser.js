@@ -43,7 +43,7 @@ function Dashboard() {
         // }
       );
 
-      setUsername(response.data.reverse());
+      setUsername(response.data);
     } catch (error) {
       console.error("Error fetching username:", error);
     }
