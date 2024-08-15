@@ -21,57 +21,70 @@ function Register() {
     e.preventDefault();
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
     if (!passwordRegex.test(password)) {
-      Swal.fire({
-        position: "center",
-        icon: "warning",
-        title: "Password tidak sesuai",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      return;
-    }
-    try {
-      const response = await axios.post(
-        `${API_DUMMY}/api/admin/register`,
-        {
-          username,
-          email,
-          password,
-          role,
-        }
-      );
-
-      if (response.data === "Username already taken") {
         Swal.fire({
-          icon: "error",
-          title: "Username sudah terdaftar. Pilih username lain.",
-          showConfirmButton: false,
-          timer: 1500,
+            position: "center",
+            icon: "warning",
+            title: "Password tidak sesuai",
+            showConfirmButton: false,
+            timer: 1500,
         });
-      } else {
-        setShow(false);
+        return;
+    }
+
+    try {
+        const response = await axios.post(
+            `${API_DUMMY}/api/admin/register`,
+            {
+                username,
+                email,
+                password,
+                role,
+            }
+        );
+
         Swal.fire({
-          icon: "success",
-          title: "Berhasil Register",
-          showConfirmButton: false,
-          timer: 1500,
+            icon: "success",
+            title: "Berhasil Register",
+            showConfirmButton: false,
+            timer: 1500,
         });
         history.push("/login");
         setTimeout(() => {
-          window.location.reload();
+            window.location.reload();
         }, 1500);
-      }
     } catch (error) {
-      console.error("Error during registration:", error);
-      setShow(false);
-      Swal.fire({
-        icon: "error",
-        title: "Terjadi kesalahan saat mendaftar. Coba lagi nanti.",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+        console.error("Error during registration:", error);
+
+        // Access the error response
+        const errorResponse = error.response?.data;
+        const errorMessage = errorResponse?.message || error.message;
+
+        // Handle specific error messages
+        if (errorMessage.includes("Email sudah digunakan")) {
+            Swal.fire({
+                icon: "error",
+                title: "Email sudah terdaftar. Gunakan email lain.",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        } else if (errorMessage.includes("Username sudah terdaftar")) {
+            Swal.fire({
+                icon: "error",
+                title: "Username sudah terdaftar. Pilih username lain.",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: "Terjadi kesalahan saat mendaftar. Coba lagi nanti.",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        }
     }
-  };
+};
+
 
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center">

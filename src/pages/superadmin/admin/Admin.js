@@ -96,35 +96,32 @@ function Admin() {
     e.preventDefault();
 
     const formData = new FormData();
-
     formData.append("file", file);
-    // formData.append("idJabatan", idJabatan);
-    // formData.append("idOrangTua", idOrangTua);
-    // formData.append("idShift", idShift);
-    // formData.append("idOrganisasi", idOrganisasi);
 
-    await axios
-      .post(
-        `${API_DUMMY}/api/superadmin/import/data-admin/${id_superadmin}`,
-        formData
-      )
-      .then(() => {
+    try {
+        await axios.post(
+            `${API_DUMMY}/api/superadmin/import/data-admin/${id_superadmin}`,
+            formData
+        );
+
         Swal.fire({
-          title: "Sukses!",
-          text: "Berhasil menambahkan",
-          icon: "success",
-          timer: 3000,
-          showConfirmButton: false,
+            title: "Sukses!",
+            text: "Berhasil menambahkan",
+            icon: "success",
+            timer: 3000,
+            showConfirmButton: false,
         });
         setOpenModal(false);
         getAllAdmin();
-      })
+    } catch (err) {
+        console.error(err);
 
-      .catch((err) => {
-        console.log(err);
-        Swal.fire("Error", "Anda belum memilih file untuk diimport!.", "error");
-      });
-  };
+        // Extract error message from the response
+        const errorMessage = err.response?.data || "Terjadi kesalahan saat mengimpor data!";
+        Swal.fire("Error", errorMessage, "error");
+    }
+};
+
   const getAllAdmin = async () => {
     const token = localStorage.getItem("token");
     const idSuperAdmin = localStorage.getItem("superadminId");
