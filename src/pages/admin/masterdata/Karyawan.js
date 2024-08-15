@@ -85,25 +85,23 @@ function Karyawan() {
     e.preventDefault();
 
     const formData = new FormData();
-
     formData.append("file", file);
-    // formData.append("idJabatan", idJabatan);
-    // formData.append("idOrangTua", idOrangTua);
-    // formData.append("idShift", idShift);
-    // formData.append("idOrganisasi", idOrganisasi);
 
-    await axios
-      .post(`${API_DUMMY}/api/import/data-siswa/admin/${idAdmin}`, formData)
-      .then(() => {
+    try {
+        await axios.post(`${API_DUMMY}/api/import/data-siswa/admin/${idAdmin}`, formData);
         Swal.fire("Sukses!", "Berhasil menambahkan", "success");
         setOpenModal(false);
         getAllKaryawan();
-      })
-      .catch((err) => {
-        console.log(err);
-        Swal.fire("Error", "Anda belum memilih file untuk diimport!.", "error");
-      });
-  };
+    } catch (err) {
+        console.error("Error during import:", err);
+
+        if (err.response && err.response.data) {
+            Swal.fire("Error", err.response.data, "error");
+        } else {
+            Swal.fire("Error", "Terjadi kesalahan saat mengimpor data.", "error");
+        }
+    }
+};
   const getAllKaryawan = async () => {
     const token = localStorage.getItem("token");
 
