@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Navbar from "../../../components/NavbarSuper";
 import Sidebar from "../../../components/SidebarUser";
 import { faArrowLeft, faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
@@ -14,35 +14,70 @@ function AddAdmin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const idSuperAdmin = localStorage.getItem("superadminId");
+
   const handleShowPasswordChange = () => {
     setShowPassword(!showPassword);
   };
+
   const tambahAdmin = async (e) => {
     e.preventDefault();
+    
     try {
       const newUser = {
         email: email,
         username: username,
         password: password,
       };
+      
       const response = await axios.post(
         `${API_DUMMY}/api/admin/register-by-superadmin/${idSuperAdmin}`,
         newUser
       );
+  
       Swal.fire({
         title: "Berhasil",
         text: "Berhasil menambahkan data",
         icon: "success",
-        showConfirmButton: false, // Ini akan menghilangkan tombol konfirmasi
+        showConfirmButton: false,
       });
+      
       setTimeout(() => {
         window.location.href = "/superadmin/admin";
       }, 3000);
+      
     } catch (error) {
       console.log(error);
-      Swal.fire("Error", "Gagal menambahkan data", "error");
+  
+      // Extracting error message from the response
+      const errorResponse = error.response?.data;
+      const errorMessage = errorResponse?.message || error.message;
+  
+      if (errorMessage.includes("Email sudah digunakan")) {
+        Swal.fire({
+          icon: "error",
+          title: "Email sudah terdaftar",
+          text: "Gunakan email lain.",
+          showConfirmButton: true,
+        });
+      } else if (errorMessage.includes("Username sudah digunakan")) {
+        Swal.fire({
+          icon: "error",
+          title: "Username sudah terdaftar",
+          text: "Pilih username lain.",
+          showConfirmButton: true,
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Terjadi kesalahan",
+          text: "Gagal menambahkan data. Coba lagi nanti.",
+          showConfirmButton: true,
+        });
+      }
     }
   };
+  
+
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
