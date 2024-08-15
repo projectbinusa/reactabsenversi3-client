@@ -186,18 +186,22 @@ function SidebarNavbar() {
       <aside
         id="logo-sidebar"
         ref={sidebarRef}
-        className={`fixed top-0 left-0 z-40 ${localStorage.getItem("role") == "ADMIN" && "SUPERADMIN" ? "w-[300px]" : "w-[260px]"} h-screen transition-transform ease-in-out duration-300 ${
+        className={`fixed top-0 left-0 z-40 ${
+          localStorage.getItem("role") == "ADMIN" && "SUPERADMIN"
+            ? "w-[300px]"
+            : "w-[260px]"
+        } h-screen transition-transform ease-in-out duration-300 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         } sm:translate-x-0`}
         aria-label="Sidebar">
         <div className="h-full flex flex-col">
           <div className={`bg-indigo-500 ${isOpen ? "hidden" : "block"}`}>
-            <a href="" className="flex items-center p-3">
+            <Link to="/" className="flex items-center p-3">
               <img src={Logo} className="h-11 me-3 text-white" alt="Logo" />
               <span className="self-center text-xl font-semibold sm:text-xl whitespace-nowrap text-white">
                 Presensi App
               </span>
-            </a>
+            </Link>
           </div>
           <div className="bg-white shadow-lg shadow-blue-300 flex-1 px-3 py-4 h-full pb-4 overflow-y-auto">
             <nav className="">
@@ -846,8 +850,8 @@ function SidebarNavbar() {
                   <ul>
                     {" "}
                     <li>
-                      <a
-                        href="/user/dashboard"
+                      <Link
+                        to="/user/dashboard"
                         className={`flex items-center p-2 rounded-lg group ${
                           isActive("/user/dashboard")
                             ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
@@ -862,11 +866,11 @@ function SidebarNavbar() {
                           icon={faCube}
                         />
                         <span className="ms-3">Dashboard</span>
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
-                        href="/user/history_absen"
+                      <Link
+                        to="/user/history_absen"
                         className={`flex items-center p-2 rounded-lg group ${
                           isActive("/user/history_absen")
                             ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white"
@@ -881,7 +885,7 @@ function SidebarNavbar() {
                           icon={faClock}
                         />
                         <span className="ms-3">Presensi</span>
-                      </a>
+                      </Link>
                     </li>
                     {/* <li>
                       <a
