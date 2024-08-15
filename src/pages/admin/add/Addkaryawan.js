@@ -12,8 +12,8 @@ function AddKaryawan() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
+  const [status, setStatus] = useState("Siswa");
   const [idOrganisasi, setIdOrganisasi] = useState("");
-  const [idJabatan, setIdJabatan] = useState("");
   const [idShift, setIdShift] = useState("");
   const [idOrangTua, setIdOrangTua] = useState(null);
   const [idKelas, setIdKelas] = useState(null);
@@ -21,7 +21,6 @@ function AddKaryawan() {
   const idAdmin = localStorage.getItem("adminId");
   const adminId = localStorage.getItem("adminId");
   const [organisasiList, setOrganisasiList] = useState([]);
-  const [jabatanList, setJabatanList] = useState([]);
   const [shiftList, setShiftList] = useState([]);
   const [orangTuaList, setOrangTuaList] = useState([]);
   const [kelasList, setKelasList] = useState([]);
@@ -32,7 +31,6 @@ function AddKaryawan() {
 
   useEffect(() => {
     GetAllOrganisasi();
-    GetAllJabatan();
     GetAllShift();
     GetAllOrangTua();
     GetAllKelas();
@@ -44,17 +42,6 @@ function AddKaryawan() {
         `${API_DUMMY}/api/organisasi/all-by-admin/${idAdmin}`
       );
       setOrganisasiList(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const GetAllJabatan = async () => {
-    try {
-      const response = await axios.get(
-        `${API_DUMMY}/api/jabatan/getByAdmin/${adminId}`
-      );
-      setJabatanList(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -98,36 +85,30 @@ function AddKaryawan() {
     e.preventDefault();
 
     try {
-        const newUser = {
-            email: email,
-            username: username,
-            password: password,
-        };
-        await axios.post(
-            `${API_DUMMY}/api/user/tambahkaryawan/${idAdmin}?idJabatan=${idJabatan}&idOrangTua=${idOrangTua}&idOrganisasi=${idOrganisasi}&idShift=${idShift}`,
-            newUser
-        );
-        Swal.fire({
-            title: "Berhasil",
-            text: "Berhasil menambahkan data",
-            icon: "success",
-            showConfirmButton: false,
-        });
-        setTimeout(() => {
-            window.location.href = "/admin/siswa";
-        }, 2000);
+      const newUser = {
+        email: email,
+        username: username,
+        password: password,
+        status: status,
+      };
+      const response = await axios.post(
+        `${API_DUMMY}/api/user/tambahkaryawan/${idAdmin}?idOrangTua=${idOrangTua}&idOrganisasi=${idOrganisasi}&idShift=${idShift}`,
+        newUser
+      );
+      Swal.fire({
+        title: "Berhasil",
+        text: "Berhasil menambahkan data",
+        icon: "success",
+        showConfirmButton: false,
+      });
+      setTimeout(() => {
+        window.location.href = "/admin/siswa";
+      }, 2000);
     } catch (error) {
-        console.error(error);
-
-        if (error.response && error.response.status === 400 && error.response.data.includes("telah digunakan")) {
-            Swal.fire("Error", "Email atau Username telah dipakai", "error");
-        } else {
-            Swal.fire("Error", "Gagal menambahkan data", "error");
-        }
+      console.log(error);
+      Swal.fire("Error", "Gagal menambahkan data", "error");
     }
-};
-
-
+  };
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
@@ -219,31 +200,24 @@ function AddKaryawan() {
                       </select>
                     </div>
                     <div className="relative z-0 w-full mb-6 group">
+                      <input
+                        type="text"
+                        name="status"
+                        id="status"
+                        value={status}
+                        onChange={(e) => setStatus(e.target.value)}
+                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                        placeholder=" "
+                        autoComplete="off"
+                        required
+                        readOnly
+                      />
                       <label
                         htmlFor="jabatan"
                         className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                       >
                         Status
                       </label>
-                      <select
-                        id="id_jabatan"
-                        value={idJabatan}
-                        onChange={(e) => setIdJabatan(e.target.value)}
-                        name="id_jabatan"
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                      >
-                        <option value="" disabled>
-                          Pilih Status
-                        </option>
-                        {jabatanList
-                          .slice()
-                          .reverse()
-                          .map((jab) => (
-                            <option key={jab.idJabatan} value={jab.idJabatan}>
-                              {jab.namaJabatan}
-                            </option>
-                          ))}
-                      </select>
                     </div>
                     <div className="relative z-0 w-full mb-6 group">
                       <label
