@@ -135,7 +135,7 @@ function Simpel() {
       </div>
       <div className="flex h-full pt-5">
         <div className="fixed h-full">
-          <Sidebar />
+          <NavbarAdmin />
         </div>
         <div className="content-page flex-1 p-8 md:ml-72 mt-16 text-center overflow-auto">
           <div className="tabel-absen bg-white p-5 rounded-xl shadow-xl border border-gray-300">
