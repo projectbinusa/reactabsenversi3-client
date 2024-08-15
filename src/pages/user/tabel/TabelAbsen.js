@@ -271,8 +271,7 @@ function TabelAbsen() {
                   <select
                     value={limit}
                     onChange={handleLimitChange}
-                    className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
-                  >
+                    className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
                     <option value="5">05</option>
                     <option value="10">10</option>
                     <option value="20">20</option>
@@ -286,8 +285,7 @@ function TabelAbsen() {
               <div className=" overflow-x-auto mt-5">
                 <table
                   id="dataKaryawan"
-                  className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
-                >
+                  className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                   {/* <!-- Tabel Head --> */}
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -352,21 +350,42 @@ function TabelAbsen() {
                                 </span>
                               </button>
                             </Link>
-                            <button
-                              className={`z-30 block rounded-full border-2 border-white p-4 ${
-                                absenData.statusAbsen === "Izin"
-                                  ? "bg-gray-100 text-gray-700"
-                                  : "bg-red-100 text-red-700"
-                              } active:bg-red-50`}
-                              disabled={absenData.statusAbsen === "Izin"}
-                            >
-                              <span className="relative inline-block">
-                                <FontAwesomeIcon
-                                  className="h-4 w-4"
-                                  icon={faUserPlus}
-                                />
-                              </span>
-                            </button>
+                            {absenData.statusAbsen === "Izin" ? (
+                              <>
+                                {" "}
+                                <button
+                                  className={`z-30 block rounded-full border-2 border-white p-4 ${
+                                    absenData.statusAbsen === "Izin"
+                                      ? "bg-gray-100 text-gray-700"
+                                      : "bg-red-100 text-red-700"
+                                  } active:bg-red-50`}>
+                                  <span className="relative inline-block">
+                                    <FontAwesomeIcon
+                                      className="h-4 w-4"
+                                      icon={faUserPlus}
+                                    />
+                                  </span>
+                                </button>
+                              </>
+                            ) : (
+                              <>
+                                {" "}
+                                <Link
+                                  to="/user/izin_absen"
+                                  className={`z-30 block rounded-full border-2 border-white p-4 ${
+                                    absenData.statusAbsen === "Izin"
+                                      ? "bg-gray-100 text-gray-700"
+                                      : "bg-red-100 text-red-700"
+                                  } active:bg-red-50`}>
+                                  <span className="relative inline-block">
+                                    <FontAwesomeIcon
+                                      className="h-4 w-4"
+                                      icon={faUserPlus}
+                                    />
+                                  </span>
+                                </Link>
+                              </>
+                            )}
                           </div>
                         </td>
                       </tr>

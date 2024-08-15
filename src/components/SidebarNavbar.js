@@ -41,13 +41,20 @@ function SidebarNavbar() {
   const [absenOpen, setAbsenOpen] = useState(false);
   const sidebarRef = useRef(null);
   const location = useLocation();
+
   const isActive = (paths) => {
-    return paths.some((path) => location.pathname.startsWith(path));
+    return (
+      Array.isArray(paths) &&
+      paths.some((path) => location.pathname.startsWith(path))
+    );
   };
 
   useEffect(() => {
     const isActive = (paths) => {
-      return paths.some((path) => location.pathname.startsWith(path));
+      return (
+        Array.isArray(paths) &&
+        paths.some((path) => location.pathname.startsWith(path))
+      );
     };
 
     if (
@@ -71,7 +78,10 @@ function SidebarNavbar() {
   useEffect(() => {
     // Check if any link inside dropdown is active and open the dropdown if it is
     const isActive = (paths) => {
-      return paths.some((path) => location.pathname.startsWith(path));
+      return (
+        Array.isArray(paths) &&
+        paths.some((path) => location.pathname.startsWith(path))
+      );
     };
 
     if (isActive(["/admin/absensi", "/admin/kehadiran"])) {
@@ -83,7 +93,10 @@ function SidebarNavbar() {
 
   useEffect(() => {
     const isActive = (paths) => {
-      return paths.some((path) => location.pathname.startsWith(path));
+      return (
+        Array.isArray(paths) &&
+        paths.some((path) => location.pathname.startsWith(path))
+      );
     };
 
     if (
@@ -173,7 +186,7 @@ function SidebarNavbar() {
       <aside
         id="logo-sidebar"
         ref={sidebarRef}
-        className={`fixed top-0 left-0 z-40 w-[300px] h-screen transition-transform ease-in-out duration-300 ${
+        className={`fixed top-0 left-0 z-40 ${localStorage.getItem("role") == "ADMIN" && "SUPERADMIN" ? "w-[300px]" : "w-[260px]"} h-screen transition-transform ease-in-out duration-300 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         } sm:translate-x-0`}
         aria-label="Sidebar">
