@@ -18,6 +18,16 @@ function AddOrtu() {
   };
   const tambahAdmin = async (e) => {
     e.preventDefault();
+
+    if (email === nama) {
+      Swal.fire(
+        "Error",
+        "Email dan Username tidak bisa sama dengan pengguna lain",
+        "error"
+      );
+      return;
+    }
+
     try {
       const newUser = {
         email: email,
