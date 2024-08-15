@@ -325,7 +325,7 @@ function SidebarNavbar() {
                           </Link>
                         </li>
 
-                        {/* <!-- Menu Jam Kerja --> */}
+                        {/* <!-- Menu Jam Sekolah --> */}
                         <li>
                           <Link
                             to="/admin/shift"

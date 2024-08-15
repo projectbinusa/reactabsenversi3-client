@@ -78,7 +78,7 @@ function BulanPerkelas() {
         `${API_DUMMY}/api/absensi/bulanan/kelas/${idKelas}?bulan=${bulan}&tahun=${tahun}`
       );
       //   if (response == 200) {
-      setRekapPerbulan(response.data.reverse());
+      setRekapPerbulan(response.data);
       console.log("list rekap perbulan: ", response.data);
       //   }
     } catch (error) {
@@ -139,7 +139,7 @@ function BulanPerkelas() {
 
       // Optional: Check the content of the blob for additional validation
       const blobContent = await response.data.text();
-      if (!blobContent.includes("<html>")) {
+      if (response.data.length <= 0) {
         // Example check for unexpected content
         Swal.fire("Peringatan", "Data tidak tersedia untuk ekspor", "warning");
         return;
@@ -284,7 +284,7 @@ function BulanPerkelas() {
                       Foto Pulang
                     </th>
                     <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                      Jam Kerja
+                      Jam Sekolah
                     </th>
                     <th scope="col" className="px-6 py-3 whitespace-nowrap">
                       Keterangan

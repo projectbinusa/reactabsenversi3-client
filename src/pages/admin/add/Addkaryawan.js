@@ -77,6 +77,7 @@ function AddKaryawan() {
         `${API_DUMMY}/api/orang-tua/getALlBySuperAdmin/${idAdmin}`
       );
       setOrangTuaList(response.data);
+      console.log("dtaa wali murid: ", response.data);
     } catch (error) {
       console.log(error);
     }

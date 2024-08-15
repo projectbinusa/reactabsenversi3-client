@@ -112,13 +112,13 @@ function AddCuti() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="relative">
                   <label className="block mb-2 text-sm sm:text-xs font-medium text-gray-900 ">
-                    Masuk Kerja
+                    Masuk Sekolah
                   </label>
                   <input
                     type="date"
                     id="masuk"
                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm sm:text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    placeholder="Masukkan Tanggal Masuk Kerja"
+                    placeholder="Masukkan Tanggal Masuk Sekolah"
                     value={masuk_kerja}
                     onChange={(e) => setMasukKerja(e.target.value)}
                     required

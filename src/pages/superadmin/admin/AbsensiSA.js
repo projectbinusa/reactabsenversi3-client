@@ -163,7 +163,7 @@ function Absensi() {
                       Foto Pulang
                     </th>
                     {/* <th scope="col" className="px-4 py-3 whitespace-nowrap">
-                      Jam Kerja
+                      Jam Sekolah
                     </th> */}
                     <th scope="col" className="px-4 py-3 whitespace-nowrap">
                       Aksi
