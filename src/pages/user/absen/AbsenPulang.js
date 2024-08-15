@@ -21,20 +21,20 @@ function AbsenPulang() {
 
   // Batas koordinat yang diizinkan
   const allowedCoordinates = {
-    northWest: { lat: -6.982697862439629, lon: 110.40416008025612 }, // Pojok Masjid
-    northEast: { lat: -6.982546110472943, lon: 110.40421372443342 }, // Pojok Satpam
-    southWest: { lat: -6.982649940771247, lon: 110.40398841888872 }, // Pojok R. Guru
-    southEast: { lat: -6.982522149631583, lon: 110.40407357902019 }, // Pojok Bootcamp
+    northWest: { lat: -6.982819816766505, lon: 110.40410288012151 }, // Pojok Masjid
+    northEast: { lat: -6.982479040440248, lon: 110.40420748626727 }, // Pojok Satpam
+    southWest: { lat: -6.982662740209464, lon: 110.40367372670305 }, // Pojok R. Guru
+    southEast: { lat: -6.982345924620396, lon: 110.40376492180447 }, // Pojok Bootcamp
   };
-
   const isWithinAllowedCoordinates = (lat, lon) => {
     const { northWest, northEast, southWest, southEast } = allowedCoordinates;
-
+    const tolerance = 0.00001; // adding a small tolerance
+  
     return (
-      lat >= southWest.lat &&
-      lat <= northWest.lat &&
-      lon >= southWest.lon &&
-      lon <= northEast.lon
+      lat >= (southWest.lat - tolerance) &&
+      lat <= (northWest.lat + tolerance) &&
+      lon >= (southWest.lon - tolerance) &&
+      lon <= (northEast.lon + tolerance)
     );
   };
 
