@@ -160,23 +160,25 @@ function OrangTua() {
     e.preventDefault();
 
     const formData = new FormData();
-
     formData.append("file", file);
 
-    await axios
-      .post(
-        `${API_DUMMY}/api/orang-tua/import/data-orang-tua/${idOrtu}`,
+    try {
+      await axios.post(
+        `${API_DUMMY}/api/orang-tua/import/data-orang-tua/{adminId}?adminId=${idOrtu}`,
         formData
-      )
-      .then(() => {
-        Swal.fire("Sukses!", "Berhasil menambahkan", "success");
-        setOpenModal(false);
-        getAllOrtu();
-      })
-      .catch((err) => {
-        console.log(err);
-        Swal.fire("Error", "Anda belum memilih file untuk diimport!.", "error");
-      });
+      );
+      Swal.fire("Sukses!", "Berhasil menambahkan", "success");
+      setOpenModal(false);
+      getAllOrtu();
+    } catch (err) {
+      console.error("Error during import:", err);
+
+      if (err.response && err.response.data) {
+        Swal.fire("Error", err.response.data, "error");
+      } else {
+        Swal.fire("Error", "Terjadi kesalahan saat mengimpor data.", "error");
+      }
+    }
   };
 
   const downloadTemplate = async () => {
