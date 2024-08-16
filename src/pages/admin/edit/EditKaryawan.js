@@ -11,6 +11,7 @@ import SidebarNavbar from "../../../components/SidebarNavbar";
 
 function EditKaryawan() {
   const [username, setUsername] = useState("");
+  const [status, setStatus] = useState("");
   const [idJabatan, setIdJabatan] = useState("");
   const [idShift, setIdShift] = useState("");
   const [idOrangTua, setIdOrangTua] = useState("");
@@ -27,6 +28,7 @@ function EditKaryawan() {
     try {
       const res = await axios.get(`${API_DUMMY}/api/user/getUserBy/${id}`);
       setUsername(res.data.username);
+      setStatus(res.data.status);
       setIdJabatan(res.data.jabatan ? res.data.jabatan.idJabatan : "");
       setIdShift(res.data.shift ? res.data.shift.id : "");
       setIdOrangTua(res.data.orangTua ? res.data.orangTua.id : "");
@@ -107,7 +109,10 @@ function EditKaryawan() {
         window.location.reload();
       }, 2000);
     } catch (error) {
-      if (error.response && error.response.data.message === "Username sudah digunakan") {
+      if (
+        error.response &&
+        error.response.data.message === "Username sudah digunakan"
+      ) {
         Swal.fire({
           title: "Error",
           text: "Username sudah digunakan",
@@ -122,7 +127,7 @@ function EditKaryawan() {
         });
       }
     }
-};
+  };
 
   return (
     <div className="flex flex-col h-screen">
@@ -166,28 +171,24 @@ function EditKaryawan() {
                     </div>
                     <div className="grid md:grid-cols-2 md:gap-6 mb-6">
                       <div className="relative z-0 w-full mb-6 group">
+                        <input
+                          type="text"
+                          name="username"
+                          id="username"
+                          value={status}
+                          readOnly
+                          onChange={(e) => setStatus(e.target.value)}
+                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer capitalize"
+                          placeholder=" "
+                          autoComplete="off"
+                          required
+                        />
                         <label
-                          htmlFor="id_jabatan"
+                          htmlFor="username"
                           className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                         >
                           Status
                         </label>
-                        <select
-                          name="idJabatan"
-                          value={idJabatan}
-                          onChange={(e) => setIdJabatan(e.target.value)}
-                          className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
-                        >
-                          <option value="">Belum memiliki</option>
-                          {jabatanOptions.map((option) => (
-                            <option
-                              key={option.idJabatan}
-                              value={option.idJabatan}
-                            >
-                              {option.namaJabatan}
-                            </option>
-                          ))}
-                        </select>
                       </div>
                       <div className="relative z-0 w-full mb-6 group">
                         <label
