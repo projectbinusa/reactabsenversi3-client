@@ -19,11 +19,13 @@ function DashboardOrtu() {
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const [userData, setUserData] = useState([]);
   const [admin, setAdmin] = useState([]);
+  const [idAdmin, setIdAdmin] = useState("");
   const [absenData, setAbsenData] = useState([]);
   const [jabatanData, setJabatanData] = useState([]);
   const [lokasiData, setLokasiData] = useState([]);
   const [organisasiData, setOrganisasiData] = useState([]);
   const [username, setUsername] = useState("");
+  const [terlambat, setTerlambat] = useState("");
   const [informasi, setInformasi] = useState([]);
 
   const token = localStorage.getItem("token");
@@ -69,8 +71,11 @@ function DashboardOrtu() {
     fetchData(`${API_DUMMY}/api/jabatan/all`, setJabatanData);
   const getLokasi = () =>
     fetchData(`${API_DUMMY}/api/lokasi/getall`, setLokasiData);
-  const getOrganisasi = () =>
-    fetchData(`${API_DUMMY}/api/absensi/by-orang-tua/${id}`, setOrganisasiData);
+  // const getOrganisasi = () =>
+  //   fetchData(`${API_DUMMY}/api/absensi/by-orang-tua/${id}`, setOrganisasiData);
+  // setTerlambat(organisasiData.find((trl) => trl.statusAbsen === "Terlambat"));
+  // // console.log('terlambat :', organisasiData.find((trl) => trl.statusAbsen === "Terlambat"));
+  // console.log("trlmbt: ", terlambat.statusAbsen)
 
   const getUsername = async () => {
     try {
@@ -83,12 +88,33 @@ function DashboardOrtu() {
     }
   };
 
+  const getOrganisasi = async () => {
+    try {
+      const response = await axios.get(
+        `${API_DUMMY}/api/absensi/by-orang-tua/${id}`
+      );
+      setOrganisasiData(response.data);
+      setTerlambat(response.data.filter((trl) => trl.statusAbsen == "Terlambat"));
+      console.log("data: ", response.data);
+      console.log(
+        "terlambat :",
+        response.data.find((trl) => trl.statusAbsen === "Terlambat")
+      );
+      console.log("jumlah terlambat: ", terlambat.length);
+
+    } catch (error) {
+      console.error("Error fetching absensi:", error);
+    }
+  };
+
   const getAdmin = async () => {
     try {
       const response = await axios.get(
         `${API_DUMMY}/api/orang-tua/${id}/admin`
       );
-      setAdmin(response.data); // Set the admin data
+      setAdmin(response.data);
+      console.log("admin: ", response.data.id);
+      setIdAdmin(response.data.id);
     } catch (error) {
       console.error("Error fetching admin:", error);
     }
@@ -98,9 +124,10 @@ function DashboardOrtu() {
     try {
       if (admin && admin.id) {
         const response = await axios.get(
-          `${API_DUMMY}/api/notifications/user/getByAdmin/${admin.id}`
+          // `${API_DUMMY}/api/notifications`
+          `${API_DUMMY}/api/notifications/user/getByAdmin/${idAdmin}`
         );
-        console.log(response.data);
+        console.log("notifikasi: ", response.data);
         setInformasi(response.data.reverse());
       }
     } catch (error) {
@@ -114,6 +141,7 @@ function DashboardOrtu() {
         `${API_DUMMY}/api/absensi/by-orang-tua/${id}`
       );
       setOrganisasiData(response.data.reverse());
+      console.log("list data", response.data);
     } catch (error) {
       console.error("Error fetching presensi:", error);
     }
@@ -147,7 +175,7 @@ function DashboardOrtu() {
     getAdmin();
     getOrganisasi();
     getPresensiByWaliMurid();
-  }, []);
+  }, [terlambat]);
 
   useEffect(() => {
     if (admin) {
@@ -213,7 +241,7 @@ function DashboardOrtu() {
                 <div className="my-auto">
                   <p className="font-bold">Terlambat</p>
                   <p className="text-lg">Jumlah Terlambat</p>
-                  <p className="text-lg">{userData.length}</p>
+                  <p className="text-lg">{terlambat.length}</p>
                 </div>
                 <div className="my-auto">
                   <FontAwesomeIcon icon={faUser} size="2x" />
@@ -231,8 +259,7 @@ function DashboardOrtu() {
                 validInformasi.map((item) => (
                   <div
                     key={item.id}
-                    className="informasi-item p-4 bg-white border border-gray-200 rounded-lg shadow-md transform transition-transform hover:scale-105 hover:shadow-xl"
-                  >
+                    className="informasi-item p-4 bg-white border border-gray-200 rounded-lg shadow-md transform transition-transform hover:scale-105 hover:shadow-xl">
                     <div className="flex items-center mb-4">
                       <FontAwesomeIcon
                         icon={faCircleInfo}
@@ -286,8 +313,7 @@ function DashboardOrtu() {
             <div className="relative overflow-x-auto mt-5">
               <table
                 id="dataKaryawan"
-                className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
-              >
+                className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 {/* <!-- Tabel Head --> */}
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
@@ -319,12 +345,10 @@ function DashboardOrtu() {
                   {organisasiData.map((admin, index) => (
                     <tr
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                      key={index}
-                    >
+                      key={index}>
                       <th
                         scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                      >
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {index + 1}
                       </th>
                       <td className="px-6 py-4 capitalize">

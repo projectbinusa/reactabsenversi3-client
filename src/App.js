@@ -112,6 +112,7 @@ import ProfileOrtu from "./pages/orangtua/Profile";
 import IndexDashboard from "./pages/IndexDashboard";
 import PrivateRoute from "./utils/PrivateRoute";
 import NotFound from "./pages/NotFound";
+import AddSiswaPerkelas from "./pages/admin/add/AddSiswaPerkelas";
 
 function App() {
   const role = localStorage.getItem("role");
@@ -305,6 +306,11 @@ function App() {
               <PrivateRoute
                 path="/admin/mingguan/perkelas"
                 component={MingguanPerkelas}
+                exact
+              />
+              <PrivateRoute
+                path="/admin/addsiswaperkelas/:id"
+                component={AddSiswaPerkelas}
                 exact
               />
             </>

@@ -28,6 +28,7 @@ function Dashboard() {
   const [isPulangDisabled, setIsPulangDisabled] = useState(false);
   const [isIzinDisabled, setIsIzinDisabled] = useState(false);
   const [informasi, setInformasi] = useState([]);
+  const idAdmin = localStorage.getItem("adminId")
 
   const getUsername = async () => {
     const token = localStorage.getItem("token");
@@ -145,7 +146,7 @@ function Dashboard() {
 
   const Informasi = async () => {
     try {
-      const response = await axios.get(`${API_DUMMY}/api/notifications`);
+      const response = await axios.get(`${API_DUMMY}/api/notifications/user/getByAdmin/${idAdmin}`);
       setInformasi(response.data.reverse());
     } catch (error) {
       console.error("Error fetching informasi:", error);

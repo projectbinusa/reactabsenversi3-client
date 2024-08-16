@@ -12,7 +12,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Pagination } from "flowbite-react";
 import { API_DUMMY } from "../../../utils/api";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { Link, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 
 function SiswaperKelas() {
@@ -159,13 +159,13 @@ function SiswaperKelas() {
                     <option value="20">20</option>
                     <option value="50">50</option>
                   </select>
-                  <a
+                  <Link
                     type="button"
-                    href="/admin/addkary"
+                    to={`/admin/addsiswaperkelas/${param.id}`}
                     className="text-white bg-indigo-500 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800 mt-2"
                   >
                     <FontAwesomeIcon icon={faPlus} size="lg" />
-                  </a>
+                  </Link>
                 </div>
               </div>
               <hr />
@@ -226,7 +226,7 @@ function SiswaperKelas() {
                         </td>
                         <td className=" py-3">
                           <div className="flex items-center -space-x-4 ml-12">
-                            <a href={`/admin/detailK/${user.id}`}>
+                            <Link to={`/admin/detailK/${user.id}`}>
                               <button className="z-20 block rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
                                 <span className=" inline-block">
                                   <FontAwesomeIcon
@@ -235,8 +235,8 @@ function SiswaperKelas() {
                                   />
                                 </span>
                               </button>
-                            </a>
-                            <a href={`/admin/editK/${user.id}`}>
+                            </Link>
+                            <Link to={`/admin/editK/${user.id}`}>
                               <button className="z-30 block rounded-full border-2 border-white bg-yellow-100 p-4 text-yellow-700 active:bg-red-50">
                                 <span className=" inline-block">
                                   <FontAwesomeIcon
@@ -245,7 +245,7 @@ function SiswaperKelas() {
                                   />
                                 </span>
                               </button>
-                            </a>
+                            </Link>
 
                             <button
                               className="z-30 block rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-red-50"

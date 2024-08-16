@@ -92,12 +92,12 @@ function AbsenMasuk() {
   const isWithinAllowedCoordinates = (lat, lon) => {
     const { northWest, northEast, southWest, southEast } = allowedCoordinates;
     const tolerance = 0.00001; // adding a small tolerance
-  
+
     return (
-      lat >= (southWest.lat - tolerance) &&
-      lat <= (northWest.lat + tolerance) &&
-      lon >= (southWest.lon - tolerance) &&
-      lon <= (northEast.lon + tolerance)
+      lat >= southWest.lat - tolerance &&
+      lat <= northWest.lat + tolerance &&
+      lon >= southWest.lon - tolerance &&
+      lon <= northEast.lon + tolerance
     );
   };
 
@@ -110,54 +110,54 @@ function AbsenMasuk() {
       return;
     }
 
-    if (isWithinAllowedCoordinates(latitude, longitude)) {
-      try {
-        const absensiCheckResponse = await axios.get(
-          `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`
-        );
-        const isUserAlreadyAbsenToday =
-          absensiCheckResponse.data ===
-          "Pengguna sudah melakukan absensi hari ini.";
-        if (isUserAlreadyAbsenToday) {
-          Swal.fire("Info", "Anda sudah melakukan absensi hari ini.", "info");
-        } else {
-          const formData = new FormData();
-          formData.append("image", imageBlob);
-          formData.append("lokasiMasuk", `${address}`);
-          formData.append("keteranganTerlambat", keteranganTerlambat || "-");
-
-          const response = await axios.post(
-            `${API_DUMMY}/api/absensi/masuk/${userId}`,
-            formData,
-            {
-              headers: {
-                "Content-Type": "multipart/form-data",
-              },
-            }
-          );
-
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Berhasil Absen",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          setTimeout(() => {
-            window.location.href = "/user/history_absen";
-          }, 1500);
-        }
-      } catch (err) {
-        console.error("Error:", err);
-        Swal.fire("Error", "Gagal Absen", "error");
-      }
-    } else {
-      Swal.fire(
-        "Error",
-        "Lokasi Anda di luar batas yang diizinkan untuk absensi",
-        "error"
+    // if (isWithinAllowedCoordinates(latitude, longitude)) {
+    try {
+      const absensiCheckResponse = await axios.get(
+        `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`
       );
+      const isUserAlreadyAbsenToday =
+        absensiCheckResponse.data ===
+        "Pengguna sudah melakukan absensi hari ini.";
+      if (isUserAlreadyAbsenToday) {
+        Swal.fire("Info", "Anda sudah melakukan absensi hari ini.", "info");
+      } else {
+        const formData = new FormData();
+        formData.append("image", imageBlob);
+        formData.append("lokasiMasuk", `${address}`);
+        formData.append("keteranganTerlambat", keteranganTerlambat || "-");
+
+        const response = await axios.post(
+          `${API_DUMMY}/api/absensi/masuk/${userId}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Berhasil Absen",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setTimeout(() => {
+          window.location.href = "/user/history_absen";
+        }, 1500);
+      }
+    } catch (err) {
+      console.error("Error:", err);
+      Swal.fire("Error", "Gagal Absen", "error");
     }
+    // } else {
+    //   Swal.fire(
+    //     "Error",
+    //     "Lokasi Anda di luar batas yang diizinkan untuk absensi",
+    //     "error"
+    //   );
+    // }
   };
 
   return (
@@ -218,8 +218,7 @@ function AbsenMasuk() {
                         );
                       }
                     }}
-                    className="block w-32 sm:w-40 bg-blue-500 text-white rounded-lg py-3 text-sm sm:text-xs font-medium"
-                  >
+                    className="block w-32 sm:w-40 bg-blue-500 text-white rounded-lg py-3 text-sm sm:text-xs font-medium">
                     {loading ? "Loading..." : "Ambil Foto"}
                   </button>
                 </div>
