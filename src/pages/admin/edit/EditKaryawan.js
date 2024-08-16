@@ -90,7 +90,7 @@ function EditKaryawan() {
     e.preventDefault();
     try {
       await axios.put(
-        `${API_DUMMY}/api/user/editBYSuper/${id}?idJabatan=${idJabatan}&idShift=${idShift}&idOrangTua=${idOrangTua}&idKelas=${idKelas}`,
+        `${API_DUMMY}/api/user/editBYSuper/${id}?idShift=${idShift}&idOrangTua=${idOrangTua}&idKelas=${idKelas}`,
         {
           username: username,
         }
@@ -107,9 +107,22 @@ function EditKaryawan() {
         window.location.reload();
       }, 2000);
     } catch (error) {
-      console.log(error);
+      if (error.response && error.response.data.message === "Username sudah digunakan") {
+        Swal.fire({
+          title: "Error",
+          text: "Username sudah digunakan",
+          icon: "error",
+        });
+      } else {
+        console.log(error);
+        Swal.fire({
+          title: "Gagal",
+          text: "Gagal mengubah data siswa",
+          icon: "error",
+        });
+      }
     }
-  };
+};
 
   return (
     <div className="flex flex-col h-screen">
