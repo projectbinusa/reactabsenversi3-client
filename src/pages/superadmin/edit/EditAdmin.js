@@ -36,32 +36,45 @@ function EditAdmin() {
 
   const updateAdmin = async (e) => {
     e.preventDefault();
-    const admin = { email: email, username: username };
-
+  
+    const usmail = {
+      email: email,
+      username: username,
+    };
+  
     try {
-      const res = await axios.put(
+      const response = await axios.put(
         `${API_DUMMY}/api/admin/edit-email-username/${param.id}`,
-        admin,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
+        usmail
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // }
       );
-      setEmail(res.data.email);
-      setUsername(res.data.username);
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Edit Berhasil",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+  
+      setUsername(response.data.username);
+      setEmail(response.data.email);
+      Swal.fire("Berhasil", "Berhasil mengubah username dan email", "success");
+  
       setTimeout(() => {
         window.location.href = "/superadmin/admin";
       }, 1500);
     } catch (error) {
-      console.log(error);
+      console.error("Error updating data:", error);
+  
+      // Checking for specific error messages returned from the server
+      if (error.response && error.response.data && error.response.data.message) {
+        if (error.response.data.message.includes("Email sudah digunakan")) {
+          Swal.fire("Gagal", "Email sudah digunakan", "error");
+        } else if (error.response.data.message.includes("Username sudah digunakan")) {
+          Swal.fire("Gagal", "Username sudah digunakan", "error");
+        } else {
+          Swal.fire("Gagal", "Gagal mengubah username dan email", "error");
+        }
+      } else {
+        Swal.fire("Gagal", "Terjadi kesalahan pada server", "error");
+      }
     }
   };
 
@@ -94,16 +107,16 @@ function EditAdmin() {
                 {/* <!-- Email Input --> */}
                 <div className="relative z-0 w-full mb-6 group">
                   <input
-                    type="email"
+                    type="text"
                     name="email"
                     id="email"
                     value={email}
+                    // value={author}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer capitalize"
                     placeholder=" "
                     autoComplete="off"
                     required
-                    readOnly
                   />
                   <label
                     htmlFor="email"
