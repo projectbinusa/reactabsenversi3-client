@@ -48,7 +48,7 @@ function IzinAbsen() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const izin = {
-      keterangan_pulang_awal: keteranganPulangAwal,
+      keteranganPulangAwal,
     };
     try {
       const response = await axios.put(
@@ -56,7 +56,8 @@ function IzinAbsen() {
         izin
       );
       Swal.fire("Berhasil", "Berhasil Izin ", "success");
-      window.location.reload();
+      console.log(response.data)
+      // window.location.reload();
     } catch (error) {
       console.error("Error:", error);
       toast.error("Gagal Izin");
