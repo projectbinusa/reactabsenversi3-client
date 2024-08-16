@@ -95,14 +95,14 @@ function ProfilSA() {
     try {
       const response = await axios.put(
         `${API_DUMMY}/api/superadmin/edit-email-username/${id}`,
-        usMail
+        usMail,
         // {
         //   headers: {
         //     Authorization: `Bearer ${token}`,
         //   },
         // }
       );
-
+  
       setProfile(response.data);
       setUsername(response.data.username);
       setEmail(response.data.email);
@@ -115,9 +115,22 @@ function ProfilSA() {
       }, 2000);
     } catch (error) {
       console.error("Error updating data:", error);
-      Swal.fire("Gagal", "Gagal mengubah username dan email", "error");
+  
+      // Checking for specific error messages returned from the server
+      if (error.response && error.response.data && error.response.data.message) {
+        if (error.response.data.message.includes("Email sudah digunakan")) {
+          Swal.fire("Gagal", "Email sudah digunakan", "error");
+        } else if (error.response.data.message.includes("Username sudah digunakan")) {
+          Swal.fire("Gagal", "Username sudah digunakan", "error");
+        } else {
+          Swal.fire("Gagal", "Gagal mengubah username dan email", "error");
+        }
+      } else {
+        Swal.fire("Gagal", "Terjadi kesalahan pada server", "error");
+      }
     }
   };
+  
 
   useEffect(() => {
     getProfile();
