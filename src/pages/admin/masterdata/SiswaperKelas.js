@@ -3,6 +3,8 @@ import Navbar from "../../../components/NavbarAdmin";
 import Sidebar from "../../../components/SidebarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faFileExport,
+  faFileImport,
   faInfo,
   faPenToSquare,
   faPlus,
@@ -12,8 +14,9 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Pagination } from "flowbite-react";
 import { API_DUMMY } from "../../../utils/api";
-import { Link, useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import SidebarNavbar from "../../../components/SidebarNavbar";
+import { Button, Modal } from "flowbite-react";
 
 function SiswaperKelas() {
   const [userData, setUserData] = useState([]);
@@ -23,8 +26,90 @@ function SiswaperKelas() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const idAdmin = localStorage.getItem("adminId");
+  // const KlasId = localStorage.getItem("KlasId");
   const param = useParams();
+  const [openModal, setOpenModal] = useState(false);
 
+
+  const exportPerkelas = async () => {
+    if (userData.length === 0) {
+      Swal.fire("Error", "Tidak ada data untuk diekspor", "error");
+      return;
+    }
+    try {
+      const response = await axios.get(
+        `${API_DUMMY}/api/user/export-data-siswa/${idAdmin}/perkelas/${param.id}`,
+        {
+          responseType: "blob",
+        }
+      );
+
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "DataSiswaperKelas.xlsx");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      Swal.fire("Berhasil", "Berhasil mengunduh data", "success");
+    } catch (error) {
+      console.error("Error exporting data:", error);
+      Swal.fire("Error", "Gagal mengunduh data", "error");
+    }
+  };
+
+  const downloadTemplate = async () => {
+    try {
+      const response = await axios.get(
+        `${API_DUMMY}/api/download/template-excel-siswa`,
+        {
+          responseType: "blob",
+        }
+      );
+
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "TemplateExcelSiswa.xlsx");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      Swal.fire("Berhasil", "Berhasil mengunduh data", "success");
+    } catch (error) {
+      console.error("Error exporting data:", error);
+      Swal.fire("Error", "Gagal mengunduh data", "error");
+    }
+  };
+
+  const [file, setFile] = useState("");
+  const importData = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      await axios.post(
+        `${API_DUMMY}/api/import/data-siswa/admin/${idAdmin}/kelas/${param.id}`,
+        formData
+      );
+      Swal.fire("Sukses!", "Berhasil menambahkan", "success");
+      setOpenModal(false);
+      getAllKaryawan();
+    } catch (err) {
+      console.error("Error during import:", err);
+
+      if (err.response && err.response.data) {
+        Swal.fire("Error", err.response.data, "error");
+      } else {
+        Swal.fire("Error", "Terjadi kesalahan saat mengimpor data.", "error");
+      }
+    }
+  };
   const getAllKaryawan = async () => {
     const token = localStorage.getItem("token");
 
@@ -159,13 +244,27 @@ function SiswaperKelas() {
                     <option value="20">20</option>
                     <option value="50">50</option>
                   </select>
-                  <Link
+                  <a
                     type="button"
-                    to={`/admin/addsiswaperkelas/${param.id}`}
+                    href="/admin/addkary"
                     className="text-white bg-indigo-500 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800 mt-2"
                   >
                     <FontAwesomeIcon icon={faPlus} size="lg" />
-                  </Link>
+                  </a>
+                  <button
+                    type="button"
+                    className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded-lg inline-block ml-auto"
+                    onClick={exportPerkelas}
+                  >
+                    <FontAwesomeIcon icon={faFileExport} />
+                  </button>
+                  <button
+                    type="button"
+                    className="imp bg-blue-500 hover:bg-blue text-white font-bold py-2 px-4 rounded-lg inline-block ml-auto"
+                    onClick={() => setOpenModal(true)}
+                  >
+                    <FontAwesomeIcon icon={faFileImport} />
+                  </button>
                 </div>
               </div>
               <hr />
@@ -226,7 +325,7 @@ function SiswaperKelas() {
                         </td>
                         <td className=" py-3">
                           <div className="flex items-center -space-x-4 ml-12">
-                            <Link to={`/admin/detailK/${user.id}`}>
+                            <a href={`/admin/detailK/${user.id}`}>
                               <button className="z-20 block rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
                                 <span className=" inline-block">
                                   <FontAwesomeIcon
@@ -235,8 +334,8 @@ function SiswaperKelas() {
                                   />
                                 </span>
                               </button>
-                            </Link>
-                            <Link to={`/admin/editK/${user.id}`}>
+                            </a>
+                            <a href={`/admin/editK/${user.id}`}>
                               <button className="z-30 block rounded-full border-2 border-white bg-yellow-100 p-4 text-yellow-700 active:bg-red-50">
                                 <span className=" inline-block">
                                   <FontAwesomeIcon
@@ -245,7 +344,7 @@ function SiswaperKelas() {
                                   />
                                 </span>
                               </button>
-                            </Link>
+                            </a>
 
                             <button
                               className="z-30 block rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-red-50"
@@ -265,6 +364,44 @@ function SiswaperKelas() {
                   </tbody>
                 </table>
               </div>
+              <Modal
+                popup
+                className="w-fit ml-auto mr-auto fixed inset-0 flex items-center justify-center"
+                show={openModal}
+                onClose={() => setOpenModal(false)}
+              >
+                <Modal.Header>Import Data Siswa perKelas</Modal.Header>
+                <hr />
+                <Modal.Body>
+                  <form className="space-y-6">
+                    <Button
+                      className="mb-3 bg-green-500 text-white"
+                      type="submit"
+                      onClick={downloadTemplate}
+                    >
+                      Download Template
+                    </Button>
+                    <input
+                      required
+                      autoComplete="off"
+                      type="file"
+                      accept=".xlsx"
+                      onChange={(e) => setFile(e.target.files[0])}
+                    />
+                  </form>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button
+                    className="bg-red-500"
+                    onClick={() => setOpenModal(false)}
+                  >
+                    Batal
+                  </Button>
+                  <Button color="blue" type="submit" onClick={importData}>
+                    Simpan
+                  </Button>
+                </Modal.Footer>
+              </Modal>
               <Pagination
                 className="mt-5"
                 layout="table"

@@ -36,7 +36,7 @@ function KelasSiswa() {
 
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/admin/kelas/export?idAdmin=${idAdmin}`,
+        `${API_DUMMY}/api/admin/kelas/export?idAdmin=${idAdmin} `,
         {
           responseType: "blob",
         }
