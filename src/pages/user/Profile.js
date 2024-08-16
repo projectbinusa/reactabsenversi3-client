@@ -66,12 +66,6 @@ function Profile() {
       const response = await axios.put(
         `${API_DUMMY}/api/user/edit-email-username/${id}`,
         usmail
-
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // }
       );
 
       setUsername(response.data.username);
@@ -85,10 +79,17 @@ function Profile() {
         }, 1000);
       }, 2000);
     } catch (error) {
-      console.error("Error updating data:", error);
-      Swal.fire("Gagal", "Gagal mengubah username dan email", "error");
+      if (error.response && error.response.data.message === "Email sudah digunakan") {
+        Swal.fire("Error", "Email sudah digunakan", "error");
+      } else if (error.response && error.response.data.message === "Username sudah digunakan") {
+        Swal.fire("Error", "Username sudah digunakan", "error");
+      } else {
+        console.error("Error updating data:", error);
+        Swal.fire("Gagal", "Gagal mengubah username dan email", "error");
+      }
     }
   };
+
 
   useEffect(() => {
     getProfile();
