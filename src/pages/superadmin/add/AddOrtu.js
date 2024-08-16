@@ -18,26 +18,29 @@ function AddOrtu() {
   };
   const tambahAdmin = async (e) => {
     e.preventDefault();
-
-    if (email === nama) {
-      Swal.fire(
-        "Error",
-        "Email dan Username tidak bisa sama dengan pengguna lain",
-        "error"
-      );
-      return;
-    }
-
+    const trimmedEmail = email.trim();
+    const trimmedUsername = nama.trim();
     try {
+      const response = await axios.get(`${API_DUMMY}/api/orang-tua/all`);
+      const existingUsers = response.data;
+
+      const isEmailExists = existingUsers.some(
+        (user) => user.email.toLowerCase() === trimmedEmail.toLowerCase()
+      );
+      const isUsernameExists = existingUsers.some(
+        (user) => user.nama.toLowerCase() === trimmedUsername.toLowerCase()
+      );
+
+      if (isEmailExists || isUsernameExists) {
+        Swal.fire("Error", "Email atau Username sudah terdaftar", "error");
+        return;
+      }
       const newUser = {
         email: email,
         nama: nama,
         password: password,
       };
-      const response = await axios.post(
-        `${API_DUMMY}/api/orang-tua/tambah/${idAdmin}`,
-        newUser
-      );
+      await axios.post(`${API_DUMMY}/api/orang-tua/tambah/${idAdmin}`, newUser);
       Swal.fire({
         title: "Berhasil",
         text: "Berhasil menambahkan data",

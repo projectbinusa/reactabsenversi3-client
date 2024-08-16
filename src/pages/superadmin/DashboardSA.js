@@ -58,8 +58,8 @@ function DashboardSA() {
     }
   };
 
-  const getUser = () =>
-    fetchData(`${API_DUMMY}/api/user/get-allUser`, setUserData);
+  // const getUser = () =>
+  //   fetchData(`${API_DUMMY}/api/user/get-allUser`, setUserData);
   const getAbsensi = () =>
     fetchData(`${API_DUMMY}/api/absensi/getAll`, setAbsenData);
   const getJabatan = () =>
@@ -138,7 +138,7 @@ function DashboardSA() {
   };
 
   useEffect(() => {
-    getUser();
+    // getUser();
     getAbsensi();
     getUsername();
     getJabatan();
@@ -179,7 +179,7 @@ function DashboardSA() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8 mt-12">
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8 mt-12">
             <div className="pl-2 h-32 bg-indigo-500 rounded-lg shadow-md md:w-auto">
               <div className="flex w-full h-full py-2 px-4 bg-gray-100 rounded-lg justify-between">
                 <div className="my-auto">
@@ -204,7 +204,7 @@ function DashboardSA() {
                 </div>
               </div>
             </div>
-            <div className="pl-2 h-32 bg-indigo-500 rounded-lg shadow-md md:w-auto">
+            {/* <div className="pl-2 h-32 bg-indigo-500 rounded-lg shadow-md md:w-auto">
               <div className="flex w-full h-full py-2 px-4 bg-gray-100 rounded-lg justify-between">
                 <div className="my-auto">
                   <p className="font-bold">User</p>
@@ -215,7 +215,7 @@ function DashboardSA() {
                   <FontAwesomeIcon icon={faUser} size="2x" />
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
 
           <br />
@@ -233,8 +233,7 @@ function DashboardSA() {
             <div className=" overflow-x-auto mt-5">
               <table
                 id="dataKaryawan"
-                className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
-              >
+                className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 {/* <!-- Tabel Head --> */}
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
@@ -254,20 +253,17 @@ function DashboardSA() {
                   {admin.map((admin, index) => (
                     <tr
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                      key={index}
-                    >
+                      key={index}>
                       <th
                         scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                      >
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {index + 1}
                       </th>
                       <td className="px-6 py-4">
                         <a
                           href="/cdn-cgi/l/email-protection"
                           className="__cf_email__"
-                          data-cfemail="5a363b23363b1a3d373b333674393537"
-                        >
+                          data-cfemail="5a363b23363b1a3d373b333674393537">
                           {admin.email}
                         </a>
                       </td>

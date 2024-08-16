@@ -16,17 +16,33 @@ function AddShift() {
 
   const TambahShift = async (e) => {
     e.preventDefault();
-    const shift = {
-      namaShift: namaShift,
-      waktuMasuk: waktuMasuk,
-      waktuPulang: waktuPulang,
-    };
+
+    // const trimmedEmail = email.trim();
+    const trimmedUsername = namaShift.trim();
 
     try {
-      const response = await axios.post(
-        `${API_DUMMY}/api/shift/tambahShift/${idAdmin}`,
-        shift
+      const response = await axios.get(`${API_DUMMY}/api/shift/getall`);
+      const existingUsers = response.data;
+
+      // const isEmailExists = existingUsers.some(
+      //   (user) => user.email.toLowerCase() === trimmedEmail.toLowerCase()
+      // );
+      const isUsernameExists = existingUsers.some(
+        (user) =>
+          user.namaShift.toLowerCase() === trimmedUsername.toLowerCase()
       );
+
+      if (isUsernameExists) {
+        Swal.fire("Error", "Nama waktu pembelajaran sudah terdaftar", "error");
+        return;
+      }
+      const shift = {
+        namaShift: namaShift,
+        waktuMasuk: waktuMasuk,
+        waktuPulang: waktuPulang,
+      };
+
+      await axios.post(`${API_DUMMY}/api/shift/tambahShift/${idAdmin}`, shift);
       Swal.fire({
         title: "Berhasil",
         text: "Berhasil menambahkan data",
@@ -78,8 +94,7 @@ function AddShift() {
                         />
                         <label
                           htmlFor="nama_shift"
-                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                        >
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                           Nama
                         </label>
                       </div>
@@ -98,8 +113,7 @@ function AddShift() {
                         />
                         <label
                           htmlFor="jam_masuk"
-                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                        >
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                           Jam Masuk
                         </label>
                       </div>
@@ -120,8 +134,7 @@ function AddShift() {
                         />
                         <label
                           htmlFor="jam_pulang"
-                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                        >
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                           Jam Pulang
                         </label>
                       </div>
@@ -130,14 +143,12 @@ function AddShift() {
                     <div className="flex justify-between">
                       <a
                         className="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                        href="/admin/shift"
-                      >
+                        href="/admin/shift">
                         <FontAwesomeIcon icon={faArrowLeft} />
                       </a>
                       <button
                         type="submit"
-                        className="text-white bg-indigo-500 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800"
-                      >
+                        className="text-white bg-indigo-500 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
                         <FontAwesomeIcon icon={faFloppyDisk} />
                       </button>
                     </div>
