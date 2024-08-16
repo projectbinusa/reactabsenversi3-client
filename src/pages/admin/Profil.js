@@ -43,30 +43,29 @@ function Profil() {
       console.error("Error fetching data:", error);
     }
   };
-
   const HandleUbahUsernameEmail = async (e) => {
     e.preventDefault();
-
+  
     const usmail = {
       email: email,
       username: username,
     };
+  
     try {
       const response = await axios.put(
         `${API_DUMMY}/api/admin/edit-email-username/${id}`,
         usmail
-
         // {
         //   headers: {
         //     Authorization: `Bearer ${token}`,
         //   },
         // }
       );
-
+  
       setUsername(response.data.username);
       setEmail(response.data.email);
       Swal.fire("Berhasil", "Berhasil mengubah username dan email", "success");
-
+  
       setTimeout(() => {
         Swal.fire("Info", "Silahkan login kembali", "info");
         setTimeout(() => {
@@ -75,7 +74,19 @@ function Profil() {
       }, 2000);
     } catch (error) {
       console.error("Error updating data:", error);
-      Swal.fire("Gagal", "Gagal mengubah username dan email", "error");
+  
+      // Checking for specific error messages returned from the server
+      if (error.response && error.response.data && error.response.data.message) {
+        if (error.response.data.message.includes("Email sudah digunakan")) {
+          Swal.fire("Gagal", "Email sudah digunakan", "error");
+        } else if (error.response.data.message.includes("Username sudah digunakan")) {
+          Swal.fire("Gagal", "Username sudah digunakan", "error");
+        } else {
+          Swal.fire("Gagal", "Gagal mengubah username dan email", "error");
+        }
+      } else {
+        Swal.fire("Gagal", "Terjadi kesalahan pada server", "error");
+      }
     }
   };
 
