@@ -46,8 +46,12 @@ function AddKelas() {
         window.location.href = "/admin/kelas";
       }, 2000);
     } catch (error) {
-      console.log(error);
-      Swal.fire("Error", error.message || "Gagal menambahkan data", "error");
+      if (error.response && error.response.status === 400) {
+        Swal.fire("Info", "Kelas dengan nama yang sama sudah terdaftar", "info");
+      } else {
+        Swal.fire("Error", error.message || "Gagal menambahkan data", "error");
+      }
+      console.error(error);
     }
   };
 
