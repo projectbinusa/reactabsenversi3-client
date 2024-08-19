@@ -170,7 +170,7 @@ function KelasSiswa() {
   const checkIfHasRelations = async (id) => {
     try {
       const response = await axios.get(`${API_DUMMY}/api/kelas/hasRelations/${id}`);
-      console.log('Relation check response:', response.data); 
+      console.log('Relation check response:', response.data);
       return response.data;
     } catch (error) {
       console.error('Error checking relations:', error);
@@ -180,7 +180,7 @@ function KelasSiswa() {
 
   const deleteData = async (id) => {
     const hasRelations = await checkIfHasRelations(id);
-    
+
     if (hasRelations) {
       Swal.fire({
         title: "Data Tidak Dapat Dihapus",
@@ -190,7 +190,7 @@ function KelasSiswa() {
       });
       return;
     }
-    
+
     Swal.fire({
       title: "Anda Ingin Menghapus Data ?",
       icon: "warning",
@@ -207,13 +207,13 @@ function KelasSiswa() {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           });
-  
+
           Swal.fire({
             icon: "success",
             title: "Dihapus!",
             showConfirmButton: false,
           });
-  
+
           setTimeout(() => {
             window.location.reload();
           }, 1500);
@@ -313,13 +313,13 @@ function KelasSiswa() {
                     <option value="50">50</option>
                   </select>
                   <div className="flex gap-2 mx-auto items-center">
-                  <a
+                  <Link
                     type="button"
-                    href="/admin/addkelas"
+                    to="/admin/addkelas"
                     className="text-white bg-indigo-500 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800 mt-2"
                   >
                     <FontAwesomeIcon icon={faPlus} size="lg" />
-                  </a>
+                  </Link>
                   <button
                     type="button"
                     className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded-lg inline-block ml-auto"
