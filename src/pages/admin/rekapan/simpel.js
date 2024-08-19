@@ -1,27 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../../../components/NavbarAdmin";
 import Sidebar from "../../../components/SidebarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faFileExport,
-  faMagnifyingGlass,
-} from "@fortawesome/free-solid-svg-icons";
+import { faFileExport } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import { useState } from "react";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../../utils/api";
 import NavbarAdmin from "../../../components/NavbarAdmin";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 
 function Simpel() {
-  const [bulan, setBulan] = useState("");
-  const [tahun, setTahun] = useState("");
+  const [bulan, setBulan] = useState(null); // Bulan default diubah ke null
+  const [tahun, setTahun] = useState(null); // Tahun default diubah ke null
   const [absensiData, setAbsensiData] = useState([]);
+  const [selectedDate, setSelectedDate] = useState("");
 
-  const handleSearch = async () => {
+  const handleSearch = async (bulan, tahun) => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/absensi/get-absensi-bulan`,
+        `${API_DUMMY}/api/absensi/get-absensi-bulan?bulan=${bulan}&tahun=${tahun}`,
         {
           params: { tanggalAbsen: `${tahun}-${bulan}-01` },
         }
@@ -31,6 +28,18 @@ function Simpel() {
       console.error(error);
       Swal.fire("Gagal", "Gagal Mengambil data", "error");
     }
+  };
+
+  const handleDateChange = (event) => {
+    const value = event.target.value;
+    setSelectedDate(value);
+
+    const [tahun, bulan] = value.split("-");
+    setBulan(parseInt(bulan, 10));
+    setTahun(parseInt(tahun, 10));
+
+    // Memanggil handleSearch setelah bulan dan tahun dipilih
+    handleSearch(parseInt(bulan, 10), parseInt(tahun, 10));
   };
 
   const formatDate = (dateString) => {
@@ -146,45 +155,14 @@ function Simpel() {
             </div>
             <hr />
             <form className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-5">
-              <select
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                id="bulan"
-                name="bulan"
-                value={bulan}
-                onChange={(e) => setBulan(e.target.value)}
-              >
-                <option value="">Pilih Bulan</option>
-                <option value="01">Januari</option>
-                <option value="02">Februari</option>
-                <option value="03">Maret</option>
-                <option value="04">April</option>
-                <option value="05">Mei</option>
-                <option value="06">Juni</option>
-                <option value="07">Juli</option>
-                <option value="08">Agustus</option>
-                <option value="09">September</option>
-                <option value="10">Oktober</option>
-                <option value="11">November</option>
-                <option value="12">Desember</option>
-              </select>
               <input
-                type="number"
-                id="form_tahun"
-                name="tahun"
-                value={tahun}
-                onChange={(e) => setTahun(e.target.value)}
-                className="w-40 sm:w-64 sm:w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 pr-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ml-3"
-                placeholder="Pilih Tahun"
-                pattern="[0-9]{4}"
+                value={selectedDate}
+                onChange={handleDateChange}
+                type="month"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                required
               />
               <div className="flex sm:flex-row gap-4 mx-auto items-center">
-                <button
-                  type="button"
-                  className="bg-indigo-500 hover:bg-indigo text-white font-bold py-2 px-4 rounded inline-block"
-                  onClick={handleSearch}
-                >
-                  <FontAwesomeIcon icon={faMagnifyingGlass} />
-                </button>
                 <button
                   type="button"
                   onClick={exportSimpel}

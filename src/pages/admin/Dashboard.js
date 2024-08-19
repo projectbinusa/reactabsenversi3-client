@@ -16,8 +16,6 @@ function Dashboard() {
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const [userData, setUserData] = useState([]);
   const [absenData, setAbsenData] = useState([]);
-  const [cutiData, setCutiData] = useState([]);
-  const [jabatanData, setJabatanData] = useState([]);
   const [lokasiData, setLokasiData] = useState([]);
   const [organisasiData, setOrganisasiData] = useState([]);
   const [username, setUsername] = useState("");
@@ -69,9 +67,6 @@ function Dashboard() {
     fetchData(`${API_DUMMY}/api/user/get-allUser`, setUserData);
   const getAbsensi = () =>
     fetchData(`${API_DUMMY}/api/absensi/getAll`, setAbsenData);
-  const getCuti = () => fetchData(`${API_DUMMY}/api/cuti/getall`, setCutiData);
-  const getJabatan = () =>
-    fetchData(`${API_DUMMY}/api/jabatan/getByAdmin/${adminId}`, setJabatanData);
   const getLokasi = () =>
     fetchData(`${API_DUMMY}/api/lokasi/get-admin/${idAdmin}`, setLokasiData);
   const getOrganisasi = () =>
@@ -105,9 +100,7 @@ function Dashboard() {
   useEffect(() => {
     getUser();
     getAbsensi();
-    getCuti();
     getUsername();
-    getJabatan();
     getLokasi();
     getOrganisasi();
     getallUser();
@@ -231,110 +224,6 @@ function Dashboard() {
                       </td>
                       <td className="px-6 py-4 capitalize">
                         {absen.statusAbsen}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          {/* <br /> */}
-
-          {/* Tabel Cuti */}
-          {/* <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-            <div className="flex justify-between">
-              <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
-                History Cuti
-              </h6>
-            </div>
-            <hr />
-            <div className="overflow-x-auto shadow-md sm:rounded-lg mt-5">
-              <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead className="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                  <tr>
-                    <th scope="col" className="px-6 py-3">
-                      No
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                      Username
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                      Awal Cuti
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                      Akhir Cuti
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                      Status
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="text-center">
-                  {cutiData.map((cuti, index) => (
-                    <tr
-                      key={index}
-                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                    >
-                      <th
-                        scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                      >
-                        {index + 1}
-                      </th>
-                      <td className="px-6 py-4 capitalize">
-                        {cuti.user.username}
-                      </td>
-                      <td className="px-6 py-4 capitalize">
-                        {formatDate(cuti.awalCuti)}
-                      </td>
-                      <td className="px-6 py-4 capitalize">
-                        {formatDate(cuti.akhirCuti)}
-                      </td>
-                      <td className="px-6 py-4 capitalize">{cuti.status}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div> */}
-
-          <br />
-
-          {/* Tabel Jabatan */}
-          <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-            <div className="flex justify-between">
-              <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
-                Data Status
-              </h6>
-            </div>
-            <hr />
-            <div className="overflow-x-auto shadow-md sm:rounded-lg mt-5">
-              <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead className="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                  <tr>
-                    <th scope="col" className="px-6 py-3">
-                      No
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                      Status
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="text-center">
-                  {jabatanData.map((jabatan, index) => (
-                    <tr
-                      key={index}
-                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                    >
-                      <th
-                        scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                      >
-                        {index + 1}
-                      </th>
-                      <td className="px-6 py-4 capitalize">
-                        {jabatan.namaJabatan}
                       </td>
                     </tr>
                   ))}

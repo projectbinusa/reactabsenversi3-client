@@ -180,7 +180,7 @@ function Profile() {
           <div className="sticky top-16 z-40">
             <Navbar />
           </div>
-          <div className="content-page container p-8 ml-0 md:ml-72 mt-20">
+          <div className="content-page container p-8 ml-0 md:ml-72 mt-10">
             <Tabs aria-label="Tabs with underline" style="underline">
               <Tabs.Item active title="Profile" icon={HiUserCircle}>
                 {/* Konten tab Profil */}
