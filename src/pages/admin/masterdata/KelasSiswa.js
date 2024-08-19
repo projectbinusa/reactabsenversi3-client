@@ -27,6 +27,27 @@ function KelasSiswa() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [openModal, setOpenModal] = useState(false);
+  const [file, setFile] = useState("");
+
+  useEffect(() => {
+    getAllKelasbyAdmin();
+    getOrganisasiData();
+  }, []);
+
+  useEffect(() => {
+    validateOrganisasiIds();
+  }, [userData, organisasiData]);
+
+  useEffect(() => {
+    const filteredData = userData.filter(
+      (kelas) =>
+        kelas.namaKelas?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        kelas.organisasi?.namaOrganisasi
+          ?.toLowerCase()
+          .includes(searchTerm.toLowerCase())
+    );
+    setTotalPages(Math.ceil(filteredData.length / limit));
+  }, [searchTerm, limit, userData]);
 
   const exportData = async () => {
     if (userData.length === 0) {
@@ -36,7 +57,7 @@ function KelasSiswa() {
 
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/admin/kelas/export?idAdmin=${idAdmin} `,
+        `${API_DUMMY}/api/admin/kelas/export?idAdmin=${idAdmin}`,
         {
           responseType: "blob",
         }
@@ -57,9 +78,7 @@ function KelasSiswa() {
         icon: "success",
         showConfirmButton: false,
       });
-      setTimeout(() => {
-        // window.location.href = "/superadmin/admin";
-      }, 3000);
+      setTimeout(() => {}, 3000);
     } catch (error) {
       console.error("Error exporting data:", error);
       Swal.fire("Error", "Gagal mengunduh data", "error");
@@ -91,44 +110,48 @@ function KelasSiswa() {
     }
   };
 
-  const [file, setFile] = useState("");
-
   const importData = async (e) => {
     e.preventDefault();
-
+  
     const formData = new FormData();
-
     formData.append("file", file);
-    // formData.append("idJabatan", idJabatan);
-    // formData.append("idOrangTua", idOrangTua);
-    // formData.append("idShift", idShift);
-    // formData.append("idOrganisasi", idOrganisasi);
-
-    await axios
-      .post(`${API_DUMMY}/api/admin/importKelas/${idAdmin}`, formData)
-      .then(() => {
-        Swal.fire({
-          title: "Sukses!",
-          text: "Berhasil menambahkan",
-          icon: "success",
-          timer: 3000,
-          showConfirmButton: false,
-        });
-        setOpenModal(false);
-        getAllKelasbyAdmin();
-      })
-
-      .catch((err) => {
-        console.log(err);
-        Swal.fire("Error", "Anda belum memilih file untuk diimport!.", "error");
+  
+    try {
+      await axios.post(
+        `${API_DUMMY}/api/admin/importKelas/${idAdmin}`,
+        formData
+      );
+      Swal.fire({
+        title: "Sukses!",
+        text: "Berhasil menambahkan",
+        icon: "success",
+        timer: 3000,
+        showConfirmButton: false,
       });
+      setOpenModal(false);
+      getAllKelasbyAdmin();
+    } catch (err) {
+      let errorMessage = "Gagal menambahkan data";
+      
+      if (err.response && err.response.status === 400) {
+        if (err.response.data && typeof err.response.data === 'string') {
+          errorMessage = err.response.data;
+        } else if (err.response.data && err.response.data.message) {
+          errorMessage = err.response.data.message;
+        }
+      }
+  
+      Swal.fire("Error", errorMessage, "error");
+    }
   };
+  
+  
+  
 
   const getAllKelasbyAdmin = async () => {
-    const token = localStorage.getItem("token");
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/kelas/getALlByAdmin/${idAdmin}`
+        `${API_DUMMY}/api/kelas/getAllByAdmin/${idAdmin}`
       );
       setUserData(response.data.reverse());
     } catch (error) {
@@ -138,7 +161,7 @@ function KelasSiswa() {
 
   const getOrganisasiData = async () => {
     try {
-      const response = await axios.get(`${API_DUMMY}/api/organisasi/all`);
+      const response = await axios.get(`${API_DUMMY}/api/organisasi/all-by-admin/${idAdmin}`);
       setOrganisasiData(response.data);
     } catch (error) {
       console.error("Error fetching organisasi data:", error);
@@ -146,34 +169,22 @@ function KelasSiswa() {
   };
 
   const validateOrganisasiIds = () => {
-    const validIds = organisasiData
-      .slice()
-      .reverse()
-      .map((org) => org.id);
+    const validIds = organisasiData.map((org) => org.id);
     const validKelasIds = userData
       .filter((kelas) => validIds.includes(kelas.organisasi.id))
-      .slice()
-      .reverse()
       .map((kelas) => kelas.organisasi.id);
     setValidOrganisasiIds(validKelasIds);
   };
 
-  useEffect(() => {
-    getAllKelasbyAdmin();
-    getOrganisasiData();
-  }, []);
-
-  useEffect(() => {
-    validateOrganisasiIds();
-  }, [userData, organisasiData]);
-
   const checkIfHasRelations = async (id) => {
     try {
-      const response = await axios.get(`${API_DUMMY}/api/kelas/hasRelations/${id}`);
-      console.log('Relation check response:', response.data);
+      const response = await axios.get(
+        `${API_DUMMY}/api/kelas/hasRelations/${id}`
+      );
+      console.log("Relation check response:", response.data);
       return response.data;
     } catch (error) {
-      console.error('Error checking relations:', error);
+      console.error("Error checking relations:", error);
       return false;
     }
   };
@@ -192,7 +203,7 @@ function KelasSiswa() {
     }
 
     Swal.fire({
-      title: "Anda Ingin Menghapus Data ?",
+      title: "Anda Ingin Menghapus Data?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -202,7 +213,7 @@ function KelasSiswa() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${API_DUMMY}/api/kelas/deleteKelas/` + id, {
+          await axios.delete(`${API_DUMMY}/api/kelas/deleteKelas/${id}`, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
@@ -218,7 +229,11 @@ function KelasSiswa() {
             window.location.reload();
           }, 1500);
         } catch (error) {
-          if (error.response && error.response.data && error.response.data.error) {
+          if (
+            error.response &&
+            error.response.data &&
+            error.response.data.error
+          ) {
             Swal.fire({
               icon: "error",
               title: "Gagal Menghapus Data",
@@ -236,17 +251,6 @@ function KelasSiswa() {
     });
   };
 
-  useEffect(() => {
-    const filteredData = userData.filter(
-      (kelas) =>
-        kelas.namaKelas?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        kelas.organisasi?.namaOrganisasi
-          ?.toLowerCase()
-          .includes(searchTerm.toLowerCase())
-    );
-    setTotalPages(Math.ceil(filteredData.length / limit));
-  }, [searchTerm, limit, userData]);
-
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
   };
@@ -256,9 +260,9 @@ function KelasSiswa() {
     setCurrentPage(1); // Reset to the first page when limit changes
   };
 
-  function onPageChange(page) {
+  const onPageChange = (page) => {
     setCurrentPage(page);
-  }
+  };
 
   const filteredKelas = userData.filter(
     (kelas) =>
@@ -313,28 +317,28 @@ function KelasSiswa() {
                     <option value="50">50</option>
                   </select>
                   <div className="flex gap-2 mx-auto items-center">
-                  <Link
-                    type="button"
-                    to="/admin/addkelas"
-                    className="text-white bg-indigo-500 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800 mt-2"
-                  >
-                    <FontAwesomeIcon icon={faPlus} size="lg" />
-                  </Link>
-                  <button
-                    type="button"
-                    className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded-lg inline-block ml-auto"
-                    onClick={exportData}
-                  >
-                    <FontAwesomeIcon icon={faFileExport} />
-                  </button>
-                  <button
-                    type="button"
-                    className="imp bg-blue-500 ml-3 hover:bg-blue text-white font-bold py-2 px-4 rounded-lg inline-block ml-auto"
-                    onClick={() => setOpenModal(true)}
-                  >
-                    <FontAwesomeIcon icon={faFileImport} />
-                  </button>
-                </div>
+                    <Link
+                      type="button"
+                      to="/admin/addkelas"
+                      className="text-white bg-indigo-500 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800 mt-2"
+                    >
+                      <FontAwesomeIcon icon={faPlus} size="lg" />
+                    </Link>
+                    <button
+                      type="button"
+                      className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded-lg inline-block ml-auto"
+                      onClick={exportData}
+                    >
+                      <FontAwesomeIcon icon={faFileExport} />
+                    </button>
+                    <button
+                      type="button"
+                      className="imp bg-blue-500 ml-3 hover:bg-blue text-white font-bold py-2 px-4 rounded-lg inline-block ml-auto"
+                      onClick={() => setOpenModal(true)}
+                    >
+                      <FontAwesomeIcon icon={faFileImport} />
+                    </button>
+                  </div>
                 </div>
               </div>
               <hr />
