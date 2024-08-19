@@ -61,6 +61,17 @@ function AddLokasi() {
     getLokasi();
   }, [idAdmin]);
 
+// Helper function to capitalize each word, but not the character after an apostrophe
+const capitalizeWords = (str) => {
+  return str.replace(/\b\w/g, (char, index, input) => {
+    // Check if the character is right after an apostrophe
+    if (index > 0 && input[index - 1] === "'") {
+      return char.toLowerCase(); // Keep it lowercase
+    }
+    return char.toUpperCase(); // Otherwise, capitalize
+  });
+};
+
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
@@ -96,7 +107,7 @@ function AddLokasi() {
                           placeholder=" "
                           autoComplete="off"
                           value={namaLokasi}
-                          onChange={(e) => setNamaLokasi(e.target.value)}
+                          onChange={(e) => setNamaLokasi(capitalizeWords(e.target.value))}
                           required
                         />
                         <label
@@ -117,7 +128,7 @@ function AddLokasi() {
                           placeholder=" "
                           autoComplete="off"
                           value={alamat}
-                          onChange={(e) => setAlamat(e.target.value)}
+                          onChange={(e) => setAlamat(capitalizeWords(e.target.value))}
                           required
                         />
                         <label

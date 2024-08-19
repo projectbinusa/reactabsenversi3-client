@@ -121,6 +121,17 @@ function Organisasi() {
     (currentPage - 1) * limit,
     currentPage * limit
   );
+
+  const capitalize = (str) => {
+    if (typeof str !== 'string') {
+      return str; // Atau Anda bisa mengembalikan string kosong jika itu lebih sesuai
+    }
+    return str
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
+  };
+
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
@@ -214,13 +225,13 @@ function Organisasi() {
                           {index + 1}
                         </th>
                         <td className="px-6 py-4 capitalize">
-                          {organisasi.namaOrganisasi}
+                          {capitalize(organisasi.namaOrganisasi || '')}
                         </td>
                         <td className="px-6 py-4 capitalize">
-                          {organisasi.alamat}
+                          {capitalize(organisasi.alamat || '')}
                         </td>
                         <td className="px-6 py-4 capitalize">
-                          {organisasi.nomerTelepon}
+                          {capitalize(organisasi.nomerTelepon || '')}
                         </td>
                         <td className="px-6 py-4">
                           <a
@@ -228,9 +239,10 @@ function Organisasi() {
                             className="__cf_email__"
                             data-cfemail="40253823252c2c252e3400272d21292c6e232f2d"
                           >
-                            {organisasi.emailOrganisasi}
+                            {capitalize(organisasi.emailOrganisasi || '')}
                           </a>
                         </td>
+
                         <td className=" py-3">
                           <div className="flex items-center -space-x-4 ml-12">
                             <a href={`/admin/detailO/${organisasi.id}`}>
