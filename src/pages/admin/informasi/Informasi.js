@@ -211,6 +211,16 @@ function Informasi() {
     requestNotificationPermission();
   }, []);
 
+  const capitalize = (str) => {
+    if (typeof str !== 'string') {
+      return str; // Atau Anda bisa mengembalikan string kosong jika itu lebih sesuai
+    }
+    return str
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
+  };
+
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
@@ -300,16 +310,16 @@ function Informasi() {
                             {(currentPage - 1) * limit + index + 1}
                           </th>
                           <td className="px-6 py-4 text-gray-700 capitalize">
-                            {informasi.namaAcara}
+                            {capitalize(informasi.namaAcara)}
                           </td>
                           <td className="px-6 py-4 text-gray-700 capitalize">
-                            {formatDate(informasi.tanggalAcara)}
+                          {capitalize(formatDate(informasi.tanggalAcara))}
                           </td>
                           <td className="px-6 py-4 text-gray-700 capitalize">
-                            {informasi.tempatAcara}
+                          {capitalize(informasi.tempatAcara)}
                           </td>
                           <td className="px-6 py-4 text-gray-700 capitalize">
-                            {informasi.message}
+                          {capitalize(informasi.message)}
                           </td>
                           <td className="py-4 text-center">
                             <div className="flex justify-center -space-x-4">

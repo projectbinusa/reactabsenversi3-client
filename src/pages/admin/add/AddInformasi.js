@@ -46,6 +46,17 @@ function AddInformasi() {
     }
   };
 
+// Helper function to capitalize each word, but not the character after an apostrophe
+const capitalizeWords = (str) => {
+  return str.replace(/\b\w/g, (char, index, input) => {
+    // Check if the character is right after an apostrophe
+    if (index > 0 && input[index - 1] === "'") {
+      return char.toLowerCase(); // Keep it lowercase
+    }
+    return char.toUpperCase(); // Otherwise, capitalize
+  });
+};
+
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
@@ -78,7 +89,7 @@ function AddInformasi() {
                           autoComplete="off"
                           required
                           value={namaAcara}
-                          onChange={(e) => setNamaAcara(e.target.value)}
+                          onChange={(e) => setNamaAcara(capitalizeWords(e.target.value))}
                         />
                         <label
                           htmlFor="nama_acara"
@@ -119,7 +130,8 @@ function AddInformasi() {
                           autoComplete="off"
                           required
                           value={tempatAcara}
-                          onChange={(e) => setTempatAcara(e.target.value)}
+                          onChange={(e) => setTempatAcara(capitalizeWords(e.target.value))}
+
                         />
                         <label
                           htmlFor="tempat_acara"
@@ -138,7 +150,7 @@ function AddInformasi() {
                           autoComplete="off"
                           required
                           value={message}
-                          onChange={(e) => setMessage(e.target.value)}
+                          onChange={(e) => setMessage(capitalizeWords(e.target.value))}
                         ></textarea>
                         <label
                           htmlFor="message"

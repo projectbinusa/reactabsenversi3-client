@@ -204,6 +204,17 @@ function SiswaperKelas() {
     currentPage * limit
   );
 
+  const capitalize = (str) => {
+    if (typeof str !== 'string') {
+      return str; // Atau Anda bisa mengembalikan string kosong jika itu lebih sesuai
+    }
+    return str
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
+  };
+
+
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
@@ -301,18 +312,18 @@ function SiswaperKelas() {
                           {(currentPage - 1) * limit + index + 1}
                         </th>
                         <td className="px-6 py-4 text-gray-900 capitalize">
-                          {user.username}
+                        {capitalize(user.username)}
                         </td>
                         <td className="px-6 py-4 text-gray-900">
                           <a
                             href="/cdn-cgi/l/email-protection"
                             className="__cf_email__"
                             data-cfemail="5a363b23363b1a3d373b333674393537">
-                            {user.email}
+                           {capitalize(user.email)}
                           </a>
                         </td>
                         <td className="px-6 py-4 text-gray-900 capitalize">
-                          {user.admin.username}
+                        {capitalize(user.admin.username)}
                         </td>
                         <td className=" py-3">
                           <div className="flex items-center -space-x-4 ml-12">

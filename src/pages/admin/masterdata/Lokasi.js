@@ -28,7 +28,7 @@ function Lokasi() {
       const res = await axios.get(`${API_DUMMY}/api/user/${idAdmin}/users`);
       setKaryawan(res.data.length);
       // console.log("data siswa: ", res.data);
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const getAllLokasibyAdmin = async () => {
@@ -121,6 +121,17 @@ function Lokasi() {
     currentPage * limit
   );
 
+  const capitalize = (str) => {
+    if (typeof str !== 'string') {
+      return str; // Atau Anda bisa mengembalikan string kosong jika itu lebih sesuai
+    }
+    return str
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
+  };
+
+
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
@@ -208,16 +219,19 @@ function Lokasi() {
                           className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                           {(currentPage - 1) * limit + index + 1}
                         </th>
-                        <td className="px-6 py-4 capitalize">
-                          {lokasi.namaLokasi}
+                        <td className="px-6 py-4">
+                          {capitalize(lokasi.namaLokasi)}
                         </td>
-                        <td className="px-6 py-4 capitalize">
-                          {lokasi.alamat}
+                        <td className="px-6 py-4">
+                          {capitalize(lokasi.alamat)}
                         </td>
-                        <td className="px-6 py-4 capitalize">{karyawan}</td>
-                        <td className="px-6 py-4 capitalize">
-                          {lokasi.organisasi.namaOrganisasi}
+                        <td className="px-6 py-4">
+                          {capitalize(karyawan)}
                         </td>
+                        <td className="px-6 py-4">
+                          {capitalize(lokasi.organisasi.namaOrganisasi)}
+                        </td>
+
                         <td className=" py-3">
                           <div className="flex items-center -space-x-4 ml-12">
                             <a href={`/admin/detailL/${lokasi.idLokasi}`}>

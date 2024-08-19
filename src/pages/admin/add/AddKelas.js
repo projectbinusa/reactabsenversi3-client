@@ -59,6 +59,17 @@ function AddKelas() {
     getOrganisasi();
   }, [idAdmin]);
 
+// Helper function to capitalize each word, but not the character after an apostrophe
+const capitalizeWords = (str) => {
+  return str.replace(/\b\w/g, (char, index, input) => {
+    // Check if the character is right after an apostrophe
+    if (index > 0 && input[index - 1] === "'") {
+      return char.toLowerCase(); // Keep it lowercase
+    }
+    return char.toUpperCase(); // Otherwise, capitalize
+  });
+};
+
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
@@ -90,7 +101,7 @@ function AddKelas() {
                           placeholder=" "
                           autoComplete="off"
                           value={namaKelas}
-                          onChange={(e) => setNamaKelas(e.target.value)}
+                          onChange={(e) => setNamaKelas(capitalizeWords(e.target.value))}
                           required
                         />
                         <label

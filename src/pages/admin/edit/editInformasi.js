@@ -66,6 +66,17 @@ function EditInformasi() {
     getInformasi();
   }, [id]);
 
+// Helper function to capitalize each word, but not the character after an apostrophe
+const capitalizeWords = (str) => {
+  return str.replace(/\b\w/g, (char, index, input) => {
+    // Check if the character is right after an apostrophe
+    if (index > 0 && input[index - 1] === "'") {
+      return char.toLowerCase(); // Keep it lowercase
+    }
+    return char.toUpperCase(); // Otherwise, capitalize
+  });
+};
+
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
@@ -98,7 +109,7 @@ function EditInformasi() {
                           id="nama_acara"
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                           placeholder=""
-                          onChange={(e) => setNamaAcara(e.target.value)}
+                          onChange={(e) => setNamaAcara(capitalizeWords(e.target.value))}
                           autoComplete="off"
                           required
                           value={namaAcara}
@@ -139,7 +150,7 @@ function EditInformasi() {
                           placeholder=""
                           autoComplete="off"
                           required
-                          onChange={(e) => setTempatAcara(e.target.value)}
+                          onChange={(e) => setTempatAcara(capitalizeWords(e.target.value))}
                           value={tempatAcara}
                         />
                         <label
@@ -158,7 +169,7 @@ function EditInformasi() {
                           autoComplete="off"
                           required
                           value={message}
-                          onChange={(e) => setMessage(e.target.value)}
+                          onChange={(e) => setMessage(capitalizeWords(e.target.value))}
                         />
                         <label
                           htmlFor="message"

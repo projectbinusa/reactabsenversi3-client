@@ -277,6 +277,17 @@ function KelasSiswa() {
     currentPage * limit
   );
 
+  const capitalize = (str) => {
+    if (typeof str !== 'string') {
+      return str;
+    }
+    return str
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
+  };
+
+
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
@@ -383,11 +394,11 @@ function KelasSiswa() {
                           {(currentPage - 1) * limit + index + 1}
                         </th>
                         <td className="px-6 py-4 capitalize">
-                          {kelas.namaKelas}
+                        {capitalize(kelas.namaKelas)}
                         </td>
                         <td className="px-6 py-4 capitalize">
                           {validOrganisasiIds.includes(kelas.organisasi.id)
-                            ? kelas.organisasi.namaOrganisasi
+                            ? capitalize(kelas.organisasi.namaOrganisasi)
                             : "Invalid Organisasi"}
                         </td>
                         <td className="py-3">
