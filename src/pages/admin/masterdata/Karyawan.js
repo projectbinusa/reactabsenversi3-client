@@ -3,6 +3,7 @@ import Navbar from "../../../components/NavbarAdmin";
 import Sidebar from "../../../components/SidebarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faCloudArrowDown,
   faFileExport,
   faFileImport,
   faInfo,
@@ -249,13 +250,15 @@ function Karyawan() {
                       type="button"
                       className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded-lg inline-block ml-auto"
                       onClick={exportPerkelas}
+                      title="Export"
                     >
-                      <FontAwesomeIcon icon={faFileExport} />
+                      <FontAwesomeIcon icon={faCloudArrowDown} />
                     </button>
                     <button
                       type="button"
                       className="imp bg-blue-500 hover:bg-blue text-white font-bold py-2 px-4 rounded-lg inline-block ml-auto"
                       onClick={() => setOpenModal(true)}
+                      title="Import"
                     >
                       <FontAwesomeIcon icon={faFileImport} />
                     </button>
