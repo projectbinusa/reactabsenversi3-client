@@ -3,6 +3,7 @@ import Navbar from "../../../components/NavbarAdmin";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleInfo,
+  faCloudArrowDown,
   faFileExport,
   faFileImport,
   faInfo,
@@ -256,14 +257,15 @@ function OrangTua() {
                     <button
                       type="button"
                       className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded-lg inline-block ml-auto"
-                      onClick={exportData}
-                    >
-                      <FontAwesomeIcon icon={faFileExport} />
+                      title="Export"
+                  >
+                    <FontAwesomeIcon icon={faCloudArrowDown} />
                     </button>
                     <button
                       type="button"
                       className="imp bg-blue-500 hover:bg-blue text-white font-bold py-2 px-4 rounded-lg inline-block ml-auto"
                       onClick={() => setOpenModal(true)}
+                       title="Import"
                     >
                       <FontAwesomeIcon icon={faFileImport} />
                     </button>

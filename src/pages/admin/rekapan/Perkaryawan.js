@@ -4,8 +4,7 @@ import Navbar from "../../../components/NavbarAdmin";
 import Sidebar from "../../../components/SidebarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faFileExport,
-  faMagnifyingGlass,
+  faCloudArrowDown,  faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -180,7 +179,7 @@ function Perkaryawan() {
                   type="button"
                   className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto"
                   onClick={exportPerkaryawan}>
-                  <FontAwesomeIcon icon={faFileExport} />
+                   <FontAwesomeIcon icon={faCloudArrowDown} />
                 </button>
               </div>
             </form>

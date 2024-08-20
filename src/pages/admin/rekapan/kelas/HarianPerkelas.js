@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../../../../components/SidebarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileExport } from "@fortawesome/free-solid-svg-icons";
+import { faCloudArrowDown, faFileExport } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../../../utils/api";
@@ -292,8 +292,9 @@ function HarianPerkelas() {
                   type="button"
                   className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto"
                   onClick={handleExportClick}
+                  title="Export"
                 >
-                  <FontAwesomeIcon icon={faFileExport} />
+                   <FontAwesomeIcon icon={faCloudArrowDown} />
                 </button>
               </div>
             </form>

@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../../../components/NavbarAdmin";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faFileExport,
-  faInfo,
-  faMagnifyingGlass,
-  faSearch,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCloudArrowDown, faInfo } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { Pagination } from "flowbite-react";
 import { API_DUMMY } from "../../../utils/api";
@@ -191,9 +186,10 @@ function Absensi() {
                     </button> */}
                     <a
                       onClick={exportAbsensi}
+                      title="Export"
                       className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto"
                     >
-                      <FontAwesomeIcon icon={faFileExport} />
+                      <FontAwesomeIcon icon={faCloudArrowDown} />
                     </a>
                   </div>
                 </div>
