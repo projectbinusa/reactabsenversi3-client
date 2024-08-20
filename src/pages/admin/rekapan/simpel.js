@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import Navbar from "../../../components/NavbarAdmin";
 import Sidebar from "../../../components/SidebarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileExport } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCloudArrowDown,
+  faFileExport,
+} from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../../utils/api";
@@ -166,9 +169,10 @@ function Simpel() {
                 <button
                   type="button"
                   onClick={exportSimpel}
+                  title="Export"
                   className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto"
                 >
-                  <FontAwesomeIcon icon={faFileExport} />
+                  <FontAwesomeIcon icon={faCloudArrowDown} />
                 </button>
               </div>
             </form>

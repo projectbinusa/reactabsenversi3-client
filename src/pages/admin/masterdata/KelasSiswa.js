@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import NavbarAdmin from "../../../components/NavbarAdmin";
 import Sidebar from "../../../components/SidebarUser";
 import {
-  faFileExport,
+  faCloudArrowDown,
   faFileImport,
   faPenToSquare,
   faPlus,
@@ -112,10 +112,10 @@ function KelasSiswa() {
 
   const importData = async (e) => {
     e.preventDefault();
-  
+
     const formData = new FormData();
     formData.append("file", file);
-  
+
     try {
       await axios.post(
         `${API_DUMMY}/api/admin/importKelas/${idAdmin}`,
@@ -132,21 +132,18 @@ function KelasSiswa() {
       getAllKelasbyAdmin();
     } catch (err) {
       let errorMessage = "Gagal menambahkan data";
-      
+
       if (err.response && err.response.status === 400) {
-        if (err.response.data && typeof err.response.data === 'string') {
+        if (err.response.data && typeof err.response.data === "string") {
           errorMessage = err.response.data;
         } else if (err.response.data && err.response.data.message) {
           errorMessage = err.response.data.message;
         }
       }
-  
+
       Swal.fire("Error", errorMessage, "error");
     }
   };
-  
-  
-  
 
   const getAllKelasbyAdmin = async () => {
     try {
@@ -161,7 +158,9 @@ function KelasSiswa() {
 
   const getOrganisasiData = async () => {
     try {
-      const response = await axios.get(`${API_DUMMY}/api/organisasi/all-by-admin/${idAdmin}`);
+      const response = await axios.get(
+        `${API_DUMMY}/api/organisasi/all-by-admin/${idAdmin}`
+      );
       setOrganisasiData(response.data);
     } catch (error) {
       console.error("Error fetching organisasi data:", error);
@@ -278,15 +277,14 @@ function KelasSiswa() {
   );
 
   const capitalize = (str) => {
-    if (typeof str !== 'string') {
+    if (typeof str !== "string") {
       return str;
     }
     return str
-      .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(' ');
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
   };
-
 
   return (
     <div className="flex flex-col h-screen">
@@ -339,13 +337,15 @@ function KelasSiswa() {
                       type="button"
                       className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded-lg inline-block ml-auto"
                       onClick={exportData}
+                      title="Export"
                     >
-                      <FontAwesomeIcon icon={faFileExport} />
+                      <FontAwesomeIcon icon={faCloudArrowDown} />
                     </button>
                     <button
                       type="button"
                       className="imp bg-blue-500 ml-3 hover:bg-blue text-white font-bold py-2 px-4 rounded-lg inline-block ml-auto"
                       onClick={() => setOpenModal(true)}
+                      title="Import"
                     >
                       <FontAwesomeIcon icon={faFileImport} />
                     </button>
@@ -394,7 +394,7 @@ function KelasSiswa() {
                           {(currentPage - 1) * limit + index + 1}
                         </th>
                         <td className="px-6 py-4 capitalize">
-                        {capitalize(kelas.namaKelas)}
+                          {capitalize(kelas.namaKelas)}
                         </td>
                         <td className="px-6 py-4 capitalize">
                           {validOrganisasiIds.includes(kelas.organisasi.id)

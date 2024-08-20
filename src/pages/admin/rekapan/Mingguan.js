@@ -3,8 +3,7 @@ import Navbar from "../../../components/NavbarAdmin";
 import Sidebar from "../../../components/SidebarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faFileExport,
-  faMagnifyingGlass,
+  faCloudArrowDown,  faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -166,7 +165,7 @@ function Mingguan() {
                 onClick={exportMingguan}
                 className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto"
               >
-                <FontAwesomeIcon icon={faFileExport} />
+                 <FontAwesomeIcon icon={faCloudArrowDown} />
               </button>
             </form>
             {error && <div className="text-red-500 mt-4">{error}</div>}
