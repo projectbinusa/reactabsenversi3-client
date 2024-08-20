@@ -122,15 +122,15 @@ function Organisasi() {
     currentPage * limit
   );
 
-  const capitalize = (str) => {
-    if (typeof str !== 'string') {
-      return str; // Atau Anda bisa mengembalikan string kosong jika itu lebih sesuai
-    }
-    return str
-      .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(' ');
-  };
+  // const capitalize = (str) => {
+  //   if (typeof str !== "string") {
+  //     return str; // Atau Anda bisa mengembalikan string kosong jika itu lebih sesuai
+  //   }
+  //   return str
+  //     .split(" ")
+  //     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+  //     .join(" ");
+  // };
 
   return (
     <div className="flex flex-col h-screen">
@@ -225,13 +225,13 @@ function Organisasi() {
                           {index + 1}
                         </th>
                         <td className="px-6 py-4 capitalize">
-                          {capitalize(organisasi.namaOrganisasi || '')}
+                          {organisasi.namaOrganisasi || ""}
                         </td>
                         <td className="px-6 py-4 capitalize">
-                          {capitalize(organisasi.alamat || '')}
+                          {organisasi.alamat || ""}
                         </td>
                         <td className="px-6 py-4 capitalize">
-                          {capitalize(organisasi.nomerTelepon || '')}
+                          {organisasi.nomerTelepon || ""}
                         </td>
                         <td className="px-6 py-4">
                           <a
@@ -239,7 +239,7 @@ function Organisasi() {
                             className="__cf_email__"
                             data-cfemail="40253823252c2c252e3400272d21292c6e232f2d"
                           >
-                            {capitalize(organisasi.emailOrganisasi || '')}
+                            {organisasi.emailOrganisasi || ""}
                           </a>
                         </td>
 

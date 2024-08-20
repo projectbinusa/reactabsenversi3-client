@@ -36,12 +36,12 @@ function EditAdmin() {
 
   const updateAdmin = async (e) => {
     e.preventDefault();
-  
+
     const usmail = {
       email: email,
       username: username,
     };
-  
+
     try {
       const response = await axios.put(
         `${API_DUMMY}/api/admin/edit-email-username/${param.id}`,
@@ -52,22 +52,28 @@ function EditAdmin() {
         //   },
         // }
       );
-  
+
       setUsername(response.data.username);
       setEmail(response.data.email);
       Swal.fire("Berhasil", "Berhasil mengubah username dan email", "success");
-  
+
       setTimeout(() => {
         window.location.href = "/superadmin/admin";
       }, 1500);
     } catch (error) {
       console.error("Error updating data:", error);
-  
+
       // Checking for specific error messages returned from the server
-      if (error.response && error.response.data && error.response.data.message) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
         if (error.response.data.message.includes("Email sudah digunakan")) {
           Swal.fire("Gagal", "Email sudah digunakan", "error");
-        } else if (error.response.data.message.includes("Username sudah digunakan")) {
+        } else if (
+          error.response.data.message.includes("Username sudah digunakan")
+        ) {
           Swal.fire("Gagal", "Username sudah digunakan", "error");
         } else {
           Swal.fire("Gagal", "Gagal mengubah username dan email", "error");
@@ -78,16 +84,7 @@ function EditAdmin() {
     }
   };
 
-    // Helper function to capitalize each word, but not the character after an apostrophe
-const capitalizeWords = (str) => {
-  return str.replace(/\b\w/g, (char, index, input) => {
-    // Check if the character is right after an apostrophe
-    if (index > 0 && input[index - 1] === "'") {
-      return char.toLowerCase(); // Keep it lowercase
-    }
-    return char.toUpperCase(); // Otherwise, capitalize
-  });
-};
+  // Helper function to capitalize each word, but not the character after an apostrophe
 
   return (
     <div className="flex flex-col h-screen">
@@ -123,8 +120,8 @@ const capitalizeWords = (str) => {
                     id="email"
                     value={email}
                     // value={author}
-                    onChange={(e) => setEmail(capitalizeWords(e.target.value))}
-                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer capitalize"
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     placeholder=" "
                     autoComplete="off"
                     required
@@ -145,8 +142,8 @@ const capitalizeWords = (str) => {
                     id="username"
                     value={username}
                     // value={author}
-                    onChange={(e) => setUsername(capitalizeWords(e.target.value))}
-                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer capitalize"
+                    onChange={(e) => setUsername(e.target.value)}
+                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     placeholder=" "
                     autoComplete="off"
                     required

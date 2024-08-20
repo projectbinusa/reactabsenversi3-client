@@ -99,28 +99,29 @@ function Admin() {
     formData.append("file", file);
 
     try {
-        await axios.post(
-            `${API_DUMMY}/api/superadmin/import/data-admin/${id_superadmin}`,
-            formData
-        );
+      await axios.post(
+        `${API_DUMMY}/api/superadmin/import/data-admin/${id_superadmin}`,
+        formData
+      );
 
-        Swal.fire({
-            title: "Sukses!",
-            text: "Berhasil menambahkan",
-            icon: "success",
-            timer: 3000,
-            showConfirmButton: false,
-        });
-        setOpenModal(false);
-        getAllAdmin();
+      Swal.fire({
+        title: "Sukses!",
+        text: "Berhasil menambahkan",
+        icon: "success",
+        timer: 3000,
+        showConfirmButton: false,
+      });
+      setOpenModal(false);
+      getAllAdmin();
     } catch (err) {
-        console.error(err);
+      console.error(err);
 
-        // Extract error message from the response
-        const errorMessage = err.response?.data || "Terjadi kesalahan saat mengimpor data!";
-        Swal.fire("Error", errorMessage, "error");
+      // Extract error message from the response
+      const errorMessage =
+        err.response?.data || "Terjadi kesalahan saat mengimpor data!";
+      Swal.fire("Error", errorMessage, "error");
     }
-};
+  };
 
   const getAllAdmin = async () => {
     const token = localStorage.getItem("token");
@@ -322,9 +323,7 @@ function Admin() {
                             {admin.email}
                           </a>
                         </td>
-                        <td className="px-6 py-4 capitalize">
-                          {admin.username}
-                        </td>
+                        <td className="px-6 py-4">{admin.username}</td>
                         <td className="py-3">
                           <div className="flex items-center -space-x-4">
                             <a href={`/superadmin/detailA/${admin.id}`}>

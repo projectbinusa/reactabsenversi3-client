@@ -134,16 +134,16 @@ function AddSiswaPerkelas() {
     }
   };
 
-// Helper function to capitalize each word, but not the character after an apostrophe
-const capitalizeWords = (str) => {
-  return str.replace(/\b\w/g, (char, index, input) => {
-    // Check if the character is right after an apostrophe
-    if (index > 0 && input[index - 1] === "'") {
-      return char.toLowerCase(); // Keep it lowercase
-    }
-    return char.toUpperCase(); // Otherwise, capitalize
-  });
-};
+  // Helper function to capitalize each word, but not the character after an apostrophe
+  const capitalizeWords = (str) => {
+    return str.replace(/\b\w/g, (char, index, input) => {
+      // Check if the character is right after an apostrophe
+      if (index > 0 && input[index - 1] === "'") {
+        return char.toLowerCase(); // Keep it lowercase
+      }
+      return char.toUpperCase(); // Otherwise, capitalize
+    });
+  };
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
@@ -174,7 +174,7 @@ const capitalizeWords = (str) => {
                           name="email"
                           id="email"
                           value={email}
-                          onChange={(e) => setEmail(capitalizeWords(e.target.value))}
+                          onChange={(e) => setEmail(e.target.value)}
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                           placeholder=" "
                           autoComplete="off"
@@ -182,7 +182,8 @@ const capitalizeWords = (str) => {
                         />
                         <label
                           htmlFor="email"
-                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                        >
                           Email
                         </label>
                       </div>
@@ -192,7 +193,7 @@ const capitalizeWords = (str) => {
                           name="username"
                           id="username"
                           value={username}
-                          onChange={(e) => setUsername(capitalizeWords(e.target.value))}
+                          onChange={(e) => setUsername(e.target.value)}
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                           placeholder=" "
                           autoComplete="off"
@@ -200,7 +201,8 @@ const capitalizeWords = (str) => {
                         />
                         <label
                           htmlFor="username"
-                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                        >
                           Username
                         </label>
                       </div>
@@ -208,14 +210,16 @@ const capitalizeWords = (str) => {
                     <div className="relative z-0 w-full mb-6 group">
                       <label
                         htmlFor="id_organisasi"
-                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                      >
                         Organisasi
                       </label>
                       <select
                         value={idOrganisasi}
                         onChange={(e) => setIdOrganisasi(e.target.value)}
                         name="id_organisasi"
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
+                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                      >
                         <option value="" disabled>
                           Pilih Organisasi
                         </option>
@@ -236,7 +240,9 @@ const capitalizeWords = (str) => {
                         name="status"
                         id="status"
                         value={status}
-                        onChange={(e) => setStatus(capitalizeWords(e.target.value))}
+                        onChange={(e) =>
+                          setStatus(capitalizeWords(e.target.value))
+                        }
                         className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                         placeholder=" "
                         autoComplete="off"
@@ -245,21 +251,24 @@ const capitalizeWords = (str) => {
                       />
                       <label
                         htmlFor="jabatan"
-                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                      >
                         Status
                       </label>
                     </div>
                     <div className="relative z-0 w-full mb-6 group">
                       <label
                         htmlFor="id_shift"
-                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                      >
                         Shift
                       </label>
                       <select
                         name="id_shift"
                         value={idShift}
                         onChange={(e) => setIdShift(e.target.value)}
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
+                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                      >
                         <option value="" disabled>
                           Pilih Waktu Pembelajaran
                         </option>
@@ -276,14 +285,16 @@ const capitalizeWords = (str) => {
                     <div className="relative z-0 w-full mb-6 group">
                       <label
                         htmlFor="id_orang_tua"
-                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                      >
                         Wali Murid
                       </label>
                       <select
                         name="id_orang_tua"
                         value={idOrangTua || ""}
                         onChange={(e) => setIdOrangTua(Number(e.target.value))}
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
+                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                      >
                         <option value="" disabled selected>
                           Pilih Wali Murid
                         </option>
@@ -311,7 +322,8 @@ const capitalizeWords = (str) => {
                       />
                       <label
                         htmlFor="password"
-                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                      >
                         Password
                       </label>
                     </div>
@@ -335,7 +347,8 @@ const capitalizeWords = (str) => {
                       </div>
                       <label
                         htmlFor="showpass"
-                        className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                        className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                      >
                         Show Password
                       </label>
                     </div>
@@ -343,12 +356,14 @@ const capitalizeWords = (str) => {
                   <div className="flex justify-between">
                     <Link
                       className="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                      to={"/admin/siswa/kelas/" + param.id}>
+                      to={"/admin/siswa/kelas/" + param.id}
+                    >
                       <FontAwesomeIcon icon={faArrowLeft} />
                     </Link>
                     <button
                       type="submit"
-                      className="text-white bg-indigo-500 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
+                      className="text-white bg-indigo-500 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800"
+                    >
                       <FontAwesomeIcon icon={faFloppyDisk} />
                     </button>
                   </div>

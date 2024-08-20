@@ -206,16 +206,6 @@ function OrangTua() {
     }
   };
 
-  const capitalize = (str) => {
-    if (typeof str !== 'string') {
-      return str; // Atau Anda bisa mengembalikan string kosong jika itu lebih sesuai
-    }
-    return str
-      .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(' ');
-  };
-
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
@@ -324,10 +314,10 @@ function OrangTua() {
                             className="__cf_email__"
                             data-cfemail="5a363b23363b1a3d373b333674393537"
                           >
-                            {capitalize(ortu.email)}
+                            {ortu.email}
                           </a>
                         </td>
-                        <td className="px-6 py-4 capitalize">{capitalize(ortu.nama)}</td>
+                        <td className="px-6 py-4">{ortu.nama}</td>
                         <td className="py-3">
                           <div className="flex items-center -space-x-4">
                             <a href={`/admin/detailOrtu/${ortu.id}`}>
