@@ -166,15 +166,14 @@ function Shift() {
   );
 
   const capitalize = (str) => {
-    if (typeof str !== 'string') {
+    if (typeof str !== "string") {
       return str; // Atau Anda bisa mengembalikan string kosong jika itu lebih sesuai
     }
     return str
-      .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(' ');
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
   };
-
 
   return (
     <div className="flex flex-col h-screen">
@@ -254,7 +253,7 @@ function Shift() {
                         Admin
                       </th>
                       <th scope="col" className="px-6 py-3 text-center">
-                        aksi
+                        Aksi
                       </th>
                     </tr>
                   </thead>
@@ -272,21 +271,21 @@ function Shift() {
                           {(currentPage - 1) * limit + index + 1}
                         </th>
                         <td className="px-6 py-4 capitalize">
-                          {capitalize(shift.namaShift || '')}
+                          {capitalize(shift.namaShift || "")}
                         </td>
                         <td className="px-6 py-4 capitalize">
-                          {capitalize(shift.waktuMasuk || '')}
+                          {capitalize(shift.waktuMasuk || "")}
                         </td>
                         <td className="px-6 py-4 capitalize">
-                          {capitalize(shift.waktuPulang || '')}
+                          {capitalize(shift.waktuPulang || "")}
                         </td>
                         <td className="px-6 py-4 capitalize">
                           {jumlahKaryawan[shift.id] !== undefined
                             ? capitalize(jumlahKaryawan[shift.id] || "Kosong")
                             : "Loading..."}
                         </td>
-                        <td className="px-6 py-4 capitalize">
-                          {capitalize(shift.admin.username || '')}
+                        <td className="px-6 py-4">
+                          {shift.admin.username || ""}
                         </td>
 
                         <td className="py-3">

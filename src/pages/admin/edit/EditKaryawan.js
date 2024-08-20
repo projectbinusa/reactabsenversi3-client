@@ -130,15 +130,15 @@ function EditKaryawan() {
   };
 
   // Helper function to capitalize each word, but not the character after an apostrophe
-const capitalizeWords = (str) => {
-  return str.replace(/\b\w/g, (char, index, input) => {
-    // Check if the character is right after an apostrophe
-    if (index > 0 && input[index - 1] === "'") {
-      return char.toLowerCase(); // Keep it lowercase
-    }
-    return char.toUpperCase(); // Otherwise, capitalize
-  });
-};
+  // const  = (str) => {
+  //   return str.replace(/\b\w/g, (char, index, input) => {
+  //     // Check if the character is right after an apostrophe
+  //     if (index > 0 && input[index - 1] === "'") {
+  //       return char.toLowerCase(); // Keep it lowercase
+  //     }
+  //     return char.toUpperCase(); // Otherwise, capitalize
+  //   });
+  // };
 
   return (
     <div className="flex flex-col h-screen">
@@ -167,8 +167,8 @@ const capitalizeWords = (str) => {
                         name="username"
                         id="username"
                         value={username}
-                        onChange={(e) => setUsername(capitalizeWords(e.target.value))}
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer capitalize"
+                        onChange={(e) => setUsername(e.target.value)}
+                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                         placeholder=" "
                         autoComplete="off"
                         required
@@ -181,14 +181,14 @@ const capitalizeWords = (str) => {
                       </label>
                     </div>
                     <div className="grid md:grid-cols-2 md:gap-6 mb-6">
-                      <div className="relative z-0 w-full mb-6 group">
+                      <div className="relative z-0 w-full mb-6 group capitalize">
                         <input
                           type="text"
                           name="username"
                           id="username"
                           value={status}
                           readOnly
-                          onChange={(e) => setStatus(capitalizeWords(e.target.value))}
+                          onChange={(e) => setStatus(e.target.value)}
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer capitalize"
                           placeholder=" "
                           autoComplete="off"

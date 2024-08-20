@@ -66,7 +66,7 @@ function Dashboard() {
   const getUser = () =>
     fetchData(`${API_DUMMY}/api/user/get-allUser`, setUserData);
   const getAbsensi = () =>
-    fetchData(`${API_DUMMY}/api/absensi/getAll`, setAbsenData);
+    fetchData(`${API_DUMMY}/api/absensi/admin/${idAdmin}`, setAbsenData);
   const getLokasi = () =>
     fetchData(`${API_DUMMY}/api/lokasi/get-admin/${idAdmin}`, setLokasiData);
   const getOrganisasi = () =>
@@ -127,7 +127,7 @@ function Dashboard() {
         <div className="content-page container p-8 md:ml-72 mt-12">
           <div className="mt-5 w-full">
             <div className="p-4 text-center bg-indigo-300 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-              <h2 className="text-2xl font-semibold mb-4 capitalize">
+              <h2 className="text-2xl font-semibold mb-4">
                 Selamat Datang di Presensi
                 <span> @{username}</span>
               </h2>
@@ -182,7 +182,7 @@ function Dashboard() {
                       No
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      Username
+                      Nama
                     </th>
                     <th scope="col" className="px-6 py-3">
                       Tanggal

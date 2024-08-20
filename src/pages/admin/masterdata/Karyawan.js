@@ -88,20 +88,23 @@ function Karyawan() {
     formData.append("file", file);
 
     try {
-        await axios.post(`${API_DUMMY}/api/import/data-siswa/admin/${idAdmin}`, formData);
-        Swal.fire("Sukses!", "Berhasil menambahkan", "success");
-        setOpenModal(false);
-        getAllKaryawan();
+      await axios.post(
+        `${API_DUMMY}/api/import/data-siswa/admin/${idAdmin}`,
+        formData
+      );
+      Swal.fire("Sukses!", "Berhasil menambahkan", "success");
+      setOpenModal(false);
+      getAllKaryawan();
     } catch (err) {
-        console.error("Error during import:", err);
+      console.error("Error during import:", err);
 
-        if (err.response && err.response.data) {
-            Swal.fire("Error", err.response.data, "error");
-        } else {
-            Swal.fire("Error", "Terjadi kesalahan saat mengimpor data.", "error");
-        }
+      if (err.response && err.response.data) {
+        Swal.fire("Error", err.response.data, "error");
+      } else {
+        Swal.fire("Error", "Terjadi kesalahan saat mengimpor data.", "error");
+      }
     }
-};
+  };
   const getAllKaryawan = async () => {
     const token = localStorage.getItem("token");
 
@@ -194,17 +197,6 @@ function Karyawan() {
     (currentPage - 1) * limit,
     currentPage * limit
   );
-
-  const capitalize = (str) => {
-    if (typeof str !== 'string') {
-      return str; // Atau Anda bisa mengembalikan string kosong jika itu lebih sesuai
-    }
-    return str
-      .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(' ');
-  };
-  
 
   return (
     <div className="flex flex-col h-screen">
@@ -311,8 +303,8 @@ function Karyawan() {
                         >
                           {(currentPage - 1) * limit + index + 1}
                         </th>
-                        <td className="px-6 py-4 text-gray-900 capitalize">
-                        {capitalize(user.username)}
+                        <td className="px-6 py-4 text-gray-900">
+                          {user.username}
                         </td>
                         <td className="px-6 py-4 text-gray-900">
                           <a
@@ -320,11 +312,11 @@ function Karyawan() {
                             className="__cf_email__"
                             data-cfemail="5a363b23363b1a3d373b333674393537"
                           >
-                              {capitalize(user.email)}
+                            {user.email}
                           </a>
                         </td>
-                        <td className="px-6 py-4 text-gray-900 capitalize">
-                        {capitalize(user.admin.username)}
+                        <td className="px-6 py-4 text-gray-900 ">
+                          {user.admin.username}
                         </td>
                         <td className=" py-3">
                           <div className="flex items-center -space-x-4 ml-12">
