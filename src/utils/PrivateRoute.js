@@ -20,21 +20,35 @@
 // export default PrivateRoute;
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 
-const PrivateRoute = ({ component: Component, isAuthenticated, ...rest }) => {
+const PrivateRoute = ({ component: Component, ...rest }) => {
     const isLoggedIn = localStorage.getItem('token');
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        isLoggedIn ? (
-          <Component {...props} />
-        ) : (
-        <Redirect to="/login" />
-        )
-      }
-    />
-  );
+    
+    const isTokenValid = () => {
+        if (!isLoggedIn) return false;
+        try {
+            const decodedToken = jwtDecode(isLoggedIn);
+            const now = Date.now() / 1000;
+            return decodedToken.exp > now; 
+        } catch (e) {
+            return false;
+        }
+    };
+
+    return (
+        <Route
+            {...rest}
+            render={(props) =>
+                isTokenValid() ? (
+                    <Component {...props} />
+                ) : (
+                    <Redirect to="/login" />
+                )
+            }
+        />
+    );
 };
 
 export default PrivateRoute;
+
