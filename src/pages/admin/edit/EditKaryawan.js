@@ -72,7 +72,7 @@ function EditKaryawan() {
   const getKelasOptions = async () => {
     try {
       const res = await axios.get(
-        `${API_DUMMY}/api/kelas/getALlByAdmin/${adminId}`
+        `${API_DUMMY}/api/kelas/getAllByAdmin/${adminId}`
       );
       setKelasOptions(res.data);
     } catch (error) {
