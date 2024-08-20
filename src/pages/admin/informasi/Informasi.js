@@ -23,15 +23,21 @@ function Informasi() {
   const token = localStorage.getItem("token");
   const idAdmin = localStorage.getItem("adminId");
 
-  const removeOutdatedData = async () => {
+  const removeOutdatedData = async (dataToCheck) => {
     try {
-      const today = new Date().toISOString().split("T")[0]; // Get current date in YYYY-MM-DD format
-      const outdatedItems = informasi.filter(
-        (item) => new Date(item.tanggalAcara) < new Date(today)
-      );
+      const today = new Date().toISOString().split("T")[0];
+
+      const outdatedItems = dataToCheck.filter((item) => {
+        const eventDate = new Date(item.tanggalAcara)
+          .toISOString()
+          .split("T")[0];
+        return new Date(eventDate) < new Date(today);
+      });
+
       for (const item of outdatedItems) {
         await axios.delete(`${API_DUMMY}/api/notifications/delete/` + item.id);
       }
+
       // Update state to remove outdated items
       setInformasi((prev) =>
         prev.filter((item) => !outdatedItems.includes(item))
@@ -45,15 +51,11 @@ function Informasi() {
     try {
       const response = await axios.get(
         `${API_DUMMY}/api/notifications/user/getByAdmin/${idAdmin}`
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // }
       );
 
-      setInformasi(response.data.reverse() || []);
-      await removeOutdatedData(); // Ensure outdated data is removed after fetching
+      const fetchedData = response.data.reverse() || [];
+      setInformasi(fetchedData);
+      await removeOutdatedData(fetchedData); // Ensure outdated data is removed after fetching
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -212,13 +214,13 @@ function Informasi() {
   }, []);
 
   const capitalize = (str) => {
-    if (typeof str !== 'string') {
+    if (typeof str !== "string") {
       return str; // Atau Anda bisa mengembalikan string kosong jika itu lebih sesuai
     }
     return str
-      .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(' ');
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
   };
 
   return (
@@ -313,13 +315,13 @@ function Informasi() {
                             {capitalize(informasi.namaAcara)}
                           </td>
                           <td className="px-6 py-4 text-gray-700 capitalize">
-                          {capitalize(formatDate(informasi.tanggalAcara))}
+                            {capitalize(formatDate(informasi.tanggalAcara))}
                           </td>
                           <td className="px-6 py-4 text-gray-700 capitalize">
-                          {capitalize(informasi.tempatAcara)}
+                            {capitalize(informasi.tempatAcara)}
                           </td>
                           <td className="px-6 py-4 text-gray-700 capitalize">
-                          {capitalize(informasi.message)}
+                            {capitalize(informasi.message)}
                           </td>
                           <td className="py-4 text-center">
                             <div className="flex justify-center -space-x-4">
