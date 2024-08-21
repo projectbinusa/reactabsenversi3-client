@@ -237,15 +237,23 @@ function TabelAbsen() {
                                   absenData.statusAbsen === "Izin" ||
                                   absenData.statusAbsen ===
                                     "Izin Tengah Hari" ||
-                                  new Date(absenData.tanggalAbsen) <
-                                    new Date(today)
+                                  new Date(absenData.tanggalAbsen).setHours(
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                  ) < new Date(today).setHours(0, 0, 0, 0)
                                 }
                                 className={`z-20 block rounded-full border-2 border-white p-4 text-red-700 active:bg-red-50 ${
                                   absenData.statusAbsen === "Izin" ||
                                   absenData.statusAbsen ===
                                     "Izin Tengah Hari" ||
-                                  new Date(absenData.tanggalAbsen) <
-                                    new Date(today)
+                                  new Date(absenData.tanggalAbsen).setHours(
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                  ) < new Date(today).setHours(0, 0, 0, 0)
                                     ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                                     : "bg-red-100 text-red-700"
                                 }`}
@@ -257,8 +265,12 @@ function TabelAbsen() {
                                       absenData.statusAbsen === "Izin" ||
                                       absenData.statusAbsen ===
                                         "Izin Tengah Hari" ||
-                                      new Date(absenData.tanggalAbsen) <
-                                        new Date(today)
+                                      new Date(absenData.tanggalAbsen).setHours(
+                                        0,
+                                        0,
+                                        0,
+                                        0
+                                      ) < new Date(today).setHours(0, 0, 0, 0)
                                         ? "text-gray-500"
                                         : "text-red-700"
                                     }`}
