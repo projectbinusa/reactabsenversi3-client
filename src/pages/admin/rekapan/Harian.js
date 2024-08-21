@@ -121,7 +121,7 @@ function Harian() {
           <div className="tabel-absen bg-white p-5 rounded-xl shadow-xl border border-gray-300">
             <div className="flex justify-between">
               <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
-                Rekap Harian
+                Rekap Harians
               </h6>
             </div>
             <hr />

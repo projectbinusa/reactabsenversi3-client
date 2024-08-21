@@ -52,7 +52,7 @@ function BulanPerkelas() {
   const getAllKelas = async (adminId) => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/kelas/getALlByAdmin/${adminId}`
+        `${API_DUMMY}/api/kelas/getAllByAdmin/${adminId}`
       );
       setListKelas(response.data);
     } catch (error) {
@@ -232,12 +232,11 @@ function BulanPerkelas() {
                 onChange={(e) => setIdKelas(e.target.value)}
               >
                 <option selected>Pilih Kelas</option>
-                {listKelas
-                  .slice()
-                  .reverse()
-                  .map((data) => (
-                    <option value={data.id}>{data.namaKelas}</option>
-                  ))}
+                {listKelas.map((data) => (
+    <option key={data.id} value={data.id}>
+      {data.namaKelas}
+    </option>
+  ))}
               </select>
               <input
                 value={selectedDate}
