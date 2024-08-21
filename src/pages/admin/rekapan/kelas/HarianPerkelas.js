@@ -67,16 +67,17 @@ function HarianPerkelas() {
     }
   };
 
-  const getAllKelas = async (adminId) => {
+  const getAllKelas = async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/kelas/getALlByAdmin/${adminId}`
+        `${API_DUMMY}/api/kelas/getAllByAdmin/${adminId}`
       );
       setListKelas(response.data);
     } catch (error) {
       console.error("Error fetching classes:", error);
     }
   };
+
 
   // const getAllKelasByOrganisasi = async () => {
   //   try {
@@ -270,14 +271,11 @@ function HarianPerkelas() {
                 onChange={handleKelasChange}
               >
                 <option value="">Pilih Kelas</option>
-                {listKelas
-                  .slice()
-                  .reverse()
-                  .map((data) => (
-                    <option key={data.id} value={data.id}>
-                      {data.namaKelas}
-                    </option>
-                  ))}
+                {listKelas.map((data) => (
+    <option key={data.id} value={data.id}>
+      {data.namaKelas}
+    </option>
+  ))}
               </select>
               <input
                 type="date"

@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../../../../components/SidebarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCloudArrowDown, faFileExport, faPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCloudArrowDown,
+  faFileExport,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { API_DUMMY } from "../../../../utils/api";
@@ -35,9 +39,9 @@ function Perkelas() {
   const getAllKelas = async (adminId) => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/kelas/getALlByAdmin/${adminId}`
+        `${API_DUMMY}/api/kelas/getAllByAdmin/${adminId}`
       );
-      setListKelas(response.data.reverse());
+      setListKelas(response.data); // Hapus reverse di sini
     } catch (error) {
       console.error("Error fetching classes:", error);
     }
@@ -189,23 +193,19 @@ function Perkelas() {
             </div>
             <hr />
             <form className="flex justify-center items-center gap-4 mt-5">
-              <select
-                id="kelas"
-                className="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                value={kelasId}
-                onChange={(e) => setKelasId(e.target.value)}
-              >
-                <option>Pilih Kelas</option>
-                {listKelas
-                  .slice()
-                  .reverse()
-                  .map((data) => (
-                    <option key={data.id} value={data.id}>
-                      {data.namaKelas}
-                    </option>
-                  ))}
-              </select>
-
+            <select
+  id="kelas"
+  className="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+  value={kelasId}
+  onChange={(e) => setKelasId(e.target.value)}
+>
+  <option>Pilih Kelas</option>
+  {listKelas.map((data) => (
+    <option key={data.id} value={data.id}>
+      {data.namaKelas}
+    </option>
+  ))}
+</select>
               <div className="flex sm:flex-row gap-4 mx-auto items-center">
                 <button
                   type="button"
@@ -213,7 +213,7 @@ function Perkelas() {
                   onClick={exportPerkelas}
                   title="Export"
                 >
-                   <FontAwesomeIcon icon={faCloudArrowDown} />
+                  <FontAwesomeIcon icon={faCloudArrowDown} />
                 </button>
               </div>
             </form>
