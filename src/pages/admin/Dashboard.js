@@ -199,34 +199,45 @@ function Dashboard() {
                   </tr>
                 </thead>
                 <tbody className="text-center">
-                  {absenData.map((absen, index) => (
-                    <tr
-                      key={index}
-                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                    >
-                      <th
-                        scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  {absenData.length > 0 ? (
+                    absenData.map((absen, index) => (
+                      <tr
+                        key={index}
+                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                       >
-                        {index + 1}
-                      </th>
-                      <td className="px-6 py-4 capitalize">
-                        {absen.user.username}
-                      </td>
-                      <td className="px-6 py-4 capitalize">
-                        {formatDate(absen.tanggalAbsen)}
-                      </td>
-                      <td className="px-6 py-4 capitalize">
-                        {absen.jamMasuk || "-"}
-                      </td>
-                      <td className="px-6 py-4 capitalize">
-                        {absen.jamPulang || "-"}
-                      </td>
-                      <td className="px-6 py-4 capitalize">
-                        {absen.statusAbsen}
+                        <th
+                          scope="row"
+                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        >
+                          {index + 1}
+                        </th>
+                        <td className="px-6 py-4 capitalize">
+                          {absen.user.username}
+                        </td>
+                        <td className="px-6 py-4 capitalize">
+                          {formatDate(absen.tanggalAbsen)}
+                        </td>
+                        <td className="px-6 py-4 capitalize">
+                          {absen.jamMasuk || "-"}
+                        </td>
+                        <td className="px-6 py-4 capitalize">
+                          {absen.jamPulang || "-"}
+                        </td>
+                        <td className="px-6 py-4 capitalize">
+                          {absen.statusAbsen}
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td
+                        colSpan="6"
+                        className="px-6 py-4 text-center text-gray-500"
+                      >
+                        Tidak ada data yang ditampilkan
                       </td>
                     </tr>
-                  ))}
+                  )}
                 </tbody>
               </table>
             </div>
@@ -264,27 +275,40 @@ function Dashboard() {
                   </tr>
                 </thead>
                 <tbody className="text-center">
-                  {lokasiData.map((lokasi, index) => (
-                    <tr
-                      key={index}
-                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                    >
-                      <th
-                        scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  {lokasiData.length > 0 ? (
+                    lokasiData.map((lokasi, index) => (
+                      <tr
+                        key={index}
+                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                       >
-                        {index + 1}
-                      </th>
-                      <td className="px-6 py-4 capitalize">
-                        {lokasi.namaLokasi}
-                      </td>
-                      <td className="px-6 py-4 capitalize">{lokasi.alamat}</td>
-                      <td className="px-6 py-4 capitalize">{karyawan}</td>
-                      <td className="px-6 py-4 capitalize">
-                        {lokasi.organisasi.namaOrganisasi}
+                        <th
+                          scope="row"
+                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        >
+                          {index + 1}
+                        </th>
+                        <td className="px-6 py-4 capitalize">
+                          {lokasi.namaLokasi}
+                        </td>
+                        <td className="px-6 py-4 capitalize">
+                          {lokasi.alamat}
+                        </td>
+                        <td className="px-6 py-4 capitalize">{karyawan}</td>
+                        <td className="px-6 py-4 capitalize">
+                          {lokasi.organisasi.namaOrganisasi}
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td
+                        colSpan="5"
+                        className="px-6 py-4 text-center text-gray-500"
+                      >
+                        Tidak ada data yang ditampilkan
                       </td>
                     </tr>
-                  ))}
+                  )}
                 </tbody>
               </table>
             </div>
@@ -316,25 +340,36 @@ function Dashboard() {
                   </tr>
                 </thead>
                 <tbody className="text-center">
-                  {organisasiData.map((organisasi, index) => (
-                    <tr
-                      key={index}
-                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                    >
-                      <th
-                        scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  {organisasiData.length > 0 ? (
+                    organisasiData.map((organisasi, index) => (
+                      <tr
+                        key={index}
+                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                       >
-                        {index + 1}
-                      </th>
-                      <td className="px-6 py-4 capitalize">
-                        {organisasi.namaOrganisasi}
-                      </td>
-                      <td className="px-6 py-4 capitalize">
-                        {organisasi.alamat}
+                        <th
+                          scope="row"
+                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        >
+                          {index + 1}
+                        </th>
+                        <td className="px-6 py-4 capitalize">
+                          {organisasi.namaOrganisasi}
+                        </td>
+                        <td className="px-6 py-4 capitalize">
+                          {organisasi.alamat}
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td
+                        colSpan="3"
+                        className="px-6 py-4 text-center text-gray-500"
+                      >
+                        Tidak ada data yang ditampilkan
                       </td>
                     </tr>
-                  ))}
+                  )}
                 </tbody>
               </table>
             </div>

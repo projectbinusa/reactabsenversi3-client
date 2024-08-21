@@ -291,7 +291,17 @@ function BulanPerkelas() {
                   </tr>
                 </thead>
                 <tbody>
-                  {currentItems.map((absensi, index) => (
+                {currentItems.length === 0 ? (
+                      <tr>
+                        <td
+                          colSpan="9"
+                          className="px-6 py-3 text-center text-gray-500"
+                        >
+                          Tidak ada Absen pada Bulan ini!
+                        </td>
+                      </tr>
+                    ) : (
+                      currentItems.map((absensi, index) => (
                     <tr key={absensi.id}>
                       <td className="px-6 py-3 whitespace-nowrap">
                         {index + 1}
@@ -321,7 +331,8 @@ function BulanPerkelas() {
                         {absensi.keterangan}
                       </td>
                     </tr>
-                  ))}
+                 ))
+                )}
                 </tbody>
               </table>
             </div>

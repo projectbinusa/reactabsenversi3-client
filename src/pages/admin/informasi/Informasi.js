@@ -300,60 +300,71 @@ function Informasi() {
                       </tr>
                     </thead>
                     <tbody className="text-left">
-                      {paginatedInformasi.map((informasi, index) => (
-                        <tr
-                          key={index}
-                          className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                        >
-                          <th
-                            scope="row"
-                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      {paginatedInformasi.length === 0 ? (
+                        <tr>
+                          <td
+                            colSpan="6"
+                            className="px-6 py-4 text-center text-gray-500"
                           >
-                            {(currentPage - 1) * limit + index + 1}
-                          </th>
-                          <td className="px-6 py-4 text-gray-700 capitalize">
-                            {capitalize(informasi.namaAcara)}
+                            Tidak ada data yang ditampilkan
                           </td>
-                          <td className="px-6 py-4 text-gray-700 capitalize">
-                            {capitalize(formatDate(informasi.tanggalAcara))}
-                          </td>
-                          <td className="px-6 py-4 text-gray-700 capitalize">
-                            {capitalize(informasi.tempatAcara)}
-                          </td>
-                          <td className="px-6 py-4 text-gray-700 capitalize">
-                            {capitalize(informasi.message)}
-                          </td>
-                          <td className="py-4 text-center">
-                            <div className="flex justify-center -space-x-4">
-                              <a href={`/admin/editI/${informasi.id}`}>
-                                <button className="rounded-full border-2 border-white bg-yellow-100 p-4 text-yellow-700 active:bg-yellow-50">
+                        </tr>
+                      ) : (
+                        paginatedInformasi.map((informasi, index) => (
+                          <tr
+                            key={index}
+                            className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                          >
+                            <th
+                              scope="row"
+                              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                            >
+                              {(currentPage - 1) * limit + index + 1}
+                            </th>
+                            <td className="px-6 py-4 text-gray-700 capitalize">
+                              {capitalize(informasi.namaAcara)}
+                            </td>
+                            <td className="px-6 py-4 text-gray-700 capitalize">
+                              {capitalize(formatDate(informasi.tanggalAcara))}
+                            </td>
+                            <td className="px-6 py-4 text-gray-700 capitalize">
+                              {capitalize(informasi.tempatAcara)}
+                            </td>
+                            <td className="px-6 py-4 text-gray-700 capitalize">
+                              {capitalize(informasi.message)}
+                            </td>
+                            <td className="py-4 text-center">
+                              <div className="flex justify-center -space-x-4">
+                                <a href={`/admin/editI/${informasi.id}`}>
+                                  <button className="rounded-full border-2 border-white bg-yellow-100 p-4 text-yellow-700 active:bg-yellow-50">
+                                    <FontAwesomeIcon
+                                      icon={faPenToSquare}
+                                      className="h-4 w-4"
+                                    />
+                                  </button>
+                                </a>
+                                <button
+                                  className="rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-red-50"
+                                  onClick={() => deleteData(informasi.id)}
+                                >
                                   <FontAwesomeIcon
-                                    icon={faPenToSquare}
+                                    icon={faTrash}
                                     className="h-4 w-4"
                                   />
                                 </button>
-                              </a>
+                              </div>
+                            </td>
+                            <td className="py-4 text-center">
                               <button
-                                className="rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-red-50"
-                                onClick={() => deleteData(informasi.id)}
+                                className="rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50"
+                                onClick={() => showNotification(informasi)}
                               >
-                                <FontAwesomeIcon
-                                  icon={faTrash}
-                                  className="h-4 w-4"
-                                />
+                                Notifikasi
                               </button>
-                            </div>
-                          </td>
-                          <td className="py-4 text-center">
-                            <button
-                              className="rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50"
-                              onClick={() => showNotification(informasi)}
-                            >
-                              Notifikasi
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
+                            </td>
+                          </tr>
+                        ))
+                      )}
                     </tbody>
                   </table>
                 </div>
@@ -376,3 +387,9 @@ function Informasi() {
 }
 
 export default Informasi;
+
+
+
+
+
+

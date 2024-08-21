@@ -171,70 +171,80 @@ function Absensi() {
                   </tr>
                 </thead>
                 <tbody className="text-left">
-                  {paginatedAbsensi.map((absenData, index) => (
-                    <tr
-                      key={index}
-                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                    >
-                      <th
-                        scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  {paginatedAbsensi.length === 0 ? (
+                    <tr>
+                      <td
+                        colSpan="11"
+                        className="px-6 py-4 text-center text-gray-500"
                       >
-                        {(currentPage - 1) * limit + index + 1}
-                      </th>
-                      <td className="px-6 py-4 whitespace-nowrap capitalize">
-                        {absenData.user.admin.username}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap capitalize">
-                        {absenData.user.username}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {formatDate(absenData.tanggalAbsen)}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {absenData.statusAbsen}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {absenData.jamMasuk}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <img
-                          src={absenData.fotoMasuk ? absenData.fotoMasuk : "-"}
-                          alt="Foto Masuk"
-                          className="block py-2.5 px-0 w-25 max-h-32 h-25 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                          id="foto_masuk"
-                        />
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {absenData.jamPulang}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <img
-                          src={
-                            absenData.fotoPulang ? absenData.fotoPulang : "-"
-                          }
-                          alt="Foto Pulang"
-                          className="block py-2.5 px-0 w-25 max-h-32 h-25 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                          id="foto_masuk"
-                        />
-                      </td>
-                      {/* <td className="px-6 py-4 whitespace-nowrap">
-                        00 jam 00 menit{" "}
-                      </td> */}
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <a href={`/superadmin/detailAbsensi/${absenData.id}`}>
-                          <button className="z-20 block rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
-                            <span className=" inline-block">
-                              <FontAwesomeIcon
-                                icon={faInfo}
-                                className="h-4 w-4"
-                              />
-                            </span>
-                          </button>
-                        </a>
+                        Tidak ada data yang ditampilkan
                       </td>
                     </tr>
-                  ))}
+                  ) : (
+                    paginatedAbsensi.map((absenData, index) => (
+                      <tr
+                        key={index}
+                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                      >
+                        <th
+                          scope="row"
+                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        >
+                          {(currentPage - 1) * limit + index + 1}
+                        </th>
+                        <td className="px-6 py-4 whitespace-nowrap capitalize">
+                          {absenData.user.admin.username}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap capitalize">
+                          {absenData.user.username}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {formatDate(absenData.tanggalAbsen)}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {absenData.statusAbsen}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {absenData.jamMasuk}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <img
+                            src={
+                              absenData.fotoMasuk ? absenData.fotoMasuk : "-"
+                            }
+                            alt="Foto Masuk"
+                            className="block py-2.5 px-0 w-25 max-h-32 h-25 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            id="foto_masuk"
+                          />
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {absenData.jamPulang}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <img
+                            src={
+                              absenData.fotoPulang ? absenData.fotoPulang : "-"
+                            }
+                            alt="Foto Pulang"
+                            className="block py-2.5 px-0 w-25 max-h-32 h-25 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            id="foto_pulang"
+                          />
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <a href={`/superadmin/detailAbsensi/${absenData.id}`}>
+                            <button className="z-20 block rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
+                              <span className="inline-block">
+                                <FontAwesomeIcon
+                                  icon={faInfo}
+                                  className="h-4 w-4"
+                                />
+                              </span>
+                            </button>
+                          </a>
+                        </td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             </div>

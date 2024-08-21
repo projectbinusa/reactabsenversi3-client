@@ -28,7 +28,7 @@ function Lokasi() {
       const res = await axios.get(`${API_DUMMY}/api/user/${idAdmin}/users`);
       setKaryawan(res.data.length);
       // console.log("data siswa: ", res.data);
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const getAllLokasibyAdmin = async () => {
@@ -122,15 +122,14 @@ function Lokasi() {
   );
 
   const capitalize = (str) => {
-    if (typeof str !== 'string') {
+    if (typeof str !== "string") {
       return str; // Atau Anda bisa mengembalikan string kosong jika itu lebih sesuai
     }
     return str
-      .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(' ');
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
   };
-
 
   return (
     <div className="flex flex-col h-screen">
@@ -164,7 +163,8 @@ function Lokasi() {
                   <select
                     value={limit}
                     onChange={handleLimitChange}
-                    className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
+                    className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+                  >
                     <option value="5">05</option>
                     <option value="10">10</option>
                     <option value="20">20</option>
@@ -173,7 +173,8 @@ function Lokasi() {
                   <a
                     type="button"
                     href="/admin/addlok"
-                    className="text-white bg-indigo-500 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800 mt-2">
+                    className="text-white bg-indigo-500 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800 mt-2"
+                  >
                     <FontAwesomeIcon icon={faPlus} size="lg" />
                   </a>
                 </div>
@@ -184,7 +185,8 @@ function Lokasi() {
               <div className=" overflow-x-auto mt-5">
                 <table
                   id="dataJabatan"
-                  className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                  className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+                >
                   {/* <!-- Tabel Head --> */}
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -210,64 +212,75 @@ function Lokasi() {
                   </thead>
                   {/* <!-- Tabel Body --> */}
                   <tbody className="text-left">
-                    {paginatedLokasi.map((lokasi, index) => (
-                      <tr
-                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                        key={index}>
-                        <th
-                          scope="row"
-                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                          {(currentPage - 1) * limit + index + 1}
-                        </th>
-                        <td className="px-6 py-4">
-                          {capitalize(lokasi.namaLokasi)}
-                        </td>
-                        <td className="px-6 py-4">
-                          {capitalize(lokasi.alamat)}
-                        </td>
-                        <td className="px-6 py-4">
-                          {capitalize(karyawan)}
-                        </td>
-                        <td className="px-6 py-4">
-                          {capitalize(lokasi.organisasi.namaOrganisasi)}
-                        </td>
-
-                        <td className=" py-3">
-                          <div className="flex items-center -space-x-4 ml-12">
-                            <a href={`/admin/detailL/${lokasi.idLokasi}`}>
-                              <button className="z-20 block rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
-                                <span className=" inline-block">
-                                  <FontAwesomeIcon
-                                    icon={faInfo}
-                                    className="h-4 w-4"
-                                  />
-                                </span>
-                              </button>
-                            </a>
-                            <a href={`/admin/editL/${lokasi.idLokasi}`}>
-                              <button className="z-30 block rounded-full border-2 border-white bg-yellow-100 p-4 text-yellow-700 active:bg-red-50">
-                                <span className=" inline-block">
-                                  <FontAwesomeIcon
-                                    icon={faPenToSquare}
-                                    className="h-4 w-4"
-                                  />
-                                </span>
-                              </button>
-                            </a>
-                            <button
-                              className="z-30 block rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-red-50"
-                              onClick={() => deleteData(lokasi.idLokasi)}>
-                              <span className=" inline-block">
-                                <FontAwesomeIcon
-                                  icon={faTrash}
-                                  className="h-4 w-4"
-                                />
-                              </span>
-                            </button>
-                          </div>
+                    {paginatedLokasi.length === 0 ? (
+                      <tr>
+                        <td
+                          colSpan="6"
+                          className="px-6 py-4 text-center text-gray-500"
+                        >
+                          Tidak ada data yang ditampilkan
                         </td>
                       </tr>
-                    ))}
+                    ) : (
+                      paginatedLokasi.map((lokasi, index) => (
+                        <tr
+                          className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                          key={index}
+                        >
+                          <th
+                            scope="row"
+                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                          >
+                            {(currentPage - 1) * limit + index + 1}
+                          </th>
+                          <td className="px-6 py-4">
+                            {capitalize(lokasi.namaLokasi)}
+                          </td>
+                          <td className="px-6 py-4">
+                            {capitalize(lokasi.alamat)}
+                          </td>
+                          <td className="px-6 py-4">{capitalize(karyawan)}</td>
+                          <td className="px-6 py-4">
+                            {capitalize(lokasi.organisasi.namaOrganisasi)}
+                          </td>
+                          <td className="py-3">
+                            <div className="flex items-center -space-x-4 ml-12">
+                              <a href={`/admin/detailL/${lokasi.idLokasi}`}>
+                                <button className="z-20 block rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
+                                  <span className="inline-block">
+                                    <FontAwesomeIcon
+                                      icon={faInfo}
+                                      className="h-4 w-4"
+                                    />
+                                  </span>
+                                </button>
+                              </a>
+                              <a href={`/admin/editL/${lokasi.idLokasi}`}>
+                                <button className="z-30 block rounded-full border-2 border-white bg-yellow-100 p-4 text-yellow-700 active:bg-red-50">
+                                  <span className="inline-block">
+                                    <FontAwesomeIcon
+                                      icon={faPenToSquare}
+                                      className="h-4 w-4"
+                                    />
+                                  </span>
+                                </button>
+                              </a>
+                              <button
+                                className="z-30 block rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-red-50"
+                                onClick={() => deleteData(lokasi.idLokasi)}
+                              >
+                                <span className="inline-block">
+                                  <FontAwesomeIcon
+                                    icon={faTrash}
+                                    className="h-4 w-4"
+                                  />
+                                </span>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    )}
                   </tbody>
                 </table>
               </div>
