@@ -56,8 +56,8 @@ function IzinAbsen() {
         izin
       );
       Swal.fire("Berhasil", "Berhasil Izin ", "success");
-      console.log(response.data)
-      // window.location.reload();
+      // console.log(response.data)
+      window.location.href = "/user/history_absen" ;
     } catch (error) {
       console.error("Error:", error);
       toast.error("Gagal Izin");
