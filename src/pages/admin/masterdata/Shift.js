@@ -259,63 +259,74 @@ function Shift() {
                   </thead>
                   {/* <!-- Tabel Body --> */}
                   <tbody className="text-left">
-                    {paginatedShift.map((shift, index) => (
-                      <tr
-                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                        key={index}
-                      >
-                        <th
-                          scope="row"
-                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    {paginatedShift.length === 0 ? (
+                      <tr>
+                        <td
+                          colSpan="7"
+                          className="px-6 py-4 text-center text-gray-500"
                         >
-                          {(currentPage - 1) * limit + index + 1}
-                        </th>
-                        <td className="px-6 py-4 capitalize">
-                          {capitalize(shift.namaShift || "")}
+                          Tidak ada data yang ditampilkan
                         </td>
-                        <td className="px-6 py-4 capitalize">
-                          {capitalize(shift.waktuMasuk || "")}
-                        </td>
-                        <td className="px-6 py-4 capitalize">
-                          {capitalize(shift.waktuPulang || "")}
-                        </td>
-                        <td className="px-6 py-4 capitalize">
-                          {jumlahKaryawan[shift.id] !== undefined
-                            ? capitalize(jumlahKaryawan[shift.id] || "Kosong")
-                            : "Loading..."}
-                        </td>
-                        <td className="px-6 py-4">
-                          {shift.admin.username || ""}
-                        </td>
+                      </tr>
+                    ) : (
+                      paginatedShift.map((shift, index) => (
+                        <tr
+                          className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                          key={shift.id}
+                        >
+                          <th
+                            scope="row"
+                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                          >
+                            {(currentPage - 1) * limit + index + 1}
+                          </th>
+                          <td className="px-6 py-4 capitalize">
+                            {capitalize(shift.namaShift || "")}
+                          </td>
+                          <td className="px-6 py-4 capitalize">
+                            {capitalize(shift.waktuMasuk || "")}
+                          </td>
+                          <td className="px-6 py-4 capitalize">
+                            {capitalize(shift.waktuPulang || "")}
+                          </td>
+                          <td className="px-6 py-4 capitalize">
+                            {jumlahKaryawan[shift.id] !== undefined
+                              ? capitalize(jumlahKaryawan[shift.id] || "Kosong")
+                              : "Loading..."}
+                          </td>
+                          <td className="px-6 py-4">
+                            {shift.admin.username || ""}
+                          </td>
 
-                        <td className="py-3">
-                          <div className="flex items-center -space-x-4 ml-12">
-                            <a href={`/admin/editS/${shift.id}`}>
-                              <button className="z-30 block rounded-full border-2 border-white bg-yellow-100 p-4 text-yellow-700 active:bg-red-50">
-                                <span className=" inline-block">
+                          <td className="py-3">
+                            <div className="flex items-center -space-x-4 ml-12">
+                              <a href={`/admin/editS/${shift.id}`}>
+                                <button className="z-30 block rounded-full border-2 border-white bg-yellow-100 p-4 text-yellow-700 active:bg-red-50">
+                                  <span className="inline-block">
+                                    <FontAwesomeIcon
+                                      icon={faPenToSquare}
+                                      className="h-4 w-4"
+                                    />
+                                  </span>
+                                </button>
+                              </a>
+
+                              <button
+                                className="z-30 block rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-red-50"
+                                onClick={() => deleteData(shift.id)}
+                              >
+                                <span className="inline-block">
                                   <FontAwesomeIcon
-                                    icon={faPenToSquare}
+                                    icon={faTrash}
                                     className="h-4 w-4"
                                   />
                                 </span>
                               </button>
-                            </a>
-
-                            <button
-                              className="z-30 block rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-red-50"
-                              onClick={() => deleteData(shift.id)}
-                            >
-                              <span className=" inline-block">
-                                <FontAwesomeIcon
-                                  icon={faTrash}
-                                  className="h-4 w-4"
-                                />
-                              </span>
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    )}
                   </tbody>
                 </table>
               </div>

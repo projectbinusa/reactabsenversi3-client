@@ -4,7 +4,8 @@ import Navbar from "../../../../components/NavbarAdmin";
 import Sidebar from "../../../../components/SidebarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faCloudArrowDown,  faMagnifyingGlass,
+  faCloudArrowDown,
+  faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -215,10 +216,10 @@ function MingguanPerkelas() {
               >
                 <option selected>Pilih Kelas</option>
                 {listKelas.map((data) => (
-    <option key={data.id} value={data.id}>
-      {data.namaKelas}
-    </option>
-  ))}
+                  <option key={data.id} value={data.id}>
+                    {data.namaKelas}
+                  </option>
+                ))}
                 {/* <option value="CA">Canada</option>
                 <option value="FR">France</option>
                 <option value="DE">Germany</option> */}
@@ -324,79 +325,97 @@ function MingguanPerkelas() {
                   onClick={handleExportClick}
                   title="Export"
                 >
-                   <FontAwesomeIcon icon={faCloudArrowDown} />
+                  <FontAwesomeIcon icon={faCloudArrowDown} />
                 </button>
               </div>
             </form>
 
-            <div className=" overflow-x-auto shadow-md sm:rounded-lg mt-5">
-              <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-left text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                  <tr>
-                    <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                      No
-                    </th>
-                    <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                      Nama
-                    </th>
-                    <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                      Tanggal
-                    </th>
-                    <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                      Jam Masuk
-                    </th>
-                    <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                      Foto Masuk
-                    </th>
-                    <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                      Jam Pulang
-                    </th>
-                    <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                      Foto Pulang
-                    </th>
-                    <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                      Jam Sekolah
-                    </th>
-                    <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                      Keterangan
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {currentItems.map((absensi, index) => (
-                    <tr key={absensi.id}>
-                      <td className="px-6 py-3 whitespace-nowrap">
-                        {index + 1}
-                      </td>
-                      <td className="px-6 py-3 whitespace-nowrap capitalize">
-                        {absensi.user.username}
-                      </td>
-                      <td className="px-6 py-3 whitespace-nowrap capitalize">
-                        {formatDate(absensi.tanggalAbsen)}
-                      </td>
-                      <td className="px-6 py-3 whitespace-nowrap capitalize">
-                        {absensi.jamMasuk}
-                      </td>
-                      <td className="px-6 py-3 whitespace-nowrap capitalize">
-                        <img src={absensi.fotoMasuk} alt="Foto Masuk" />
-                      </td>
-                      <td className="px-6 py-3 whitespace-nowrap capitalize">
-                        {absensi.jamPulang}
-                      </td>
-                      <td className="px-6 py-3 whitespace-nowrap capitalize">
-                        <img src={absensi.fotoPulang} alt="Foto Pulang" />
-                      </td>
-                      <td className="px-6 py-3 whitespace-nowrap capitalize">
-                        {absensi.jamKerja}
-                      </td>
-                      <td className="px-6 py-3 whitespace-nowrap capitalize">
-                        {absensi.keterangan}
-                      </td>
+            <div className="overflow-x-auto shadow-md sm:rounded-lg mt-5">
+              {tanggalAwal && tanggalAkhir ? (
+                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                  <thead className="text-xs text-left text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
+                        No
+                      </th>
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
+                        Nama
+                      </th>
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
+                        Tanggal
+                      </th>
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
+                        Jam Masuk
+                      </th>
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
+                        Foto Masuk
+                      </th>
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
+                        Jam Pulang
+                      </th>
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
+                        Foto Pulang
+                      </th>
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
+                        Jam Sekolah
+                      </th>
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
+                        Keterangan
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {currentItems.length === 0 ? (
+                      <tr>
+                        <td
+                          colSpan="9"
+                          className="px-6 py-3 text-center text-gray-500"
+                        >
+                          Tidak ada absen pada minggu ini!
+                        </td>
+                      </tr>
+                    ) : (
+                      currentItems.map((absensi, index) => (
+                        <tr key={absensi.id}>
+                          <td className="px-6 py-3 whitespace-nowrap">
+                            {index + 1}
+                          </td>
+                          <td className="px-6 py-3 whitespace-nowrap capitalize">
+                            {absensi.user.username}
+                          </td>
+                          <td className="px-6 py-3 whitespace-nowrap capitalize">
+                            {formatDate(absensi.tanggalAbsen)}
+                          </td>
+                          <td className="px-6 py-3 whitespace-nowrap capitalize">
+                            {absensi.jamMasuk}
+                          </td>
+                          <td className="px-6 py-3 whitespace-nowrap capitalize">
+                            <img src={absensi.fotoMasuk} alt="Foto Masuk" />
+                          </td>
+                          <td className="px-6 py-3 whitespace-nowrap capitalize">
+                            {absensi.jamPulang}
+                          </td>
+                          <td className="px-6 py-3 whitespace-nowrap capitalize">
+                            <img src={absensi.fotoPulang} alt="Foto Pulang" />
+                          </td>
+                          <td className="px-6 py-3 whitespace-nowrap capitalize">
+                            {absensi.jamKerja}
+                          </td>
+                          <td className="px-6 py-3 whitespace-nowrap capitalize">
+                            {absensi.keterangan}
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              ) : (
+                <div className="px-6 py-3 text-center text-gray-500">
+                  Silahkan Pilih Tanggal!
+                </div>
+              )}
             </div>
+
             <Pagination
               className="mt-5"
               layout="table"

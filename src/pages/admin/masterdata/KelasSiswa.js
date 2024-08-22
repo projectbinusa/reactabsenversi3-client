@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import NavbarAdmin from "../../../components/NavbarAdmin";
 import Sidebar from "../../../components/SidebarUser";
 import {
-  faCloudArrowDown,
+  faFileExport,
   faFileImport,
   faPenToSquare,
   faPlus,
@@ -337,15 +337,13 @@ function KelasSiswa() {
                       type="button"
                       className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded-lg inline-block ml-auto"
                       onClick={exportData}
-                      title="Export"
                     >
-                      <FontAwesomeIcon icon={faCloudArrowDown} />
+                      <FontAwesomeIcon icon={faFileExport} />
                     </button>
                     <button
                       type="button"
                       className="imp bg-blue-500 ml-3 hover:bg-blue text-white font-bold py-2 px-4 rounded-lg inline-block ml-auto"
                       onClick={() => setOpenModal(true)}
-                      title="Import"
                     >
                       <FontAwesomeIcon icon={faFileImport} />
                     </button>
@@ -382,64 +380,72 @@ function KelasSiswa() {
                   </thead>
                   {/* <!-- Tabel Body --> */}
                   <tbody className="text-left">
-                    {paginatedKelas.map((kelas, index) => (
-                      <tr
-                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                        key={index}
-                      >
-                        <th
-                          scope="row"
-                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    {paginatedKelas.length === 0 ? (
+                      <tr>
+                        <td colSpan="4" className="text-center py-4">
+                          Tidak ada data yang ditampilkan
+                        </td>
+                      </tr>
+                    ) : (
+                      paginatedKelas.map((kelas, index) => (
+                        <tr
+                          className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                          key={index}
                         >
-                          {(currentPage - 1) * limit + index + 1}
-                        </th>
-                        <td className="px-6 py-4 capitalize">
-                          {capitalize(kelas.namaKelas)}
-                        </td>
-                        <td className="px-6 py-4 capitalize">
-                          {validOrganisasiIds.includes(kelas.organisasi.id)
-                            ? capitalize(kelas.organisasi.namaOrganisasi)
-                            : "Invalid Organisasi"}
-                        </td>
-                        <td className="py-3">
-                          <div className="flex items-center -space-x-4 ml-12">
-                            <a href={`/admin/editkelas/${kelas.id}`}>
-                              <button className="z-30 block rounded-full border-2 border-white bg-yellow-100 p-4 text-yellow-700 active:bg-red-50">
+                          <th
+                            scope="row"
+                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                          >
+                            {(currentPage - 1) * limit + index + 1}
+                          </th>
+                          <td className="px-6 py-4 capitalize">
+                            {capitalize(kelas.namaKelas)}
+                          </td>
+                          <td className="px-6 py-4 capitalize">
+                            {validOrganisasiIds.includes(kelas.organisasi.id)
+                              ? capitalize(kelas.organisasi.namaOrganisasi)
+                              : "Invalid Organisasi"}
+                          </td>
+                          <td className="py-3">
+                            <div className="flex items-center -space-x-4 ml-12">
+                              <a href={`/admin/editkelas/${kelas.id}`}>
+                                <button className="z-30 block rounded-full border-2 border-white bg-yellow-100 p-4 text-yellow-700 active:bg-red-50">
+                                  <span className=" inline-block">
+                                    <FontAwesomeIcon
+                                      icon={faPenToSquare}
+                                      className="h-4 w-4"
+                                    />
+                                  </span>
+                                </button>
+                              </a>
+                              <Link
+                                to={`/admin/siswa/kelas/${kelas.id}`}
+                                title="list siswa"
+                                className="z-30 block rounded-full border-2 border-white  bg-blue-100 active:bg-blue-50 p-4 text-blue-700"
+                              >
                                 <span className=" inline-block">
                                   <FontAwesomeIcon
-                                    icon={faPenToSquare}
+                                    icon={faUser}
+                                    className="h-4 w-4"
+                                  />
+                                </span>
+                              </Link>
+                              <button
+                                className="z-30 block rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-red-50"
+                                onClick={() => deleteData(kelas.id)}
+                              >
+                                <span className=" inline-block">
+                                  <FontAwesomeIcon
+                                    icon={faTrash}
                                     className="h-4 w-4"
                                   />
                                 </span>
                               </button>
-                            </a>
-                            <Link
-                              to={`/admin/siswa/kelas/${kelas.id}`}
-                              title="list siswa"
-                              className="z-30 block rounded-full border-2 border-white  bg-blue-100 active:bg-blue-50 p-4 text-blue-700"
-                            >
-                              <span className=" inline-block">
-                                <FontAwesomeIcon
-                                  icon={faUser}
-                                  className="h-4 w-4"
-                                />
-                              </span>
-                            </Link>
-                            <button
-                              className="z-30 block rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-red-50"
-                              onClick={() => deleteData(kelas.id)}
-                            >
-                              <span className=" inline-block">
-                                <FontAwesomeIcon
-                                  icon={faTrash}
-                                  className="h-4 w-4"
-                                />
-                              </span>
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    )}
                   </tbody>
                 </table>
               </div>

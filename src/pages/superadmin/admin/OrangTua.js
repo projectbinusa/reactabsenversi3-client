@@ -222,7 +222,7 @@ function OrangTua() {
             <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
               <div className="md:flex justify-between">
                 <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
-                  Data Orang Tuaa
+                  Data Orang Tua
                 </h6>
                 <div className="md:mt-2 mt-5 md:flex items-center gap-2">
                   <div className=" w-64">
@@ -259,14 +259,14 @@ function OrangTua() {
                       className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded-lg inline-block ml-auto"
                       onClick={exportData}
                       title="Export"
-                  >
-                    <FontAwesomeIcon icon={faCloudArrowDown} />
+                    >
+                      <FontAwesomeIcon icon={faCloudArrowDown} />
                     </button>
                     <button
                       type="button"
                       className="imp bg-blue-500 hover:bg-blue text-white font-bold py-2 px-4 rounded-lg inline-block ml-auto"
                       onClick={() => setOpenModal(true)}
-                       title="Import"
+                      title="Import"
                     >
                       <FontAwesomeIcon icon={faFileImport} />
                     </button>
@@ -300,65 +300,75 @@ function OrangTua() {
                   </thead>
                   {/* <!-- Tabel Body --> */}
                   <tbody className="text-left">
-                    {paginatedAdmin.map((ortu, index) => (
-                      <tr
-                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                        key={index}
-                      >
-                        <th
-                          scope="row"
-                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    {paginatedAdmin.length === 0 ? (
+                      <tr>
+                        <td
+                          colSpan="4"
+                          className="px-6 py-4 text-center text-gray-500"
                         >
-                          {(currentPage - 1) * limit + index + 1}
-                        </th>
-                        <td className="px-6 py-4">
-                          <a
-                            href="/cdn-cgi/l/email-protection"
-                            className="__cf_email__"
-                            data-cfemail="5a363b23363b1a3d373b333674393537"
-                          >
-                            {ortu.email}
-                          </a>
-                        </td>
-                        <td className="px-6 py-4">{ortu.nama}</td>
-                        <td className="py-3">
-                          <div className="flex items-center -space-x-4">
-                            <a href={`/admin/detailOrtu/${ortu.id}`}>
-                              <button className="z-20 block rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
-                                <span className=" inline-block">
-                                  <FontAwesomeIcon
-                                    icon={faInfo}
-                                    className="h-4 w-4"
-                                  />
-                                </span>
-                              </button>
-                            </a>
-                            <a href={`/admin/editOrtu/${ortu.id}`}>
-                              <button className="z-30 block rounded-full border-2 border-white bg-yellow-100 p-4 text-yellow-700 active:bg-red-50">
-                                <span className=" inline-block">
-                                  <FontAwesomeIcon
-                                    icon={faPenToSquare}
-                                    className="h-4 w-4"
-                                  />
-                                </span>
-                              </button>
-                            </a>
-
-                            <button
-                              className="z-30 block rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-red-50"
-                              onClick={() => deleteData(ortu.id)}
-                            >
-                              <span className=" inline-block">
-                                <FontAwesomeIcon
-                                  icon={faTrash}
-                                  className="h-4 w-4"
-                                />
-                              </span>
-                            </button>
-                          </div>
+                          Tidak ada data yang ditampilkan
                         </td>
                       </tr>
-                    ))}
+                    ) : (
+                      paginatedAdmin.map((ortu, index) => (
+                        <tr
+                          className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                          key={index}
+                        >
+                          <th
+                            scope="row"
+                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                          >
+                            {(currentPage - 1) * limit + index + 1}
+                          </th>
+                          <td className="px-6 py-4">
+                            <a
+                              href="/cdn-cgi/l/email-protection"
+                              className="__cf_email__"
+                              data-cfemail="5a363b23363b1a3d373b333674393537"
+                            >
+                              {ortu.email}
+                            </a>
+                          </td>
+                          <td className="px-6 py-4">{ortu.nama}</td>
+                          <td className="py-3">
+                            <div className="flex items-center -space-x-4">
+                              <a href={`/admin/detailOrtu/${ortu.id}`}>
+                                <button className="z-20 block rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
+                                  <span className="inline-block">
+                                    <FontAwesomeIcon
+                                      icon={faInfo}
+                                      className="h-4 w-4"
+                                    />
+                                  </span>
+                                </button>
+                              </a>
+                              <a href={`/admin/editOrtu/${ortu.id}`}>
+                                <button className="z-30 block rounded-full border-2 border-white bg-yellow-100 p-4 text-yellow-700 active:bg-red-50">
+                                  <span className="inline-block">
+                                    <FontAwesomeIcon
+                                      icon={faPenToSquare}
+                                      className="h-4 w-4"
+                                    />
+                                  </span>
+                                </button>
+                              </a>
+                              <button
+                                className="z-30 block rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-red-50"
+                                onClick={() => deleteData(ortu.id)}
+                              >
+                                <span className="inline-block">
+                                  <FontAwesomeIcon
+                                    icon={faTrash}
+                                    className="h-4 w-4"
+                                  />
+                                </span>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    )}
                   </tbody>
                 </table>
               </div>
