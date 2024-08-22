@@ -194,8 +194,15 @@ function TabelAbsen() {
                     </tr>
                   </thead>
                   {/* <!-- Tabel Body --> */}
-                  <tbody className="text-left">
-                    {paginatedAbsen.map((absenData, index) => (
+                <tbody className="text-left">
+  {paginatedAbsen.length === 0 ? (
+    <tr>
+      <td colSpan="7" className="text-center py-4 text-gray-700">
+        Tidak ada data yang ditampilkan
+      </td>
+    </tr>
+  ) : (
+    paginatedAbsen.map((absenData, index) => (
                       <tr key={index}>
                         <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 ">
                           {(currentPage - 1) * limit + index + 1}
@@ -281,7 +288,8 @@ function TabelAbsen() {
                           </div>
                         </td>
                       </tr>
-                    ))}
+                    ))
+                  )}
                   </tbody>
                 </table>
               </div>

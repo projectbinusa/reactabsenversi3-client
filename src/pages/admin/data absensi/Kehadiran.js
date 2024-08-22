@@ -192,39 +192,50 @@ function Kehadiran() {
                       </tr>
                     </thead>
                     <tbody className="text-left">
-                      {paginatedKehadiran.map((kehadiran, index) => (
-                        <tr
-                          key={index}
-                          className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                        >
-                          <th
-                            scope="row"
-                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      {paginatedKehadiran.length === 0 ? (
+                        <tr>
+                          <td
+                            colSpan="7"
+                            className="px-6 py-4 text-center text-gray-500"
                           >
-                            {(currentPage - 1) * limit + index + 1}
-                          </th>
-                          <td className="px-6 py-4 text-gray-700 capitalize">
-                            {kehadiran.username}
-                          </td>
-                          <td className="px-6 py-4 text-gray-700 capitalize">
-                            {kehadiran.status
-                              ? kehadiran.status
-                              : "Tidak ada Status"}
-                          </td>
-                          <td className="px-6 py-4 text-gray-700 capitalize">
-                            {kehadiran.lateCount}
-                          </td>
-                          <td className="px-6 py-4 text-gray-700 capitalize">
-                            {kehadiran.earlyCount}
-                          </td>
-                          <td className="px-6 py-4 text-gray-700 capitalize">
-                            {kehadiran.permissionCount}
-                          </td>
-                          <td className="px-6 py-4 text-gray-700 capitalize">
-                            {kehadiran.totalMasuk}
+                            Tidak ada data yang ditampilkan
                           </td>
                         </tr>
-                      ))}
+                      ) : (
+                        paginatedKehadiran.map((kehadiran, index) => (
+                          <tr
+                            key={index}
+                            className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                          >
+                            <th
+                              scope="row"
+                              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                            >
+                              {(currentPage - 1) * limit + index + 1}
+                            </th>
+                            <td className="px-6 py-4 text-gray-700 capitalize">
+                              {kehadiran.username || "0"}
+                            </td>
+                            <td className="px-6 py-4 text-gray-700 capitalize">
+                              {kehadiran.jabatan
+                                ? kehadiran.jabatan.namaJabatan
+                                : "Siswa"}
+                            </td>
+                            <td className="px-6 py-4 text-gray-700 capitalize">
+                              {kehadiran.lateCount || "0"}
+                            </td>
+                            <td className="px-6 py-4 text-gray-700 capitalize">
+                              {kehadiran.earlyCount || "0"}
+                            </td>
+                            <td className="px-6 py-4 text-gray-700 capitalize">
+                              {kehadiran.permissionCount || "0"}
+                            </td>
+                            <td className="px-6 py-4 text-gray-700 capitalize">
+                              {kehadiran.totalMasuk || "0"}
+                            </td>
+                          </tr>
+                        ))
+                      )}
                     </tbody>
                   </table>
                 </div>

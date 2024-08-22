@@ -213,74 +213,84 @@ function Organisasi() {
                   </thead>
                   {/* <!-- Tabel Body --> */}
                   <tbody className="text-left">
-                    {paginatedOrganisasi.map((organisasi, index) => (
-                      <tr
-                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                        key={index}
-                      >
-                        <th
-                          scope="row"
-                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    {paginatedOrganisasi.length === 0 ? (
+                      <tr>
+                        <td
+                          colSpan="6"
+                          className="px-6 py-4 text-center text-gray-500"
                         >
-                          {index + 1}
-                        </th>
-                        <td className="px-6 py-4 capitalize">
-                          {organisasi.namaOrganisasi || ""}
-                        </td>
-                        <td className="px-6 py-4 capitalize">
-                          {organisasi.alamat || ""}
-                        </td>
-                        <td className="px-6 py-4 capitalize">
-                          {organisasi.nomerTelepon || ""}
-                        </td>
-                        <td className="px-6 py-4">
-                          <a
-                            href="/cdn-cgi/l/email-protection"
-                            className="__cf_email__"
-                            data-cfemail="40253823252c2c252e3400272d21292c6e232f2d"
-                          >
-                            {organisasi.emailOrganisasi || ""}
-                          </a>
-                        </td>
-
-                        <td className=" py-3">
-                          <div className="flex items-center -space-x-4 ml-12">
-                            <a href={`/admin/detailO/${organisasi.id}`}>
-                              <button className="z-20 block rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
-                                <span className=" inline-block">
-                                  <FontAwesomeIcon
-                                    icon={faInfo}
-                                    className="h-4 w-4"
-                                  />
-                                </span>
-                              </button>
-                            </a>
-                            <a href={`/admin/editO/${organisasi.id}`}>
-                              <button className="z-30 block rounded-full border-2 border-white bg-yellow-100 p-4 text-yellow-700 active:bg-red-50">
-                                <span className=" inline-block">
-                                  <FontAwesomeIcon
-                                    icon={faPenToSquare}
-                                    className="h-4 w-4"
-                                  />
-                                </span>
-                              </button>
-                            </a>
-
-                            <button
-                              className="z-30 block rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-red-50"
-                              onClick={() => deleteData(organisasi.id)}
-                            >
-                              <span className=" inline-block">
-                                <FontAwesomeIcon
-                                  icon={faTrash}
-                                  className="h-4 w-4"
-                                />
-                              </span>
-                            </button>
-                          </div>
+                          Tidak ada data yang ditampilkan
                         </td>
                       </tr>
-                    ))}
+                    ) : (
+                      paginatedOrganisasi.map((organisasi, index) => (
+                        <tr
+                          className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                          key={organisasi.id}
+                        >
+                          <th
+                            scope="row"
+                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                          >
+                            {index + 1}
+                          </th>
+                          <td className="px-6 py-4 capitalize">
+                            {organisasi.namaOrganisasi || ""}
+                          </td>
+                          <td className="px-6 py-4 capitalize">
+                            {organisasi.alamat || ""}
+                          </td>
+                          <td className="px-6 py-4 capitalize">
+                            {organisasi.nomerTelepon || ""}
+                          </td>
+                          <td className="px-6 py-4">
+                            <a
+                              href="/cdn-cgi/l/email-protection"
+                              className="__cf_email__"
+                              data-cfemail="40253823252c2c252e3400272d21292c6e232f2d"
+                            >
+                              {organisasi.emailOrganisasi || ""}
+                            </a>
+                          </td>
+
+                          <td className="py-3">
+                            <div className="flex items-center -space-x-4 ml-12">
+                              <a href={`/admin/detailO/${organisasi.id}`}>
+                                <button className="z-20 block rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
+                                  <span className="inline-block">
+                                    <FontAwesomeIcon
+                                      icon={faInfo}
+                                      className="h-4 w-4"
+                                    />
+                                  </span>
+                                </button>
+                              </a>
+                              <a href={`/admin/editO/${organisasi.id}`}>
+                                <button className="z-30 block rounded-full border-2 border-white bg-yellow-100 p-4 text-yellow-700 active:bg-red-50">
+                                  <span className="inline-block">
+                                    <FontAwesomeIcon
+                                      icon={faPenToSquare}
+                                      className="h-4 w-4"
+                                    />
+                                  </span>
+                                </button>
+                              </a>
+                              <button
+                                className="z-30 block rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-red-50"
+                                onClick={() => deleteData(organisasi.id)}
+                              >
+                                <span className="inline-block">
+                                  <FontAwesomeIcon
+                                    icon={faTrash}
+                                    className="h-4 w-4"
+                                  />
+                                </span>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    )}
                   </tbody>
                 </table>
               </div>
