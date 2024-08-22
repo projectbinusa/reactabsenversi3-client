@@ -207,8 +207,8 @@ function Kehadiran() {
                             {kehadiran.username}
                           </td>
                           <td className="px-6 py-4 text-gray-700 capitalize">
-                            {kehadiran.jabatan
-                              ? kehadiran.jabatan.namaJabatan
+                            {kehadiran.status
+                              ? kehadiran.status
                               : "Tidak ada Status"}
                           </td>
                           <td className="px-6 py-4 text-gray-700 capitalize">
