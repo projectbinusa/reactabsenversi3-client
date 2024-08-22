@@ -222,7 +222,7 @@ function OrangTua() {
             <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
               <div className="md:flex justify-between">
                 <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
-                  Data Orang Tuaa
+                  Data Orang Tua
                 </h6>
                 <div className="md:mt-2 mt-5 md:flex items-center gap-2">
                   <div className=" w-64">

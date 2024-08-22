@@ -64,7 +64,7 @@ function Dashboard() {
   };
 
   const getUser = () =>
-    fetchData(`${API_DUMMY}/api/user/get-allUser`, setUserData);
+    fetchData(`${API_DUMMY}/api/user/${idAdmin}/users`, setUserData);
   const getAbsensi = () =>
     fetchData(`${API_DUMMY}/api/absensi/admin/${idAdmin}`, setAbsenData);
   const getLokasi = () =>
@@ -176,7 +176,7 @@ function Dashboard() {
             <hr />
             <div className="overflow-x-auto shadow-md sm:rounded-lg mt-5">
               <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead className="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <thead className="text-left text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
                     <th scope="col" className="px-6 py-3">
                       No
@@ -198,7 +198,7 @@ function Dashboard() {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="text-center">
+                <tbody className="text-left">
                   {absenData.length > 0 ? (
                     absenData.map((absen, index) => (
                       <tr
@@ -255,7 +255,7 @@ function Dashboard() {
             <hr />
             <div className="overflow-x-auto shadow-md sm:rounded-lg mt-5">
               <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead className="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <thead className="text-left text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
                     <th scope="col" className="px-6 py-3">
                       No
@@ -274,7 +274,7 @@ function Dashboard() {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="text-center">
+                <tbody className="text-left">
                   {lokasiData.length > 0 ? (
                     lokasiData.map((lokasi, index) => (
                       <tr
@@ -326,7 +326,7 @@ function Dashboard() {
             <hr />
             <div className="overflow-x-auto shadow-md sm:rounded-lg mt-5">
               <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead className="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <thead className="text-left text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
                     <th scope="col" className="px-6 py-3">
                       No
@@ -339,7 +339,7 @@ function Dashboard() {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="text-center">
+                <tbody className="text-left">
                   {organisasiData.length > 0 ? (
                     organisasiData.map((organisasi, index) => (
                       <tr
