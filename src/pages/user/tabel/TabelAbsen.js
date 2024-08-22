@@ -162,30 +162,30 @@ function TabelAbsen() {
               <br />
               <hr />
               {/* <!-- Tabel --> */}
-              <div className=" overflow-x-auto mt-5">
+              <div className="overflow-x-auto mt-5">
                 <table
                   id="dataKaryawan"
                   className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
                 >
                   {/* <!-- Tabel Head --> */}
-                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                  <thead className="text-xs text-left text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                      <th className="whitespace-nowrap px-4 py-2 font-medium text-center">
+                      <th className="whitespace-nowrap px-4 py-2 font-medium ">
                         NO
                       </th>
-                      <th className="whitespace-nowrap px-4 py-2 font-medium text-center">
+                      <th className="whitespace-nowrap px-4 py-2 font-medium ">
                         TANGGAL
                       </th>
-                      <th className="whitespace-nowrap px-4 py-2 font-medium text-center">
+                      <th className="whitespace-nowrap px-4 py-2 font-medium ">
                         JAM MASUK
                       </th>
-                      <th className="whitespace-nowrap px-4 py-2 font-medium text-center">
+                      <th className="whitespace-nowrap px-4 py-2 font-medium ">
                         JAM PULANG
                       </th>
-                      <th className="whitespace-nowrap px-4 py-2 font-medium text-center">
+                      <th className="whitespace-nowrap px-4 py-2 font-medium ">
                         KETERANGAN
                       </th>
-                      <th className="whitespace-nowrap px-4 py-2 font-medium text-center">
+                      <th className="whitespace-nowrap px-4 py-2 font-medium ">
                         KEHADIRAN
                       </th>
                       <th className="whitespace-nowrap px-4 py-2 font-medium text-center">
@@ -197,26 +197,26 @@ function TabelAbsen() {
                   <tbody className="text-left">
                     {paginatedAbsen.map((absenData, index) => (
                       <tr key={index}>
-                        <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-center">
+                        <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 ">
                           {(currentPage - 1) * limit + index + 1}
                         </td>
-                        <td className="whitespace-nowrap px-4 py-2 text-gray-700 text-center capitalize">
+                        <td className="whitespace-nowrap px-4 py-2 text-gray-700 capitalize">
                           {formatDate(absenData.tanggalAbsen)}
                         </td>
-                        <td className="whitespace-nowrap px-4 py-2 text-gray-700 text-center capitalize">
+                        <td className="whitespace-nowrap px-4 py-2 text-gray-700 capitalize">
                           {absenData.jamMasuk}
                         </td>
-                        <td className="whitespace-nowrap px-4 py-2 text-gray-700 text-center capitalize">
+                        <td className="whitespace-nowrap px-4 py-2 text-gray-700 capitalize">
                           {absenData.jamPulang}
                         </td>
-                        <td className="whitespace-nowrap px-4 py-2 text-gray-700 text-center capitalize">
+                        <td className="whitespace-nowrap px-4 py-2 text-gray-700 capitalize">
                           {absenData.keteranganIzin != null
                             ? absenData.keteranganIzin
                             : absenData.keteranganTerlambat == null
                             ? "-"
                             : absenData.keteranganTerlambat}
                         </td>
-                        <td className="whitespace-nowrap px-4 py-2 text-gray-700 text-center capitalize">
+                        <td className="whitespace-nowrap px-4 py-2 text-gray-700 capitalize">
                           {absenData.statusAbsen}
                         </td>
                         <td className="whitespace-nowrap text-center py-3">

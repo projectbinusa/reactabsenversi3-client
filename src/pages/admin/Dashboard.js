@@ -176,7 +176,7 @@ function Dashboard() {
             <hr />
             <div className="overflow-x-auto shadow-md sm:rounded-lg mt-5">
               <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead className="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <thead className="text-left text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
                     <th scope="col" className="px-6 py-3">
                       No
@@ -198,7 +198,7 @@ function Dashboard() {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="text-center">
+                <tbody className="text-left">
                   {absenData.map((absen, index) => (
                     <tr
                       key={index}
@@ -244,7 +244,7 @@ function Dashboard() {
             <hr />
             <div className="overflow-x-auto shadow-md sm:rounded-lg mt-5">
               <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead className="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <thead className="text-left text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
                     <th scope="col" className="px-6 py-3">
                       No
@@ -263,7 +263,7 @@ function Dashboard() {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="text-center">
+                <tbody className="text-left">
                   {lokasiData.map((lokasi, index) => (
                     <tr
                       key={index}
@@ -302,7 +302,7 @@ function Dashboard() {
             <hr />
             <div className="overflow-x-auto shadow-md sm:rounded-lg mt-5">
               <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead className="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <thead className="text-left text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
                     <th scope="col" className="px-6 py-3">
                       No
@@ -315,7 +315,7 @@ function Dashboard() {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="text-center">
+                <tbody className="text-left">
                   {organisasiData.map((organisasi, index) => (
                     <tr
                       key={index}
