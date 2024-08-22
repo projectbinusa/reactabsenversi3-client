@@ -64,7 +64,7 @@ function Dashboard() {
   };
 
   const getUser = () =>
-    fetchData(`${API_DUMMY}/api/user/get-allUser`, setUserData);
+    fetchData(`${API_DUMMY}/api/user/${idAdmin}/users`, setUserData);
   const getAbsensi = () =>
     fetchData(`${API_DUMMY}/api/absensi/admin/${idAdmin}`, setAbsenData);
   const getLokasi = () =>
