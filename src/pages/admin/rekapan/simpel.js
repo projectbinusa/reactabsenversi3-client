@@ -17,11 +17,12 @@ function Simpel() {
   const [tahun, setTahun] = useState(null); // Tahun default diubah ke null
   const [absensiData, setAbsensiData] = useState([]);
   const [selectedDate, setSelectedDate] = useState("");
+  const adminId = localStorage.getItem("adminId");
 
   const handleSearch = async (bulan, tahun) => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/absensi/get-absensi-bulan?bulan=${bulan}&tahun=${tahun}`,
+        `${API_DUMMY}/api/absensi/admin/${adminId}?bulan=${bulan}&tahun=${tahun}`,
         {
           params: { tanggalAbsen: `${tahun}-${bulan}-01` },
         }
