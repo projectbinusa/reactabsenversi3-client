@@ -210,20 +210,19 @@ function MingguanPerkelas() {
             <form className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-5">
               <select
                 id="small"
-                class="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="block w-40 sm:w-48 md:w-56 p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                style={{ width: 'auto' }}
                 value={idKelas}
                 onChange={(e) => setIdKelas(e.target.value)}
               >
-                <option selected>Pilih Kelas</option>
+                <option value="">Pilih Kelas</option>
                 {listKelas.map((data) => (
                   <option key={data.id} value={data.id}>
                     {data.namaKelas}
                   </option>
                 ))}
-                {/* <option value="CA">Canada</option>
-                <option value="FR">France</option>
-                <option value="DE">Germany</option> */}
               </select>
+
               <input
                 value={tanggalAwal}
                 onChange={handleTanggalAwalChange}
