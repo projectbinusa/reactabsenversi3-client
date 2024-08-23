@@ -28,7 +28,9 @@ function Dashboard() {
   const [isPulangDisabled, setIsPulangDisabled] = useState(false);
   const [isIzinDisabled, setIsIzinDisabled] = useState(false);
   const [informasi, setInformasi] = useState([]);
-  const idAdmin = localStorage.getItem("adminId");
+  const userId = localStorage.getItem("userId");
+  const adminId = localStorage.getItem("adminId");
+  const [admin, setAdmin] = useState(null);
 
   const getUsername = async () => {
     const token = localStorage.getItem("token");
@@ -83,7 +85,6 @@ function Dashboard() {
   };
 
   const getIzin = async () => {
-    const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
 
     try {
@@ -143,20 +144,54 @@ function Dashboard() {
     }
   };
 
-  const Informasi = async () => {
+  const fetchUserData = async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/notifications/user/getByAdmin/${idAdmin}`
+        `http://localhost:2026/api/user/getUserBy/${userId}`
       );
-      setInformasi(response.data.reverse());
+      const userData = response.data;
+      setAdmin(userData.admin.id);
     } catch (error) {
-      console.error("Error fetching informasi:", error);
+      console.error("Error fetching user data:", error);
     }
   };
 
   useEffect(() => {
-    Informasi();
+    fetchUserData();
   }, []);
+
+  const Informasi = async (adminId) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:2026/api/notifications/user/getByAdmin/${adminId}`
+      );
+      setInformasi(response.data.reverse());
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+    }
+  };
+
+  useEffect(() => {
+    console.log("Admin ID:", admin);
+    if (admin) {
+      Informasi(admin);
+    }
+  }, [admin]);
+
+  // const Informasi = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `${API_DUMMY}/api/notifications/user/getByAdmin/${idAdmin}`
+  //     );
+  //     setInformasi(response.data.reverse());
+  //   } catch (error) {
+  //     console.error("Error fetching informasi:", error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   Informasi();
+  // }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
