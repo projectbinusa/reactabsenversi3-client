@@ -1,0 +1,4 @@
+.webcam-container {
+    transform: scaleX(-1); /* Membalikkan gambar secara horizontal */
+  }
+  
