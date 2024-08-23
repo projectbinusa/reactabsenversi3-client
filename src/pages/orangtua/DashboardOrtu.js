@@ -333,12 +333,12 @@ function DashboardOrtu() {
 
           <br />
           <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700 mt-10">
-            <div className="flex justify-between">
-              <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
+            <div className="flex flex-col md:flex-row justify-between">
+              <h6 className="mb-2 text-lg md:text-xl font-bold text-gray-900 dark:text-white">
                 Data Presensi Siswa
               </h6>
-              <div className="md:mt-2 mt-5 md:flex items-center gap-2">
-                <div className="relative w-64">
+              <div className="mt-5 md:mt-2 flex flex-col md:flex-row items-center gap-2">
+                <div className="relative w-full md:w-64">
                   <input
                     type="search"
                     id="search-dropdown"
@@ -352,7 +352,7 @@ function DashboardOrtu() {
                 <select
                   value={limit}
                   onChange={handleLimitChange}
-                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+                  className="w-full md:w-auto flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
                 >
                   <option value="5">05</option>
                   <option value="10">10</option>
@@ -372,25 +372,25 @@ function DashboardOrtu() {
                 {/* <!-- Tabel Head --> */}
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
-                    <th scope="col" className="px-6 py-3">
+                    <th scope="col" className="px-4 md:px-6 py-3">
                       No
                     </th>
-                    <th scope="col" className="px-6 py-3">
+                    <th scope="col" className="px-4 md:px-6 py-3">
                       Nama
                     </th>
-                    <th scope="col" className="px-6 py-3">
+                    <th scope="col" className="px-4 md:px-6 py-3">
                       Tanggal Presensi
                     </th>
-                    <th scope="col" className="px-6 py-3">
+                    <th scope="col" className="px-4 md:px-6 py-3">
                       Jam Masuk
                     </th>
-                    <th scope="col" className="px-6 py-3">
+                    <th scope="col" className="px-4 md:px-6 py-3">
                       Jam Pulang
                     </th>
-                    <th scope="col" className="px-6 py-3">
+                    <th scope="col" className="px-4 md:px-6 py-3">
                       Status Presensi
                     </th>
-                    <th scope="col" className="px-6 py-3">
+                    <th scope="col" className="px-4 md:px-6 py-3">
                       Aksi
                     </th>
                   </tr>
@@ -414,24 +414,26 @@ function DashboardOrtu() {
                       >
                         <th
                           scope="row"
-                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                          className="px-4 md:px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                         >
                           {(currentPage - 1) * limit + index + 1}
                         </th>
-                        <td className="px-6 py-4 capitalize">
+                        <td className="px-4 md:px-6 py-4 capitalize">
                           {absen.user.username}
                         </td>
-                        <td className="px-6 py-4 capitalize">
+                        <td className="px-4 md:px-6 py-4 capitalize">
                           {formatDate(absen.tanggalAbsen)}
                         </td>
-                        <td className="px-6 py-4 capitalize">
+                        <td className="px-4 md:px-6 py-4 capitalize">
                           {absen.jamMasuk}
                         </td>
-                        <td className="px-6 py-4">{absen.jamPulang}</td>
-                        <td className="px-6 py-4">{absen.statusAbsen}</td>
-                        <td className="px-6 py-4">
+                        <td className="px-4 md:px-6 py-4">{absen.jamPulang}</td>
+                        <td className="px-4 md:px-6 py-4">
+                          {absen.statusAbsen}
+                        </td>
+                        <td className="px-4 md:px-6 py-4">
                           <Link to={"/user/detail_absen/" + absen.id}>
-                            <button className="z-20 block rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
+                            <button className="block rounded-full border-2 border-white bg-blue-100 p-2 md:p-4 text-blue-700 active:bg-blue-50">
                               <span className="relative inline-block">
                                 <FontAwesomeIcon
                                   icon={faInfo}
@@ -458,6 +460,7 @@ function DashboardOrtu() {
               nextLabel=""
             />
           </div>
+
           <br />
         </div>
       </div>
