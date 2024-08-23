@@ -99,15 +99,15 @@ function DetailAbsen() {
           <Navbar />
         </div>
         <div
-          className={`content-page container p-8  mt-12 ${
-            localStorage.getItem("role") == "USER"
-              ? "sm:ml-64  ml-14 md:ml-64"
-              : ""
-          }`}>
+          className={`content-page container p-4 md:p-8 ${localStorage.getItem("role") === "USER"
+              ? "ml-4 md:ml-8"
+              : "md:ml-64"
+            } mt-12`}
+        >
           <div className="p-4">
             <div className="p-5 mt-5">
               {/* <!-- Card --> */}
-              <div className="w-full shadow-md p-4 text-center bg-white border border-gray-200 rounded-lg sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+              <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                 {/* <!-- Header --> */}
                 <div className="flex justify-between">
                   <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
@@ -127,7 +127,7 @@ function DetailAbsen() {
                           id="username"
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer capitalize"
                           placeholder=" "
-                          onChange={() => {}}
+                          onChange={() => { }}
                           value={item.user.username}
                           required
                         />
@@ -144,7 +144,7 @@ function DetailAbsen() {
                           id="tanggal"
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer capitalize"
                           placeholder=" "
-                          onChange={() => {}}
+                          onChange={() => { }}
                           value={formatDate(item.tanggalAbsen)}
                           required
                         />
@@ -161,7 +161,7 @@ function DetailAbsen() {
                           id="jam_masuk"
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer capitalize"
                           placeholder=" "
-                          onChange={() => {}}
+                          onChange={() => { }}
                           value={item.jamMasuk}
                           required
                         />
@@ -178,7 +178,7 @@ function DetailAbsen() {
                           id="jam_pulang"
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer capitalize"
                           placeholder=" "
-                          onChange={() => {}}
+                          onChange={() => { }}
                           value={item.jamPulang}
                           required
                         />
@@ -195,7 +195,7 @@ function DetailAbsen() {
                           id="lokasi"
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer capitalize"
                           placeholder=" "
-                          onChange={() => {}}
+                          onChange={() => { }}
                           value={item.lokasiMasuk ? item.lokasiMasuk : "-"}
                           required
                         />
@@ -212,7 +212,7 @@ function DetailAbsen() {
                           id="lokasi"
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer capitalize"
                           placeholder=" "
-                          onChange={() => {}}
+                          onChange={() => { }}
                           value={item.lokasiPulang ? item.lokasiPulang : "-"}
                           required
                         />
@@ -255,7 +255,7 @@ function DetailAbsen() {
                           id="statusabsen"
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer capitalize"
                           placeholder=" "
-                          onChange={() => {}}
+                          onChange={() => { }}
                           value={item.statusAbsen}
                           required
                         />
@@ -272,7 +272,7 @@ function DetailAbsen() {
                           id="keterangan"
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer capitalize"
                           placeholder=""
-                          onChange={() => {}}
+                          onChange={() => { }}
                           value={
                             item.keteranganTerlambat
                               ? item.keteranganTerlambat
@@ -293,7 +293,7 @@ function DetailAbsen() {
                           id="keterangan"
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer capitalize"
                           placeholder=""
-                          onChange={() => {}}
+                          onChange={() => { }}
                           value={
                             item.keteranganPulangAwal
                               ? item.keteranganPulangAwal
@@ -314,7 +314,7 @@ function DetailAbsen() {
                           id="keterangan"
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer capitalize"
                           placeholder=""
-                          onChange={() => {}}
+                          onChange={() => { }}
                           value={
                             item.keteranganIzin ? item.keteranganIzin : "-"
                           }
