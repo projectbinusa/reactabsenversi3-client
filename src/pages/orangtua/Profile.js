@@ -173,7 +173,7 @@ function Profile() {
         <NavbarAdmin />
         {/* <div className="flex h-full">
           <Sidebar /> */}
-        <div className="content-page container p-8 min-h-screen mt-20">
+        <div className="content-page container p-8 mt-10">
           <Tabs aria-label="Tabs with underline" style="underline">
             <Tabs.Item active title="Profile" icon={HiUserCircle}>
               {/* Konten tab Profil */}
