@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { toBeDisabled } from "@testing-library/jest-dom/matchers";
 import { API_DUMMY } from "../../../utils/api";
 import SidebarNavbar from "../../../components/SidebarNavbar";
+import "../css/AbsenMasuk.css"
 
 function AbsenPulang() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -273,7 +274,7 @@ function AbsenPulang() {
             <div className="text-base text-center mt-2">{ucapan}</div>
             <form onSubmit={""}>
               <p className="font-bold text-center mt-8">Foto:</p>
-              <div className="flex justify-center">
+              <div className="flex justify-center webcam-container">
                 <Webcam audio={false} ref={webcamRef} />
               </div>
               <div className="flex justify-center mt-6">
