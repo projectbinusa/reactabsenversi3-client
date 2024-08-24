@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import Loader from "../../../components/Loader";
 import { API_DUMMY } from "../../../utils/api";
 import SidebarNavbar from "../../../components/SidebarNavbar";
+import "../css/AbsenMasuk.css"
 
 function AbsenMasuk() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -22,10 +23,10 @@ function AbsenMasuk() {
 
   // Batas koordinat yang diizinkan
   const allowedCoordinates = {
-    northWest: { lat: -6.982582191501385, lon: 110.4039029362035 }, // Pojok Pintu Garasi
-    northEast: { lat: -6.98251394719206, lon: 110.4039281254977 }, // Pojok Garasi
-    southWest: { lat: -6.982594723643381, lon: 110.40415927480096 }, // Pojok Parkir Depan
-    southEast: { lat: -6.982656068121616, lon: 110.40412982921886 }, // Pojok Parkir Mushola
+    northWest: { lat: -6.982582191501385, lon: 110.4039029362035 }, 
+    northEast: { lat: -6.98251394719206, lon: 110.4039281254977 }, 
+    southWest: { lat: -6.982594723643381, lon: 110.40415927480096 }, 
+    southEast: { lat: -6.982656068121616, lon: 110.40412982921886 }, 
   };
 
   useEffect(() => {
@@ -91,7 +92,7 @@ function AbsenMasuk() {
 
   const isWithinAllowedCoordinates = (lat, lon) => {
     const { northWest, northEast, southWest, southEast } = allowedCoordinates;
-    const tolerance = 0.00001; // adding a small tolerance
+    const tolerance = 0.00001; 
 
     return (
       lat >= southWest.lat - tolerance &&
@@ -110,7 +111,6 @@ function AbsenMasuk() {
       return;
     }
 
-    // if (isWithinAllowedCoordinates(latitude, longitude)) {
     try {
       const absensiCheckResponse = await axios.get(
         `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`
@@ -151,13 +151,6 @@ function AbsenMasuk() {
       console.error("Error:", err);
       Swal.fire("Error", "Gagal Absen", "error");
     }
-    // } else {
-    //   Swal.fire(
-    //     "Error",
-    //     "Lokasi Anda di luar batas yang diizinkan untuk absensi",
-    //     "error"
-    //   );
-    // }
   };
 
   return (
@@ -194,8 +187,11 @@ function AbsenMasuk() {
               {error && <div className="text-red-500">{error}</div>}
               <form onSubmit={(e) => e.preventDefault()}>
                 <p className="font-bold text-center mt-8">Foto:</p>
-                <div className="flex justify-center">
-                  <Webcam audio={false} ref={webcamRef} />
+                <div className="flex justify-center webcam-container">
+                  <Webcam 
+                    audio={false} 
+                    ref={webcamRef} 
+                  />
                 </div>
                 <div className="flex justify-center mt-6">
                   {fetchingLocation ? (
