@@ -27,9 +27,20 @@ function AddKelas() {
 
   const tambahKelas = async (e) => {
     e.preventDefault();
+    const trimmedKelas = namaKelas.trim();
     try {
       if (!selectedOrganisasi || !idAdmin) {
         throw new Error("Pilih organisasi dan pastikan admin ID tersedia.");
+      }
+      const response = await axios.get(`${API_DUMMY}/api/kelas/kelas/all`);
+      const existingUsers = response.data;
+      const isUsernameExists = existingUsers.some(
+        (user) => user.namaKelas.toLowerCase() === trimmedKelas.toLowerCase()
+      );
+
+      if (isUsernameExists) {
+        Swal.fire("Error", "Nama kelas sudah terdaftar", "error");
+        return;
       }
       const add = {
         namaKelas: namaKelas,
@@ -47,7 +58,11 @@ function AddKelas() {
       }, 2000);
     } catch (error) {
       if (error.response && error.response.status === 400) {
-        Swal.fire("Info", "Kelas dengan nama yang sama sudah terdaftar", "info");
+        Swal.fire(
+          "Info",
+          "Kelas dengan nama yang sama sudah terdaftar",
+          "info"
+        );
       } else {
         Swal.fire("Error", error.message || "Gagal menambahkan data", "error");
       }
@@ -59,16 +74,16 @@ function AddKelas() {
     getOrganisasi();
   }, [idAdmin]);
 
-// Helper function to capitalize each word, but not the character after an apostrophe
-const capitalizeWords = (str) => {
-  return str.replace(/\b\w/g, (char, index, input) => {
-    // Check if the character is right after an apostrophe
-    if (index > 0 && input[index - 1] === "'") {
-      return char.toLowerCase(); // Keep it lowercase
-    }
-    return char.toUpperCase(); // Otherwise, capitalize
-  });
-};
+  // Helper function to capitalize each word, but not the character after an apostrophe
+  const capitalizeWords = (str) => {
+    return str.replace(/\b\w/g, (char, index, input) => {
+      // Check if the character is right after an apostrophe
+      if (index > 0 && input[index - 1] === "'") {
+        return char.toLowerCase(); // Keep it lowercase
+      }
+      return char.toUpperCase(); // Otherwise, capitalize
+    });
+  };
 
   return (
     <div className="flex flex-col h-screen">
@@ -101,13 +116,14 @@ const capitalizeWords = (str) => {
                           placeholder=" "
                           autoComplete="off"
                           value={namaKelas}
-                          onChange={(e) => setNamaKelas(capitalizeWords(e.target.value))}
+                          onChange={(e) =>
+                            setNamaKelas(capitalizeWords(e.target.value))
+                          }
                           required
                         />
                         <label
                           htmlFor="nama_kelas"
-                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                        >
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                           Nama Kelas
                         </label>
                       </div>
@@ -121,8 +137,7 @@ const capitalizeWords = (str) => {
                           onChange={(e) =>
                             setSelectedOrganisasi(Number(e.target.value))
                           }
-                          required
-                        >
+                          required>
                           <option value="" disabled>
                             Pilih Organisasi
                           </option>
@@ -135,21 +150,18 @@ const capitalizeWords = (str) => {
                         </select>
                         <label
                           htmlFor="organisasi"
-                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                        ></label>
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"></label>
                       </div>
                     </div>
                     <div className="flex justify-between">
                       <a
                         className="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                        href="/admin/kelas"
-                      >
+                        href="/admin/kelas">
                         <FontAwesomeIcon icon={faArrowLeft} />
                       </a>
                       <button
                         type="submit"
-                        className="text-white bg-indigo-500 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800"
-                      >
+                        className="text-white bg-indigo-500 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
                         <FontAwesomeIcon icon={faFloppyDisk} />
                       </button>
                     </div>
