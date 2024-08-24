@@ -207,6 +207,28 @@ function OrangTua() {
     }
   };
 
+  // Updated getAbsensiByUserId function
+  const getAbsensiByUserId = (idUser, status) => {
+    return userData.filter((abs) => abs.id === idUser && abs.status === status)
+      .length;
+  };
+
+  useEffect(() => {
+    const userAbsensiCounts = userData.map((user) => ({
+      idUser: user.id,
+      earlyCount: getAbsensiByUserId(user.id, "Siswa"),
+    }));
+
+    setUserData((prevUsers) =>
+      prevUsers.map((user) => {
+        const updatedCounts = userAbsensiCounts.find(
+          (u) => u.idUser === user.id
+        );
+        return updatedCounts ? { ...user, ...updatedCounts } : user;
+      })
+    );
+  }, [userData]);
+
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
@@ -294,6 +316,9 @@ function OrangTua() {
                         Nama Orangtua
                       </th>
                       <th scope="col" className="px-6 py-3">
+                        Jumlah Siswa
+                      </th>
+                      <th scope="col" className="px-6 py-3">
                         Aksi
                       </th>
                     </tr>
@@ -331,6 +356,7 @@ function OrangTua() {
                             </a>
                           </td>
                           <td className="px-6 py-4">{ortu.nama}</td>
+                          <td className="px-6 py-4">{ortu.earlyCount || "0"}</td>
                           <td className="py-3">
                             <div className="flex items-center -space-x-4">
                               <a href={`/admin/detailOrtu/${ortu.id}`}>
