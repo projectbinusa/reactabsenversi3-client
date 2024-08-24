@@ -27,7 +27,8 @@ function OrangTua() {
   const [limit, setLimit] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const idOrtu = localStorage.getItem("adminId");
+  const idAdmin = localStorage.getItem("adminId");
+  const idOrtu = localStorage.getItem("idOrangTua");
   const fileInputRef = useRef(null);
   const [openModal, setOpenModal] = useState(false);
 
@@ -36,7 +37,25 @@ function OrangTua() {
 
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/orang-tua/getALlBySuperAdmin/${idOrtu}`,
+        `${API_DUMMY}/api/orang-tua/getALlBySuperAdmin/${idAdmin}`,
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      );
+
+      setUserData(response.data.reverse());
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  const getByIdOrtu = async () => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const response = await axios.get(
+        `${API_DUMMY}/api/user/byOrangtua/${idOrtu}`,
         {
           headers: {
             Authorization: `${token}`,
@@ -92,6 +111,7 @@ function OrangTua() {
   };
   useEffect(() => {
     getAllOrtu();
+    getByIdOrtu();
   }, []);
 
   useEffect(() => {
@@ -208,21 +228,21 @@ function OrangTua() {
   };
 
   // Updated getAbsensiByUserId function
-  const getAbsensiByUserId = (idUser, status) => {
-    return userData.filter((abs) => abs.id === idUser && abs.status === status)
+  const getAbsensiByUserId = (idOrangTua, status) => {
+    return userData.filter((abs) => abs.id === idOrangTua && abs.status === status)
       .length;
   };
 
   useEffect(() => {
     const userAbsensiCounts = userData.map((user) => ({
-      idUser: user.id,
+      idOrangTua: user.id,
       earlyCount: getAbsensiByUserId(user.id, "Siswa"),
     }));
 
     setUserData((prevUsers) =>
       prevUsers.map((user) => {
         const updatedCounts = userAbsensiCounts.find(
-          (u) => u.idUser === user.id
+          (u) => u.idOrangTua === user.id
         );
         return updatedCounts ? { ...user, ...updatedCounts } : user;
       })
