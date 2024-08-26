@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import { toBeDisabled } from "@testing-library/jest-dom/matchers";
 import { API_DUMMY } from "../../../utils/api";
 import SidebarNavbar from "../../../components/SidebarNavbar";
-import "../css/AbsenMasuk.css"
+import "../css/AbsenMasuk.css";
 
 function AbsenPulang() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -32,10 +32,10 @@ function AbsenPulang() {
     const tolerance = 0.00001; // adding a small tolerance
 
     return (
-      lat >= (southWest.lat - tolerance) &&
-      lat <= (northWest.lat + tolerance) &&
-      lon >= (southWest.lon - tolerance) &&
-      lon <= (northEast.lon + tolerance)
+      lat >= southWest.lat - tolerance &&
+      lat <= northWest.lat + tolerance &&
+      lon >= southWest.lon - tolerance &&
+      lon <= northEast.lon + tolerance
     );
   };
 
@@ -217,7 +217,7 @@ function AbsenPulang() {
             } else {
               Swal.fire(
                 "Info",
-                `Anda belum dapat melakukan absensi pulang sebelum pukul ${waktuPulang}.`,
+                `Anda akan melakukan absensi pulang sebelum pukul ${waktuPulang}. Mohon isi keterangan pulang awal.`,
                 "info"
               );
             }
