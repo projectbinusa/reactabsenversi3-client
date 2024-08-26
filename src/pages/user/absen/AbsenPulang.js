@@ -132,15 +132,15 @@ function AbsenPulang() {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
 
-        if (!isWithinAllowedCoordinates(latitude, longitude)) {
-          Swal.fire(
-            "Lokasi tidak valid",
-            "Anda berada di luar kawasan yang diizinkan.",
-            "error"
-          );
-          setFetchingLocation(false);
-          return;
-        }
+        // if (!isWithinAllowedCoordinates(latitude, longitude)) {
+        //   Swal.fire(
+        //     "Lokasi tidak valid",
+        //     "Anda berada di luar kawasan yang diizinkan.",
+        //     "error"
+        //   );
+        //   setFetchingLocation(false);
+        //   return;
+        // }
 
         try {
           const absensiCheckResponse = await axios.get(

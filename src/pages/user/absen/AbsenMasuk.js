@@ -28,7 +28,7 @@ function AbsenMasuk() {
     southWest: { lat: -6.982277272373105, lon: 110.40378695766125 },
     southEast: { lat: -6.982277272373105, lon: 110.40366275475002 },
   };
-  
+
 
 
   useEffect(() => {
@@ -41,13 +41,13 @@ function AbsenMasuk() {
 
   useEffect(() => {
     if (!fetchingLocation) return;
-  
+
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         const { latitude, longitude } = position.coords;
         setLatitude(latitude);
         setLongitude(longitude);
-  
+
         try {
           const response = await fetch(
             `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`
@@ -59,7 +59,7 @@ function AbsenMasuk() {
           console.error("Error:", error);
           setError("Gagal mendapatkan alamat");
         }
-  
+
         setFetchingLocation(false);
       },
       (error) => {
@@ -69,7 +69,7 @@ function AbsenMasuk() {
       }
     );
   }, [fetchingLocation]);
-  
+
 
   const tambahkanNolDepan = (num) => {
     return num < 10 ? "0" + num : num;
@@ -95,26 +95,26 @@ function AbsenMasuk() {
   // validasi
   const isWithinAllowedCoordinates = (lat, lon) => {
     const { northWest, northEast, southWest, southEast } = allowedCoordinates;
-  
+
     // Koordinat batas
     const latMin = southWest.lat;
     const latMax = northWest.lat;
     const lonMin = southWest.lon;
     const lonMax = northEast.lon;
-  
+
     // Log koordinat dan batas untuk debugging
     console.log('Koordinat Pengguna:', { lat, lon });
     console.log('Koordinat Batas:', { northWest, northEast, southWest, southEast });
-  
+
     // Validasi latitude dan longitude
     const isLatValid = lat >= latMin && lat <= latMax;
     const isLonValid = lon >= lonMin && lon <= lonMax;
-  
+
     console.log('Is Latitude Valid:', isLatValid);
     console.log('Is Longitude Valid:', isLonValid);
-  
+
     return isLatValid && isLonValid;
-  };  
+  };
 
   const handleCaptureAndSubmitMasuk = async () => {
     const imageSrc = webcamRef.current.getScreenshot();
@@ -125,7 +125,7 @@ function AbsenMasuk() {
       return;
     }
 
-if (isWithinAllowedCoordinates(latitude, longitude)) {
+// if (isWithinAllowedCoordinates(latitude, longitude)) {
   try {
     const absensiCheckResponse = await axios.get(
       `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`
@@ -166,12 +166,12 @@ if (isWithinAllowedCoordinates(latitude, longitude)) {
     console.error("Error:", err);
     Swal.fire("Error", "Gagal Absen", "error");
   }
-  } else {
-    Swal.fire(
-      "Error",
-      "Lokasi Anda di luar batas yang diizinkan untuk absensi",
-      "error"
-    );
+  // } else {
+  //   Swal.fire(
+  //     "Error",
+  //     "Lokasi Anda di luar batas yang diizinkan untuk absensi",
+  //     "error"
+  //   );
   }
 };
 
@@ -210,9 +210,9 @@ if (isWithinAllowedCoordinates(latitude, longitude)) {
               <form onSubmit={(e) => e.preventDefault()}>
                 <p className="font-bold text-center mt-8">Foto:</p>
                 <div className="flex justify-center webcam-container">
-                  <Webcam 
-                    audio={false} 
-                    ref={webcamRef} 
+                  <Webcam
+                    audio={false}
+                    ref={webcamRef}
                   />
                 </div>
                 <div className="flex justify-center mt-6">
