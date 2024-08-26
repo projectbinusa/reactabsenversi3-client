@@ -23,12 +23,13 @@ import SidebarNavbar from "../../../components/SidebarNavbar";
 
 function OrangTua() {
   const [userData, setUserData] = useState([]);
+  const [allAbsensi, setAllAbsensi] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [limit, setLimit] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const idAdmin = localStorage.getItem("adminId");
-  const idOrtu = localStorage.getItem("idOrangTua");
+  const idOrtu = localStorage.getItem("orangTuaId");
   const fileInputRef = useRef(null);
   const [openModal, setOpenModal] = useState(false);
 
@@ -55,7 +56,7 @@ function OrangTua() {
 
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/user/byOrangtua/${idOrtu}`,
+        `${API_DUMMY}/api/absensi/by-orang-tua/${idOrtu}`,
         {
           headers: {
             Authorization: `${token}`,
@@ -63,7 +64,7 @@ function OrangTua() {
         }
       );
 
-      setUserData(response.data.reverse());
+      setAllAbsensi(response.data.reverse());
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -228,26 +229,25 @@ function OrangTua() {
   };
 
   // Updated getAbsensiByUserId function
-  const getAbsensiByUserId = (idOrangTua, status) => {
-    return userData.filter((abs) => abs.id === idOrangTua && abs.status === status)
-      .length;
+  const getAbsensiByUserId = (idUser) => {
+    return allAbsensi.filter((abs) => abs.id === idUser).length;
   };
 
   useEffect(() => {
-    const userAbsensiCounts = userData.map((user) => ({
-      idOrangTua: user.id,
+    const userAbsensiCounts = allAbsensi.map((user) => ({
+      idUser: user.id,
       earlyCount: getAbsensiByUserId(user.id, "Siswa"),
     }));
 
     setUserData((prevUsers) =>
       prevUsers.map((user) => {
         const updatedCounts = userAbsensiCounts.find(
-          (u) => u.idOrangTua === user.id
+          (u) => u.idUser === user.id
         );
         return updatedCounts ? { ...user, ...updatedCounts } : user;
       })
     );
-  }, [userData]);
+  }, [allAbsensi]);
 
   return (
     <div className="flex flex-col h-screen">
@@ -376,7 +376,9 @@ function OrangTua() {
                             </a>
                           </td>
                           <td className="px-6 py-4">{ortu.nama}</td>
-                          <td className="px-6 py-4">{ortu.earlyCount || "0"}</td>
+                          <td className="px-6 py-4">
+                            {ortu.earlyCount || "0"}
+                          </td>
                           <td className="py-3">
                             <div className="flex items-center -space-x-4">
                               <a href={`/admin/detailOrtu/${ortu.id}`}>
