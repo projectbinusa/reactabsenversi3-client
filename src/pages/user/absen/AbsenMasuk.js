@@ -172,7 +172,7 @@ function AbsenMasuk() {
   //     "Lokasi Anda di luar batas yang diizinkan untuk absensi",
   //     "error"
   //   );
-  }
+  // }
 };
 
   return (
