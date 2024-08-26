@@ -21,13 +21,15 @@ function AbsenMasuk() {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
 
-  // Batas koordinat yang diizinkan
+  // // Batas koordinat yang diizinkan
   const allowedCoordinates = {
-    northWest: { lat: -6.982582191501385, lon: 110.4039029362035 }, 
-    northEast: { lat: -6.98251394719206, lon: 110.4039281254977 }, 
-    southWest: { lat: -6.982594723643381, lon: 110.40415927480096 }, 
-    southEast: { lat: -6.982656068121616, lon: 110.40412982921886 }, 
+    northWest: { lat: -6.982839529257101, lon: 110.40429653782975 },
+    northEast: { lat: -6.982839529257101, lon: 110.4040841160283 },
+    southWest: { lat: -6.982277272373105, lon: 110.40378695766125 },
+    southEast: { lat: -6.982277272373105, lon: 110.40366275475002 },
   };
+  
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -38,16 +40,14 @@ function AbsenMasuk() {
   }, []);
 
   useEffect(() => {
-    if (!fetchingLocation) {
-      return;
-    }
-
+    if (!fetchingLocation) return;
+  
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         const { latitude, longitude } = position.coords;
         setLatitude(latitude);
         setLongitude(longitude);
-
+  
         try {
           const response = await fetch(
             `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`
@@ -59,7 +59,7 @@ function AbsenMasuk() {
           console.error("Error:", error);
           setError("Gagal mendapatkan alamat");
         }
-
+  
         setFetchingLocation(false);
       },
       (error) => {
@@ -69,6 +69,7 @@ function AbsenMasuk() {
       }
     );
   }, [fetchingLocation]);
+  
 
   const tambahkanNolDepan = (num) => {
     return num < 10 ? "0" + num : num;
@@ -90,17 +91,30 @@ function AbsenMasuk() {
     setSidebarOpen(!sidebarOpen);
   };
 
+
+  // validasi
   const isWithinAllowedCoordinates = (lat, lon) => {
     const { northWest, northEast, southWest, southEast } = allowedCoordinates;
-    const tolerance = 0.00001; 
-
-    return (
-      lat >= southWest.lat - tolerance &&
-      lat <= northWest.lat + tolerance &&
-      lon >= southWest.lon - tolerance &&
-      lon <= northEast.lon + tolerance
-    );
-  };
+  
+    // Koordinat batas
+    const latMin = southWest.lat;
+    const latMax = northWest.lat;
+    const lonMin = southWest.lon;
+    const lonMax = northEast.lon;
+  
+    // Log koordinat dan batas untuk debugging
+    console.log('Koordinat Pengguna:', { lat, lon });
+    console.log('Koordinat Batas:', { northWest, northEast, southWest, southEast });
+  
+    // Validasi latitude dan longitude
+    const isLatValid = lat >= latMin && lat <= latMax;
+    const isLonValid = lon >= lonMin && lon <= lonMax;
+  
+    console.log('Is Latitude Valid:', isLatValid);
+    console.log('Is Longitude Valid:', isLonValid);
+  
+    return isLatValid && isLonValid;
+  };  
 
   const handleCaptureAndSubmitMasuk = async () => {
     const imageSrc = webcamRef.current.getScreenshot();
@@ -111,47 +125,55 @@ function AbsenMasuk() {
       return;
     }
 
-    try {
-      const absensiCheckResponse = await axios.get(
-        `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`
+if (isWithinAllowedCoordinates(latitude, longitude)) {
+  try {
+    const absensiCheckResponse = await axios.get(
+      `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`
+    );
+    const isUserAlreadyAbsenToday =
+      absensiCheckResponse.data ===
+      "Pengguna sudah melakukan absensi hari ini.";
+    if (isUserAlreadyAbsenToday) {
+      Swal.fire("Info", "Anda sudah melakukan absensi hari ini.", "info");
+    } else {
+      const formData = new FormData();
+      formData.append("image", imageBlob);
+      formData.append("lokasiMasuk", `${address}`);
+      formData.append("keteranganTerlambat", keteranganTerlambat || "-");
+
+      const response = await axios.post(
+        `${API_DUMMY}/api/absensi/masuk/${userId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
-      const isUserAlreadyAbsenToday =
-        absensiCheckResponse.data ===
-        "Pengguna sudah melakukan absensi hari ini.";
-      if (isUserAlreadyAbsenToday) {
-        Swal.fire("Info", "Anda sudah melakukan absensi hari ini.", "info");
-      } else {
-        const formData = new FormData();
-        formData.append("image", imageBlob);
-        formData.append("lokasiMasuk", `${address}`);
-        formData.append("keteranganTerlambat", keteranganTerlambat || "-");
 
-        const response = await axios.post(
-          `${API_DUMMY}/api/absensi/masuk/${userId}`,
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Berhasil Absen",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        setTimeout(() => {
-          window.location.href = "/user/history_absen";
-        }, 1500);
-      }
-    } catch (err) {
-      console.error("Error:", err);
-      Swal.fire("Error", "Gagal Absen", "error");
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Berhasil Absen",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setTimeout(() => {
+        window.location.href = "/user/history_absen";
+      }, 1500);
     }
-  };
+  } catch (err) {
+    console.error("Error:", err);
+    Swal.fire("Error", "Gagal Absen", "error");
+  }
+  } else {
+    Swal.fire(
+      "Error",
+      "Lokasi Anda di luar batas yang diizinkan untuk absensi",
+      "error"
+    );
+  }
+};
 
   return (
     <>
