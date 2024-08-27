@@ -129,7 +129,7 @@ export default function AddOrganisasi() {
                             placeholder=" "
                             value={namaOrganisasi}
                             onChange={(e) =>
-                              setNamaOrganisasi(capitalizeWords(e.target.value))
+                              setNamaOrganisasi(e.target.value)
                             }
                             required
                           />

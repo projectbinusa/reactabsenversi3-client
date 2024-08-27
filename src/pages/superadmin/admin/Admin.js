@@ -328,13 +328,13 @@ function Admin() {
                             {(currentPage - 1) * limit + index + 1}
                           </th>
                           <td className="px-6 py-4">
-                            <a
+                            {/* <a
                               href="/cdn-cgi/l/email-protection"
                               className="__cf_email__"
                               data-cfemail="5a363b23363b1a3d373b333674393537"
-                            >
+                            > */}
                               {admin.email}
-                            </a>
+                            {/* </a> */}
                           </td>
                           <td className="px-6 py-4">{admin.username}</td>
                           <td className="py-3">
