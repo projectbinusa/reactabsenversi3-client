@@ -318,8 +318,7 @@ function KelasSiswa() {
                   <select
                     value={limit}
                     onChange={handleLimitChange}
-                    className="flex-shrink-0 md:mt-0 mt-3  z-10 inline-flex rounded-md md:rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
-                  >
+                    className="flex-shrink-0 md:mt-0 mt-3  z-10 inline-flex rounded-md md:rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
                     <option value="5">05</option>
                     <option value="10">10</option>
                     <option value="20">20</option>
@@ -329,22 +328,19 @@ function KelasSiswa() {
                     <Link
                       type="button"
                       to="/admin/addkelas"
-                      className="text-white bg-indigo-500 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800 mt-2"
-                    >
+                      className="text-white bg-indigo-500 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800 mt-2">
                       <FontAwesomeIcon icon={faPlus} size="lg" />
                     </Link>
                     <button
                       type="button"
                       className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded-lg inline-block ml-auto"
-                      onClick={exportData}
-                    >
+                      onClick={exportData}>
                       <FontAwesomeIcon icon={faFileExport} />
                     </button>
                     <button
                       type="button"
                       className="imp bg-blue-500 ml-3 hover:bg-blue text-white font-bold py-2 px-4 rounded-lg inline-block ml-auto"
-                      onClick={() => setOpenModal(true)}
-                    >
+                      onClick={() => setOpenModal(true)}>
                       <FontAwesomeIcon icon={faFileImport} />
                     </button>
                   </div>
@@ -356,8 +352,7 @@ function KelasSiswa() {
               <div className=" overflow-x-auto mt-5">
                 <table
                   id="dataKelas"
-                  className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
-                >
+                  className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                   {/* <!-- Tabel Head --> */}
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -372,8 +367,7 @@ function KelasSiswa() {
                       </th>
                       <th
                         scope="col"
-                        className="px-6 py-3 whitespace-nowrap text-center"
-                      >
+                        className="px-6 py-3 whitespace-nowrap text-center">
                         Aksi
                       </th>
                     </tr>
@@ -390,12 +384,10 @@ function KelasSiswa() {
                       paginatedKelas.map((kelas, index) => (
                         <tr
                           className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                          key={index}
-                        >
+                          key={index}>
                           <th
                             scope="row"
-                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                          >
+                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {(currentPage - 1) * limit + index + 1}
                           </th>
                           <td className="px-6 py-4 capitalize">
@@ -403,7 +395,7 @@ function KelasSiswa() {
                           </td>
                           <td className="px-6 py-4 capitalize">
                             {validOrganisasiIds.includes(kelas.organisasi.id)
-                              ? capitalize(kelas.organisasi.namaOrganisasi)
+                              ? kelas.organisasi.namaOrganisasi
                               : "Invalid Organisasi"}
                           </td>
                           <td className="py-3">
@@ -421,8 +413,7 @@ function KelasSiswa() {
                               <Link
                                 to={`/admin/siswa/kelas/${kelas.id}`}
                                 title="list siswa"
-                                className="z-30 block rounded-full border-2 border-white  bg-blue-100 active:bg-blue-50 p-4 text-blue-700"
-                              >
+                                className="z-30 block rounded-full border-2 border-white  bg-blue-100 active:bg-blue-50 p-4 text-blue-700">
                                 <span className=" inline-block">
                                   <FontAwesomeIcon
                                     icon={faUser}
@@ -432,8 +423,7 @@ function KelasSiswa() {
                               </Link>
                               <button
                                 className="z-30 block rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-red-50"
-                                onClick={() => deleteData(kelas.id)}
-                              >
+                                onClick={() => deleteData(kelas.id)}>
                                 <span className=" inline-block">
                                   <FontAwesomeIcon
                                     icon={faTrash}
@@ -453,8 +443,7 @@ function KelasSiswa() {
                 popup
                 className="w-fit ml-auto mr-auto fixed inset-0 flex items-center justify-center"
                 show={openModal}
-                onClose={() => setOpenModal(false)}
-              >
+                onClose={() => setOpenModal(false)}>
                 <Modal.Header>Import Data Kelas</Modal.Header>
                 <hr />
                 <Modal.Body>
@@ -462,8 +451,7 @@ function KelasSiswa() {
                     <Button
                       className="mb-3 bg-green-500 text-white"
                       type="submit"
-                      onClick={downloadTemplate}
-                    >
+                      onClick={downloadTemplate}>
                       Download Template
                     </Button>
                     <input
@@ -478,8 +466,7 @@ function KelasSiswa() {
                 <Modal.Footer>
                   <Button
                     className="bg-red-500"
-                    onClick={() => setOpenModal(false)}
-                  >
+                    onClick={() => setOpenModal(false)}>
                     Batal
                   </Button>
                   <Button color="blue" type="submit" onClick={importData}>

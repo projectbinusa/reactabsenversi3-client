@@ -241,7 +241,7 @@ function Lokasi() {
                           </td>
                           <td className="px-6 py-4">{capitalize(karyawan)}</td>
                           <td className="px-6 py-4">
-                            {capitalize(lokasi.organisasi.namaOrganisasi)}
+                            {lokasi.organisasi.namaOrganisasi}
                           </td>
                           <td className="py-3">
                             <div className="flex items-center -space-x-4 ml-12">
