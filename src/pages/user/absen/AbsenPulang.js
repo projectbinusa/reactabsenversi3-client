@@ -22,11 +22,12 @@ function AbsenPulang() {
 
   // Batas koordinat yang diizinkan
   const allowedCoordinates = {
-    northWest: { lat: -6.982582191501385, lon: 110.4039029362035 }, // Pojok Pintu Garasi
-    northEast: { lat: -6.98251394719206, lon: 110.4039281254977 }, // Pojok Garasi
-    southWest: { lat: -6.982594723643381, lon: 110.40415927480096 }, // Pojok Parkir Depan
-    southEast: { lat: -6.982656068121616, lon: 110.40412982921886 }, // Pojok Parkir Mushola
+    northWest: { lat: -6.982582191501385, lon: 110.4039029362035 },
+    northEast: { lat: -6.98251394719206, lon: 110.4039281254977 },
+    southWest: { lat: -6.982594723643381, lon: 110.40415927480096 },
+    southEast: { lat: -6.982656068121616, lon: 110.40412982921886 },
   };
+
   const isWithinAllowedCoordinates = (lat, lon) => {
     const { northWest, northEast, southWest, southEast } = allowedCoordinates;
     const tolerance = 0.00001; // adding a small tolerance
@@ -134,9 +135,9 @@ function AbsenPulang() {
 
         // if (!isWithinAllowedCoordinates(latitude, longitude)) {
         //   Swal.fire(
-        //     "Lokasi tidak valid",
-        //     "Anda berada di luar kawasan yang diizinkan.",
-        //     "error"
+        //     "Info",
+        //     "Lokasi tidak sesuai. Pastikan Anda berada di area yang diperbolehkan.",
+        //     "info"
         //   );
         //   setFetchingLocation(false);
         //   return;
@@ -153,23 +154,25 @@ function AbsenPulang() {
           const currentTime = new Date();
           const currentHours = currentTime.getHours();
           const currentMinutes = currentTime.getMinutes();
-          const [shiftHours, shiftMinutes] = waktuPulang
-            .split(":")
-            .slice()
-            .reverse()
-            .map(Number);
+          const [shiftHours, shiftMinutes] = waktuPulang.split(":").map(Number);
+
+          const formData = new FormData();
+          formData.append("image", imageBlob);
+          formData.append("lokasiPulang", address);
+          if (keteranganPulangAwal) {
+            formData.append("keteranganPulangAwal", keteranganPulangAwal);
+          }
+
           if (isUserAlreadyAbsenToday) {
             if (
               currentHours > shiftHours ||
               (currentHours === shiftHours && currentMinutes >= shiftMinutes)
             ) {
-              const formData = new FormData();
-              formData.append("image", imageBlob);
-              formData.append("lokasiPulang", address);
-              formData.append("keteranganPulangAwal", keteranganPulangAwal);
-
+              // Sudah melewati waktu pulang, absensi diperbolehkan
               await axios.put(
-                `${API_DUMMY}/api/absensi/pulang/${userId}`,
+                `${API_DUMMY}/api/absensi/pulang/${userId}?keteranganPulangAwal=${keteranganPulangAwal}&lokasiPulang=${encodeURIComponent(
+                  address
+                )}`,
                 formData,
                 {
                   headers: {
@@ -188,36 +191,35 @@ function AbsenPulang() {
               setTimeout(() => {
                 window.location.href = "/user/history_absen";
               }, 1500);
-            } else if (keteranganPulangAwal) {
-              const formData = new FormData();
-              formData.append("image", imageBlob);
-              formData.append("lokasiPulang", address);
-              formData.append("keteranganPulangAwal", keteranganPulangAwal);
+              // } else if (keteranganPulangAwal) {
+              //   // Absensi sebelum waktu pulang dengan keterangan
+              //   await axios.put(
+              //     `${API_DUMMY}/api/absensi/pulang/${userId}?keteranganPulangAwal=${keteranganPulangAwal}&lokasiPulang=${encodeURIComponent(
+              //       address
+              //     )}`,
+              //     formData,
+              //     {
+              //       headers: {
+              //         "Content-Type": "multipart/form-data",
+              //       },
+              //     }
+              //   );
 
-              await axios.put(
-                `${API_DUMMY}/api/absensi/pulang/${userId}`,
-                formData,
-                {
-                  headers: {
-                    "Content-Type": "multipart/form-data",
-                  },
-                }
-              );
-
-              Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "Berhasil Pulang",
-                showConfirmButton: false,
-                timer: 1500,
-              });
-              setTimeout(() => {
-                window.location.href = "/user/history_absen";
-              }, 1500);
+              //   Swal.fire({
+              //     position: "center",
+              //     icon: "success",
+              //     title: "Berhasil Pulang",
+              //     showConfirmButton: false,
+              //     timer: 1500,
+              //   });
+              //   setTimeout(() => {
+              //     window.location.href = "/user/history_absen";
+              //   }, 1500);
             } else {
+              // Tidak boleh absen sebelum waktu pulang tanpa keterangan
               Swal.fire(
                 "Info",
-                `Anda akan melakukan absensi pulang sebelum pukul ${waktuPulang}. Mohon isi keterangan pulang awal.`,
+                `Anda tidak bisa melakukan absensi pulang sebelum pukul ${waktuPulang}.Jika ingin pulang,mohon isi izin tengah hari.`,
                 "info"
               );
             }
@@ -304,7 +306,7 @@ function AbsenPulang() {
                   Ambil Foto
                 </button>
               </div>
-              <div className="relative mb-3 mt-5">
+              {/* <div className="relative mb-3 mt-5">
                 <input
                   type="text"
                   id="keterangan"
@@ -314,7 +316,7 @@ function AbsenPulang() {
                   onChange={(e) => setKeteranganPulangAwal(e.target.value)}
                   required
                 />
-              </div>
+              </div> */}
             </form>
           </div>
         </div>
