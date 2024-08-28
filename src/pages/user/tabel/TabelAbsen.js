@@ -194,102 +194,103 @@ function TabelAbsen() {
                     </tr>
                   </thead>
                   {/* <!-- Tabel Body --> */}
-                <tbody className="text-left">
-  {paginatedAbsen.length === 0 ? (
-    <tr>
-      <td colSpan="7" className="text-center py-4 text-gray-700">
-        Tidak ada data yang ditampilkan
-      </td>
-    </tr>
-  ) : (
-    paginatedAbsen.map((absenData, index) => (
-                      <tr key={index}>
-                        <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 ">
-                          {(currentPage - 1) * limit + index + 1}
-                        </td>
-                        <td className="whitespace-nowrap px-4 py-2 text-gray-700 capitalize">
-                          {formatDate(absenData.tanggalAbsen)}
-                        </td>
-                        <td className="whitespace-nowrap px-4 py-2 text-gray-700 capitalize">
-                          {absenData.jamMasuk}
-                        </td>
-                        <td className="whitespace-nowrap px-4 py-2 text-gray-700 capitalize">
-                          {absenData.jamPulang}
-                        </td>
-                        <td className="whitespace-nowrap px-4 py-2 text-gray-700 capitalize">
-                          {absenData.keteranganIzin != null
-                            ? absenData.keteranganIzin
-                            : absenData.keteranganTerlambat == null
-                            ? "-"
-                            : absenData.keteranganTerlambat}
-                        </td>
-                        <td className="whitespace-nowrap px-4 py-2 text-gray-700 capitalize">
-                          {absenData.statusAbsen}
-                        </td>
-                        <td className="whitespace-nowrap text-center py-3">
-                          <div className="flex items-center -space-x-4 ml-12">
-                            <Link to={"/user/detail_absen/" + absenData.id}>
-                              <button className="z-20 block rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
-                                <span className="relative inline-block">
-                                  <FontAwesomeIcon
-                                    icon={faInfo}
-                                    className="h-4 w-4"
-                                  />
-                                </span>
-                              </button>
-                            </Link>
-                            <Link to="/user/izin_absen">
-                              <button
-                                disabled={
-                                  absenData.statusAbsen === "Izin" ||
-                                  absenData.statusAbsen ===
-                                    "Izin Tengah Hari" ||
-                                  new Date(absenData.tanggalAbsen).setHours(
-                                    0,
-                                    0,
-                                    0,
-                                    0
-                                  ) < new Date(today).setHours(0, 0, 0, 0)
-                                }
-                                className={`z-20 block rounded-full border-2 border-white p-4 text-red-700 active:bg-red-50 ${
-                                  absenData.statusAbsen === "Izin" ||
-                                  absenData.statusAbsen ===
-                                    "Izin Tengah Hari" ||
-                                  new Date(absenData.tanggalAbsen).setHours(
-                                    0,
-                                    0,
-                                    0,
-                                    0
-                                  ) < new Date(today).setHours(0, 0, 0, 0)
-                                    ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                                    : "bg-red-100 text-red-700"
-                                }`}
-                              >
-                                <span className="relative inline-block">
-                                  <FontAwesomeIcon
-                                    icon={faUserPlus}
-                                    className={`h-4 w-4 ${
-                                      absenData.statusAbsen === "Izin" ||
-                                      absenData.statusAbsen ===
-                                        "Izin Tengah Hari" ||
-                                      new Date(absenData.tanggalAbsen).setHours(
-                                        0,
-                                        0,
-                                        0,
-                                        0
-                                      ) < new Date(today).setHours(0, 0, 0, 0)
-                                        ? "text-gray-500"
-                                        : "text-red-700"
-                                    }`}
-                                  />
-                                </span>
-                              </button>
-                            </Link>
-                          </div>
+                  <tbody className="text-left">
+                    {paginatedAbsen.length === 0 ? (
+                      <tr>
+                        <td
+                          colSpan="7"
+                          className="text-center py-4 text-gray-700"
+                        >
+                          Tidak ada data yang ditampilkan
                         </td>
                       </tr>
-                    ))
-                  )}
+                    ) : (
+                      paginatedAbsen.map((absenData, index) => (
+                        <tr key={index}>
+                          <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 ">
+                            {(currentPage - 1) * limit + index + 1}
+                          </td>
+                          <td className="whitespace-nowrap px-4 py-2 text-gray-700 capitalize">
+                            {formatDate(absenData.tanggalAbsen)}
+                          </td>
+                          <td className="whitespace-nowrap px-4 py-2 text-gray-700 capitalize">
+                            {absenData.jamMasuk}
+                          </td>
+                          <td className="whitespace-nowrap px-4 py-2 text-gray-700 capitalize">
+                            {absenData.jamPulang}
+                          </td>
+                          <td className="whitespace-nowrap px-4 py-2 text-gray-700 capitalize">
+                            {absenData.keteranganPulangAwal
+                              ? absenData.keteranganPulangAwal
+                              : absenData.keteranganIzin
+                              ? absenData.keteranganIzin
+                              : absenData.keteranganTerlambat || "-"}
+                          </td>
+                          <td className="whitespace-nowrap px-4 py-2 text-gray-700 capitalize">
+                            {absenData.statusAbsen}
+                          </td>
+                          <td className="whitespace-nowrap text-center py-3">
+                            <div className="flex items-center -space-x-4 ml-12">
+                              <Link to={"/user/detail_absen/" + absenData.id}>
+                                <button className="z-20 block rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
+                                  <span className="relative inline-block">
+                                    <FontAwesomeIcon
+                                      icon={faInfo}
+                                      className="h-4 w-4"
+                                    />
+                                  </span>
+                                </button>
+                              </Link>
+                              <Link to="/user/izin_absen">
+                                <button
+                                  disabled={
+                                    absenData.statusAbsen === "Izin" ||
+                                    absenData.statusAbsen ===
+                                      "Izin Tengah Hari" ||
+                                    new Date(absenData.tanggalAbsen).setHours(
+                                      0,
+                                      0,
+                                      0,
+                                      0
+                                    ) < new Date(today).setHours(0, 0, 0, 0)
+                                  }
+                                  className={`z-20 block rounded-full border-2 border-white p-4 text-red-700 active:bg-red-50 ${
+                                    absenData.statusAbsen === "Izin" ||
+                                    absenData.statusAbsen ===
+                                      "Izin Tengah Hari" ||
+                                    new Date(absenData.tanggalAbsen).setHours(
+                                      0,
+                                      0,
+                                      0,
+                                      0
+                                    ) < new Date(today).setHours(0, 0, 0, 0)
+                                      ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                                      : "bg-red-100 text-red-700"
+                                  }`}
+                                >
+                                  <span className="relative inline-block">
+                                    <FontAwesomeIcon
+                                      icon={faUserPlus}
+                                      className={`h-4 w-4 ${
+                                        absenData.statusAbsen === "Izin" ||
+                                        absenData.statusAbsen ===
+                                          "Izin Tengah Hari" ||
+                                        new Date(
+                                          absenData.tanggalAbsen
+                                        ).setHours(0, 0, 0, 0) <
+                                          new Date(today).setHours(0, 0, 0, 0)
+                                          ? "text-gray-500"
+                                          : "text-red-700"
+                                      }`}
+                                    />
+                                  </span>
+                                </button>
+                              </Link>
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    )}
                   </tbody>
                 </table>
               </div>
