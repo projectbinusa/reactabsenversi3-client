@@ -52,6 +52,68 @@ function Dashboard() {
     }
   };
 
+  // const cekAbsensi = async () => {
+  //   try {
+  //     const absensiCheckResponse = await axios.get(
+  //       `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`
+  //     );
+  //     const isUserAlreadyAbsenToday =
+  //       absensiCheckResponse.data ===
+  //       "Pengguna sudah melakukan absensi hari ini.";
+  //     console.log("Is User Already Absen Today:", isUserAlreadyAbsenToday);
+
+  //     const izinCheckResponse = await axios.get(
+  //       `${API_DUMMY}/api/absensi/checkIzin/${userId}`
+  //     );
+  //     const izin = izinCheckResponse.data;
+  //     console.log(izin);
+  //     let hasMiddayLeave = false;
+
+  //     if (izin && Array.isArray(izin)) {
+  //       hasMiddayLeave = izin.some((izin) => {
+  //         return izin.statusAbsen === "Izin Tengah Hari"; // Check if the status is "Izin Tengah Hari"
+  //       });
+  //     }
+
+  //     console.log("Has midday leave:", hasMiddayLeave);
+
+  //     setIsPulangDisabled(izinCheckResponse);
+  //     setIsIzinDisabled(isUserAlreadyAbsenToday);
+  //     setIsAbsenMasuk(isUserAlreadyAbsenToday);
+  //   } catch (error) {
+  //     console.error("Error checking absensi or izin:", error);
+  //   }
+  // };
+
+  // const getIzin = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `${API_DUMMY}/api/absensi/getByUserId/${userId}`
+  //     );
+  //     const izinData = response.data.reverse();
+  //     setIzin(izinData);
+  //     setTotalIzin(izinData.length);
+
+  //     // Check if any izin has the status "Izin Tengah Hari"
+  //     const hasMiddayIzin = izinData.some((izin) => {
+  //       return (
+  //         izin.statusAbsen === "Izin Tengah Hari" ||
+  //         izin.statusAbsen === "Izin" ||
+  //         new Date(izin.tanggalAbsen).setHours(0, 0, 0, 0) <
+  //           new Date().setHours(0, 0, 0, 0)
+  //       );
+  //     });
+
+  //     if (hasMiddayIzin) {
+  //       setIsPulangDisabled(true);
+  //     } else {
+  //       setIsPulangDisabled(false);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching izin:", error);
+  //   }
+  // };
+
   const cekAbsensi = async () => {
     const userId = localStorage.getItem("userId");
 
@@ -75,7 +137,7 @@ function Dashboard() {
       console.log("Is Pulang Disabled:", isPulangDisabled);
 
       // The 'Izin' button is disabled if the user has both 'absen masuk' and 'izin' on the same day
-      setIsIzinDisabled(isUserAlreadyAbsenToday && hasTakenLeave);
+      setIsIzinDisabled(isUserAlreadyAbsenToday);
 
       // Set the 'Absen Masuk' status
       setIsAbsenMasuk(isUserAlreadyAbsenToday);
@@ -85,24 +147,51 @@ function Dashboard() {
   };
 
   const getIzin = async () => {
-    const userId = localStorage.getItem("userId");
-
     try {
-      const response = await axios.get(
-        `${API_DUMMY}/api/absensi/getizin/${userId}`
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // }
-      );
+        const response = await axios.get(`${API_DUMMY}/api/absensi/getByUserId/${userId}`);
+        const izinData = response.data.reverse();
 
-      setIzin(response.data.reverse());
-      setTotalIzin(response.data.length);
+        // Get today's date at midnight for accurate comparison
+        const today = new Date().setHours(0, 0, 0, 0);
+        
+        // Filter izin data to include both "Izin" and "Izin Tengah Hari"
+        const filteredIzin = izinData.filter((izin) => {
+            return (
+                izin.statusAbsen === "Izin Tengah Hari" || izin.statusAbsen === "Izin"
+            );
+        });
+
+        // Set the total izin count based on the filtered izin data
+        setTotalIzin(filteredIzin.length);
+        
+        // Check if any "Izin" or "Izin Tengah Hari" exists for today
+        const hasMiddayIzin = filteredIzin.some((izin) => {
+            const izinDate = new Date(izin.tanggalAbsen).setHours(0, 0, 0, 0);
+            return izinDate === today;
+        });
+
+        // Disable "Pulang" button only if there's a relevant izin today
+        setIsPulangDisabled(hasMiddayIzin);
     } catch (error) {
-      console.error("Error fetching izin:", error);
+        console.error("Error fetching izin:", error);
     }
-  };
+};
+
+  
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentDateTime(new Date());
+    }, 1000);
+
+    getUsername();
+    getAbsensi();
+    getCuti();
+    getIzin(); // Ensure this runs to check and disable the "Pulang" button
+    cekAbsensi();
+
+    return () => clearInterval(interval);
+  }, []);
 
   const getAbsensi = async () => {
     const token = localStorage.getItem("token");
@@ -193,19 +282,19 @@ function Dashboard() {
   //   Informasi();
   // }, []);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentDateTime(new Date());
-    }, 1000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setCurrentDateTime(new Date());
+  //   }, 1000);
 
-    getUsername();
-    getAbsensi();
-    getCuti();
-    getIzin();
-    cekAbsensi();
+  //   getUsername();
+  //   getAbsensi();
+  //   getCuti();
+  //   getIzin();
+  //   cekAbsensi();
 
-    return () => clearInterval(interval);
-  }, []);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   useEffect(() => {
     setUsername(username); // Setelah mendapatkan respons, atur username
@@ -400,35 +489,7 @@ function Dashboard() {
               </Link>
             </div>
 
-            <div className="flex justify-center mt-3 gap-4 flex-col md:flex-row">
-              {/* <Link to="/user/cuti">
-                <div className="pl-2 h-24 w-full md:w-80 bg-red-400 rounded-lg shadow-md md:mr-20 cursor-pointer">
-                  <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
-                    <div className="my-auto">
-                      <p className="font-bold text-black">Cuti</p>
-                      <p className="text-lg text-black">Ajukan cuti.</p>
-                    </div>
-                    <div className="my-auto text-black">
-                      <FontAwesomeIcon icon={faCalendarDays} size="2x" />
-                    </div>
-                  </div>
-                </div>
-              </Link>
-
-              <Link to="/user/lembur">
-                <div className="pl-2 h-24 w-full md:w-80 bg-yellow-300 rounded-lg shadow-md md:ml-0 mt-4 md:mt-0 cursor-pointer">
-                  <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
-                    <div className="my-auto">
-                      <p className="font-bold text-black">Lembur</p>
-                      <p className="text-lg text-black">Ajukan lembur.</p>
-                    </div>
-                    <div className="my-auto text-black">
-                      <FontAwesomeIcon icon={faClockFour} size="2x" />
-                    </div>
-                  </div>
-                </div>
-              </Link> */}
-            </div>
+            <div className="flex justify-center mt-3 gap-4 flex-col md:flex-row"></div>
           </div>
           <div className="dashboard-announcements p-4 bg-slate-200 rounded-lg shadow-xl mt-10">
             <h2 className="text-3xl font-semibold text-black text-center">
@@ -510,88 +571,6 @@ function Dashboard() {
               </div>
             </div>
           </div>
-          {/* <div className="tabel-absen mt-12 bg-blue-100 p-5 rounded-xl shadow-xl border border-gray-300">
-            <h2 className="text-xl font-bold text-black">History Presensi</h2>
-            <div className="overflow-x-auto rounded-lg border border-gray-200 mt-4">
-              <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm border border-gray-300">
-                <thead className="text-left text-white bg-blue-500">
-                  <tr>
-                    <th className="whitespace-nowrap px-4 py-2 font-medium text-center">
-                      NO
-                    </th>
-                    <th className="whitespace-nowrap px-4 py-2 font-medium text-center">
-                      TANGGAL
-                    </th>
-                    <th className="whitespace-nowrap px-4 py-2 font-medium text-center">
-                      KEHADIRAN
-                    </th>
-                  </tr>
-                </thead>
-
-                <tbody className="divide-y divide-gray-200">
-                  {absensivalidInformasi.map((absenData, index) => (
-                    <tr key={index}>
-                      <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-center">
-                        {index + 1}
-                      </td>
-                      <td className="whitespace-nowrap px-4 py-2 text-gray-700 text-center capitalize">
-                        {formatDate(absenData.tanggalAbsen)}
-                      </td>
-                      <td className="whitespace-nowrap px-4 py-2 text-gray-700 text-center capitalize">
-                        {absenData.statusAbsen}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <div className="flex justify-end mt-5">
-              <button
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                onClick={() => (window.location.href = "/user/history_absen")}
-              >
-                <FontAwesomeIcon icon={faArrowRight} />
-              </button>
-            </div>
-          </div> */}
-          {/* <div className="tabel-cuti mt-12 bg-blue-100 p-5 rounded-xl shadow-xl border border-gray-300">
-            <h2 className="text-xl font-bold text-black">Permohonan Cuti</h2>
-            <div className="overflow-x-auto rounded-lg border border-gray-200 mt-4">
-              <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm border border-gray-300">
-                <thead className="text-left text-white bg-blue-500">
-                  <tr>
-                    <th className="whitespace-nowrap px-4 py-2 font-medium text-center">
-                      NO
-                    </th>
-                    <th className="whitespace-nowrap px-4 py-2 font-medium text-center">
-                      KEPERLUAN CUTI
-                    </th>
-                  </tr>
-                </thead>
-
-                <tbody className="divide-y divide-gray-200">
-                  {cutivalidInformasi.map((item, index) => (
-                    <tr key={index}>
-                      <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-center">
-                        {index + 1}
-                      </td>
-                      <td className="whitespace-nowrap px-4 py-2 text-gray-700 text-center capitalize">
-                        {item.keperluan}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <div className="flex justify-end mt-5">
-              <button
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                onClick={() => (window.location.href = "/user/history_cuti")}
-              >
-                <FontAwesomeIcon icon={faArrowRight} />
-              </button>
-            </div>
-          </div> */}
         </div>
       </div>
     </div>
