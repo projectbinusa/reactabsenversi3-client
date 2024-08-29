@@ -164,10 +164,19 @@ function AbsenPulang() {
           }
 
           if (isUserAlreadyAbsenToday) {
+            const absen = await axios.get(
+              `${API_DUMMY}/api/absensi/getByUserId/${userId}`
+            );
+            const dataAbsen = absen.data.some(
+              (dt) => dt.statusAbsen === "Izin Tengah Hari"
+            );
+            console.log("izin :", dataAbsen);
             if (
               currentHours > shiftHours ||
-              (currentHours === shiftHours && currentMinutes >= shiftMinutes)
+              (currentHours === shiftHours && currentMinutes >= shiftMinutes) ||
+              dataAbsen
             ) {
+              // if () {
               // Sudah melewati waktu pulang, absensi diperbolehkan
               await axios.put(
                 `${API_DUMMY}/api/absensi/pulang/${userId}?keteranganPulangAwal=${keteranganPulangAwal}&lokasiPulang=${encodeURIComponent(
@@ -191,30 +200,7 @@ function AbsenPulang() {
               setTimeout(() => {
                 window.location.href = "/user/history_absen";
               }, 1500);
-              // } else if (keteranganPulangAwal) {
-              //   // Absensi sebelum waktu pulang dengan keterangan
-              //   await axios.put(
-              //     `${API_DUMMY}/api/absensi/pulang/${userId}?keteranganPulangAwal=${keteranganPulangAwal}&lokasiPulang=${encodeURIComponent(
-              //       address
-              //     )}`,
-              //     formData,
-              //     {
-              //       headers: {
-              //         "Content-Type": "multipart/form-data",
-              //       },
-              //     }
-              //   );
-
-              //   Swal.fire({
-              //     position: "center",
-              //     icon: "success",
-              //     title: "Berhasil Pulang",
-              //     showConfirmButton: false,
-              //     timer: 1500,
-              //   });
-              //   setTimeout(() => {
-              //     window.location.href = "/user/history_absen";
-              //   }, 1500);
+              // }
             } else {
               // Tidak boleh absen sebelum waktu pulang tanpa keterangan
               Swal.fire(
@@ -223,6 +209,30 @@ function AbsenPulang() {
                 "info"
               );
             }
+            // } else if (keteranganPulangAwal) {
+            //   // Absensi sebelum waktu pulang dengan keterangan
+            //   await axios.put(
+            //     `${API_DUMMY}/api/absensi/pulang/${userId}?keteranganPulangAwal=${keteranganPulangAwal}&lokasiPulang=${encodeURIComponent(
+            //       address
+            //     )}`,
+            //     formData,
+            //     {
+            //       headers: {
+            //         "Content-Type": "multipart/form-data",
+            //       },
+            //     }
+            //   );
+
+            //   Swal.fire({
+            //     position: "center",
+            //     icon: "success",
+            //     title: "Berhasil Pulang",
+            //     showConfirmButton: false,
+            //     timer: 1500,
+            //   });
+            //   setTimeout(() => {
+            //     window.location.href = "/user/history_absen";
+            //   }, 1500);
           } else {
             Swal.fire(
               "Info",
@@ -301,8 +311,7 @@ function AbsenPulang() {
                       );
                     }
                   }}
-                  className="block w-32 sm:w-40 bg-blue-500 text-white rounded-lg py-3 text-sm sm:text-xs font-medium"
-                >
+                  className="block w-32 sm:w-40 bg-blue-500 text-white rounded-lg py-3 text-sm sm:text-xs font-medium">
                   Ambil Foto
                 </button>
               </div>
