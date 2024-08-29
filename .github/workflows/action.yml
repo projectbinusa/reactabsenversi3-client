@@ -36,7 +36,7 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             sudo su -
-            cd reactabsenv3/
+            cd reactabsenv3/reactabsenversi3-client/
             echo "${{ secrets.SSH_PASSWORD }}" | git pull origin develop
             echo "${{ secrets.SSH_PASSWORD }}" | npm install
             echo ${{ secrets.SSH_PASSWORD }} | npm run build
