@@ -39,7 +39,7 @@ jobs:
             cd reactabsenv3/reactabsenversi3-client/
             echo "${{ secrets.SSH_PASSWORD }}" | git pull origin develop
             echo "${{ secrets.SSH_PASSWORD }}" | npm install
-            echo ${{ secrets.SSH_PASSWORD }} | npm run build
+            echo ${{ secrets.SSH_PASSWORD }} | sudo -S npm run build
             mv build absenv3
             cd /var/www
             rm -rf absenv3
