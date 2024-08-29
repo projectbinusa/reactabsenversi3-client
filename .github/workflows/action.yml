@@ -1,4 +1,4 @@
-name: CI/CD for React App
+name: CI/CD for React js
 
 on:
   push:
@@ -19,20 +19,29 @@ jobs:
         with:
           node-version: '16'  # Pilih versi Node.js yang sesuai
 
+      # - name: Git pull
+      #   run: git pull origin develop
+
       - name: Install dependencies
         run: npm install    # Untuk install semua dependensi
 
-      - name: Build React App
-        run: npm run build     # Untuk build 
+      - name: Build React JS
+        run: npm run build     # Untuk build
 
       - name: Deploy to Server
         uses: appleboy/ssh-action@master
         with:
-          host: 192.168.1.99
+          host: 41.216.186.59
           username: bootcampserver
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
+            sudo su -
             cd reactabsenv3/reactabsenversi3-client
-            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S git pull origin develop
-            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S npm install
-            echo ${{ secrets.SSH_PASSWORD }} | sudo -S npm run build
+            git pull origin develop
+            npm install
+            npm run build
+            if [ ! -d /var/www/absenv3 ]; then
+              sudo mkdir -p /var/www/absenv3
+            fi
+            sudo rm -rf /var/www/absenv3/*
+            sudo cp -r build/* /var/www/absenv3/
