@@ -23,10 +23,10 @@ function AbsenMasuk() {
 
   // // Batas koordinat yang diizinkan
   const allowedCoordinates = {
-    northWest: { lat: -6.982839529257101, lon: 110.40429653782975 },
-    northEast: { lat: -6.982839529257101, lon: 110.4040841160283 },
-    southWest: { lat: -6.982277272373105, lon: 110.40378695766125 },
-    southEast: { lat: -6.982277272373105, lon: 110.40366275475002 },
+    northWest: { lat: -6.982582191501385, lon: 110.4039029362035 },
+    northEast: { lat: -6.98251394719206, lon: 110.4039281254977 },
+    southWest: { lat: -6.982594723643381, lon: 110.40415927480096 },
+    southEast: { lat: 6.982656068121616, lon: 110.40412982921886 },
   };
 
   useEffect(() => {
@@ -142,7 +142,7 @@ function AbsenMasuk() {
       return;
     }
 
-    if (isWithinAllowedCoordinates(latitude, longitude)) {
+    // if (isWithinAllowedCoordinates(latitude, longitude)) {
       try {
         const absensiCheckResponse = await axios.get(
           `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`
@@ -183,13 +183,13 @@ function AbsenMasuk() {
         console.error("Error:", err);
         Swal.fire("Error", "Gagal Absen", "error");
       }
-    } else {
-      Swal.fire(
-        "Error",
-        "Lokasi Anda di luar batas yang diizinkan untuk absensi",
-        "error"
-      );
-    }
+    // } else {
+    //   Swal.fire(
+    //     "Error",
+    //     "Lokasi Anda di luar batas yang diizinkan untuk absensi",
+    //     "error"
+    //   );
+    // }
   };
 
   return (
