@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import Loader from "../../../components/Loader";
 import { API_DUMMY } from "../../../utils/api";
 import SidebarNavbar from "../../../components/SidebarNavbar";
-import "../css/AbsenMasuk.css"
+import "../css/AbsenMasuk.css";
 
 function AbsenMasuk() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -29,8 +29,6 @@ function AbsenMasuk() {
     southEast: { lat: -6.982277272373105, lon: 110.40366275475002 },
   };
 
-
-
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentDateTime(new Date());
@@ -47,6 +45,8 @@ function AbsenMasuk() {
         const { latitude, longitude } = position.coords;
         setLatitude(latitude);
         setLongitude(longitude);
+        console.log("latitude: ", latitude);
+        console.log("longitude: ", longitude);
 
         try {
           const response = await fetch(
@@ -59,13 +59,17 @@ function AbsenMasuk() {
           console.error("Error:", error);
           setError("Gagal mendapatkan alamat");
         }
-
         setFetchingLocation(false);
       },
       (error) => {
         console.error("Error:", error);
         setError("Gagal mendapatkan lokasi");
         setFetchingLocation(false);
+      },
+      {
+        enableHighAccuracy: true,  // Memastikan akurasi tinggi
+        timeout: 10000,  // Waktu tunggu 10 detik
+        maximumAge: 0  // Tidak menggunakan cache, selalu minta lokasi baru
       }
     );
   }, [fetchingLocation]);
@@ -91,7 +95,6 @@ function AbsenMasuk() {
     setSidebarOpen(!sidebarOpen);
   };
 
-
   // validasi
   const isWithinAllowedCoordinates = (lat, lon) => {
     const { northWest, northEast, southWest, southEast } = allowedCoordinates;
@@ -103,15 +106,20 @@ function AbsenMasuk() {
     const lonMax = northEast.lon;
 
     // Log koordinat dan batas untuk debugging
-    console.log('Koordinat Pengguna:', { lat, lon });
-    console.log('Koordinat Batas:', { northWest, northEast, southWest, southEast });
+    console.log("Koordinat Pengguna:", { lat, lon });
+    console.log("Koordinat Batas:", {
+      northWest,
+      northEast,
+      southWest,
+      southEast,
+    });
 
     // Validasi latitude dan longitude
     const isLatValid = lat >= latMin && lat <= latMax;
     const isLonValid = lon >= lonMin && lon <= lonMax;
 
-    console.log('Is Latitude Valid:', isLatValid);
-    console.log('Is Longitude Valid:', isLonValid);
+    console.log("Is Latitude Valid:", isLatValid);
+    console.log("Is Longitude Valid:", isLonValid);
 
     return isLatValid && isLonValid;
   };
@@ -125,55 +133,55 @@ function AbsenMasuk() {
       return;
     }
 
-// if (isWithinAllowedCoordinates(latitude, longitude)) {
-  try {
-    const absensiCheckResponse = await axios.get(
-      `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`
-    );
-    const isUserAlreadyAbsenToday =
-      absensiCheckResponse.data ===
-      "Pengguna sudah melakukan absensi hari ini.";
-    if (isUserAlreadyAbsenToday) {
-      Swal.fire("Info", "Anda sudah melakukan absensi hari ini.", "info");
-    } else {
-      const formData = new FormData();
-      formData.append("image", imageBlob);
-      formData.append("lokasiMasuk", `${address}`);
-      formData.append("keteranganTerlambat", keteranganTerlambat || "-");
+    // if (isWithinAllowedCoordinates(latitude, longitude)) {
+      try {
+        const absensiCheckResponse = await axios.get(
+          `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`
+        );
+        const isUserAlreadyAbsenToday =
+          absensiCheckResponse.data ===
+          "Pengguna sudah melakukan absensi hari ini.";
+        if (isUserAlreadyAbsenToday) {
+          Swal.fire("Info", "Anda sudah melakukan absensi hari ini.", "info");
+        } else {
+          const formData = new FormData();
+          formData.append("image", imageBlob);
+          formData.append("lokasiMasuk", `${address}`);
+          formData.append("keteranganTerlambat", keteranganTerlambat || "-");
 
-      const response = await axios.post(
-        `${API_DUMMY}/api/absensi/masuk/${userId}`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
+          const response = await axios.post(
+            `${API_DUMMY}/api/absensi/masuk/${userId}`,
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
+
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Berhasil Absen",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          setTimeout(() => {
+            window.location.href = "/user/history_absen";
+          }, 1500);
         }
-      );
-
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Berhasil Absen",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      setTimeout(() => {
-        window.location.href = "/user/history_absen";
-      }, 1500);
-    }
-  } catch (err) {
-    console.error("Error:", err);
-    Swal.fire("Error", "Gagal Absen", "error");
-  }
-  // } else {
-  //   Swal.fire(
-  //     "Error",
-  //     "Lokasi Anda di luar batas yang diizinkan untuk absensi",
-  //     "error"
-  //   );
-  // }
-};
+      } catch (err) {
+        console.error("Error:", err);
+        Swal.fire("Error", "Gagal Absen", "error");
+      }
+    // } else {
+    //   Swal.fire(
+    //     "Error",
+    //     "Lokasi Anda di luar batas yang diizinkan untuk absensi",
+    //     "error"
+    //   );
+    // }
+  };
 
   return (
     <>
@@ -210,10 +218,7 @@ function AbsenMasuk() {
               <form onSubmit={(e) => e.preventDefault()}>
                 <p className="font-bold text-center mt-8">Foto:</p>
                 <div className="flex justify-center webcam-container">
-                  <Webcam
-                    audio={false}
-                    ref={webcamRef}
-                  />
+                  <Webcam audio={false} ref={webcamRef} />
                 </div>
                 <div className="flex justify-center mt-6">
                   {fetchingLocation ? (
