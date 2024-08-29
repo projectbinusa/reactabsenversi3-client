@@ -19,9 +19,6 @@ jobs:
         with:
           node-version: '16'  # Pilih versi Node.js yang sesuai
 
-      # - name: Git pull
-      #   run: git pull origin develop
-
       - name: Install dependencies
         run: npm install    # Untuk install semua dependensi
 
@@ -39,7 +36,7 @@ jobs:
             cd reactabsenv3/reactabsenversi3-client/
             echo "${{ secrets.SSH_PASSWORD }}" | git pull origin develop
             echo "${{ secrets.SSH_PASSWORD }}" | npm install
-            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S npm run build
+            echo "${{ secrets.SSH_PASSWORD }}" | sudo npm run build
             mv build absenv3
             cd /var/www
             rm -rf absenv3
