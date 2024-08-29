@@ -1,3 +1,4 @@
+
 name: CI/CD for React js
 
 on:
@@ -12,10 +13,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: '16'  # Pilih versi Node.js yang sesuai
 
@@ -26,20 +27,20 @@ jobs:
         run: npm run build     # Untuk build
 
       - name: Deploy to Server
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v0.1.10
         with:
           host: 192.168.1.99
           username: bootcampserver
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            sudo su -
             cd reactabsenv3/reactabsenversi3-client/
-            echo "${{ secrets.SSH_PASSWORD }}" | git pull origin develop
-            echo "${{ secrets.SSH_PASSWORD }}" | npm install
-            echo "${{ secrets.SSH_PASSWORD }}" | sudo npm run build
-            mv build absenv3
+            git pull origin develop
+            npm install
+            npm run build
+            mv build /var/www/absenv3 || echo "Direktori /var/www/absenv3 tidak ada, membuat baru."
             cd /var/www
             rm -rf absenv3
             cd
             cd reactabsenv3/reactabsenversi3-client/
             mv absenv3/ /var/www
+
