@@ -38,41 +38,50 @@ function AbsenMasuk() {
   }, []);
 
   useEffect(() => {
-    if (!fetchingLocation) return;
+    async function requestPermissions() {
+      try {
+        await navigator.mediaDevices.getUserMedia({ video: true });
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            const { latitude, longitude } = position.coords;
+            setLatitude(latitude);
+            setLongitude(longitude);
+            console.log("latitude: ", latitude);
+            console.log("longitude: ", longitude);
 
-    navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        const { latitude, longitude } = position.coords;
-        setLatitude(latitude);
-        setLongitude(longitude);
-        console.log("latitude: ", latitude);
-        console.log("longitude: ", longitude);
-
-        try {
-          const response = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`
-          );
-          const data = await response.json();
-          const address = data.display_name;
-          setAddress(address);
-        } catch (error) {
-          console.error("Error:", error);
-          setError("Gagal mendapatkan alamat");
-        }
-        setFetchingLocation(false);
-      },
-      (error) => {
-        console.error("Error:", error);
-        setError("Gagal mendapatkan lokasi");
-        setFetchingLocation(false);
-      },
-      {
-        enableHighAccuracy: true,  // Memastikan akurasi tinggi
-        timeout: 10000,  // Waktu tunggu 10 detik
-        maximumAge: 0  // Tidak menggunakan cache, selalu minta lokasi baru
+            try {
+              const response = await fetch(
+                `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`
+              );
+              const data = await response.json();
+              const address = data.display_name;
+              setAddress(address);
+            } catch (error) {
+              console.error("Error:", error);
+              setError("Gagal mendapatkan alamat");
+            }
+            setFetchingLocation(false);
+          },
+          (error) => {
+            console.error("Error:", error);
+            setError("Gagal mendapatkan lokasi");
+            setFetchingLocation(false);
+          },
+          {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0,
+          }
+        );
+      } catch (err) {
+        console.error("Error meminta akses kamera:", err);
+        setError("Gagal mendapatkan akses kamera");
       }
-    );
-  }, [fetchingLocation]);
+    }
+
+    requestPermissions();
+  }, []);
+
 
 
   const tambahkanNolDepan = (num) => {
@@ -133,7 +142,7 @@ function AbsenMasuk() {
       return;
     }
 
-    // if (isWithinAllowedCoordinates(latitude, longitude)) {
+    if (isWithinAllowedCoordinates(latitude, longitude)) {
       try {
         const absensiCheckResponse = await axios.get(
           `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`
@@ -174,13 +183,13 @@ function AbsenMasuk() {
         console.error("Error:", err);
         Swal.fire("Error", "Gagal Absen", "error");
       }
-    // } else {
-    //   Swal.fire(
-    //     "Error",
-    //     "Lokasi Anda di luar batas yang diizinkan untuk absensi",
-    //     "error"
-    //   );
-    // }
+    } else {
+      Swal.fire(
+        "Error",
+        "Lokasi Anda di luar batas yang diizinkan untuk absensi",
+        "error"
+      );
+    }
   };
 
   return (

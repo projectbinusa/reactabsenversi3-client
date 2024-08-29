@@ -133,15 +133,15 @@ function AbsenPulang() {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
 
-        // if (!isWithinAllowedCoordinates(latitude, longitude)) {
-        //   Swal.fire(
-        //     "Info",
-        //     "Lokasi tidak sesuai. Pastikan Anda berada di area yang diperbolehkan.",
-        //     "info"
-        //   );
-        //   setFetchingLocation(false);
-        //   return;
-        // }
+        if (!isWithinAllowedCoordinates(latitude, longitude)) {
+          Swal.fire(
+            "Info",
+            "Lokasi tidak sesuai. Pastikan Anda berada di area yang diperbolehkan.",
+            "info"
+          );
+          setFetchingLocation(false);
+          return;
+        }
 
         try {
           const absensiCheckResponse = await axios.get(
