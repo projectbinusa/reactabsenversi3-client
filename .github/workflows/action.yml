@@ -33,7 +33,7 @@ jobs:
           username: bootcampserver
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            cd reactabsenv3/reactabsenversi3-client/
+            cd reactabsenv3/reactabsenversi3-client
             git pull origin develop
             npm install
             npm run build
