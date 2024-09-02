@@ -14,9 +14,9 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Pagination } from "flowbite-react";
 import { API_DUMMY } from "../../../utils/api";
-import { Link, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 import { Button, Modal } from "flowbite-react";
+import { Link, useParams } from "react-router-dom";
 
 function SiswaperKelas() {
   const [userData, setUserData] = useState([]);

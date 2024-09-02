@@ -210,7 +210,7 @@ function Profile() {
                       <div>
                         <label htmlFor="fileInput" className="cursor-pointer">
                           <span className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
-                            <FontAwesomeIcon icon={faPenToSquare} />
+                            Edit
                           </span>
                         </label>
                         {/* Input file tersembunyi */}
@@ -249,7 +249,7 @@ function Profile() {
                         <input
                           type="text"
                           id="nama"
-                          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm sm:text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 capitalize"
+                          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm sm:text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                           placeholder="Masukkan Nama"
                           value={username}
                           onChange={(e) => setUsername(e.target.value)}

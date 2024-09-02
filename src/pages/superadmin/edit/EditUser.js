@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
 import NavbarSuper from "../../../components/NavbarSuper";
 import Sidebar from "../../../components/SidebarUser";
-import {
-  useHistory,
-  useParams,
-} from "react-router-dom/cjs/react-router-dom.min";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../../utils/api";
+import { useNavigate, useParams } from "react-router-dom";
 
 function EditUser() {
   const [username, setUsername] = useState("");
@@ -24,7 +21,7 @@ function EditUser() {
   const { id } = useParams();
   const idSuperAdmin = localStorage.getItem("superadminId");
   const [adminId, setAdminId] = useState(null);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const getUser = async () => {
     try {
@@ -244,7 +241,7 @@ function EditUser() {
 
                     <div className="flex justify-between">
                       <button
-                        onClick={() => history.goBack()}
+                        // onClick={() =>}
                         className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
                       >
                         <FontAwesomeIcon icon={faArrowLeft} className="mr-1" />

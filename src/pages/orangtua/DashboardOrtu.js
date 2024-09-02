@@ -12,8 +12,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../utils/api";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { Pagination } from "flowbite-react";
+import { Link } from "react-router-dom";
 
 function DashboardOrtu() {
   const [currentDateTime, setCurrentDateTime] = useState(new Date());

@@ -5,8 +5,9 @@ import NavbarSuper from "../../../components/NavbarSuper";
 import Sidebar from "../../../components/SidebarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+
 import { API_DUMMY } from "../../../utils/api";
+import { useNavigate } from "react-router-dom";
 
 function AddUser() {
   const [showPassword, setShowPassword] = useState(false);
@@ -26,7 +27,7 @@ function AddUser() {
   const [orangTuaList, setOrangTuaList] = useState([]);
   const [kelasList, setKelasList] = useState([]);
   const [adminList, setAdminList] = useState([]);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const getAllAdmin = async () => {
     try {
@@ -123,7 +124,7 @@ function AddUser() {
         timer: 2000,
         showConfirmButton: false,
       });
-      history.push("/superadmin/data-user");
+      navigate("/superadmin/data-user");
     } catch (error) {
       Swal.fire({
         title: "Error",

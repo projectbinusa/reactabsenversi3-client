@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../../../components/NavbarSuper";
 import Sidebar from "../../../components/SidebarUser";
 import axios from "axios";
-import { useParams } from "react-router-dom/cjs/react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { API_DUMMY } from "../../../utils/api";
+import { useParams } from "react-router-dom";
 
 function DetailJabatanSA() {
     const { id } = useParams();

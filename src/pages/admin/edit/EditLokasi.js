@@ -3,14 +3,11 @@ import Navbar from "../../../components/NavbarAdmin";
 import Sidebar from "../../../components/SidebarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
-import {
-  useHistory,
-  useParams,
-} from "react-router-dom/cjs/react-router-dom.min";
 import Swal from "sweetalert2";
 import axios from "axios";
 import Lokasi from "../masterdata/Lokasi";
 import { API_DUMMY } from "../../../utils/api";
+import { useNavigate, useParams } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 
 function EditLokasi() {
@@ -27,7 +24,7 @@ function EditLokasi() {
   });
   const { id } = useParams();
   const token = localStorage.getItem("token");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const getLokasi = async () => {
     try {
@@ -73,7 +70,7 @@ function EditLokasi() {
         showConfirmButton: false,
         timer: 1500,
       }).then(() => {
-        history.push("/admin/lokasi");
+        navigate("/admin/lokasi");
       });
     } catch (error) {
       console.log(error);

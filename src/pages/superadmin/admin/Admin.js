@@ -12,10 +12,11 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+
 import Swal from "sweetalert2";
 
 import { API_DUMMY } from "../../../utils/api";
+import { useNavigate } from "react-router-dom";
 
 import { Button, Modal, Pagination } from "flowbite-react";
 import SidebarNavbar from "../../../components/SidebarNavbar";

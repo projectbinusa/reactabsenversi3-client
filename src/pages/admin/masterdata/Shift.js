@@ -12,6 +12,7 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import { Pagination } from "flowbite-react";
 import { API_DUMMY } from "../../../utils/api";
+import { useNavigate } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 
 function Shift() {
@@ -281,7 +282,7 @@ function Shift() {
                             {(currentPage - 1) * limit + index + 1}
                           </th>
                           <td className="px-6 py-4 capitalize">
-                            {capitalize(shift.namaShift || "")}
+                            {shift.namaShift || ""}
                           </td>
                           <td className="px-6 py-4 capitalize">
                             {capitalize(shift.waktuMasuk || "")}

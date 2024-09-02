@@ -6,6 +6,7 @@ import axios from "axios";
 import { Pagination } from "flowbite-react";
 import NavbarSuper from "../../../components/NavbarSuper";
 import { API_DUMMY } from "../../../utils/api";
+import { useNavigate } from "react-router-dom";
 
 function Absensi() {
   const [absensi, setAbsensi] = useState([]);

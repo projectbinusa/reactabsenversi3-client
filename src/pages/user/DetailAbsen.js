@@ -3,9 +3,9 @@ import Navbar from "../../components/NavbarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { API_DUMMY } from "../../utils/api";
 import SidebarNavbar from "../../components/SidebarNavbar";
+import { Link, useParams } from "react-router-dom";
 
 function DetailAbsen() {
   const [absensi, setAbsensi] = useState([]);

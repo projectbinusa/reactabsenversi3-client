@@ -7,6 +7,7 @@ import { useHistory, useParams } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../../utils/api";
+import { useNavigate } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 
 function EditKaryawan() {
@@ -22,7 +23,7 @@ function EditKaryawan() {
   const [kelasOptions, setKelasOptions] = useState([]);
   const { id } = useParams();
   const adminId = localStorage.getItem("adminId");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const getUser = async () => {
     try {
@@ -105,7 +106,7 @@ function EditKaryawan() {
       });
 
       setTimeout(() => {
-        history.push("/admin/siswa");
+        navigate("/admin/siswa");
         window.location.reload();
       }, 2000);
     } catch (error) {

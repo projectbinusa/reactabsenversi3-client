@@ -12,11 +12,12 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+
 import Swal from "sweetalert2";
 import { Button, Modal } from "flowbite-react";
 
 import { API_DUMMY } from "../../../utils/api";
+import { useNavigate } from "react-router-dom";
 
 import { Pagination } from "flowbite-react";
 import SidebarNavbar from "../../../components/SidebarNavbar";
@@ -54,7 +55,7 @@ function OrangTua() {
         const siswaList = siswaResponse.data;
 
         const ortuWithSiswaCount = ortuList.map((ortu) => {
-            const siswaCount = siswaList.filter((siswa) => siswa.orangTua.id === ortu.id).length;
+            const siswaCount = siswaList.filter((siswa) => siswa.orangTua?.id === ortu.id).length;
             return {
                 ...ortu,
                 siswaCount,
@@ -196,7 +197,7 @@ function OrangTua() {
     }
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/orang-tua/export/data-orang-tua/${idOrtu}`,
+        `${API_DUMMY}/api/orang-tua/export/data-orang-tua/${idAdmin}`,
         {
           responseType: "blob",
         }
@@ -227,7 +228,7 @@ function OrangTua() {
 
     try {
       await axios.post(
-        `${API_DUMMY}/api/orang-tua/import/data-orang-tua/{adminId}?adminId=${idOrtu}`,
+        `${API_DUMMY}/api/orang-tua/import/data-orang-tua/{adminId}?adminId=${idAdmin}`,
         formData
       );
       Swal.fire("Sukses!", "Berhasil menambahkan", "success");

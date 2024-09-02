@@ -6,6 +6,7 @@ import { faArrowLeft, faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../../utils/api";
+import { useNavigate } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 
 function AddShift() {
@@ -101,7 +102,7 @@ const capitalizeWords = (str) => {
                           autoComplete="off"
                           required
                           value={namaShift}
-                          onChange={(e) => setNamaShift(capitalizeWords(e.target.value))}
+                          onChange={(e) => setNamaShift(e.target.value)}
                         />
                         <label
                           htmlFor="nama_shift"

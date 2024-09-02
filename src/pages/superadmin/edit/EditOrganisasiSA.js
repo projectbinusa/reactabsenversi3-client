@@ -3,7 +3,7 @@ import Navbar from "../../../components/NavbarSuper";
 import Sidebar from "../../../components/SidebarUser";
 import { faArrowLeft, faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../../utils/api";
@@ -18,7 +18,7 @@ function EditOrganisasiSA() {
   const [namaOrganisasi, setNamaOrganisasi] = useState("");
   const [image, setImage] = useState(null);
   const param = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [idAdmin, setIdAdmin] = useState("");
 
   useEffect(() => {
@@ -85,7 +85,7 @@ function EditOrganisasiSA() {
           showConfirmButton: false,
           timer: 1500,
         });
-        history.push("/superadmin/organisasi");
+        navigate("/superadmin/organisasi");
       })
       .catch((error) => {
         console.log(error);

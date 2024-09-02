@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import NavbarAdmin from "../../../components/NavbarAdmin";
 import Sidebar from "../../../components/SidebarUser";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { API_DUMMY } from "../../../utils/api";
+import { useNavigate, useParams } from "react-router-dom";
 
 function DetailLembur() {
   const [lembur, setLembur] = useState(null);
