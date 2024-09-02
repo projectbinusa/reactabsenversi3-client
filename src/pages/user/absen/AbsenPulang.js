@@ -138,102 +138,100 @@ function AbsenPulang() {
     setFetchingLocation(true);
 
     // Check if the current location is within allowed coordinates
-    if (isWithinAllowedCoordinates(latitude, longitude)) {
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          const latitude = position.coords.latitude;
-          const longitude = position.coords.longitude;
-          console.log("latitude: ", latitude, "longitude: ", longitude);
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        console.log("latitude: ", latitude, "longitude: ", longitude);
 
-          try {
-            const absensiCheckResponse = await axios.get(
-              `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`
+        if (!isWithinAllowedCoordinates(latitude, longitude)) {
+          Swal.fire(
+            "Error",
+            "Lokasi Anda di luar batas yang diizinkan untuk absensi",
+            "error"
+          );
+          setFetchingLocation(false);
+          return;
+        }
+
+        try {
+          const absensiCheckResponse = await axios.get(
+            `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`
+          );
+          const isUserAlreadyAbsenToday =
+            absensiCheckResponse.data ===
+            "Pengguna sudah melakukan absensi hari ini.";
+
+          if (!isUserAlreadyAbsenToday) {
+            Swal.fire(
+              "Info",
+              "Anda belum melakukan absensi masuk hari ini.",
+              "info"
             );
-            const isUserAlreadyAbsenToday =
-              absensiCheckResponse.data ===
-              "Pengguna sudah melakukan absensi hari ini.";
+            setFetchingLocation(false);
+            return;
+          }
 
-            if (!isUserAlreadyAbsenToday) {
+          const currentTime = new Date();
+          const currentHours = currentTime.getHours();
+          const currentMinutes = currentTime.getMinutes();
+          const [shiftHours, shiftMinutes] = waktuPulang.split(":").map(Number);
+
+          if (
+            currentHours < shiftHours ||
+            (currentHours === shiftHours && currentMinutes < shiftMinutes)
+          ) {
+            if (!keteranganPulangAwal) {
               Swal.fire(
                 "Info",
-                "Anda belum melakukan absensi masuk hari ini.",
+                `Anda tidak bisa melakukan absensi pulang sebelum pukul ${waktuPulang} tanpa memberikan keterangan. Mohon isi keterangan pulang awal.`,
                 "info"
               );
               setFetchingLocation(false);
               return;
             }
-
-            const currentTime = new Date();
-            const currentHours = currentTime.getHours();
-            const currentMinutes = currentTime.getMinutes();
-            const [shiftHours, shiftMinutes] = waktuPulang
-              .split(":")
-              .map(Number);
-
-            // Include reason for early departure if needed
-            if (
-              currentHours < shiftHours ||
-              (currentHours === shiftHours && currentMinutes < shiftMinutes)
-            ) {
-              if (!keteranganPulangAwal) {
-                Swal.fire(
-                  "Info",
-                  `Anda tidak bisa melakukan absensi pulang sebelum pukul ${waktuPulang} tanpa memberikan keterangan. Mohon isi keterangan pulang awal.`,
-                  "info"
-                );
-                setFetchingLocation(false);
-                return;
-              }
-            }
-
-            const formData = new FormData();
-            formData.append("image", imageBlob, "image.jpeg");
-
-            // Proceed with the absensi pulang request
-            await axios.put(
-              `${API_DUMMY}/api/absensi/pulang/${userId}?keteranganPulangAwal=${encodeURIComponent(
-                keteranganPulangAwal || ""
-              )}&lokasiPulang=${encodeURIComponent(address)}`,
-              formData,
-              {
-                headers: {
-                  "Content-Type": "multipart/form-data",
-                },
-              }
-            );
-
-            Swal.fire({
-              position: "center",
-              icon: "success",
-              title: "Berhasil Pulang",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-            setTimeout(() => {
-              window.location.href = "/user/history_absen";
-            }, 1500);
-          } catch (err) {
-            console.error("Error:", err);
-            Swal.fire("Error", "Gagal Absen", "error");
           }
 
-          setFetchingLocation(false);
-        },
-        (error) => {
-          console.error("Error:", error);
-          Swal.fire("Error", "Gagal mendapatkan lokasi", "error");
-          setError("Gagal mendapatkan lokasi");
+          const formData = new FormData();
+          formData.append("image", imageBlob, "image.jpeg");
+
+          // Proceed with the absensi pulang request
+          await axios.put(
+            `${API_DUMMY}/api/absensi/pulang/${userId}?keteranganPulangAwal=${encodeURIComponent(
+              keteranganPulangAwal || ""
+            )}&lokasiPulang=${encodeURIComponent(address)}`,
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
+
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Berhasil Pulang",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          setTimeout(() => {
+            window.location.href = "/user/history_absen";
+          }, 1500);
+        } catch (err) {
+          console.error("Error:", err);
+          Swal.fire("Error", "Gagal Absen", "error");
+        } finally {
           setFetchingLocation(false);
         }
-      );
-    } else {
-      Swal.fire(
-        "Error",
-        "Lokasi Anda di luar batas yang diizinkan untuk absensi",
-        "error"
-      );
-      setFetchingLocation(false);
-    }
+      },
+      (error) => {
+        console.error("Error:", error);
+        Swal.fire("Error", "Gagal mendapatkan lokasi", "error");
+        setError("Gagal mendapatkan lokasi");
+        setFetchingLocation(false);
+      }
+    );
   };
 
   return (
