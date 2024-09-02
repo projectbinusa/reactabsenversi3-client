@@ -144,15 +144,15 @@ function AbsenPulang() {
         const longitude = position.coords.longitude;
         console.log("latitude: ", latitude, "longitude: ", longitude);
 
-        if (!isWithinAllowedCoordinates(latitude, longitude)) {
-          Swal.fire(
-            "Error",
-            "Lokasi Anda di luar batas yang diizinkan untuk absensi",
-            "error"
-          );
-          setFetchingLocation(false);
-          return;
-        }
+        // if (!isWithinAllowedCoordinates(latitude, longitude)) {
+        //   Swal.fire(
+        //     "Error",
+        //     "Lokasi Anda di luar batas yang diizinkan untuk absensi",
+        //     "error"
+        //   );
+        //   setFetchingLocation(false);
+        //   return;
+        // }
 
         try {
           const absensiCheckResponse = await axios.get(

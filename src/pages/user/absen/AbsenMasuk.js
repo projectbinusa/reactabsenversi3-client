@@ -24,11 +24,12 @@ function AbsenMasuk() {
 
   // // Batas koordinat yang diizinkan
   const allowedCoordinates = {
-    northWest: { lat: -6.982535175682822, lon: 110.40395139111704 },
-    northEast: { lat: -6.982535175682822, lon: 110.40404173111704 },
-    southWest: { lat: -6.982625175682822, lon: 110.40395139111704 },
-    southEast: { lat: -6.982625175682822, lon: 110.40404173111704 },
+    northWest: { lat: -6.982580885, lon: 110.404028235 },
+    northEast: { lat: -6.982580885, lon: 110.404118565 },
+    southWest: { lat: -6.982670715, lon: 110.404028235 },
+    southEast: { lat: -6.982670715, lon: 110.404118565 },
   };
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -39,10 +40,13 @@ function AbsenMasuk() {
   }, []);
 
   useEffect(() => {
+    let watchId;
+
     async function requestPermissions() {
       try {
         await navigator.mediaDevices.getUserMedia({ video: true });
-        navigator.geolocation.getCurrentPosition(
+
+        watchId = navigator.geolocation.watchPosition(
           async (position) => {
             const { latitude, longitude } = position.coords;
             setLatitude(latitude);
@@ -71,7 +75,7 @@ function AbsenMasuk() {
           {
             enableHighAccuracy: true,
             timeout: 10000,
-            maximumAge: 0,
+            maximumAge: 1000, // Menggunakan cache hingga 1 detik untuk hasil yang lebih cepat.
           }
         );
       } catch (err) {
@@ -81,7 +85,15 @@ function AbsenMasuk() {
     }
 
     requestPermissions();
+
+    return () => {
+      // Bersihkan watchPosition saat komponen dilepas.
+      if (watchId) {
+        navigator.geolocation.clearWatch(watchId);
+      }
+    };
   }, []);
+
 
   const tambahkanNolDepan = (num) => {
     return num < 10 ? "0" + num : num;
@@ -104,32 +116,16 @@ function AbsenMasuk() {
   };
 
   // validasi
-  const isWithinAllowedCoordinates = (lat, lon) => {
+   const isWithinAllowedCoordinates = (lat, lon) => {
     const { northWest, northEast, southWest, southEast } = allowedCoordinates;
+    const tolerance = 0.00001; // adding a small tolerance
 
-    // Koordinat batas
-    const latMin = southWest.lat;
-    const latMax = northWest.lat;
-    const lonMin = southWest.lon;
-    const lonMax = northEast.lon;
-
-    // Log koordinat dan batas untuk debugging
-    console.log("Koordinat Pengguna:", { lat, lon });
-    console.log("Koordinat Batas:", {
-      northWest,
-      northEast,
-      southWest,
-      southEast,
-    });
-
-    // Validasi latitude dan longitude
-    const isLatValid = lat >= latMin && lat <= latMax;
-    const isLonValid = lon >= lonMin && lon <= lonMax;
-
-    console.log("Is Latitude Valid:", isLatValid);
-    console.log("Is Longitude Valid:", isLonValid);
-
-    return isLatValid && isLonValid;
+    return (
+      lat >= southWest.lat - tolerance &&
+      lat <= northWest.lat + tolerance &&
+      lon >= southWest.lon - tolerance &&
+      lon <= northEast.lon + tolerance
+    );
   };
 
   const handleCaptureAndSubmitMasuk = async () => {
