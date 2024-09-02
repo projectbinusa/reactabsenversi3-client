@@ -233,7 +233,7 @@ function Organisasi() {
                             scope="row"
                             className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                           >
-                            {index + 1}
+                            {(currentPage - 1) * limit + index + 1}
                           </th>
                           <td className="px-6 py-4 capitalize">
                             {organisasi.namaOrganisasi || ""}

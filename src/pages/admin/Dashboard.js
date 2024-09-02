@@ -11,6 +11,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../utils/api";
 import SidebarNavbar from "../../components/SidebarNavbar";
+import { Pagination } from "flowbite-react";
 
 function Dashboard() {
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
@@ -115,6 +116,155 @@ function Dashboard() {
       localStorage.removeItem("loginSuccess");
     }
   }, []);
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [limit, setLimit] = useState(5);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+  useEffect(() => {
+    const filteredData = absenData.filter(
+      (absensi) =>
+        absensi.user?.username
+          ?.toLowerCase()
+          .includes(searchTerm.toLowerCase()) ||
+        absensi.statusAbsen?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (formatDate(absensi.tanggalAbsen)
+          ?.toLowerCase()
+          .includes(searchTerm.toLowerCase()) ??
+          false)
+    );
+    setTotalPages(Math.ceil(filteredData.length / limit));
+  }, [searchTerm, limit, absenData]);
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleLimitChange = (event) => {
+    setLimit(parseInt(event.target.value));
+    setCurrentPage(1); // Reset to the first page when limit changes
+  };
+
+  function onPageChange(page) {
+    setCurrentPage(page);
+  }
+
+  const filteredAbsensi = absenData.filter(
+    (absensi) =>
+      absensi.user?.username
+        ?.toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      absensi.statusAbsen?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (formatDate(absensi.tanggalAbsen)
+        ?.toLowerCase()
+        .includes(searchTerm.toLowerCase()) ??
+        false)
+  );
+
+  const paginatedAbsensi = filteredAbsensi.slice(
+    (currentPage - 1) * limit,
+    currentPage * limit
+  );
+
+  const [searchTerm2, setSearchTerm2] = useState("");
+  const [limit2, setLimit2] = useState(5);
+  const [currentPage2, setCurrentPage2] = useState(1);
+  const [totalPages2, setTotalPages2] = useState(1);
+
+  useEffect(() => {
+    const filteredData = lokasiData.filter(
+      (lokasi) =>
+        lokasi.namaLokasi?.toLowerCase().includes(searchTerm2.toLowerCase()) ||
+        lokasi.alamat?.toLowerCase().includes(searchTerm2.toLowerCase()) ||
+        lokasi.organisasi?.namaOrganisasi
+          ?.toLowerCase()
+          .includes(searchTerm2.toLowerCase())
+    );
+    setTotalPages(Math.ceil(filteredData.length / limit2));
+  }, [searchTerm2, limit2, lokasiData]);
+
+  const handleSearch2 = (event) => {
+    setSearchTerm2(event.target.value);
+  };
+
+  const handleLimitChange2 = (event) => {
+    setLimit2(parseInt(event.target.value));
+    setCurrentPage2(1); // Reset to the first page when limit changes
+  };
+
+  function onPageChange2(page) {
+    setCurrentPage2(page);
+  }
+
+  const filteredLokasi = lokasiData.filter(
+    (lokasi) =>
+      lokasi.namaLokasi?.toLowerCase().includes(searchTerm2.toLowerCase()) ||
+      lokasi.alamat?.toLowerCase().includes(searchTerm2.toLowerCase()) ||
+      lokasi.organisasi?.namaOrganisasi
+        ?.toLowerCase()
+        .includes(searchTerm2.toLowerCase())
+  );
+
+  const paginatedLokasi = filteredLokasi.slice(
+    (currentPage2 - 1) * limit2,
+    currentPage2 * limit2
+  );
+
+  const [searchTerm3, setSearchTerm3] = useState("");
+  const [limit3, setLimit3] = useState(5);
+  const [currentPage3, setCurrentPage3] = useState(1);
+  const [totalPages3, setTotalPages3] = useState(1);
+
+  useEffect(() => {
+    const filteredData = organisasiData.filter(
+      (organisasi) =>
+        organisasi.namaOrganisasi
+          ?.toLowerCase()
+          .includes(searchTerm3.toLowerCase()) ||
+        organisasi.alamat?.toLowerCase().includes(searchTerm3.toLowerCase()) ||
+        organisasi.nomerTelepon
+          ?.toLowerCase()
+          .includes(searchTerm3.toLowerCase()) ||
+        organisasi.emailOrganisasi
+          ?.toLowerCase()
+          .includes(searchTerm3.toLowerCase())
+    );
+    setTotalPages(Math.ceil(filteredData.length / limit3));
+  }, [searchTerm3, limit3, organisasiData]);
+
+  const handleSearch3 = (event) => {
+    setSearchTerm3(event.target.value);
+  };
+
+  const handleLimitChange3 = (event) => {
+    setLimit3(parseInt(event.target.value));
+    setCurrentPage3(1); // Reset to the first page when limit changes
+  };
+
+  function onPageChange3(page) {
+    setCurrentPage3(page);
+  }
+
+  const filteredOrganisasi = organisasiData.filter(
+    (organisasi) =>
+      organisasi.namaOrganisasi
+        ?.toLowerCase()
+        .includes(searchTerm3.toLowerCase()) ||
+      organisasi.alamat?.toLowerCase().includes(searchTerm3.toLowerCase()) ||
+      organisasi.nomerTelepon
+        ?.toLowerCase()
+        .includes(searchTerm3.toLowerCase()) ||
+      organisasi.emailOrganisasi
+        ?.toLowerCase()
+        .includes(searchTerm3.toLowerCase())
+  );
+
+  const paginatedOrganisasi = filteredOrganisasi.slice(
+    (currentPage3 - 1) * limit3,
+    currentPage3 * limit3
+  );
+
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
@@ -168,11 +318,33 @@ function Dashboard() {
 
           {/* Tabel Absensi */}
           <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-            <div className="flex justify-between">
-              <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
-                History Presensi
-              </h6>
+            <div className="md:flex justify-between">
+              <h6 className="text-xl font-bold"> History Presensi</h6>
+              <div className="flex items-center gap-2 mt-2">
+                <div className=" w-64">
+                  <input
+                    type="search"
+                    id="search-dropdown"
+                    value={searchTerm}
+                    onChange={handleSearch}
+                    className="block p-2.5 w-full z-20 text-sm rounded-l-md text-gray-900 bg-gray-50 border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                    placeholder="Search name..."
+                    required
+                  />
+                </div>
+                <select
+                  value={limit}
+                  onChange={handleLimitChange}
+                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+                >
+                  <option value="5">05</option>
+                  <option value="10">10</option>
+                  <option value="20">20</option>
+                  <option value="50">50</option>
+                </select>
+              </div>
             </div>
+            <hr className="mt-3" />
             <hr />
             <div className="overflow-x-auto shadow-md sm:rounded-lg mt-5">
               <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -199,8 +371,8 @@ function Dashboard() {
                   </tr>
                 </thead>
                 <tbody className="text-left">
-                  {absenData.length > 0 ? (
-                    absenData.map((absen, index) => (
+                  {paginatedAbsensi.length > 0 ? (
+                    paginatedAbsensi.map((absen, index) => (
                       <tr
                         key={index}
                         className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
@@ -209,7 +381,7 @@ function Dashboard() {
                           scope="row"
                           className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                         >
-                          {index + 1}
+                          {(currentPage - 1) * limit + index + 1}
                         </th>
                         <td className="px-6 py-4 capitalize">
                           {absen.user.username}
@@ -241,18 +413,51 @@ function Dashboard() {
                 </tbody>
               </table>
             </div>
+            <Pagination
+              className="mt-5"
+              layout="table"
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={onPageChange}
+              showIcons
+              previousLabel=""
+              nextLabel=""
+            />
           </div>
 
           <br />
 
           {/* Tabel Lokasi */}
           <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-            <div className="flex justify-between">
+            <div className="md:flex justify-between">
               <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
                 Data Lokasi
               </h6>
+              <div className="flex items-center gap-2 mt-2">
+                <div className=" w-64">
+                  <input
+                    type="search"
+                    id="search-dropdown"
+                    value={searchTerm2}
+                    onChange={handleSearch2}
+                    className="block p-2.5 w-full z-20 text-sm rounded-l-md text-gray-900 bg-gray-50 border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                    placeholder="Search name..."
+                    required
+                  />
+                </div>
+                <select
+                  value={limit2}
+                  onChange={handleLimitChange2}
+                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+                >
+                  <option value="5">05</option>
+                  <option value="10">10</option>
+                  <option value="20">20</option>
+                  <option value="50">50</option>
+                </select>
+              </div>
             </div>
-            <hr />
+            <hr className="mt-3" />
             <div className="overflow-x-auto shadow-md sm:rounded-lg mt-5">
               <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead className="text-left text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -275,8 +480,8 @@ function Dashboard() {
                   </tr>
                 </thead>
                 <tbody className="text-left">
-                  {lokasiData.length > 0 ? (
-                    lokasiData.map((lokasi, index) => (
+                  {paginatedLokasi.length > 0 ? (
+                    paginatedLokasi.map((lokasi, index) => (
                       <tr
                         key={index}
                         className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
@@ -285,7 +490,7 @@ function Dashboard() {
                           scope="row"
                           className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                         >
-                          {index + 1}
+                          {(currentPage2 - 1) * limit2 + index + 1}
                         </th>
                         <td className="px-6 py-4 capitalize">
                           {lokasi.namaLokasi}
@@ -312,18 +517,51 @@ function Dashboard() {
                 </tbody>
               </table>
             </div>
+            <Pagination
+              className="mt-5"
+              layout="table"
+              currentPage={currentPage2}
+              totalPages={totalPages2}
+              onPageChange={onPageChange2}
+              showIcons
+              previousLabel=""
+              nextLabel=""
+            />
           </div>
 
           <br />
 
           {/* Tabel Organisasi */}
           <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-            <div className="flex justify-between">
+            <div className="md:flex justify-between">
               <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
                 Data Organisasi
               </h6>
+              <div className="flex items-center gap-2 mt-2">
+                <div className=" w-64">
+                  <input
+                    type="search"
+                    id="search-dropdown"
+                    value={searchTerm3}
+                    onChange={handleSearch3}
+                    className="block p-2.5 w-full z-20 text-sm rounded-l-md text-gray-900 bg-gray-50 border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                    placeholder="Search name..."
+                    required
+                  />
+                </div>
+                <select
+                  value={limit3}
+                  onChange={handleLimitChange3}
+                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+                >
+                  <option value="5">05</option>
+                  <option value="10">10</option>
+                  <option value="20">20</option>
+                  <option value="50">50</option>
+                </select>
+              </div>
             </div>
-            <hr />
+            <hr className="mt-3" />
             <div className="overflow-x-auto shadow-md sm:rounded-lg mt-8 mb-8">
               <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead className="text-left text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -340,8 +578,8 @@ function Dashboard() {
                   </tr>
                 </thead>
                 <tbody className="text-left">
-                  {organisasiData.length > 0 ? (
-                    organisasiData.map((organisasi, index) => (
+                  {paginatedOrganisasi.length > 0 ? (
+                    paginatedOrganisasi.map((organisasi, index) => (
                       <tr
                         key={index}
                         className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
@@ -350,7 +588,7 @@ function Dashboard() {
                           scope="row"
                           className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                         >
-                          {index + 1}
+                          {(currentPage3 - 1) * limit3 + index + 1}
                         </th>
                         <td className="px-6 py-4 capitalize">
                           {organisasi.namaOrganisasi}
@@ -373,6 +611,16 @@ function Dashboard() {
                 </tbody>
               </table>
             </div>
+            <Pagination
+              className="mt-5"
+              layout="table"
+              currentPage={currentPage3}
+              totalPages={totalPages3}
+              onPageChange={onPageChange3}
+              showIcons
+              previousLabel=""
+              nextLabel=""
+            />
           </div>
         </div>
       </div>
