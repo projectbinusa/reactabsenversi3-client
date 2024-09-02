@@ -2,17 +2,17 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../../../components/NavbarSuper";
 import Sidebar from "../../../components/SidebarUser";
 import axios from "axios";
-import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../../utils/api";
+import { useNavigate, useParams } from "react-router-dom";
 
 function EditJabatanSA() {
   const [jabatan, setJabatan] = useState("");
   const [namaJabatan, setNamaJabatan] = useState("");
   const { idJabatan } = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -46,7 +46,7 @@ function EditJabatanSA() {
       );
       setJabatan(res.data);
       Swal.fire("Berhasil", "Berhasil mengubah data", "success");
-      history.push("/superadmin/jabatan");
+      navigate("/superadmin/jabatan");
     } catch (error) {
       console.log(error);
     }

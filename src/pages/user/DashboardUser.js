@@ -10,11 +10,11 @@ import {
   faCircleXmark,
 } from "@fortawesome/free-regular-svg-icons";
 import Navbar from "../../components/NavbarUser";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../utils/api";
 import SidebarNavbar from "../../components/SidebarNavbar";
+import { Link } from "react-router-dom";
 
 function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -533,7 +533,7 @@ function Dashboard() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8 mt-12">
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8 mt-12 mb-10">
             <div className="bg-blue-500 rounded-lg shadow-md p-4 md:w-full lg:w-auto">
               <div className="flex justify-between items-center">
                 <div>

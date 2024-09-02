@@ -5,6 +5,7 @@ import { faCloudArrowDown, faInfo } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { Pagination } from "flowbite-react";
 import { API_DUMMY } from "../../../utils/api";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 

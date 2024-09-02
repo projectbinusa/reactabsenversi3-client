@@ -14,7 +14,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Button, Modal, Pagination } from "flowbite-react";
 import { API_DUMMY } from "../../../utils/api";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Link, useNavigate } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 
 function KelasSiswa() {
@@ -150,7 +150,27 @@ function KelasSiswa() {
       const response = await axios.get(
         `${API_DUMMY}/api/kelas/getAllByAdmin/${idAdmin}`
       );
-      setUserData(response.data.reverse());
+      const kelasList = response.data.reverse();
+
+      const siswaResponse = await axios.get(
+        `${API_DUMMY}/api/user/${idAdmin}/users`
+      );
+      const siswaList = siswaResponse.data;
+      console.log(
+        "siswa list: ",
+        siswaResponse.data.map((dt) => dt.kelas?.id)
+      );
+
+      const kelasWithSiswaCount = kelasList.map((kelas) => {
+        const siswaCount = siswaList.filter(
+          (siswa) => siswa.kelas?.id === kelas.id
+        ).length;
+        return {
+          ...kelas,
+          siswaCount,
+        };
+      });
+      setUserData(kelasWithSiswaCount);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -161,6 +181,7 @@ function KelasSiswa() {
       const response = await axios.get(
         `${API_DUMMY}/api/organisasi/all-by-admin/${idAdmin}`
       );
+
       setOrganisasiData(response.data);
     } catch (error) {
       console.error("Error fetching organisasi data:", error);
@@ -365,6 +386,9 @@ function KelasSiswa() {
                       <th scope="col" className="px-6 py-3 whitespace-nowrap">
                         Organisasi
                       </th>
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
+                        Jumlah Siswa
+                      </th>
                       <th
                         scope="col"
                         className="px-6 py-3 whitespace-nowrap text-center">
@@ -397,6 +421,9 @@ function KelasSiswa() {
                             {validOrganisasiIds.includes(kelas.organisasi.id)
                               ? kelas.organisasi.namaOrganisasi
                               : "Invalid Organisasi"}
+                          </td>
+                          <td className="px-6 py-4">
+                            {kelas.siswaCount || "0"}
                           </td>
                           <td className="py-3">
                             <div className="flex items-center -space-x-4 ml-12">

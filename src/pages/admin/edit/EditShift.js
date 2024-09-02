@@ -4,9 +4,10 @@ import Sidebar from "../../../components/SidebarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../../utils/api";
+import { useNavigate } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 
 function EditShift() {
@@ -14,7 +15,7 @@ function EditShift() {
   const [waktuMasuk, setWaktuMasuk] = useState("");
   const [waktuPulang, setWaktuPulang] = useState("");
   const { id } = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
   const idAdmin = localStorage.getItem("adminId");
 
   const getShift = async () => {

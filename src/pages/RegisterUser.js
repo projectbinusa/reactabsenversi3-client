@@ -1,10 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 import Logo from "../components/absensii.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { API_DUMMY } from "../utils/api";
+import { useNavigate } from "react-router-dom";
 
 function RegisterUser() {
   const [email, setEmail] = useState("");
@@ -15,7 +15,7 @@ function RegisterUser() {
   const [organisasiList, setOrganisasiList] = useState([]);
   const [shiftList, setShiftList] = useState([]);
   const [selectedShift, setSelectedShift] = useState("");
-  const history = useHistory();
+  const navigate = useNavigate();
   const [noShiftsError, setNoShiftsError] = useState(false);
 
   useEffect(() => {
@@ -93,7 +93,7 @@ function RegisterUser() {
         showConfirmButton: false,
         timer: 1500,
       });
-      history.push("/login");
+      navigate("/login");
       setTimeout(() => {
         window.location.reload();
       }, 1500);

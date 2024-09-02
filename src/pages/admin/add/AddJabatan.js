@@ -6,6 +6,7 @@ import { faArrowLeft, faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { API_DUMMY } from "../../../utils/api";
+import { useNavigate } from "react-router-dom";
 
 function AddJabatan() {
   const [namaJabatan, setNamaJabatan] = useState("");

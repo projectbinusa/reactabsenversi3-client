@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import axios from "axios";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+
 import Swal from "sweetalert2";
 import Logo from "../components/absensii.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import ikon dari react-icons
 import { API_DUMMY } from '../utils/api';
+import { useNavigate } from "react-router-dom";
 
 function RegisterSuperadmin() {
     const [email, setEmail] = useState("");
@@ -14,7 +15,7 @@ function RegisterSuperadmin() {
     const [role, setRole] = useState("ADMIN");
     const [errorMessage, setErrorMessage] = useState("");
     const [show, setShow] = useState(false);
-    const history = useHistory();
+    const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const [organisasiList, setOrganisasiList] = useState([]);
     const [organisasi, setOrganisasi] = useState("");
@@ -74,7 +75,7 @@ function RegisterSuperadmin() {
             showConfirmButton: false,
             timer: 1500,
           });
-          history.push("/login");
+          navigate("/login");
           setTimeout(() => {
             window.location.reload();
           }, 1500);

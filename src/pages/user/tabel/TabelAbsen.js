@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../../../components/NavbarUser";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faInfo,
@@ -10,7 +9,9 @@ import {
 import axios from "axios";
 import { Pagination } from "flowbite-react";
 import { API_DUMMY } from "../../../utils/api";
+import { Link, useNavigate } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
+// import { useNavigate } from "react-router-dom";
 
 function TabelAbsen() {
   const [absensi, setAbsensi] = useState([]);
@@ -18,6 +19,7 @@ function TabelAbsen() {
   const [limit, setLimit] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  // useNavigate
 
   const formatDate = (dateString) => {
     const options = {
@@ -150,8 +152,7 @@ function TabelAbsen() {
                   <select
                     value={limit}
                     onChange={handleLimitChange}
-                    className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
-                  >
+                    className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
                     <option value="5">05</option>
                     <option value="10">10</option>
                     <option value="20">20</option>
@@ -165,8 +166,7 @@ function TabelAbsen() {
               <div className="overflow-x-auto mt-5">
                 <table
                   id="dataKaryawan"
-                  className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
-                >
+                  className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                   {/* <!-- Tabel Head --> */}
                   <thead className="text-xs text-left text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -199,8 +199,7 @@ function TabelAbsen() {
                       <tr>
                         <td
                           colSpan="7"
-                          className="text-center py-4 text-gray-700"
-                        >
+                          className="text-center py-4 text-gray-700">
                           Tidak ada data yang ditampilkan
                         </td>
                       </tr>
@@ -252,7 +251,8 @@ function TabelAbsen() {
                                       0,
                                       0,
                                       0
-                                    ) < new Date(today).setHours(0, 0, 0, 0)
+                                    ) < new Date(today).setHours(0, 0, 0, 0) ||
+                                    absenData.jamPulang != "-"
                                   }
                                   className={`z-20 block rounded-full border-2 border-white p-4 text-red-700 active:bg-red-50 ${
                                     absenData.statusAbsen === "Izin" ||
@@ -263,11 +263,10 @@ function TabelAbsen() {
                                       0,
                                       0,
                                       0
-                                    ) < new Date(today).setHours(0, 0, 0, 0)
+                                    ) < new Date(today).setHours(0, 0, 0, 0) || absenData.jamPulang != "-"
                                       ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                                       : "bg-red-100 text-red-700"
-                                  }`}
-                                >
+                                  }`}>
                                   <span className="relative inline-block">
                                     <FontAwesomeIcon
                                       icon={faUserPlus}
@@ -278,7 +277,7 @@ function TabelAbsen() {
                                         new Date(
                                           absenData.tanggalAbsen
                                         ).setHours(0, 0, 0, 0) <
-                                          new Date(today).setHours(0, 0, 0, 0)
+                                          new Date(today).setHours(0, 0, 0, 0) || absenData.jamPulang != "-"
                                           ? "text-gray-500"
                                           : "text-red-700"
                                       }`}

@@ -6,8 +6,8 @@ import { faArrowLeft, faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../../utils/api";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
-import { Link, useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 function AddSiswaPerkelas() {
   const [showPassword, setShowPassword] = useState(false);

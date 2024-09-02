@@ -5,8 +5,8 @@ import { faArrowLeft, faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import { API_DUMMY } from "../../../utils/api";
+import { useNavigate } from "react-router-dom";
 
 function AddJabatanSA() {
   const [showPassword, setShowPassword] = useState(false);
@@ -14,7 +14,7 @@ function AddJabatanSA() {
   const idSuperAdmin = localStorage.getItem("superadminId");
   const [adminList, setAdminList] = useState([]);
   const [adminId, setadminId] = useState("");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const tambahJabatan = async (e) => {
     e.preventDefault();
@@ -33,7 +33,7 @@ function AddJabatanSA() {
         timer: 2000,
         showConfirmButton: false,
       });
-      history.push("/superadmin/jabatan");
+      navigate("/superadmin/jabatan");
     } catch (error) {
       console.log(error);
       Swal.fire("Error", "Gagal menambahkan data", "error");
