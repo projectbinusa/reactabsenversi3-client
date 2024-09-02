@@ -39,9 +39,8 @@ jobs:
             cd reactabsenv3/reactabsenversi3-client
             git pull origin develop
             npm install
-            npm run build
-            if [ ! -d /var/www/absenv3 ]; then
-              sudo mkdir -p /var/www/absenv3
-            fi
-            sudo rm -rf /var/www/absenv3/*
-            sudo cp -r build/* /var/www/absenv3/
+            sudo npm run build
+            mv build/ /var/www
+            cd /var/www
+            rm -rf absenv3
+            mv build absenv3
