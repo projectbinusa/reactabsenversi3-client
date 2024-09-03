@@ -31,10 +31,10 @@ function AbsenPulang() {
 
   // exc
   const allowedCoordinates = {
-    northWest: { lat: -6.982535175682822, lon: 110.40395139111704 },
-    northEast: { lat: -6.982535175682822, lon: 110.40404173111704 },
-    southWest: { lat: -6.982625175682822, lon: 110.40395139111704 },
-    southEast: { lat: -6.982625175682822, lon: 110.40404173111704 },
+    northWest: { lat: -6.982580885, lon: 110.404028235 },
+    northEast: { lat: -6.982580885, lon: 110.404118565 },
+    southWest: { lat: -6.982670715, lon: 110.404028235 },
+    southEast: { lat: -6.982670715, lon: 110.404118565 },
   };
 
   const isWithinAllowedCoordinates = (lat, lon) => {
@@ -144,15 +144,15 @@ function AbsenPulang() {
         const longitude = position.coords.longitude;
         console.log("latitude: ", latitude, "longitude: ", longitude);
 
-        // if (!isWithinAllowedCoordinates(latitude, longitude)) {
-        //   Swal.fire(
-        //     "Error",
-        //     "Lokasi Anda di luar batas yang diizinkan untuk absensi",
-        //     "error"
-        //   );
-        //   setFetchingLocation(false);
-        //   return;
-        // }
+        if (!isWithinAllowedCoordinates(latitude, longitude)) {
+          Swal.fire(
+            "Error",
+            "Lokasi Anda di luar batas yang diizinkan untuk absensi",
+            "error"
+          );
+          setFetchingLocation(false);
+          return;
+        }
 
         try {
           const absensiCheckResponse = await axios.get(
