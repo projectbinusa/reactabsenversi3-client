@@ -22,12 +22,12 @@ function AbsenPulang() {
   const [waktuPulang, setWaktuPulang] = useState("");
 
   // rmh
-  // const allowedCoordinates = {
-  //   northWest: { lat: -6.968697419671277, lon: 110.25208956395724 },
-  //   northEast: { lat: -6.968697419671277, lon: 110.25231003604275 },
-  //   southWest: { lat: -6.968878380328723, lon: 110.25208956395724 },
-  //   southEast: { lat: -6.968878380328723, lon: 110.25231003604275 },
-  // };
+//   const allowedCoordinates = {
+//     northWest: { lat: -6.9686335, lon: 110.2521534 },
+//     northEast: { lat: -6.9686335, lon: 110.2522446 },
+//     southWest: { lat: -6.9687235, lon: 110.2521534 },
+//     southEast: { lat: -6.9687235, lon: 110.2522446 },
+// };
 
   // exc
   const allowedCoordinates = {
@@ -48,6 +48,7 @@ function AbsenPulang() {
       lon <= northEast.lon + tolerance
     );
   };
+
 
   const getShift = async () => {
     try {
@@ -78,35 +79,53 @@ function AbsenPulang() {
 
   useEffect(() => {
     if (!fetchingLocation) {
-      return;
+        return;
     }
 
-    navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
+    const cameraPermission = localStorage.getItem("cameraPermission");
+    const locationPermission = localStorage.getItem("locationPermission");
 
-        try {
-          const response = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`
-          );
-          const data = await response.json();
-          const address = data.display_name;
-          setAddress(address);
-        } catch (error) {
-          console.error("Error:", error);
-          setError("Gagal mendapatkan alamat");
-        }
+    if (!cameraPermission) {
+        navigator.mediaDevices.getUserMedia({ video: true });
+        localStorage.setItem("cameraPermission", "granted");
+    }
 
-        setFetchingLocation(false);
-      },
-      (error) => {
-        console.error("Error:", error);
-        setError("Gagal mendapatkan lokasi");
-        setFetchingLocation(false);
-      }
-    );
-  }, [fetchingLocation]);
+    if (!locationPermission) {
+        const options = {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0,
+        };
+
+        const handleSuccess = async (position) => {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+
+            try {
+                const response = await fetch(
+                    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`
+                );
+                const data = await response.json();
+                const address = data.display_name;
+                setAddress(address);
+            } catch (error) {
+                console.error("Error:", error);
+                setError("Gagal mendapatkan alamat");
+            }
+
+            setFetchingLocation(false);
+        };
+
+        const handleError = (error) => {
+            console.error("Error:", error);
+            setError("Gagal mendapatkan lokasi");
+            setFetchingLocation(false);
+        };
+
+        navigator.geolocation.getCurrentPosition(handleSuccess, handleError, options);
+    }
+}, [fetchingLocation]);
+
 
   // Fungsi untuk menambahkan nol di depan angka jika angka kurang dari 10
   const tambahkanNolDepan = (num) => {
@@ -290,8 +309,7 @@ function AbsenPulang() {
                       );
                     }
                   }}
-                  className="block w-32 sm:w-40 bg-blue-500 text-white rounded-lg py-3 text-sm sm:text-xs font-medium"
-                >
+                  className="block w-32 sm:w-40 bg-blue-500 text-white rounded-lg py-3 text-sm sm:text-xs font-medium">
                   Ambil Foto
                 </button>
               </div>
