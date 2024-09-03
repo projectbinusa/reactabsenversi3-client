@@ -110,6 +110,7 @@ import AddSiswaPerkelas from "./pages/admin/add/AddSiswaPerkelas";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Loader from "./components/Loader";
+import Navbar1 from "./components/Navbar1";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -120,11 +121,12 @@ function App() {
   }, []);
 
   return loading ? (
-    <Loader/>
-  ):(
+    <Loader />
+  ) : (
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/navbar" element={<Navbar1 />} />
         <Route path="/register" element={<Register />} />
         <Route path="/registerUser" element={<RegisterUser />} />
         <Route path="/registerSA" element={<RegisterSuperadmin />} />

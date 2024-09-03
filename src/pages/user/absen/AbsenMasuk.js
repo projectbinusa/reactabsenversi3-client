@@ -30,6 +30,12 @@ function AbsenMasuk() {
     southEast: { lat: -6.982670715, lon: 110.404118565 },
   };
 
+  // const allowedCoordinates = {
+  //   northWest: { lat: -6.968697419671277, lon: 110.25208956395724 },
+  //   northEast: { lat: -6.968697419671277, lon: 110.25231003604275 },
+  //   southWest: { lat: -6.968878380328723, lon: 110.25208956395724 },
+  //   southEast: { lat: -6.968878380328723, lon: 110.25231003604275 },
+  // };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -44,56 +50,79 @@ function AbsenMasuk() {
 
     async function requestPermissions() {
       try {
-        await navigator.mediaDevices.getUserMedia({ video: true });
+        // Cek apakah izin sudah pernah diminta sebelumnya
+        const cameraPermission = localStorage.getItem("cameraPermission");
+        const locationPermission = localStorage.getItem("locationPermission");
 
-        watchId = navigator.geolocation.watchPosition(
-          async (position) => {
-            const { latitude, longitude } = position.coords;
-            setLatitude(latitude);
-            setLongitude(longitude);
-            console.log("latitude: ", latitude);
-            console.log("longitude: ", longitude);
+        if (!cameraPermission) {
+          await navigator.mediaDevices.getUserMedia({ video: true });
+          localStorage.setItem("cameraPermission", "granted");
+        }
 
-            try {
-              const response = await fetch(
-                `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`
-              );
-              const data = await response.json();
-              const address = data.display_name;
-              setAddress(address);
-            } catch (error) {
-              console.error("Error:", error);
-              setError("Gagal mendapatkan alamat");
-            }
-            setFetchingLocation(false);
-          },
-          (error) => {
-            console.error("Error:", error);
-            setError("Gagal mendapatkan lokasi");
-            setFetchingLocation(false);
-          },
-          {
+        if (!locationPermission) {
+          const options = {
             enableHighAccuracy: true,
             timeout: 10000,
-            maximumAge: 1000, // Menggunakan cache hingga 1 detik untuk hasil yang lebih cepat.
-          }
-        );
+            maximumAge: 0,
+          };
+
+          watchId = navigator.geolocation.watchPosition(
+            async (position) => {
+              const { latitude, longitude } = position.coords;
+              setLatitude(latitude);
+              setLongitude(longitude);
+              console.log("latitude: ", latitude);
+              console.log("longitude: ", longitude);
+
+              try {
+                const response = await fetch(
+                  `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`
+                );
+                const data = await response.json();
+                const address = data.display_name;
+                setAddress(address);
+              } catch (error) {
+                console.error("Error:", error);
+                setError("Gagal mendapatkan alamat");
+              }
+              setFetchingLocation(false);
+            },
+            (error) => {
+              console.error("Error mendapatkan lokasi:", error);
+              switch (error.code) {
+                case error.PERMISSION_DENIED:
+                  setError("Izin lokasi ditolak. Harap izinkan akses lokasi.");
+                  break;
+                case error.POSITION_UNAVAILABLE:
+                  setError("Lokasi tidak tersedia. Harap coba lagi.");
+                  break;
+                case error.TIMEOUT:
+                  setError("Permintaan lokasi timeout. Coba lagi.");
+                  break;
+                default:
+                  setError("Gagal mendapatkan lokasi. Coba lagi.");
+                  break;
+              }
+              setFetchingLocation(false);
+            },
+            options
+          );
+          localStorage.setItem("locationPermission", "granted");
+        }
       } catch (err) {
-        console.error("Error meminta akses kamera:", err);
-        setError("Gagal mendapatkan akses kamera");
+        console.error("Error meminta akses kamera atau lokasi:", err);
+        setError("Gagal mendapatkan akses kamera atau lokasi");
       }
     }
 
     requestPermissions();
 
     return () => {
-      // Bersihkan watchPosition saat komponen dilepas.
       if (watchId) {
         navigator.geolocation.clearWatch(watchId);
       }
     };
   }, []);
-
 
   const tambahkanNolDepan = (num) => {
     return num < 10 ? "0" + num : num;
@@ -116,9 +145,9 @@ function AbsenMasuk() {
   };
 
   // validasi
-   const isWithinAllowedCoordinates = (lat, lon) => {
+  const isWithinAllowedCoordinates = (lat, lon) => {
     const { northWest, northEast, southWest, southEast } = allowedCoordinates;
-    const tolerance = 0.00001; // adding a small tolerance
+    const tolerance = 0.00001;
 
     return (
       lat >= southWest.lat - tolerance &&
