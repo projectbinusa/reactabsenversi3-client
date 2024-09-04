@@ -20,6 +20,8 @@ function AbsenPulang() {
   const [fetchingLocation, setFetchingLocation] = useState(true);
   const [keteranganPulangAwal, setKeteranganPulangAwal] = useState("");
   const [waktuPulang, setWaktuPulang] = useState("");
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
 
   // rmh
 //   const allowedCoordinates = {
@@ -78,53 +80,83 @@ function AbsenPulang() {
   }, []);
 
   useEffect(() => {
-    if (!fetchingLocation) {
-        return;
-    }
+    let watchId;
 
-    const cameraPermission = localStorage.getItem("cameraPermission");
-    const locationPermission = localStorage.getItem("locationPermission");
+    async function requestPermissions() {
+      try {
+        // Cek apakah izin sudah pernah diminta sebelumnya
+        const cameraPermission = localStorage.getItem("cameraPermission");
+        const locationPermission = localStorage.getItem("locationPermission");
 
-    if (!cameraPermission) {
-        navigator.mediaDevices.getUserMedia({ video: true });
-        localStorage.setItem("cameraPermission", "granted");
-    }
+        if (!cameraPermission) {
+          await navigator.mediaDevices.getUserMedia({ video: true });
+          localStorage.setItem("cameraPermission", "granted");
+        }
 
-    if (!locationPermission) {
-        const options = {
+        if (!locationPermission) {
+          const options = {
             enableHighAccuracy: true,
             timeout: 10000,
             maximumAge: 0,
-        };
+          };
 
-        const handleSuccess = async (position) => {
-            const latitude = position.coords.latitude;
-            const longitude = position.coords.longitude;
+          watchId = navigator.geolocation.watchPosition(
+            async (position) => {
+              const { latitude, longitude } = position.coords;
+              setLatitude(latitude);
+              setLongitude(longitude);
+              console.log("latitude: ", latitude);
+              console.log("longitude: ", longitude);
 
-            try {
+              try {
                 const response = await fetch(
-                    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`
+                  `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`
                 );
                 const data = await response.json();
                 const address = data.display_name;
                 setAddress(address);
-            } catch (error) {
+              } catch (error) {
                 console.error("Error:", error);
                 setError("Gagal mendapatkan alamat");
-            }
-
-            setFetchingLocation(false);
-        };
-
-        const handleError = (error) => {
-            console.error("Error:", error);
-            setError("Gagal mendapatkan lokasi");
-            setFetchingLocation(false);
-        };
-
-        navigator.geolocation.getCurrentPosition(handleSuccess, handleError, options);
+              }
+              setFetchingLocation(false);
+            },
+            (error) => {
+              console.error("Error mendapatkan lokasi:", error);
+              switch (error.code) {
+                case error.PERMISSION_DENIED:
+                  setError("Izin lokasi ditolak. Harap izinkan akses lokasi.");
+                  break;
+                case error.POSITION_UNAVAILABLE:
+                  setError("Lokasi tidak tersedia. Harap coba lagi.");
+                  break;
+                case error.TIMEOUT:
+                  setError("Permintaan lokasi timeout. Coba lagi.");
+                  break;
+                default:
+                  setError("Gagal mendapatkan lokasi. Coba lagi.");
+                  break;
+              }
+              setFetchingLocation(false);
+            },
+            options
+          );
+          localStorage.setItem("locationPermission", "granted");
+        }
+      } catch (err) {
+        console.error("Error meminta akses kamera atau lokasi:", err);
+        setError("Gagal mendapatkan akses kamera atau lokasi");
+      }
     }
-}, [fetchingLocation]);
+
+    requestPermissions();
+
+    return () => {
+      if (watchId) {
+        navigator.geolocation.clearWatch(watchId);
+      }
+    };
+  }, []);
 
 
   // Fungsi untuk menambahkan nol di depan angka jika angka kurang dari 10
@@ -159,8 +191,8 @@ function AbsenPulang() {
     // Check if the current location is within allowed coordinates
     navigator.geolocation.getCurrentPosition(
       async (position) => {
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
+        // const latitude = position.coords.latitude;
+        // const longitude = position.coords.longitude;
         console.log("latitude: ", latitude, "longitude: ", longitude);
 
         if (!isWithinAllowedCoordinates(latitude, longitude)) {
