@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../../../../components/SidebarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCloudArrowDown, faFileExport } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCloudArrowDown,
+  faFileExport,
+} from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../../../utils/api";
@@ -77,7 +80,6 @@ function HarianPerkelas() {
       console.error("Error fetching classes:", error);
     }
   };
-
 
   // const getAllKelasByOrganisasi = async () => {
   //   try {
@@ -227,7 +229,7 @@ function HarianPerkelas() {
         <div className="sticky top-16 z-40">
           <NavbarAdmin />
         </div>
-        <div className="content-page flex-1 p-8 md:ml-72 mt-16 text-center overflow-auto">
+        <div className="content-page flex-1 p-8 md:ml-72 mt-5 md:mt-16 text-center overflow-auto">
           <div className="tabel-absen bg-white p-5 rounded-xl shadow-xl border border-gray-300">
             <div className="md:flex justify-between">
               <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
@@ -257,12 +259,12 @@ function HarianPerkelas() {
                 </select>
               </div>
             </div>
-            <hr />
+            <hr className="mt-3" />
 
             <form
               method="get"
               id="filterForm"
-              className="flex justify-center items-center gap-4 mt-5"
+              className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-5"
             >
               <select
                 id="small"
@@ -272,10 +274,10 @@ function HarianPerkelas() {
               >
                 <option value="">Pilih Kelas</option>
                 {listKelas.map((data) => (
-    <option key={data.id} value={data.id}>
-      {data.namaKelas}
-    </option>
-  ))}
+                  <option key={data.id} value={data.id}>
+                    {data.namaKelas}
+                  </option>
+                ))}
               </select>
               <input
                 type="date"
@@ -285,17 +287,18 @@ function HarianPerkelas() {
                 value={tanggal}
                 onChange={handleTanggalChange}
               />
-              <div className="flex sm:flex-row gap-4 mx-auto items-center">
+              <div className="flex w-full sm:w-auto sm:flex-row gap-4 items-center justify-center">
                 <button
                   type="button"
-                  className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto"
+                  className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded sm:py-2 sm:px-4"
                   onClick={handleExportClick}
                   title="Export"
                 >
-                   <FontAwesomeIcon icon={faCloudArrowDown} />
+                  <FontAwesomeIcon icon={faCloudArrowDown} />
                 </button>
               </div>
             </form>
+
             <div className=" overflow-x-auto shadow-md sm:rounded-lg mt-5 py-3">
               {absensiData.length === 0 ? (
                 <>

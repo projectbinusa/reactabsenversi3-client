@@ -151,56 +151,54 @@ function Absensi() {
         <div className="sticky top-16 z-40">
           <Navbar />
         </div>
-        <div className="sm:ml-64 content-page container ml-0 md:ml-64 mt-6 text-center">
-          <div className="p-5 mt-5">
-            <main id="content" className="flex-1 p-4 sm:p-6">
-              <div className="bg-white rounded-lg shadow-xl p-8">
-                <div className="md:flex justify-between">
-                  <h6 className="text-xl font-bold">Detail History Presensi</h6>
-                  <div className="flex items-center gap-2 mt-2">
-                    <div className=" w-64">
-                      <input
-                        type="search"
-                        id="search-dropdown"
-                        value={searchTerm}
-                        onChange={handleSearch}
-                        className="block p-2.5 w-full z-20 text-sm rounded-l-md text-gray-900 bg-gray-50 border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
-                        placeholder="Search name..."
-                        required
-                      />
-                    </div>
-                    <select
-                      value={limit}
-                      onChange={handleLimitChange}
-                      className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
-                    >
-                      <option value="5">05</option>
-                      <option value="10">10</option>
-                      <option value="20">20</option>
-                      <option value="50">50</option>
-                    </select>
-                    {/* <button
+        <div className="content-page flex-1 p-8 md:ml-72 mt-5 md:mt-20 text-center overflow-auto">
+          <div className="tabel-absen bg-white p-5 rounded-xl shadow-xl border border-gray-300">
+            <div className="md:flex justify-between">
+              <h6 className="text-xl font-bold">Detail History Presensi</h6>
+              <div className="flex items-center gap-2 mt-2">
+                <div className=" w-64">
+                  <input
+                    type="search"
+                    id="search-dropdown"
+                    value={searchTerm}
+                    onChange={handleSearch}
+                    className="block p-2.5 w-full z-20 text-sm rounded-l-md text-gray-900 bg-gray-50 border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                    placeholder="Search name..."
+                    required
+                  />
+                </div>
+                <select
+                  value={limit}
+                  onChange={handleLimitChange}
+                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+                >
+                  <option value="5">05</option>
+                  <option value="10">10</option>
+                  <option value="20">20</option>
+                  <option value="50">50</option>
+                </select>
+                {/* <button
                       type="submit"
                       className="bg-indigo-500 hover:bg-indigo text-white font-bold py-2 px-4 rounded inline-block"
                     >
                       <FontAwesomeIcon icon={faMagnifyingGlass} />
                     </button> */}
-                    <a
-                      onClick={exportAbsensi}
-                      title="Export"
-                      className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto"
-                    >
-                      <FontAwesomeIcon icon={faCloudArrowDown} />
-                    </a>
-                  </div>
-                </div>
-                <hr className="mt-3" />
-                <form
-                  action=""
-                  method="post"
-                  className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-5"
+                <a
+                  onClick={exportAbsensi}
+                  title="Export"
+                  className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto"
                 >
-                  {/* <select
+                  <FontAwesomeIcon icon={faCloudArrowDown} />
+                </a>
+              </div>
+            </div>
+            <hr className="mt-3" />
+            <form
+              action=""
+              method="post"
+              className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-5"
+            >
+              {/* <select
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     id="bulan"
                     name="bulan"
@@ -219,7 +217,7 @@ function Absensi() {
                     <option value="11">November</option>
                     <option value="12">Desember</option>
                   </select> */}
-                  {/* <input
+              {/* <input
                     type="text"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     id="tanggal"
@@ -235,135 +233,129 @@ function Absensi() {
                     placeholder="Pilih Tahun"
                     value=""
                   /> */}
-                </form>
+            </form>
 
-                <div className=" overflow-x-auto shadow-md sm:rounded-lg mt-5">
-                  <table
-                    id="rekapSimple"
-                    className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
-                  >
-                    <thead className="text-left text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                      <tr>
-                        <th scope="col" className="px-4 py-3">
-                          No
+            <div className=" overflow-x-auto shadow-md sm:rounded-lg mt-5">
+              <table
+                id="rekapSimple"
+                className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+              >
+                <thead className="text-left text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                  <tr>
+                    <th scope="col" className="px-4 py-3">
+                      No
+                    </th>
+                    <th scope="col" className="px-4 py-3 whitespace-nowrap">
+                      Nama Siswa
+                    </th>
+                    <th scope="col" className="px-4 py-3">
+                      Tanggal
+                    </th>
+                    <th scope="col" className="px-4 py-3">
+                      Kehadiran
+                    </th>
+                    <th scope="col" className="px-4 py-3 whitespace-nowrap">
+                      Jam Masuk
+                    </th>
+                    <th scope="col" className="px-4 py-3 whitespace-nowrap">
+                      Foto Masuk
+                    </th>
+                    <th scope="col" className="px-4 py-3 whitespace-nowrap">
+                      Jam Pulang
+                    </th>
+                    <th scope="col" className="px-4 py-3 whitespace-nowrap">
+                      Foto Pulang
+                    </th>
+                    <th scope="col" className="px-4 py-3 whitespace-nowrap">
+                      Jam Sekolah
+                    </th>
+                    <th scope="col" className="px-4 py-3">
+                      Aksi
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="text-left">
+                  {paginatedAbsensi.length === 0 ? (
+                    <tr>
+                      <td
+                        colSpan="9"
+                        className="px-4 py-4 text-center text-gray-500"
+                      >
+                        Tidak ada data yang ditampilkan
+                      </td>
+                    </tr>
+                  ) : (
+                    paginatedAbsensi.map((absensi, index) => (
+                      <tr
+                        key={index}
+                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                      >
+                        <th
+                          scope="row"
+                          className="px-4 py-4 font-medium text-gray-900 dark:text-white"
+                        >
+                          {(currentPage - 1) * limit + index + 1}
                         </th>
-                        <th scope="col" className="px-4 py-3">
-                          Nama Siswa
-                        </th>
-                        <th scope="col" className="px-4 py-3">
-                          Tanggal
-                        </th>
-                        <th scope="col" className="px-4 py-3">
-                          Kehadiran
-                        </th>
-                        <th scope="col" className="px-4 py-3">
-                          Jam Masuk
-                        </th>
-                        <th scope="col" className="px-4 py-3">
-                          Foto Masuk
-                        </th>
-                        <th scope="col" className="px-4 py-3">
-                          Jam Pulang
-                        </th>
-                        <th scope="col" className="px-4 py-3">
-                          Foto Pulang
-                        </th>
-                        <th scope="col" className="px-4 py-3">
-                          Jam Sekolah
-                        </th>
-                        <th scope="col" className="px-4 py-3">
-                          Aksi
-                        </th>
+                        <td className="px-4 py-2 text-gray-700 text-center capitalize whitespace-nowrap">
+                          {absensi.user.username}
+                        </td>
+                        <td className="px-4 py-2 text-gray-700 text-center capitalize whitespace-nowrap">
+                          {formatDate(absensi.tanggalAbsen)}
+                        </td>
+                        <td className="px-4 py-2 text-gray-700 text-center capitalize whitespace-nowrap">
+                          {absensi.statusAbsen}
+                        </td>
+                        <td className="px-4 py-2 text-gray-700 text-center capitalize">
+                          {absensi.jamMasuk}
+                        </td>
+                        <td className="px-4 py-2 text-gray-700 text-center capitalize">
+                          <img
+                            src={absensi.fotoMasuk ? absensi.fotoMasuk : "-"}
+                            alt="Foto Masuk"
+                            className="block py-2.5 px-0 w-25 max-h-32 h-25 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            id="foto_masuk"
+                          />
+                        </td>
+                        <td className="px-4 py-4">{absensi.jamPulang}</td>
+                        <td className="px-4 py-4">
+                          <img
+                            src={absensi.fotoPulang ? absensi.fotoPulang : "-"}
+                            alt="Foto Pulang"
+                            className="block py-2.5 px-0 w-25 max-h-96 h-25 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            id="foto_pulang"
+                          />
+                        </td>
+                        <td className="px-4 py-2 text-gray-700 text-center capitalize">
+                          00 jam 00 menit
+                        </td>
+                        <td className="px-4 py-2 text-gray-700 text-center capitalize">
+                          <a href={`/admin/detailA/${absensi.id}`}>
+                            <button className="z-20 block rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
+                              <span className="inline-block">
+                                <FontAwesomeIcon
+                                  icon={faInfo}
+                                  className="h-4 w-4"
+                                />
+                              </span>
+                            </button>
+                          </a>
+                        </td>
                       </tr>
-                    </thead>
-                    <tbody className="text-left">
-                      {paginatedAbsensi.length === 0 ? (
-                        <tr>
-                          <td
-                            colSpan="9"
-                            className="px-4 py-4 text-center text-gray-500"
-                          >
-                            Tidak ada data yang ditampilkan
-                          </td>
-                        </tr>
-                      ) : (
-                        paginatedAbsensi.map((absensi, index) => (
-                          <tr
-                            key={index}
-                            className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                          >
-                            <th
-                              scope="row"
-                              className="px-4 py-4 font-medium text-gray-900 dark:text-white"
-                            >
-                              {(currentPage - 1) * limit + index + 1}
-                            </th>
-                            <td className="px-4 py-2 text-gray-700 text-center capitalize">
-                              {absensi.user.username}
-                            </td>
-                            <td className="px-4 py-2 text-gray-700 text-center capitalize">
-                              {formatDate(absensi.tanggalAbsen)}
-                            </td>
-                            <td className="px-4 py-2 text-gray-700 text-center capitalize">
-                              {absensi.statusAbsen}
-                            </td>
-                            <td className="px-4 py-2 text-gray-700 text-center capitalize">
-                              {absensi.jamMasuk}
-                            </td>
-                            <td className="px-4 py-2 text-gray-700 text-center capitalize">
-                              <img
-                                src={
-                                  absensi.fotoMasuk ? absensi.fotoMasuk : "-"
-                                }
-                                alt="Foto Masuk"
-                                className="block py-2.5 px-0 w-25 max-h-32 h-25 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                id="foto_masuk"
-                              />
-                            </td>
-                            <td className="px-4 py-4">{absensi.jamPulang}</td>
-                            <td className="px-4 py-4">
-                              <img
-                                src={
-                                  absensi.fotoPulang ? absensi.fotoPulang : "-"
-                                }
-                                alt="Foto Pulang"
-                                className="block py-2.5 px-0 w-25 max-h-96 h-25 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                id="foto_pulang"
-                              />
-                            </td>
-                            <td className="px-4 py-2 text-gray-700 text-center capitalize">
-                              00 jam 00 menit
-                            </td>
-                            <td className="px-4 py-2 text-gray-700 text-center capitalize">
-                              <a href={`/admin/detailA/${absensi.id}`}>
-                                <button className="z-20 block rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
-                                  <span className="inline-block">
-                                    <FontAwesomeIcon
-                                      icon={faInfo}
-                                      className="h-4 w-4"
-                                    />
-                                  </span>
-                                </button>
-                              </a>
-                            </td>
-                          </tr>
-                        ))
-                      )}
-                    </tbody>
-                  </table>
-                </div>
-                <Pagination
-                  className="mt-5"
-                  layout="table"
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={onPageChange}
-                  showIcons
-                  previousLabel=""
-                  nextLabel=""
-                />
-              </div>
-            </main>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+            <Pagination
+              className="mt-5"
+              layout="table"
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={onPageChange}
+              showIcons
+              previousLabel=""
+              nextLabel=""
+            />
           </div>
         </div>
       </div>

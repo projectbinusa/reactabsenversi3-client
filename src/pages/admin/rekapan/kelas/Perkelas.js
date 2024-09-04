@@ -161,14 +161,14 @@ function Perkelas() {
         <div className="sticky top-16 z-40">
           <NavbarAdmin />
         </div>
-        <div className="content-page flex-1 p-8 md:ml-72 mt-16 text-center overflow-auto">
+        <div className="content-page flex-1 p-8 md:ml-72 mt-5 text-center overflow-auto md:mt-16">
           <div className="tabel-absen bg-white p-5 rounded-xl shadow-xl border border-gray-300">
             <div className="md:flex justify-between">
               <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
                 Rekap Perkelas
               </h6>
               <div className="flex md:mt-2 mt-4 items-center gap-2">
-                <div className=" w-64">
+                <div className="w-64">
                   <input
                     type="search"
                     id="search-dropdown"
@@ -191,21 +191,21 @@ function Perkelas() {
                 </select>
               </div>
             </div>
-            <hr />
+            <hr className="mt-3" />
             <form className="flex justify-center items-center gap-4 mt-5">
-            <select
-  id="kelas"
-  className="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-  value={kelasId}
-  onChange={(e) => setKelasId(e.target.value)}
->
-  <option>Pilih Kelas</option>
-  {listKelas.map((data) => (
-    <option key={data.id} value={data.id}>
-      {data.namaKelas}
-    </option>
-  ))}
-</select>
+              <select
+                id="kelas"
+                className="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                value={kelasId}
+                onChange={(e) => setKelasId(e.target.value)}
+              >
+                <option>Pilih Kelas</option>
+                {listKelas.map((data) => (
+                  <option key={data.id} value={data.id}>
+                    {data.namaKelas}
+                  </option>
+                ))}
+              </select>
               <div className="flex sm:flex-row gap-4 mx-auto items-center">
                 <button
                   type="button"

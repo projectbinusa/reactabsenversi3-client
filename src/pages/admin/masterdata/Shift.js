@@ -238,16 +238,16 @@ function Shift() {
                       <th scope="col" className="px-6 py-3">
                         No
                       </th>
-                      <th scope="col" className="px-6 py-3">
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
                         Nama Pembelajaran
                       </th>
-                      <th scope="col" className="px-6 py-3">
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
                         Waktu Masuk
                       </th>
-                      <th scope="col" className="px-6 py-3">
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
                         Waktu pulang
                       </th>
-                      <th scope="col" className="px-6 py-3">
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
                         Jumlah Siswa
                       </th>
                       <th scope="col" className="px-6 py-3">
