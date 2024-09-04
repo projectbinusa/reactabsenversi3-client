@@ -12,12 +12,16 @@ import { API_DUMMY } from "../../../utils/api";
 import { useNavigate } from "react-router-dom";
 import NavbarAdmin from "../../../components/NavbarAdmin";
 import SidebarNavbar from "../../../components/SidebarNavbar";
+import { Pagination } from "flowbite-react";
 
 function Simpel() {
   const [bulan, setBulan] = useState(null); // Bulan default diubah ke null
   const [tahun, setTahun] = useState(null); // Tahun default diubah ke null
   const [absensiData, setAbsensiData] = useState([]);
   const [selectedDate, setSelectedDate] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
   const adminId = localStorage.getItem("adminId");
 
   const handleSearch = async (bulan, tahun) => {
@@ -142,6 +146,21 @@ function Simpel() {
     }
   };
 
+  const filteredData = Object.values(absensiData)
+    .flat()
+    .filter((item) =>
+      item.user.username.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+
+  function onPageChange(page) {
+    setCurrentPage(page);
+  }
+
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
@@ -157,6 +176,30 @@ function Simpel() {
               <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
                 Rekap Simpel
               </h6>
+              <div className="flex md:mt-2 mt-4 items-center gap-2">
+                <div className=" w-64">
+                  <input
+                    type="search"
+                    id="search-dropdown"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="block p-2.5 w-full z-20 text-sm rounded-l-md text-gray-900 bg-gray-50 border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                    placeholder="Search name..."
+                    required
+                  />
+                </div>
+                <select
+                  value={itemsPerPage}
+                  onChange={(e) => setItemsPerPage(Number(e.target.value))}
+                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+                >
+                  {[5, 10, 20, 50].map((limit) => (
+                    <option key={limit} value={limit}>
+                      {limit}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
             <hr />
             <form className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-5">
@@ -222,11 +265,11 @@ function Simpel() {
                   </tr>
                 </thead>
                 <tbody className="text-left">
-                  {absensiData.length > 0 && absensiData != null ? (
-                    absensiData.map((absensi, index) => (
+                  {currentItems.length > 0 && absensiData != null ? (
+                    currentItems.map((absensi, index) => (
                       <tr key={index}>
                         <td className="px-5 py-4 whitespace-nowrap">
-                          {index + 1}
+                          {indexOfFirstItem + index + 1}
                         </td>
                         <td className="px-5 py-4 whitespace-nowrap capitalize">
                           {absensi.user.username}
@@ -283,6 +326,16 @@ function Simpel() {
                 </tbody>
               </table>
             </div>
+            <Pagination
+              className="mt-5"
+              layout="table"
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={onPageChange}
+              showIcons
+              previousLabel=""
+              nextLabel=""
+            />
           </div>
         </div>
       </div>
