@@ -206,7 +206,7 @@ function Lokasi() {
                       <th scope="col" className="px-6 py-3">
                         No
                       </th>
-                      <th scope="col" className="px-6 py-3">
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
                         Nama Lokasi
                       </th>
                       <th scope="col" className="px-6 py-3">
@@ -246,14 +246,14 @@ function Lokasi() {
                           >
                             {(currentPage - 1) * limit + index + 1}
                           </th>
-                          <td className="px-6 py-4">
+                          <td className="px-6 py-4 whitespace-nowrap">
                             {capitalize(lokasi.namaLokasi)}
                           </td>
-                          <td className="px-6 py-4">
+                          <td className="px-6 py-4 whitespace-nowrap">
                             {capitalize(lokasi.alamat)}
                           </td>
                           {/* <td className="px-6 py-4">{capitalize(karyawan)}</td> */}
-                          <td className="px-6 py-4">
+                          <td className="px-6 py-4 whitespace-nowrap">
                             {lokasi.organisasi.namaOrganisasi}
                           </td>
                           <td className="py-3">

@@ -274,8 +274,8 @@ function Dashboard() {
         <div className="sticky top-16 z-40">
           <Navbar />
         </div>
-        <div className="content-page container p-8 md:ml-72 mt-12">
-          <div className="mt-5 w-full">
+        <div className="content-page container p-8 md:ml-72 mt-2 md:mt-12">
+          <div className="mt-2 md:mt-12 w-full">
             <div className="p-4 text-center bg-indigo-300 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
               <h2 className="text-2xl font-semibold mb-4">
                 Selamat Datang di Presensi
@@ -287,7 +287,7 @@ function Dashboard() {
             </div>
           </div>
 
-          <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 mt-12">
+          <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 mt-5 md:mt-12">
             <div className="pl-2 h-32 bg-indigo-500 rounded-lg shadow-md flex-1">
               <div className="flex w-full h-full py-2 px-4 bg-gray-100 rounded-lg justify-between">
                 <div className="my-auto">
@@ -359,10 +359,10 @@ function Dashboard() {
                     <th scope="col" className="px-6 py-3">
                       Tanggal
                     </th>
-                    <th scope="col" className="px-6 py-3">
+                    <th scope="col" className="px-6 py-3 whitespace-nowrap">
                       Jam Masuk
                     </th>
-                    <th scope="col" className="px-6 py-3">
+                    <th scope="col" className="px-6 py-3 whitespace-nowrap">
                       Jam Pulang
                     </th>
                     <th scope="col" className="px-6 py-3">
@@ -383,19 +383,19 @@ function Dashboard() {
                         >
                           {(currentPage - 1) * limit + index + 1}
                         </th>
-                        <td className="px-6 py-4 capitalize">
+                        <td className="px-6 py-4 capitalize whitespace-nowrap">
                           {absen.user.username}
                         </td>
-                        <td className="px-6 py-4 capitalize">
+                        <td className="px-6 py-4 capitalize whitespace-nowrap">
                           {formatDate(absen.tanggalAbsen)}
                         </td>
-                        <td className="px-6 py-4 capitalize">
+                        <td className="px-6 py-4 capitalize whitespace-nowrap">
                           {absen.jamMasuk || "-"}
                         </td>
-                        <td className="px-6 py-4 capitalize">
+                        <td className="px-6 py-4 capitalize whitespace-nowrap">
                           {absen.jamPulang || "-"}
                         </td>
-                        <td className="px-6 py-4 capitalize">
+                        <td className="px-6 py-4 capitalize whitespace-nowrap">
                           {absen.statusAbsen}
                         </td>
                       </tr>
@@ -465,13 +465,13 @@ function Dashboard() {
                     <th scope="col" className="px-6 py-3">
                       No
                     </th>
-                    <th scope="col" className="px-6 py-3">
+                    <th scope="col" className="px-6 py-3 whitespace-nowrap">
                       Nama Lokasi
                     </th>
                     <th scope="col" className="px-6 py-3">
                       Alamat
                     </th>
-                    <th scope="col" className="px-6 py-3">
+                    <th scope="col" className="px-6 py-3 whitespace-nowrap">
                       Jumlah Siswa
                     </th>
                     <th scope="col" className="px-6 py-3">
@@ -492,14 +492,14 @@ function Dashboard() {
                         >
                           {(currentPage2 - 1) * limit2 + index + 1}
                         </th>
-                        <td className="px-6 py-4 capitalize">
+                        <td className="px-6 py-4 capitalize whitespace-nowrap">
                           {lokasi.namaLokasi}
                         </td>
-                        <td className="px-6 py-4 capitalize">
+                        <td className="px-6 py-4 capitalize whitespace-nowrap">
                           {lokasi.alamat}
                         </td>
                         <td className="px-6 py-4 capitalize">{karyawan}</td>
-                        <td className="px-6 py-4 capitalize">
+                        <td className="px-6 py-4 capitalize whitespace-nowrap">
                           {lokasi.organisasi.namaOrganisasi}
                         </td>
                       </tr>
@@ -569,7 +569,7 @@ function Dashboard() {
                     <th scope="col" className="px-6 py-3">
                       No
                     </th>
-                    <th scope="col" className="px-6 py-3">
+                    <th scope="col" className="px-6 py-3 whitespace-nowrap">
                       Nama Organisasi
                     </th>
                     <th scope="col" className="px-6 py-3">
@@ -590,10 +590,10 @@ function Dashboard() {
                         >
                           {(currentPage3 - 1) * limit3 + index + 1}
                         </th>
-                        <td className="px-6 py-4 capitalize">
+                        <td className="px-6 py-4 capitalize whitespace-nowrap">
                           {organisasi.namaOrganisasi}
                         </td>
-                        <td className="px-6 py-4 capitalize">
+                        <td className="px-6 py-4 capitalize whitespace-nowrap">
                           {organisasi.alamat}
                         </td>
                       </tr>

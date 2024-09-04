@@ -235,10 +235,10 @@ function Organisasi() {
                           >
                             {(currentPage - 1) * limit + index + 1}
                           </th>
-                          <td className="px-6 py-4 capitalize">
+                          <td className="px-6 py-4 capitalize whitespace-nowrap">
                             {organisasi.namaOrganisasi || ""}
                           </td>
-                          <td className="px-6 py-4 capitalize">
+                          <td className="px-6 py-4 capitalize whitespace-nowrap">
                             {organisasi.alamat || ""}
                           </td>
                           <td className="px-6 py-4 capitalize">
