@@ -4,23 +4,21 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../../../components/NavbarUser";
 import Swal from "sweetalert2";
 import axios from "axios";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Pagination } from "flowbite-react";
 import { API_DUMMY } from "../../../utils/api";
-import { useNavigate } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 
 function TabelLembur() {
   const [lembur, setLembur] = useState([]);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  // const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [limit, setLimit] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
+  // const toggleSidebar = () => {
+  //   setSidebarOpen(!sidebarOpen);
+  // };
 
   const formatDate = (dateString) => {
     const options = {
@@ -33,7 +31,6 @@ function TabelLembur() {
   };
 
   const getAllLembur = async () => {
-    const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
 
     try {
@@ -53,7 +50,6 @@ function TabelLembur() {
   };
 
   const BatalLembur = async (id) => {
-    const token = localStorage.getItem("token");
 
     await Swal.fire({
       title: "Anda yakin?",

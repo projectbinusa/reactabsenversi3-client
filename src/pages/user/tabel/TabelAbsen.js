@@ -3,13 +3,13 @@ import Navbar from "../../../components/NavbarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faInfo,
-  faSearch,
+  
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { Pagination } from "flowbite-react";
 import { API_DUMMY } from "../../../utils/api";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 // import { useNavigate } from "react-router-dom";
 
@@ -32,7 +32,6 @@ function TabelAbsen() {
   };
 
   const getAbsensi = async () => {
-    const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
 
     try {
@@ -256,7 +255,7 @@ function TabelAbsen() {
                                       0,
                                       0
                                     ) < new Date(today).setHours(0, 0, 0, 0) ||
-                                    absenData.jamPulang != "-"
+                                    absenData.jamPulang !== "-"
                                   }
                                   className={`z-20 block rounded-full border-2 border-white p-4 text-red-700 active:bg-red-50 ${
                                     absenData.statusAbsen === "Izin" ||
@@ -268,7 +267,7 @@ function TabelAbsen() {
                                       0,
                                       0
                                     ) < new Date(today).setHours(0, 0, 0, 0) ||
-                                    absenData.jamPulang != "-"
+                                    absenData.jamPulang !== "-"
                                       ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                                       : "bg-red-100 text-red-700"
                                   }`}
@@ -289,7 +288,7 @@ function TabelAbsen() {
                                             0,
                                             0
                                           ) ||
-                                        absenData.jamPulang != "-"
+                                        absenData.jamPulang !== "-"
                                           ? "text-gray-500"
                                           : "text-red-700"
                                       }`}
