@@ -10,6 +10,7 @@ import {
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../utils/api";
 import SidebarNavbar from "../../components/SidebarNavbar";
+import { Pagination } from "flowbite-react";
 // import jwt from 'jsonwebtoken';
 
 function DashboardSA() {
@@ -24,6 +25,10 @@ function DashboardSA() {
   const token = localStorage.getItem("token");
   const idSuperAdmin = localStorage.getItem("superadminId");
   const id = localStorage.getItem("superadminId");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [limit, setLimit] = useState(5);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -157,6 +162,40 @@ function DashboardSA() {
       localStorage.removeItem("loginSuccess");
     }
   }, []);
+
+  useEffect(() => {
+    const filteredData = admin.filter(
+      (admin) =>
+        admin.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        admin.username?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setTotalPages(Math.ceil(filteredData.length / limit));
+  }, [searchTerm, limit, admin]);
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleLimitChange = (event) => {
+    setLimit(parseInt(event.target.value));
+    setCurrentPage(1); // Reset to the first page when limit changes
+  };
+
+  function onPageChange(page) {
+    setCurrentPage(page);
+  }
+
+  const filteredAdmin = admin.filter(
+    (admin) =>
+      admin.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      admin.username?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const paginatedAdmin = filteredAdmin.slice(
+    (currentPage - 1) * limit,
+    currentPage * limit
+  );
+
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
@@ -166,8 +205,8 @@ function DashboardSA() {
         <div className="sticky top-16 z-40">
           <Navbar />
         </div>
-        <div className="content-page container p-8 ml-0 md:ml-72 mt-12">
-          <div className="mt-5 w-full">
+        <div className="content-page container p-8 ml-0 md:ml-72 mt-5 md:mt-12">
+          <div className="w-full">
             <div className="p-4 text-center bg-indigo-300 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
               <h2 className="text-2xl font-semibold mb-4">
                 Selamat Datang di Presensi
@@ -179,7 +218,7 @@ function DashboardSA() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8 mt-12">
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8 mt-5 md:mt-12">
             <div className="pl-2 h-32 bg-indigo-500 rounded-lg shadow-md md:w-auto">
               <div className="flex w-full h-full py-2 px-4 bg-gray-100 rounded-lg justify-between">
                 <div className="my-auto">
@@ -222,12 +261,37 @@ function DashboardSA() {
 
           {/* Tabel Absensi */}
           <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-            <div className="flex justify-between">
+            <div className="md:flex justify-between">
               <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
                 Data Admin
               </h6>
+              <div className="flex flex-col items-center gap-2 mt-5 md:flex-row md:mt-0">
+                <div className="flex items-center w-full md:w-auto">
+                  <div className="relative w-full md:w-64">
+                    <input
+                      type="search"
+                      id="search-dropdown"
+                      value={searchTerm}
+                      onChange={handleSearch}
+                      className="block p-2.5 w-full text-sm rounded-l-md text-gray-900 bg-gray-50 border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                      placeholder="Search name..."
+                      required
+                    />
+                  </div>
+                  <select
+                    value={limit}
+                    onChange={handleLimitChange}
+                    className="w-auto ml-2 flex-shrink-0 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+                  >
+                    <option value="5">05</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                  </select>
+                </div>
+              </div>
             </div>
-            <hr />
+            <hr className="mt-3" />
 
             {/* <!-- Tabel --> */}
             <div className=" overflow-x-auto mt-5">
@@ -251,7 +315,7 @@ function DashboardSA() {
                 </thead>
                 {/* <!-- Tabel Body --> */}
                 <tbody className="text-left">
-                  {admin.map((admin, index) => (
+                  {paginatedAdmin.map((admin, index) => (
                     <tr
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                       key={index}
@@ -260,7 +324,7 @@ function DashboardSA() {
                         scope="row"
                         className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                       >
-                        {index + 1}
+                        {(currentPage - 1) * limit + index + 1}
                       </th>
                       <td className="px-6 py-4">
                         {/* <a
@@ -268,7 +332,7 @@ function DashboardSA() {
                           className="__cf_email__"
                           data-cfemail="5a363b23363b1a3d373b333674393537"
                         > */}
-                          {admin.email}
+                        {admin.email}
                         {/* </a> */}
                       </td>
                       <td className="px-6 py-4">{admin.username}</td>
@@ -277,6 +341,16 @@ function DashboardSA() {
                 </tbody>
               </table>
             </div>
+            <Pagination
+              className="mt-5"
+              layout="table"
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={onPageChange}
+              showIcons
+              previousLabel=""
+              nextLabel=""
+            />
           </div>
           <br />
         </div>
