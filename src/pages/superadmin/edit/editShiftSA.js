@@ -4,7 +4,7 @@ import Sidebar from "../../../components/SidebarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import { useParams, useHistory } from "react-router-dom";
+import { useNavigate, useParams, } from "react-router-dom";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../../utils/api";
 
@@ -13,7 +13,7 @@ function EditShift() {
   const [waktuMasuk, setWaktuMasuk] = useState("");
   const [waktuPulang, setWaktuPulang] = useState("");
   const { id } = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const getShift = async () => {
     try {
@@ -47,7 +47,7 @@ function EditShift() {
         timer: 2000,
         showConfirmButton: false,
       });
-      history.push("/superadmin/shift");
+      navigate("/superadmin/shift");
     } catch (error) {
       Swal.fire({
         title: "Error",

@@ -32,7 +32,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import { Link, useLocation } from "react-router-dom";
+
 import Swal from "sweetalert2";
 
 const Sidebar = () => {
@@ -226,28 +227,6 @@ const Sidebar = () => {
                       </span>
                     </Link>
                   </li>
-                  {/* <!-- Menu Karyawan --> */}
-                  <li>
-                    <Link
-                      to="/admin/siswa"
-                      className={`${
-                        isActive(["/admin/siswa"])
-                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
-                          : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
-                      } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
-                      <FontAwesomeIcon
-                        className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
-                          isActive(["/admin/siswa"])
-                            ? "text-white hover:text-black"
-                            : "text-blue-500"
-                        }`}
-                        icon={faUsersGear}
-                      />{" "}
-                      <span className="flex-1 ml-3 whitespace-nowrap">
-                        Siswa
-                      </span>
-                    </Link>
-                  </li>
 
                   {/* <!-- Menu Jabatan --> */}
                   <li>
@@ -360,6 +339,29 @@ const Sidebar = () => {
                       />
                       <span className="flex-1 ml-3 whitespace-nowrap">
                         Kelas
+                      </span>
+                    </Link>
+                  </li>
+
+                  {/* <!-- Menu Karyawan --> */}
+                  <li>
+                    <Link
+                      to="/admin/siswa"
+                      className={`${
+                        isActive(["/admin/siswa"])
+                          ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                          : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
+                      } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}>
+                      <FontAwesomeIcon
+                        className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
+                          isActive(["/admin/siswa"])
+                            ? "text-white hover:text-black"
+                            : "text-blue-500"
+                        }`}
+                        icon={faUsersGear}
+                      />{" "}
+                      <span className="flex-1 ml-3 whitespace-nowrap">
+                        Siswa
                       </span>
                     </Link>
                   </li>

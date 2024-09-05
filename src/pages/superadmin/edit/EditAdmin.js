@@ -2,20 +2,17 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../../../components/NavbarSuper";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
-import {
-  useHistory,
-  useParams,
-} from "react-router-dom/cjs/react-router-dom.min";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../../utils/api";
+import { useNavigate, useParams } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 
 function EditAdmin() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const param = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios

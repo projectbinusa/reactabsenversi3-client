@@ -1,13 +1,13 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import Swal from "sweetalert2";
 import Logo from "../components/logo.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import ikon dari react-icons
 import { API_DUMMY } from "../utils/api";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [passwordType, setPasswordType] = useState("password");
   const [email, setEmail] = useState("");

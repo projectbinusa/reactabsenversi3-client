@@ -12,6 +12,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Pagination } from "flowbite-react";
 import { API_DUMMY } from "../../../utils/api";
+import { useNavigate } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 
 function Lokasi() {
@@ -37,7 +38,19 @@ function Lokasi() {
       const response = await axios.get(
         `${API_DUMMY}/api/lokasi/get-admin/${idAdmin}`
       );
+      // const lokasiList = response.data.reverse();
 
+      // const siswaResponse = await axios.get(`${API_DUMMY}/api/user/${idAdmin}/users`);
+      // const siswaList = siswaResponse.data;
+      // console.log("siswa list: ", siswaResponse.data);
+
+      // const ortuWithSiswaCount = lokasiList.map((lokasi) => {
+      //     const siswaCount = siswaList.filter((siswa) => siswa.lokasi?.id === lokasi.id).length;
+      //     return {
+      //         ...lokasi,
+      //         siswaCount,
+      //     };
+      // });
       setUserData(response.data.reverse());
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -193,15 +206,15 @@ function Lokasi() {
                       <th scope="col" className="px-6 py-3">
                         No
                       </th>
-                      <th scope="col" className="px-6 py-3">
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
                         Nama Lokasi
                       </th>
                       <th scope="col" className="px-6 py-3">
                         Alamat
                       </th>
-                      <th scope="col" className="px-6 py-3">
+                      {/* <th scope="col" className="px-6 py-3">
                         Jumlah Siswa
-                      </th>
+                      </th> */}
                       <th scope="col" className="px-6 py-3">
                         Organisasi
                       </th>
@@ -233,15 +246,15 @@ function Lokasi() {
                           >
                             {(currentPage - 1) * limit + index + 1}
                           </th>
-                          <td className="px-6 py-4">
+                          <td className="px-6 py-4 whitespace-nowrap">
                             {capitalize(lokasi.namaLokasi)}
                           </td>
-                          <td className="px-6 py-4">
+                          <td className="px-6 py-4 whitespace-nowrap">
                             {capitalize(lokasi.alamat)}
                           </td>
-                          <td className="px-6 py-4">{capitalize(karyawan)}</td>
-                          <td className="px-6 py-4">
-                            {capitalize(lokasi.organisasi.namaOrganisasi)}
+                          {/* <td className="px-6 py-4">{capitalize(karyawan)}</td> */}
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            {lokasi.organisasi.namaOrganisasi}
                           </td>
                           <td className="py-3">
                             <div className="flex items-center -space-x-4 ml-12">

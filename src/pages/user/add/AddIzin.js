@@ -3,6 +3,7 @@ import Navbar from "../../../components/NavbarUser";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { API_DUMMY } from "../../../utils/api";
+import { useNavigate } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 
 function AddIzin() {
@@ -38,9 +39,9 @@ function AddIzin() {
         showConfirmButton: false,
         timer: 1500,
       });
-      setTimeout(() => {
-        window.location.href = "/user/history_absen";
-      }, 1500);
+      // setTimeout(() => {
+      //   window.location.href = "/user/history_absen";
+      // }, 1500);
     } catch (err) {
       console.log(err);
       Swal.fire({

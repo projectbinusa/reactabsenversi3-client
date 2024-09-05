@@ -3,9 +3,9 @@ import NavbarSuper from "../../../components/NavbarSuper";
 import Sidebar from "../../../components/SidebarUser";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import axios from "axios";
 import { API_DUMMY } from "../../../utils/api";
+import { useNavigate, useParams } from "react-router-dom";
 
 function DetailShiftSA() {
   const [shift, setShift] = useState(null);

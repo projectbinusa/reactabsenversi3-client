@@ -14,9 +14,9 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Pagination } from "flowbite-react";
 import { API_DUMMY } from "../../../utils/api";
-import { Link, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 import { Button, Modal } from "flowbite-react";
+import { Link, useParams } from "react-router-dom";
 
 function SiswaperKelas() {
   const [userData, setUserData] = useState([]);
@@ -330,7 +330,7 @@ function SiswaperKelas() {
                             {(currentPage - 1) * limit + index + 1}
                           </th>
                           <td className="px-6 py-4 text-gray-900 capitalize">
-                            {capitalize(user.username)}
+                            {user.username}
                           </td>
                           <td className="px-6 py-4 text-gray-900">
                             <a
@@ -338,11 +338,11 @@ function SiswaperKelas() {
                               className="__cf_email__"
                               data-cfemail="5a363b23363b1a3d373b333674393537"
                             >
-                              {capitalize(user.email)}
+                              {user.email}
                             </a>
                           </td>
                           <td className="px-6 py-4 text-gray-900 capitalize">
-                            {capitalize(user.admin.username)}
+                            {user.admin.username}
                           </td>
                           <td className="py-3">
                             <div className="flex items-center -space-x-4 ml-12">

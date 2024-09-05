@@ -13,6 +13,7 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import { Pagination } from "flowbite-react";
 import { API_DUMMY } from "../../../utils/api";
+import { useNavigate } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 function Organisasi() {
   const [userData, setUserData] = useState([]);
@@ -232,12 +233,12 @@ function Organisasi() {
                             scope="row"
                             className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                           >
-                            {index + 1}
+                            {(currentPage - 1) * limit + index + 1}
                           </th>
-                          <td className="px-6 py-4 capitalize">
+                          <td className="px-6 py-4 capitalize whitespace-nowrap">
                             {organisasi.namaOrganisasi || ""}
                           </td>
-                          <td className="px-6 py-4 capitalize">
+                          <td className="px-6 py-4 capitalize whitespace-nowrap">
                             {organisasi.alamat || ""}
                           </td>
                           <td className="px-6 py-4 capitalize">

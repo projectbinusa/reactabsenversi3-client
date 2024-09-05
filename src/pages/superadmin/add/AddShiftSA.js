@@ -5,8 +5,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+
 import { API_DUMMY } from "../../../utils/api";
+import { useNavigate } from "react-router-dom";
 
 function AddShift() {
   const [waktuMasuk, setWaktuMasuk] = useState("");
@@ -16,7 +17,7 @@ function AddShift() {
   const [idSuperAdmin, setIdSuperAdmin] = useState("");
   const [adminList, setadminList] = useState([]);
   const token = localStorage.getItem("token");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const getAllAdmin = async () => {
     try {
@@ -52,7 +53,7 @@ function AddShift() {
         timer: 2000,
         showConfirmButton: false,
       });
-      history.push("/superadmin/shift");
+      navigate("/superadmin/shift");
     } catch (error) {
       Swal.fire({
         title: "Error",

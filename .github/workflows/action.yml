@@ -1,0 +1,46 @@
+name: CI/CD for React js
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'  # Pilih versi Node.js yang sesuai
+
+      # - name: Git pull
+      #   run: git pull origin develop
+
+      - name: Install dependencies
+        run: npm install    # Untuk install semua dependensi
+
+      - name: Build React JS
+        run: npm run build     # Untuk build
+
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: 41.216.186.59
+          username: bootcampserver
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            sudo su -
+            cd reactabsenv3/reactabsenversi3-client
+            git pull origin develop
+            npm install
+            sudo npm run build
+            mv build/ /var/www
+            cd /var/www
+            rm -rf absenv3
+            mv build absenv3

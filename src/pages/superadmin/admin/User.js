@@ -12,6 +12,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Pagination } from "flowbite-react";
 import { API_DUMMY } from "../../../utils/api";
+import { useNavigate } from "react-router-dom";
 
 function User() {
   const [userData, setUserData] = useState([]);

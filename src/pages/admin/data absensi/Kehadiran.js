@@ -3,6 +3,7 @@ import Navbar from "../../../components/NavbarAdmin";
 import axios from "axios";
 import { Pagination } from "flowbite-react";
 import { API_DUMMY } from "../../../utils/api";
+import { useNavigate } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 
 function Kehadiran() {
@@ -127,7 +128,7 @@ function Kehadiran() {
         <div className="sticky top-16 z-40">
           <Navbar />
         </div>
-        <div className="sm:ml-64 content-page container md:p-8 ml-0 md:ml-64 mt-12">
+        <div className="sm:ml-64 content-page container md:p-8 ml-0 md:ml-64 md:mt-10 mt-5">
           <div className="p-4">
             <div className="p-5">
               <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
