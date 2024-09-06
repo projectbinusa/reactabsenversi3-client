@@ -73,7 +73,7 @@ import DetailLokasiSA from "./pages/superadmin/detail/DetailLokasiSA";
 import AbsensiSA from "./pages/superadmin/admin/AbsensiSA";
 import DetailOrganisasiSA from "./pages/superadmin/detail/DetailOrganisasiSA";
 import DetailAbsensiSA from "./pages/superadmin/detail/DetailAbsensiSA";
-import ProfileSA from "./pages/superadmin/ProfilSA";
+// import ProfileSA from "./pages/superadmin/ProfilSA";
 import ProfilSA from "./pages/superadmin/ProfilSA";
 import ForgotPass from "./pages/ForgotPass";
 import VerifyCode from "./pages/VerifyCode";
@@ -561,7 +561,7 @@ function App() {
           //   </>
         )}
         {/* end superadmin */}
-        {role == "Wali Murid" && (
+        {role === "Wali Murid" && (
           <>
             <Route
               path="/walimurid/dashboard"

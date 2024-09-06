@@ -3,19 +3,16 @@ import Navbar from "../../../components/NavbarUser";
 import Webcam from "react-webcam";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { toBeDisabled } from "@testing-library/jest-dom/matchers";
 import { API_DUMMY } from "../../../utils/api";
-import { useNavigate } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 import "../css/AbsenMasuk.css";
 
 function AbsenPulang() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const webcamRef = useRef(null);
   const [error, setError] = useState("");
+  console.log(error);
   const userId = localStorage.getItem("userId");
-  const [loading, setLoading] = useState(false);
   const [address, setAddress] = useState("");
   const [fetchingLocation, setFetchingLocation] = useState(true);
   const [keteranganPulangAwal, setKeteranganPulangAwal] = useState("");
@@ -40,7 +37,7 @@ function AbsenPulang() {
   };
 
   const isWithinAllowedCoordinates = (lat, lon) => {
-    const { northWest, northEast, southWest, southEast } = allowedCoordinates;
+    const { northWest, northEast, southWest } = allowedCoordinates;
     const tolerance = 0.00001; // adding a small tolerance
 
     return (
@@ -76,7 +73,7 @@ function AbsenPulang() {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  });
 
   useEffect(() => {
     let watchId;
@@ -152,10 +149,6 @@ function AbsenPulang() {
   } else {
     ucapan = "Selamat Malam";
   }
-
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
 
   const handleCaptureAndSubmitPulang = async () => {
     const imageSrc = webcamRef.current.getScreenshot();
@@ -315,7 +308,8 @@ function AbsenPulang() {
                       );
                     }
                   }}
-                  className="block w-32 sm:w-40 bg-blue-500 text-white rounded-lg py-3 text-sm sm:text-xs font-medium">
+                  className="block w-32 sm:w-40 bg-blue-500 text-white rounded-lg py-3 text-sm sm:text-xs font-medium"
+                >
                   Ambil Foto
                 </button>
               </div>

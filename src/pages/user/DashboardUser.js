@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faArrowRight,
   faArrowRightFromBracket,
   faArrowRightToBracket,
   faCircleInfo,
@@ -18,12 +17,11 @@ import SidebarNavbar from "../../components/SidebarNavbar";
 import { Link } from "react-router-dom";
 
 function Dashboard() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  // const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const [username, setUsername] = useState({});
   const [absensi, setAbsensi] = useState([]);
   const [cuti, setCuti] = useState([]);
-  const [izin, setIzin] = useState([]);
   const [totalIzin, setTotalIzin] = useState(0);
   const [isAbsenMasuk, setIsAbsenMasuk] = useState(false);
   const [isPulangDisabled, setIsPulangDisabled] = useState(false);
@@ -31,11 +29,9 @@ function Dashboard() {
   const [isIzinDisabled, setIsIzinDisabled] = useState(false);
   const [informasi, setInformasi] = useState([]);
   const userId = localStorage.getItem("userId");
-  const adminId = localStorage.getItem("adminId");
   const [admin, setAdmin] = useState(null);
 
   const getUsername = async () => {
-    const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
 
     try {
@@ -196,10 +192,15 @@ function Dashboard() {
     cekAbsensi();
 
     return () => clearInterval(interval);
-  }, []);
+  });
+
+  useEffect(() => {
+    if (cuti === 0) {
+      console.log("Presensi App");
+    }
+  });
 
   const getAbsensi = async () => {
-    const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
 
     try {
@@ -219,7 +220,6 @@ function Dashboard() {
   };
 
   const getCuti = async () => {
-    const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
 
     try {
@@ -252,7 +252,7 @@ function Dashboard() {
 
   useEffect(() => {
     fetchUserData();
-  }, []);
+  });
 
   const Informasi = async (adminId) => {
     try {
@@ -324,9 +324,9 @@ function Dashboard() {
     ":" +
     addLeadingZero(currentDateTime.getSeconds());
 
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
+  // const toggleSidebar = () => {
+  //   setSidebarOpen(!sidebarOpen);
+  // };
 
   const formatDate = (dateString) => {
     const options = {

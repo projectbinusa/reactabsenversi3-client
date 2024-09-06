@@ -6,7 +6,6 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import { Pagination } from "flowbite-react";
 import { API_DUMMY } from "../../../utils/api";
-import { useNavigate } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 
 function TabelCuti() {
@@ -15,11 +14,11 @@ function TabelCuti() {
   const [limit, setLimit] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  // const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
+  // const toggleSidebar = () => {
+  //   setSidebarOpen(!sidebarOpen);
+  // };
 
   const formatDate = (dateString) => {
     const options = {
@@ -52,7 +51,6 @@ function TabelCuti() {
   };
 
   const BatalCuti = async (id) => {
-    const token = localStorage.getItem("token");
 
     await Swal.fire({
       title: "Anda yakin?",
