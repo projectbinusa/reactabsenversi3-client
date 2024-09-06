@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../../../components/NavbarSuper";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faCircleInfo,
   faCloudArrowDown,
-  faFileExport,
   faFileImport,
   faInfo,
   faPenToSquare,
@@ -16,7 +14,6 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 import { API_DUMMY } from "../../../utils/api";
-import { useNavigate } from "react-router-dom";
 
 import { Button, Modal, Pagination } from "flowbite-react";
 import SidebarNavbar from "../../../components/SidebarNavbar";
@@ -126,7 +123,6 @@ function Admin() {
   };
 
   const getAllAdmin = async () => {
-    const token = localStorage.getItem("token");
     const idSuperAdmin = localStorage.getItem("superadminId");
 
     try {

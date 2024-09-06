@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Navbar from "../../../components/NavbarSuper";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { API_DUMMY } from "../../../utils/api";
-import { useNavigate } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 
 function DetailAdmin() {
@@ -15,18 +14,18 @@ function DetailAdmin() {
     username: "",
   });
 
-  const getUserData = async () => {
+  const getUserData = useCallback(async () => {
     try {
       const res = await axios.get(`${API_DUMMY}/api/admin/getById/${id}`);
       setAdmin(res.data);
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [id]);
 
   useEffect(() => {
     getUserData();
-  }, []);
+  }, [getUserData]);
 
   return (
     <div className="flex flex-col h-screen">
@@ -109,7 +108,7 @@ function DetailAdmin() {
                         ? admin.imageAdmin
                         : "https://demo-absen.excellentsistem.com/images/admin/User.png"
                     }
-                    alt="Image Admin"
+                    alt={admin.username}
                   />
 
                   {/* <!-- Button --> */}

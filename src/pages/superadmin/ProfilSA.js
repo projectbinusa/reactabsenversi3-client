@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Tabs } from "flowbite-react";
-import { HiAdjustments, HiClipboardList, HiUserCircle } from "react-icons/hi";
+import { HiAdjustments, HiUserCircle } from "react-icons/hi";
 import { MdDashboard } from "react-icons/md";
 import Navbar from "../../components/NavbarSuper";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import Loader from "../../components/Loader";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../utils/api";
 import SidebarNavbar from "../../components/SidebarNavbar";
@@ -18,15 +16,13 @@ function ProfilSA() {
   const [showPasswordd, setShowPasswordd] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [ubahUsername, setUbahUsername] = useState(false);
-  const [profile, setProfile] = useState([]);
+  const [, setProfile] = useState([]);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
-  const token = localStorage.getItem("token");
   const id = localStorage.getItem("superadminId");
   const [selectedFile, setSelectedFile] = useState(null);
   const [preview, setPreview] = useState(null);
-  const [edit, setEdit] = useState(false);
   const [passwordLama, setPasswordLama] = useState("");
   const [passwordBaru, setPasswordBaru] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -44,7 +40,7 @@ function ProfilSA() {
     }
 
     try {
-      const response = await axios.put(
+      await axios.put(
         `${API_DUMMY}/api/superadmin/edit-password/${id}`,
         {
           old_password: passwordLama,
@@ -66,7 +62,7 @@ function ProfilSA() {
     }
   };
 
-  const getProfile = async () => {
+  const getProfile = useCallback(async () => {
     try {
       const response = await axios.get(
         `${API_DUMMY}/api/superadmin/getbyid/${id}`
@@ -84,7 +80,7 @@ function ProfilSA() {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  };
+  }, [id]);
 
   const HandleUbahUsernameEmail = async (e) => {
     e.preventDefault();
@@ -95,7 +91,7 @@ function ProfilSA() {
     try {
       const response = await axios.put(
         `${API_DUMMY}/api/superadmin/edit-email-username/${id}`,
-        usMail,
+        usMail
         // {
         //   headers: {
         //     Authorization: `Bearer ${token}`,
@@ -117,10 +113,16 @@ function ProfilSA() {
       console.error("Error updating data:", error);
 
       // Checking for specific error messages returned from the server
-      if (error.response && error.response.data && error.response.data.message) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
         if (error.response.data.message.includes("Email sudah digunakan")) {
           Swal.fire("Gagal", "Email sudah digunakan", "error");
-        } else if (error.response.data.message.includes("Username sudah digunakan")) {
+        } else if (
+          error.response.data.message.includes("Username sudah digunakan")
+        ) {
           Swal.fire("Gagal", "Username sudah digunakan", "error");
         } else {
           Swal.fire("Gagal", "Gagal mengubah username dan email", "error");
@@ -131,10 +133,9 @@ function ProfilSA() {
     }
   };
 
-
   useEffect(() => {
     getProfile();
-  }, []);
+  }, [getProfile]);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -165,7 +166,11 @@ function ProfilSA() {
       );
       setLoading(false);
       setImageAdmin(response.data.imageSuperAdmin);
-      Swal.fire("Berhasil", "Berhasil mengubah foto profil", "success", {
+      Swal.fire({
+        title: "Berhasil",
+        text: "Berhasil mengubah foto profil",
+        icon: "success",
+        showConfirmButton: false,
         timer: 2000,
       });
       window.location.reload();
@@ -177,7 +182,7 @@ function ProfilSA() {
   };
   return (
     <>
-      {loading && <Loader />}
+      {/* {loading && <Loader />} */}
       <div className="flex flex-col h-screen">
         <div className="sticky top-0 z-50">
           <SidebarNavbar />
@@ -187,7 +192,7 @@ function ProfilSA() {
             <Navbar />
           </div>
           <div className="content-page container p-8 ml-0 md:ml-72 mt-10">
-            <Tabs aria-label="Tabs with underline" style="underline">
+            <Tabs aria-label="Tabs with underline">
               <Tabs.Item active title="Profile" icon={HiUserCircle}>
                 {/* Konten tab Profil */}
                 <div className="font-medium text-gray-800 dark:text-white">
@@ -216,7 +221,7 @@ function ProfilSA() {
                       <div>
                         <label htmlFor="fileInput" className="cursor-pointer">
                           <span className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
-                            <FontAwesomeIcon icon={faPenToSquare} />
+                            Ubah
                           </span>
                         </label>
                         {/* Input file tersembunyi */}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Navbar from "../../components/NavbarSuper";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -54,7 +54,7 @@ function DashboardOrtu() {
     ":" +
     addLeadingZero(currentDateTime.getSeconds());
 
-  const getUsername = async () => {
+  const getUsername = useCallback(async () => {
     try {
       const response = await axios.get(
         `${API_DUMMY}/api/orang-tua/getbyid/${id}`
@@ -63,9 +63,9 @@ function DashboardOrtu() {
     } catch (error) {
       console.error("Error fetching username:", error);
     }
-  };
+  }, [id]);
 
-  const getAbsensi = async () => {
+  const getAbsensi = useCallback(async () => {
     try {
       const response = await axios.get(
         `${API_DUMMY}/api/absensi/by-orang-tua/${id}`
@@ -82,41 +82,35 @@ function DashboardOrtu() {
             trl.statusAbsen === "Izin" || trl.statusAbsen === "Izin Tengah Hari"
         )
       );
-
-      console.log("data: ", response.data);
-      console.log("terlambat :", terlambat.length);
-      console.log("izin atau izin tengah hari: ", izinData.length);
     } catch (error) {
       console.error("Error fetching absensi:", error);
     }
-  };
+  }, [id]);
 
-  const getAdmin = async () => {
+  const getAdmin = useCallback(async () => {
     try {
       const response = await axios.get(
         `${API_DUMMY}/api/orang-tua/${id}/admin`
       );
       setAdmin(response.data);
-      console.log("admin: ", response.data.id);
       setIdAdmin(response.data.id);
     } catch (error) {
       console.error("Error fetching admin:", error);
     }
-  };
+  }, [id]);
 
-  const getInformasi = async () => {
+  const getInformasi = useCallback(async () => {
     try {
       if (admin && admin.id) {
         const response = await axios.get(
           `${API_DUMMY}/api/notifications/user/getByAdmin/${idAdmin}`
         );
-        console.log("notifikasi: ", response.data);
         setInformasi(response.data.reverse());
       }
     } catch (error) {
       console.error("Error fetching informasi:", error);
     }
-  };
+  }, [admin, idAdmin]);
 
   const formatDate = (tanggal) => {
     const date = new Date(tanggal);
@@ -141,13 +135,13 @@ function DashboardOrtu() {
     getAbsensi();
     getUsername();
     getAdmin();
-  }, []);
+  }, [getAbsensi, getUsername, getAdmin]);
 
   useEffect(() => {
     if (admin) {
       getInformasi();
     }
-  }, [admin]);
+  }, [admin, getInformasi]);
 
   useEffect(() => {
     if (localStorage.getItem("loginSuccess") === "true") {
@@ -235,9 +229,9 @@ function DashboardOrtu() {
                 Selamat Datang di Presensi
                 <span> @{username}</span>
               </h2>
-              <a className="profile-menu-link">{day}, </a>
-              <a className="profile-menu-link active">{date} - </a>
-              <a className="profile-menu-link">{time}</a>
+              <button className="profile-menu-link">{day},</button>
+              <button className="profile-menu-link active">{date} -</button>
+              <button className="profile-menu-link">{time}</button>
             </div>
           </div>
 

@@ -5,14 +5,13 @@ import { faArrowLeft, faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../../utils/api";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 
 function EditAdmin() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const param = useParams();
-  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -29,7 +28,7 @@ function EditAdmin() {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [param.id]);
 
   const updateAdmin = async (e) => {
     e.preventDefault();
