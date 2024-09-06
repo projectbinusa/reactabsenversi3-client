@@ -5,12 +5,10 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import Loader from "../../../components/Loader";
 import { API_DUMMY } from "../../../utils/api";
-import { useNavigate } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 import "../css/AbsenMasuk.css";
 
 function AbsenMasuk() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const webcamRef = useRef(null);
   const [keteranganTerlambat, setKeteranganTerlambat] = useState("");
@@ -116,13 +114,9 @@ function AbsenMasuk() {
     ucapan = "Selamat Malam";
   }
 
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
-
   // validasi
   const isWithinAllowedCoordinates = (lat, lon) => {
-    const { northWest, northEast, southWest, southEast } = allowedCoordinates;
+    const { northWest, northEast, southWest } = allowedCoordinates;
     const tolerance = 0.00001;
 
     return (
@@ -136,7 +130,7 @@ function AbsenMasuk() {
   const handleCaptureAndSubmitMasuk = async () => {
     const imageSrc = webcamRef.current.getScreenshot();
     const imageBlob = await fetch(imageSrc).then((res) => res.blob());
-
+    setLoading(true);
     if (!latitude || !longitude) {
       Swal.fire("Error", "Lokasi belum tersedia", "error");
       return;
@@ -160,7 +154,7 @@ function AbsenMasuk() {
           formData.append("lokasiMasuk", `${address}`);
           formData.append("keteranganTerlambat", keteranganTerlambat || "-");
 
-          const response = await axios.post(
+          await axios.post(
             `${API_DUMMY}/api/absensi/masuk/${userId}`,
             formData,
             {
@@ -252,7 +246,8 @@ function AbsenMasuk() {
                         );
                       }
                     }}
-                    className="block w-32 sm:w-40 bg-blue-500 text-white rounded-lg py-3 text-sm sm:text-xs font-medium">
+                    className="block w-32 sm:w-40 bg-blue-500 text-white rounded-lg py-3 text-sm sm:text-xs font-medium"
+                  >
                     {loading ? "Loading..." : "Ambil Foto"}
                   </button>
                 </div>

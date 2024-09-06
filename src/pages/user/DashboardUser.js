@@ -17,7 +17,7 @@ import SidebarNavbar from "../../components/SidebarNavbar";
 import { Link } from "react-router-dom";
 
 function Dashboard() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  // const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const [username, setUsername] = useState({});
   const [absensi, setAbsensi] = useState([]);
@@ -192,6 +192,12 @@ function Dashboard() {
     cekAbsensi();
 
     return () => clearInterval(interval);
+  });
+
+  useEffect(() => {
+    if (cuti === 0) {
+      console.log("Presensi App");
+    }
   });
 
   const getAbsensi = async () => {
