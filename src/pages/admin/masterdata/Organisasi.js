@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../../../components/NavbarAdmin";
-import Sidebar from "../../../components/SidebarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faCircleInfo,
   faInfo,
   faPenToSquare,
   faPlus,
@@ -13,7 +11,6 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import { Pagination } from "flowbite-react";
 import { API_DUMMY } from "../../../utils/api";
-import { useNavigate } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 function Organisasi() {
   const [userData, setUserData] = useState([]);
@@ -24,8 +21,6 @@ function Organisasi() {
   const [totalPages, setTotalPages] = useState(1);
 
   const getAllOrganisasi = async () => {
-    const token = localStorage.getItem("token");
-
     try {
       const response = await axios.get(
         `${API_DUMMY}/api/organisasi/all-by-admin/${idAdmin}`
@@ -70,9 +65,6 @@ function Organisasi() {
       }
     });
   };
-  useEffect(() => {
-    getAllOrganisasi();
-  }, []);
 
   useEffect(() => {
     const filteredData = userData.filter(
@@ -133,6 +125,9 @@ function Organisasi() {
   //     .join(" ");
   // };
 
+  useEffect(() => {
+    getAllOrganisasi();
+  }, []);
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-50">
