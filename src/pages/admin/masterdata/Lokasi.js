@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../../../components/NavbarAdmin";
-import Sidebar from "../../../components/SidebarUser";
 import {
   faInfo,
   faPenToSquare,
@@ -12,7 +11,6 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Pagination } from "flowbite-react";
 import { API_DUMMY } from "../../../utils/api";
-import { useNavigate } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 
 function Lokasi() {
@@ -33,7 +31,6 @@ function Lokasi() {
   };
 
   const getAllLokasibyAdmin = async () => {
-    const token = localStorage.getItem("token");
     try {
       const response = await axios.get(
         `${API_DUMMY}/api/lokasi/get-admin/${idAdmin}`

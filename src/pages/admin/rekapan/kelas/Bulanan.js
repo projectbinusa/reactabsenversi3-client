@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Select from "react-select";
-import Navbar from "../../../../components/NavbarAdmin";
-import Sidebar from "../../../../components/SidebarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faCloudArrowDown,  faMagnifyingGlass,
+  faCloudArrowDown,
 } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import axios from "axios";

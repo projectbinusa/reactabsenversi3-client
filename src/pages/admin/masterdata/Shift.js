@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../../../components/NavbarAdmin";
-import Sidebar from "../../../components/SidebarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faCircleInfo,
   faPenToSquare,
   faPlus,
   faTrash,
@@ -12,13 +10,11 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import { Pagination } from "flowbite-react";
 import { API_DUMMY } from "../../../utils/api";
-import { useNavigate } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 
 function Shift() {
   const [userData, setUserData] = useState([]);
   const idAdmin = localStorage.getItem("adminId");
-  const token = localStorage.getItem("token");
   const [jumlahKaryawan, setJumlahKaryawan] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
   const [limit, setLimit] = useState(5);

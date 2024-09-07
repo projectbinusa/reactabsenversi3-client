@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import NavbarAdmin from "../../../components/NavbarAdmin";
-import Sidebar from "../../../components/SidebarUser";
 import {
   faFileExport,
   faFileImport,
@@ -14,7 +13,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Button, Modal, Pagination } from "flowbite-react";
 import { API_DUMMY } from "../../../utils/api";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 
 function KelasSiswa() {

@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../../../components/NavbarAdmin";
-import Sidebar from "../../../components/SidebarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import axios from "axios";
-import Lokasi from "../masterdata/Lokasi";
 import { API_DUMMY } from "../../../utils/api";
 import { useNavigate, useParams } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";

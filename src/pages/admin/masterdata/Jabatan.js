@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../../../components/NavbarAdmin";
-import Sidebar from "../../../components/SidebarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPenToSquare,
@@ -11,12 +10,10 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Pagination } from "flowbite-react";
 import { API_DUMMY } from "../../../utils/api";
-import { useNavigate } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 
 function Jabatan() {
   const [userData, setUserData] = useState([]);
-  const token = localStorage.getItem("token");
   const idAdmin = localStorage.getItem("adminId");
   const [jumlahKaryawan, setJumlahKaryawan] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
