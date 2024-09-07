@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Tabs } from "flowbite-react";
-import { HiAdjustments, HiClipboardList, HiUserCircle } from "react-icons/hi";
+import { HiAdjustments, HiUserCircle } from "react-icons/hi";
 import { MdDashboard } from "react-icons/md";
-// import Navbar from "../../components/NavbarAdmin";
-// import Sidebar from "../../components/SidebarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
@@ -12,28 +10,25 @@ import Loader from "../../components/Loader";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../utils/api";
 import NavbarAdmin from "../../components/NavbarAdmin";
-import Sidebar from "../../components/SidebarUser";
-// import { API_DUMMY } from "../../utils/api";
+
 function Profile() {
   const [showPassword, setShowPassword] = useState(false);
   const [imageOrtu, setImageWaliMurid] = useState("");
   const [showPasswordd, setShowPasswordd] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [ubahUsername, setUbahUsername] = useState(false);
-  const [profile, setProfile] = useState([]);
+  const [, setProfile] = useState([]);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
-  const token = localStorage.getItem("token");
   const id = localStorage.getItem("id_orangtua");
   const [selectedFile, setSelectedFile] = useState(null);
   const [preview, setPreview] = useState(null);
-  const [edit, setEdit] = useState(false);
   const [passwordLama, setPasswordLama] = useState("");
   const [passwordBaru, setPasswordBaru] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const getProfile = async () => {
+  const getProfile = useCallback(async () => {
     try {
       const response = await axios.get(
         `${API_DUMMY}/api/orang-tua/getbyid/${id}`
@@ -51,7 +46,7 @@ function Profile() {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  };
+  }, [id]); // Include dependencies if there are any
 
   const HandleUbahUsernameEmail = async (e) => {
     e.preventDefault();
@@ -89,7 +84,7 @@ function Profile() {
 
   useEffect(() => {
     getProfile();
-  }, [id]);
+  }, [getProfile]);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -110,7 +105,7 @@ function Profile() {
     }
 
     try {
-      const response = await axios.put(
+      await axios.put(
         `${API_DUMMY}/api/orang-tua/edit-password/${id}`,
         {
           old_password: passwordLama,
@@ -174,7 +169,7 @@ function Profile() {
         {/* <div className="flex h-full">
           <Sidebar /> */}
         <div className="content-page container p-8 mt-10">
-          <Tabs aria-label="Tabs with underline" style="underline">
+          <Tabs aria-label="Tabs with underline">
             <Tabs.Item active title="Profile" icon={HiUserCircle}>
               {/* Konten tab Profil */}
               <div className="font-medium text-gray-800 dark:text-white">
@@ -219,7 +214,8 @@ function Profile() {
                       type="submit"
                       className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50"
                       onClick={handleImageUpload}
-                      disabled={loading || !selectedFile}>
+                      disabled={loading || !selectedFile}
+                    >
                       {loading ? "Uploading..." : "Simpan"}
                     </button>
                   </div>
@@ -271,7 +267,8 @@ function Profile() {
                         <button
                           type="button"
                           onClick={() => setUbahUsername(true)}
-                          className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
+                          className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50"
+                        >
                           Ubah
                         </button>
                       )}
@@ -280,13 +277,15 @@ function Profile() {
                           <button
                             type="button"
                             onClick={() => setUbahUsername(false)}
-                            className="z-20 block rounded-xl border-2 border-white bg-rose-100 p-4 text-rose-500 active:bg-rose-50">
+                            className="z-20 block rounded-xl border-2 border-white bg-rose-100 p-4 text-rose-500 active:bg-rose-50"
+                          >
                             Batal
                           </button>
 
                           <button
                             type="submit"
-                            className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
+                            className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50"
+                          >
                             Simpan
                           </button>
                         </>
@@ -367,7 +366,8 @@ function Profile() {
                     <div className="flex justify-between mt-6">
                       <button
                         type="submit"
-                        className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
+                        className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50"
+                      >
                         Simpan
                       </button>
                     </div>

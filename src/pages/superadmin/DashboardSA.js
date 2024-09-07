@@ -1,12 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Navbar from "../../components/NavbarSuper";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faUsers,
-  faClipboardUser,
-  faUser,
-} from "@fortawesome/free-solid-svg-icons";
+import { faUsers, faClipboardUser } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../utils/api";
 import SidebarNavbar from "../../components/SidebarNavbar";
@@ -15,15 +11,9 @@ import { Pagination } from "flowbite-react";
 
 function DashboardSA() {
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
-  const [userData, setUserData] = useState([]);
   const [admin, setAdmin] = useState([]);
-  const [absenData, setAbsenData] = useState([]);
-  const [jabatanData, setJabatanData] = useState([]);
-  const [lokasiData, setLokasiData] = useState([]);
   const [organisasiData, setOrganisasiData] = useState([]);
   const [username, setUsername] = useState("");
-  const token = localStorage.getItem("token");
-  const idSuperAdmin = localStorage.getItem("superadminId");
   const id = localStorage.getItem("superadminId");
   const [searchTerm, setSearchTerm] = useState("");
   const [limit, setLimit] = useState(5);
@@ -54,7 +44,6 @@ function DashboardSA() {
     addLeadingZero(currentDateTime.getSeconds());
 
   const fetchData = async (url, setter) => {
-    const token = localStorage.getItem("token");
     try {
       const response = await axios.get(url);
       setter(response.data);
@@ -63,37 +52,25 @@ function DashboardSA() {
     }
   };
 
-  // const getUser = () =>
-  //   fetchData(`${API_DUMMY}/api/user/get-allUser`, setUserData);
-  const getAbsensi = () =>
-    fetchData(`${API_DUMMY}/api/absensi/getAll`, setAbsenData);
-  const getJabatan = () =>
-    fetchData(`${API_DUMMY}/api/jabatan/all`, setJabatanData);
-  const getLokasi = () =>
-    fetchData(`${API_DUMMY}/api/lokasi/getall`, setLokasiData);
-  const getOrganisasi = () =>
+  const getOrganisasi = useCallback(() => {
     fetchData(
       `${API_DUMMY}/api/organisasi/superadmin/${id}`,
       setOrganisasiData
     );
+  }, [id]);
 
-  const getUsername = async () => {
+  const getUsername = useCallback(async () => {
     try {
       const response = await axios.get(
         `${API_DUMMY}/api/superadmin/getbyid/${id}`
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // }
       );
       setUsername(response.data.username);
     } catch (error) {
       console.error("Error fetching username:", error);
     }
-  };
+  }, [id]);
 
-  const getAdmin = async () => {
+  const getAdmin = useCallback(async () => {
     const token = localStorage.getItem("token");
     const idSuperAdmin = localStorage.getItem("superadminId");
 
@@ -111,15 +88,14 @@ function DashboardSA() {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  };
+  }, []);
 
-  const getOrganisasiSA = async () => {
-    const idSuperAdmin = localStorage.getItem("superadminId");
+  const getOrganisasiSA = useCallback(async () => {
     const token = localStorage.getItem("token");
 
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/organisasi/superadmin/${idSuperAdmin}`,
+        `${API_DUMMY}/api/organisasi/superadmin/${id}`,
         {
           headers: {
             Authorization: `${token}`,
@@ -131,27 +107,14 @@ function DashboardSA() {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  };
-
-  const formatDate = (tanggal) => {
-    const date = new Date(tanggal);
-    return date.toLocaleDateString("id-ID", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
-  };
+  }, [id]);
 
   useEffect(() => {
-    // getUser();
-    getAbsensi();
     getUsername();
-    getJabatan();
-    getLokasi();
     getOrganisasi();
     getAdmin();
     getOrganisasiSA();
-  }, []);
+  }, [getOrganisasi, getOrganisasiSA, getUsername, getAdmin]);
 
   useEffect(() => {
     if (localStorage.getItem("loginSuccess") === "true") {
@@ -212,9 +175,9 @@ function DashboardSA() {
                 Selamat Datang di Presensi
                 <span> @{username}</span>
               </h2>
-              <a className="profile-menu-link">{day}, </a>
-              <a className="profile-menu-link active">{date} - </a>
-              <a className="profile-menu-link">{time}</a>
+              <button className="profile-menu-link">{day},</button>
+              <button className="profile-menu-link active">{date} -</button>
+              <button className="profile-menu-link">{time}</button>
             </div>
           </div>
 
@@ -243,18 +206,6 @@ function DashboardSA() {
                 </div>
               </div>
             </div>
-            {/* <div className="pl-2 h-32 bg-indigo-500 rounded-lg shadow-md md:w-auto">
-              <div className="flex w-full h-full py-2 px-4 bg-gray-100 rounded-lg justify-between">
-                <div className="my-auto">
-                  <p className="font-bold">User</p>
-                  <p className="text-lg">Jumlah User</p>
-                  <p className="text-lg">{userData.length}</p>
-                </div>
-                <div className="my-auto">
-                  <FontAwesomeIcon icon={faUser} size="2x" />
-                </div>
-              </div>
-            </div> */}
           </div>
 
           <br />
