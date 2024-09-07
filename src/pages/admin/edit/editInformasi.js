@@ -6,7 +6,6 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../../utils/api";
-import { useNavigate } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 
 function EditInformasi() {
@@ -15,7 +14,6 @@ function EditInformasi() {
   const [tanggalAcara, setTanggalAcara] = useState("");
   const [tempatAcara, setTempatAcara] = useState("");
   const { id } = useParams();
-  const token = localStorage.getItem("token");
 
   const getInformasi = async () => {
     try {

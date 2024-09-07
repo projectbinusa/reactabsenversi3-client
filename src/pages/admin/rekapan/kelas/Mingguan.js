@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Select from "react-select";
-import Navbar from "../../../../components/NavbarAdmin";
-import Sidebar from "../../../../components/SidebarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCloudArrowDown,
-  faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -17,7 +13,6 @@ import SidebarNavbar from "../../../../components/SidebarNavbar";
 function MingguanPerkelas() {
   const [listKelas, setListKelas] = useState([]);
   const [idKelas, setIdKelas] = useState();
-  const [bulan, setBulan] = useState("");
   const [rekapPerbulan, setRekapPerbulan] = useState([]);
   const [tanggalAwal, setTanggalAwal] = useState("");
   const [selectedDate, setSelectedDate] = useState("");

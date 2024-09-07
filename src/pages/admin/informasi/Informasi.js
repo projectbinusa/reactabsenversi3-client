@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../../../components/NavbarAdmin";
-import Sidebar from "../../../components/SidebarUser";
 import axios from "axios";
 import { Pagination } from "flowbite-react";
 import { API_DUMMY } from "../../../utils/api";
-import { useNavigate } from "react-router-dom";
 import {
   faPenToSquare,
   faPlus,
@@ -21,7 +19,6 @@ function Informasi() {
   const [limit, setLimit] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const token = localStorage.getItem("token");
   const idAdmin = localStorage.getItem("adminId");
 
   const removeOutdatedData = async (dataToCheck) => {
