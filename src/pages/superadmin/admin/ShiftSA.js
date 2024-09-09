@@ -29,12 +29,12 @@ function ShiftSA() {
   const getAllShift = async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/shift/getBySuper/${idSuperAdmin}`
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // }
+        `${API_DUMMY}/api/shift/getBySuper/${idSuperAdmin}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       setUserData(response.data.reverse());
@@ -55,7 +55,13 @@ function ShiftSA() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${API_DUMMY}/api/shift/delete/` + id);
+          await axios.delete(`${API_DUMMY}/api/shift/delete/` + id,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
 
           Swal.fire({
             icon: "success",

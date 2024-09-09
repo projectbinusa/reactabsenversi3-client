@@ -14,16 +14,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 function DetailPengumuman() {
   const [informasi, setInformasi] = useState([]);
   const { id } = useParams();
-
+  const token = localStorage.getItem("token");
+  
   const fetchInformasi = useCallback(async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/notifications/user/getById/${id}`
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // }
+        `${API_DUMMY}/api/notifications/user/getById/${id}`,
+        {
+         headers: {
+           Authorization: `Bearer ${token}`,
+         },
+       }
       );
       setInformasi([response.data]);
     } catch (error) {

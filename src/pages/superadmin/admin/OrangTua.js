@@ -79,12 +79,12 @@ function OrangTua() {
     const token = localStorage.getItem("token");
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/user/${idAdmin}/users`
-        // {
-        //   headers: {
-        //     Authorization: `${token}`,
-        //   },
-        // }
+        `${API_DUMMY}/api/user/${idAdmin}/users`,
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
       );
       setSiswa(response.data.reverse());
       console.log(
@@ -128,12 +128,12 @@ function OrangTua() {
       if (result.isConfirmed) {
         try {
           await axios.delete(
-            `${API_DUMMY}/api/orang-tua/deleteOrangTua/` + id
-            // {
-            //   headers: {
-            //     Authorization: `Bearer ${localStorage.getItem("token")}`,
-            //   },
-            // }
+            `${API_DUMMY}/api/orang-tua/deleteOrangTua/` + id,
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            }
           );
 
           Swal.fire({

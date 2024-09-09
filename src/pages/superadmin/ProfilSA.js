@@ -26,7 +26,8 @@ function ProfilSA() {
   const [passwordLama, setPasswordLama] = useState("");
   const [passwordBaru, setPasswordBaru] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
+  const token = localStorage.getItem("token");
+  
   const editPassword = async (e) => {
     e.preventDefault();
 
@@ -46,12 +47,12 @@ function ProfilSA() {
           old_password: passwordLama,
           new_password: passwordBaru,
           confirm_new_password: confirmPassword,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // }
       );
 
       Swal.fire("Berhasil", "Password berhasil diubah", "success");
@@ -65,12 +66,12 @@ function ProfilSA() {
   const getProfile = useCallback(async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/superadmin/getbyid/${id}`
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // }
+        `${API_DUMMY}/api/superadmin/getbyid/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       setProfile(response.data);
@@ -91,12 +92,12 @@ function ProfilSA() {
     try {
       const response = await axios.put(
         `${API_DUMMY}/api/superadmin/edit-email-username/${id}`,
-        usMail
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // }
+        usMail,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       setProfile(response.data);
@@ -159,7 +160,7 @@ function ProfilSA() {
         formData,
         {
           headers: {
-            // Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",
           },
         }

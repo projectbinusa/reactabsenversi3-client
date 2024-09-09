@@ -23,13 +23,18 @@ function LokasiSA() {
   const [limit, setLimit] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-
+  const token = localStorage.getItem("token");
   const idSuperAdmin = localStorage.getItem("superadminId");
 
   const getLokasiBySuperAdmin = async () => {
     try {
       const lok = await axios.get(
-        `${API_DUMMY}/api/lokasi/superadmin/${idSuperAdmin}`
+        `${API_DUMMY}/api/lokasi/superadmin/${idSuperAdmin}`,
+         {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setLokasiList(lok.data.reverse());
       // Mengambil jumlah karyawan untuk setiap lokasi
