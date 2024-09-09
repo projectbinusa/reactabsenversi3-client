@@ -125,6 +125,7 @@ function App() {
   ) : (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<PrivateRoute element={IndexDashboard} />} />
         <Route path="/login" element={<Login />} />
         <Route path="/navbar" element={<Navbar1 />} />
         <Route path="/register" element={<Register />} />
@@ -148,7 +149,6 @@ function App() {
           path="/reset-password-admin/:token"
           element={<ResetPasswordAdmin />}
         />
-        <Route path="/" element={<IndexDashboard />} />
 
         {/* start admin */}
         {/* Admin Routes */}
