@@ -1,31 +1,33 @@
-import React from "react";
-import { Link, Navigate, useLocation } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Navigate, useLocation } from "react-router-dom";
 
 function PrivateRoute({ element: Component }) {
   const location = useLocation();
 
-  // const decodeBase64Url = (base64Url) => {
-  //   const base64 = base64Url
-  //     .replace(/-/g, '+') // mengganti '-' dengan '+'
-  //     .replace(/_/g, '/'); // mengganti '_' dengan '/'
-  //   return atob(base64);
-  // };
-
   const isTokenExpired = () => {
     const token = localStorage.getItem("token");
-    if (!token) return true; // Jika token tidak ada, diasumsikan token telah kedaluwarsa
-    const tokenData = JSON.parse(atob(token.split('.')[1])); // Mengurai bagian data token JWT
-    const expirationTime = tokenData.exp * 1000; // Waktu kedaluwarsa dalam format milidetik
-    const currentTime = Date.now(); // Waktu saat ini dalam format milidetik
-    return currentTime > expirationTime; // Memeriksa apakah token telah kedaluwarsa
+    if (!token) return true;
+    try {
+      const tokenData = JSON.parse(atob(token.split(".")[1]));
+      const expirationTime = tokenData.exp * 1000;
+      const currentTime = Date.now();
+      return currentTime > expirationTime; // Cek apakah token telah
+    } catch (e) {
+      return true;
+    }
   };
 
+  // const token = localStorage.getItem("token")
+  // const tokenData = JSON.parse(atob(token.split(".")[1]));
+  // const expirationTime = tokenData.exp * 1000;
 
+  // useEffect(() => {
+  //   console.log("expired: ", expirationTime);
+  // }, []);
 
   if (isTokenExpired()) {
     localStorage.removeItem("token");
-    // sessionStorage.removeItem("token");
-    return <Link to="/login" state={{ from: location }} />;
+    return <Navigate to="/login" state={{ from: location }} />;
   }
 
   return <Component />;

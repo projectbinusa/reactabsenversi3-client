@@ -19,7 +19,6 @@ import { SidebarProvider } from "../../components/SidebarContext";
 import Navbar1 from "../../components/Navbar1";
 
 function Dashboard() {
-  // const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const [username, setUsername] = useState({});
   const [absensi, setAbsensi] = useState([]);
@@ -30,211 +29,42 @@ function Dashboard() {
   const [isPulangTengahHari, setIsPulangTengahHari] = useState(false);
   const [isIzinDisabled, setIsIzinDisabled] = useState(false);
   const [informasi, setInformasi] = useState([]);
-  const userId = localStorage.getItem("userId");
   const [admin, setAdmin] = useState(null);
+  const userId = localStorage.getItem("userId");
 
-  const getUsername = async () => {
-    const userId = localStorage.getItem("userId");
-
+  const fetchData = async () => {
     try {
-      const response = await axios.get(
-        `${API_DUMMY}/api/user/getUserBy/${userId}`
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // }
-      );
+      // Parallel fetching of data
+      const [userResponse, absensiResponse, cutiResponse, izinResponse] = await Promise.all([
+        axios.get(`${API_DUMMY}/api/user/getUserBy/${userId}`),
+        axios.get(`${API_DUMMY}/api/absensi/getByUserId/${userId}`),
+        axios.get(`${API_DUMMY}/api/cuti/getByUser/${userId}`),
+        axios.get(`${API_DUMMY}/api/absensi/checkAbsensi/${userId}`)
+      ]);
 
-      setUsername(response.data);
-    } catch (error) {
-      console.error("Error fetching username:", error);
-    }
-  };
+      setUsername(userResponse.data);
+      setAbsensi(absensiResponse.data.reverse());
+      setCuti(cutiResponse.data.reverse());
 
-  // const cekAbsensi = async () => {
-  //   try {
-  //     const absensiCheckResponse = await axios.get(
-  //       `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`
-  //     );
-  //     const isUserAlreadyAbsenToday =
-  //       absensiCheckResponse.data ===
-  //       "Pengguna sudah melakukan absensi hari ini.";
-  //     console.log("Is User Already Absen Today:", isUserAlreadyAbsenToday);
-
-  //     const izinCheckResponse = await axios.get(
-  //       `${API_DUMMY}/api/absensi/checkIzin/${userId}`
-  //     );
-  //     const izin = izinCheckResponse.data;
-  //     console.log(izin);
-  //     let hasMiddayLeave = false;
-
-  //     if (izin && Array.isArray(izin)) {
-  //       hasMiddayLeave = izin.some((izin) => {
-  //         return izin.statusAbsen === "Izin Tengah Hari"; // Check if the status is "Izin Tengah Hari"
-  //       });
-  //     }
-
-  //     console.log("Has midday leave:", hasMiddayLeave);
-
-  //     setIsPulangDisabled(izinCheckResponse);
-  //     setIsIzinDisabled(isUserAlreadyAbsenToday);
-  //     setIsAbsenMasuk(isUserAlreadyAbsenToday);
-  //   } catch (error) {
-  //     console.error("Error checking absensi or izin:", error);
-  //   }
-  // };
-
-  // const getIzin = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       `${API_DUMMY}/api/absensi/getByUserId/${userId}`
-  //     );
-  //     const izinData = response.data.reverse();
-  //     setIzin(izinData);
-  //     setTotalIzin(izinData.length);
-
-  //     // Check if any izin has the status "Izin Tengah Hari"
-  //     const hasMiddayIzin = izinData.some((izin) => {
-  //       return (
-  //         izin.statusAbsen === "Izin Tengah Hari" ||
-  //         izin.statusAbsen === "Izin" ||
-  //         new Date(izin.tanggalAbsen).setHours(0, 0, 0, 0) <
-  //           new Date().setHours(0, 0, 0, 0)
-  //       );
-  //     });
-
-  //     if (hasMiddayIzin) {
-  //       setIsPulangDisabled(true);
-  //     } else {
-  //       setIsPulangDisabled(false);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching izin:", error);
-  //   }
-  // };
-
-  const cekAbsensi = async () => {
-    const userId = localStorage.getItem("userId");
-
-    try {
-      const absensiCheckResponse = await axios.get(
-        `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`
-      );
-      const isUserAlreadyAbsenToday =
-        absensiCheckResponse.data ===
-        "Pengguna sudah melakukan absensi hari ini.";
-      console.log("Is User Already Absen Today:", isUserAlreadyAbsenToday);
-
-      const izinCheckResponse = await axios.get(
-        `${API_DUMMY}/api/absensi/checkIzin/${userId}`
-      );
-      const hasTakenLeave =
-        izinCheckResponse.data === "Pengguna sudah melakukan izin.";
-      console.log("Has taken leave:", hasTakenLeave);
-
-      setIsPulangDisabled(hasTakenLeave);
-      console.log("Is Pulang Disabled:", isPulangDisabled);
-
-      // The 'Izin' button is disabled if the user has both 'absen masuk' and 'izin' on the same day
-      setIsIzinDisabled(isUserAlreadyAbsenToday);
-      console.log("tes: ", isIzinDisabled);
-
-      // Set the 'Absen Masuk' status
+      const isUserAlreadyAbsenToday = izinResponse.data === "Pengguna sudah melakukan absensi hari ini.";
       setIsAbsenMasuk(isUserAlreadyAbsenToday);
-    } catch (error) {
-      console.error("Error checking absensi or izin:", error);
-    }
-  };
+      setIsIzinDisabled(isUserAlreadyAbsenToday);
 
-  const getIzin = async () => {
-    try {
-      const response = await axios.get(
-        `${API_DUMMY}/api/absensi/getByUserId/${userId}`
+      // Additional checks for izin
+      const filteredIzin = absensiResponse.data.filter(izin =>
+        izin.statusAbsen === "Izin Tengah Hari" || izin.statusAbsen === "Izin"
       );
-      const izinData = response.data.reverse();
 
-      // Get today's date at midnight for accurate comparison
-      const today = new Date().setHours(0, 0, 0, 0);
-
-      // Filter izin data to include both "Izin" and "Izin Tengah Hari"
-      const filteredIzin = izinData.filter((izin) => {
-        return (
-          izin.statusAbsen === "Izin Tengah Hari" || izin.statusAbsen === "Izin"
-        );
-      });
-
-      // Set the total izin count based on the filtered izin data
       setTotalIzin(filteredIzin.length);
 
-      // Check if any "Izin" or "Izin Tengah Hari" exists for today
-      const hasMiddayIzin = filteredIzin.some((izin) => {
-        const izinDate = new Date(izin.tanggalAbsen).setHours(0, 0, 0, 0);
-        return izinDate === today;
-      });
-      console.log("has : ", hasMiddayIzin);
+      const today = new Date().setHours(0, 0, 0, 0);
+      const hasMiddayIzin = filteredIzin.some(izin =>
+        new Date(izin.tanggalAbsen).setHours(0, 0, 0, 0) === today
+      );
 
-      // Disable "Pulang" button only if there's a relevant izin today
       setIsPulangTengahHari(hasMiddayIzin);
-      // console.log("tets: ", isPulangDisabled);
-    } catch (error) {
-      console.error("Error fetching izin:", error);
-    }
-  };
+      setIsPulangDisabled(hasMiddayIzin || isUserAlreadyAbsenToday);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentDateTime(new Date());
-    }, 1000);
-
-    getUsername();
-    getAbsensi();
-    getCuti();
-    getIzin(); // Ensure this runs to check and disable the "Pulang" button
-    cekAbsensi();
-
-    return () => clearInterval(interval);
-  });
-
-  useEffect(() => {
-    if (cuti === 0) {
-      console.log("Presensi App");
-    }
-  });
-
-  const getAbsensi = async () => {
-    const userId = localStorage.getItem("userId");
-
-    try {
-      const response = await axios.get(
-        `${API_DUMMY}/api/absensi/getByUserId/${userId}`
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // }
-      );
-
-      setAbsensi(response.data.reverse());
-    } catch (error) {
-      console.error("Error fetching absensi:", error);
-    }
-  };
-
-  const getCuti = async () => {
-    const userId = localStorage.getItem("userId");
-
-    try {
-      const response = await axios.get(
-        `${API_DUMMY}/api/cuti/getByUser/${userId}`
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // }
-      );
-
-      setCuti(response.data.reverse());
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -242,115 +72,62 @@ function Dashboard() {
 
   const fetchUserData = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:2026/api/user/getUserBy/${userId}`
-      );
-      const userData = response.data;
-      setAdmin(userData.admin.id);
+      const response = await axios.get(`${API_DUMMY}/api/user/getUserBy/${userId}`);
+      setAdmin(response.data.admin.id);
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
   };
 
   useEffect(() => {
+    fetchData();
     fetchUserData();
-  });
 
-  const Informasi = async (adminId) => {
-    try {
-      const response = await axios.get(
-        `http://localhost:2026/api/notifications/user/getByAdmin/${adminId}`
-      );
-      setInformasi(response.data.reverse());
-    } catch (error) {
-      console.error("Error fetching notifications:", error);
-    }
-  };
+    const interval = setInterval(() => {
+      setCurrentDateTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
-    console.log("Admin ID:", admin);
     if (admin) {
-      Informasi(admin);
+      (async () => {
+        try {
+          const response = await axios.get(`${API_DUMMY}/api/notifications/user/getByAdmin/${admin}`);
+          setInformasi(response.data.reverse());
+        } catch (error) {
+          console.error("Error fetching notifications:", error);
+        }
+      })();
     }
   }, [admin]);
 
-  // const Informasi = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       `${API_DUMMY}/api/notifications/user/getByAdmin/${idAdmin}`
-  //     );
-  //     setInformasi(response.data.reverse());
-  //   } catch (error) {
-  //     console.error("Error fetching informasi:", error);
-  //   }
-  // };
+  // Function to add leading zero to numbers < 10
+  const addLeadingZero = (num) => (num < 10 ? "0" + num : num);
 
-  // useEffect(() => {
-  //   Informasi();
-  // }, []);
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setCurrentDateTime(new Date());
-  //   }, 1000);
-
-  //   getUsername();
-  //   getAbsensi();
-  //   getCuti();
-  //   getIzin();
-  //   cekAbsensi();
-
-  //   return () => clearInterval(interval);
-  // }, []);
-
-  useEffect(() => {
-    setUsername(username); // Setelah mendapatkan respons, atur username
-  }, [username]); // Tambahkan username sebagai dependensi
-
-  // Fungsi untuk menambah nol di depan angka jika angka kurang dari 10
-  const addLeadingZero = (num) => {
-    return num < 10 ? "0" + num : num;
-  };
-
-  // Mendapatkan informasi hari, tanggal, dan waktu
+  // Get current date, day, and time
   const day = currentDateTime.toLocaleDateString("id-ID", { weekday: "long" });
   const date = currentDateTime.toLocaleDateString("id-ID", {
     day: "numeric",
     month: "long",
     year: "numeric",
   });
-  const time =
-    addLeadingZero(currentDateTime.getHours()) +
-    ":" +
-    addLeadingZero(currentDateTime.getMinutes()) +
-    ":" +
-    addLeadingZero(currentDateTime.getSeconds());
+  const time = addLeadingZero(currentDateTime.getHours()) +
+    ":" + addLeadingZero(currentDateTime.getMinutes()) +
+    ":" + addLeadingZero(currentDateTime.getSeconds());
 
-  // const toggleSidebar = () => {
-  //   setSidebarOpen(!sidebarOpen);
-  // };
-
+  // Function to format date
   const formatDate = (dateString) => {
-    const options = {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    };
+    const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString("id-ID", options);
   };
 
-  // Fungsi untuk memeriksa apakah tanggal acara sudah lewat
-  const isEventExpired = (eventDate) => {
-    const today = new Date();
-    const eventDateObj = new Date(eventDate);
-    return eventDateObj < today;
-  };
+  // Function to check if the event date has passed
+  const isEventExpired = (eventDate) => new Date(eventDate) < new Date();
 
-  // Filter informasi untuk hanya menampilkan acara yang belum lewat
-  const validInformasi = informasi.filter(
-    (item) => !isEventExpired(item.tanggalAcara)
-  );
+  // Filter information to show only events that have not expired
+  const validInformasi = informasi.filter(item => !isEventExpired(item.tanggalAcara));
 
   useEffect(() => {
     if (localStorage.getItem("loginSuccess") === "true") {
@@ -361,6 +138,8 @@ function Dashboard() {
       localStorage.removeItem("loginSuccess");
     }
   }, []);
+
+
   return (
     <div className="flex flex-col h-screen">
     <SidebarProvider>
