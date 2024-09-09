@@ -9,6 +9,8 @@ import { API_DUMMY } from "../../../../utils/api";
 import NavbarAdmin from "../../../../components/NavbarAdmin";
 import { Pagination } from "flowbite-react";
 import SidebarNavbar from "../../../../components/SidebarNavbar";
+import { SidebarProvider } from "../../../../components/SidebarContext";
+import Navbar1 from "../../../../components/Navbar1";
 
 function BulanPerkelas() {
   const [listKelas, setListKelas] = useState([]);
@@ -182,13 +184,11 @@ function BulanPerkelas() {
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="sticky top-0 z-50">
-        <SidebarNavbar />
-      </div>
-      <div className="flex h-full">
-        <div className="sticky top-16 z-40">
-          <NavbarAdmin />
-        </div>
+      <SidebarProvider>
+      <Navbar1 />
+      <SidebarNavbar />
+    </SidebarProvider>
+      <div className="w-full mt-10">
         <div className="content-page flex-1 p-8 md:ml-72 mt-16 text-center overflow-auto">
           <div className="tabel-absen bg-white p-5 rounded-xl shadow-xl border border-gray-300">
             <div className="md:flex justify-between">

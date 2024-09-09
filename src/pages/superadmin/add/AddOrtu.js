@@ -7,6 +7,8 @@ import Swal from "sweetalert2";
 import { API_DUMMY } from "../../../utils/api";
 import { useNavigate } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
+import { SidebarProvider } from "../../../components/SidebarContext";
+import Navbar1 from "../../../components/Navbar1";
 
 function AddOrtu() {
   const [showPassword, setShowPassword] = useState(false);
@@ -58,13 +60,11 @@ function AddOrtu() {
   };
   return (
     <div className="flex flex-col h-screen">
-      <div className="sticky top-0 z-50">
-        <SidebarNavbar />
-      </div>
-      <div className="flex h-full">
-        <div className="sticky top-16 z-40">
-          <Navbar />
-        </div>
+     <SidebarProvider>
+      <Navbar1 />
+      <SidebarNavbar />
+    </SidebarProvider>
+      <div className="md:w-[78%] w-full mt-10 md:mt-0">
       </div>
       <div className=" sm:ml-64 content-page md:p-8 md:ml-64 mb-12">
         <div className="p-4">

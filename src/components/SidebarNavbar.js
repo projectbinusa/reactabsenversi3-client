@@ -31,10 +31,11 @@ import {
   faUsers,
   faUsersGear,
 } from "@fortawesome/free-solid-svg-icons";
+import { useSidebar } from "./SidebarContext";
 
 function SidebarNavbar() {
   const role = localStorage.getItem("role");
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, toggleSidebar } = useSidebar();
   const [masterDataOpen, setMasterDataOpen] = useState(false);
   const [rekapanOpen, setRekapanOpen] = useState(false);
   const [absenOpen, setAbsenOpen] = useState(false);
@@ -138,13 +139,14 @@ function SidebarNavbar() {
   // Fungsi untuk memeriksa apakah URL saat ini cocok dengan href
   // const isActive = (path) => location.pathname === path;
 
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
+  // const toggleSidebar = () => {
+  //   setIsOpen(!isOpen);
+  // };
 
   const handleClickOutside = (event) => {
     if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
-      setIsOpen(false);
+      // Gunakan fungsi setter untuk memperbarui state
+      toggleSidebar();
     }
   };
 
@@ -158,16 +160,16 @@ function SidebarNavbar() {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isOpen]);
+  }, [isOpen, toggleSidebar]);
 
   return (
     <div>
-      <button
+      {/* <button
         onClick={toggleSidebar}
         aria-controls="logo-sidebar"
         aria-expanded={isOpen}
         type="button"
-        className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-white rounded-lg sm:hidden hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:text-white dark:hover:bg-blue-800 dark:focus:ring-blue-800"
+        className="relative inline-flex items-center p-2 mt-2 ms-3 text-sm text-white rounded-lg sm:hidden hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:text-white dark:hover:bg-blue-800 dark:focus:ring-blue-800"
       >
         <span className="sr-only">Open sidebar</span>
         <svg
@@ -183,12 +185,12 @@ function SidebarNavbar() {
             d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
           ></path>
         </svg>
-      </button>
+      </button> */}
 
       <aside
         id="logo-sidebar"
         ref={sidebarRef}
-        className={`fixed top-0 left-0 z-40 ${
+        className={`fixed top-20 left-0 z-40 ${
           localStorage.getItem("role") == "ADMIN" && "SUPERADMIN"
             ? "w-[300px]"
             : "w-[260px]"
@@ -198,14 +200,6 @@ function SidebarNavbar() {
         aria-label="Sidebar"
       >
         <div className="h-full flex flex-col">
-          <div className={`bg-indigo-500 ${isOpen ? "hidden" : "block"}`}>
-            <Link to="/" className="flex items-center p-3">
-              <img src={Logo} className="h-11 me-3 text-white" alt="Logo" />
-              <span className="self-center text-xl font-semibold sm:text-xl whitespace-nowrap text-white">
-                Presensi App
-              </span>
-            </Link>
-          </div>
           <div className="bg-white shadow-lg shadow-blue-300 flex-1 px-3 py-4 h-full pb-4 overflow-y-auto">
             <nav className="">
               <ul className="space-y-2 font-medium">

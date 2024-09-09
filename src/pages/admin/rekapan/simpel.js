@@ -13,6 +13,8 @@ import { useNavigate } from "react-router-dom";
 import NavbarAdmin from "../../../components/NavbarAdmin";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 import { Pagination } from "flowbite-react";
+import { SidebarProvider } from "../../../components/SidebarContext";
+import Navbar1 from "../../../components/Navbar1";
 
 function Simpel() {
   const [bulan, setBulan] = useState(null); // Bulan default diubah ke null
@@ -163,16 +165,14 @@ function Simpel() {
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="sticky top-0 z-50">
-        <SidebarNavbar />
-      </div>
-      <div className="flex h-full pt-5">
-        <div className="fixed h-full">
-          <NavbarAdmin />
-        </div>
+      <SidebarProvider>
+      <Navbar1   />
+      <SidebarNavbar />
+    </SidebarProvider>
+      <div className="w-full mt-10">
         <div className="content-page flex-1 p-8 md:ml-72 mt-5 md:mt-10 text-center overflow-auto">
           <div className="tabel-absen bg-white p-5 rounded-xl shadow-xl border border-gray-300">
-            <div className="flex justify-between">
+            <div className="md:flex block justify-between">
               <h6 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
                 Rekap Simpel
               </h6>

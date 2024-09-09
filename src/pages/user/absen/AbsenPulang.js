@@ -6,6 +6,8 @@ import Swal from "sweetalert2";
 import { API_DUMMY } from "../../../utils/api";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 import "../css/AbsenMasuk.css";
+import { SidebarProvider } from "../../../components/SidebarContext";
+import Navbar1 from "../../../components/Navbar1";
 
 function AbsenPulang() {
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
@@ -254,13 +256,11 @@ function AbsenPulang() {
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="sticky top-0 z-50">
-        <SidebarNavbar />
-      </div>
-      <div className="flex h-full">
-        <div className="sticky top-16 z-40">
-          <Navbar />
-        </div>
+      <SidebarProvider>
+      <Navbar1 />
+      <SidebarNavbar />
+    </SidebarProvider>
+      <div className="md:w-[78%] w-full mt-10 md:mt-0">
         <div className="content-page max-h-screen container p-8 min-h-screen ml-0 lg:ml-64">
           <div className="add-izin mt-12 bg-white p-5 rounded-xl shadow-lg border border-gray-300">
             <h1 className="text-lg sm:text-2xl font-medium mb-4 sm:mb-7">

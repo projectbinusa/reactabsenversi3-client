@@ -11,6 +11,9 @@ import axios from "axios";
 import { API_DUMMY } from "../../../utils/api";
 import { useNavigate } from "react-router-dom";
 import NavbarAdmin from "../../../components/NavbarAdmin";
+import Navbar1 from "../../../components/Navbar1";
+import { SidebarProvider } from "../../../components/SidebarContext";
+import SidebarNavbar from "../../../components/SidebarNavbar";
 
 function Perkaryawan() {
   const [listAbsensi, setListAbsensi] = useState([]);
@@ -120,13 +123,11 @@ function Perkaryawan() {
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="sticky top-0 z-50">
-        <NavbarAdmin />
-      </div>
-      <div className="flex h-full pt-5">
-        <div className="fixed h-full">
-          <Sidebar />
-        </div>
+      <SidebarProvider>
+      <Navbar1 />
+      <SidebarNavbar />
+    </SidebarProvider>
+      <div className="w-full mt-10">
         <div className="content-page flex-1 p-8 md:ml-72 mt-16 text-center overflow-auto">
           <div className="tabel-absen bg-white p-5 rounded-xl shadow-xl border border-gray-300">
             <div className="flex justify-between">

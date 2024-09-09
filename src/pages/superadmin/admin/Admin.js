@@ -17,6 +17,8 @@ import { API_DUMMY } from "../../../utils/api";
 
 import { Button, Modal, Pagination } from "flowbite-react";
 import SidebarNavbar from "../../../components/SidebarNavbar";
+import { SidebarProvider } from "../../../components/SidebarContext";
+import Navbar1 from "../../../components/Navbar1";
 
 function Admin() {
   const [userData, setUserData] = useState([]);
@@ -212,13 +214,11 @@ function Admin() {
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="sticky top-0 z-50">
-        <SidebarNavbar />
-      </div>
-      <div className="flex h-full">
-        <div className="sticky top-16 z-40">
-          <Navbar />
-        </div>
+     <SidebarProvider>
+      <Navbar1 />
+      <SidebarNavbar />
+    </SidebarProvider>
+      <div className="md:w-[79%] w-full mt-10">
         <div className=" sm:ml-64 content-page container md:p-8 md:ml-64 mt-5">
           <div className="p-5 mt-10">
             {/* <!-- Card --> */}
