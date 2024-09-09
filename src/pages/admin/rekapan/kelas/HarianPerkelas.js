@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCloudArrowDown,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCloudArrowDown } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../../../utils/api";
@@ -22,6 +20,7 @@ function HarianPerkelas() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const adminId = localStorage.getItem("adminId");
+  const token = localStorage.getItem("token");
 
   // useEffect(() => {
   //   getAllKelas();
@@ -57,7 +56,13 @@ function HarianPerkelas() {
   const getHarianPerkelas = async (tanggal, kelasId) => {
     try {
       const response = await axios.get(`${API_DUMMY}/api/absensi/by-tanggal`, {
-        params: { tanggalAbsen: tanggal, kelasId },
+        params: {
+          tanggalAbsen: tanggal,
+          kelasId: kelasId,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       if (response.data.length === 0) {
         Swal.fire("Tidak ada", "Tidak ada yang absen hari ini", "info");
@@ -73,7 +78,12 @@ function HarianPerkelas() {
   const getAllKelas = async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/kelas/getAllByAdmin/${adminId}`
+        `${API_DUMMY}/api/kelas/getAllByAdmin/${adminId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setListKelas(response.data);
     } catch (error) {
@@ -123,6 +133,11 @@ function HarianPerkelas() {
         {
           params: { kelasId, tanggal },
           responseType: "blob",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -222,10 +237,10 @@ function HarianPerkelas() {
 
   return (
     <div className="flex flex-col h-screen">
-     <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+      <SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="w-full mt-10">
         <div className="content-page flex-1 p-8 md:ml-72 mt-5 md:mt-16 text-center overflow-auto">
           <div className="tabel-absen bg-white p-5 rounded-xl shadow-xl border border-gray-300">

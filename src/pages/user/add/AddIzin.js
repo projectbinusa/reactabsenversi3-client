@@ -31,7 +31,7 @@ function AddIzin() {
     try {
       await axios.post(`${API_DUMMY}/api/absensi/izin/${userId}`, add, {
         headers: {
-          Authorization: `${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
       Swal.fire({
@@ -93,9 +93,9 @@ function AddIzin() {
   return (
     <div className="flex flex-col h-screen">
       <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="md:w-[78%] w-full mt-10 md:mt-5">
         <div className="content-page max-h-screen container p-8 min-h-screen ml-0 sm:ml-64">
           <div className="add-izin mt-12 bg-white p-5 rounded-xl shadow-lg border border-gray-300">

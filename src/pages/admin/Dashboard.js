@@ -23,14 +23,20 @@ function Dashboard() {
   const [organisasiData, setOrganisasiData] = useState([]);
   const [username, setUsername] = useState("");
   const idAdmin = localStorage.getItem("adminId");
-  const adminId = localStorage.getItem("adminId");
+  const token = localStorage.getItem("token");
   const [karyawan, setKaryawan] = useState("");
 
   const getallUser = async () => {
     try {
-      const res = await axios.get(`${API_DUMMY}/api/user/${idAdmin}/users`);
+      const res = await axios.get(`${API_DUMMY}/api/user/${idAdmin}/users`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setKaryawan(res.data.length);
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
   };
 
   useEffect(() => {
@@ -56,26 +62,45 @@ function Dashboard() {
     ":" +
     addLeadingZero(currentDateTime.getSeconds());
 
-  const fetchData = async (url, setter) => {
-    const token = localStorage.getItem("token");
+  const fetchData = async (url, setData, options = {}) => {
     try {
-      const response = await axios.get(url);
-      setter(response.data);
+      const response = await axios.get(url, options);
+      setData(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
   const getUser = () =>
-    fetchData(`${API_DUMMY}/api/user/${idAdmin}/users`, setUserData);
+    fetchData(`${API_DUMMY}/api/user/${idAdmin}/users`, setUserData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
   const getAbsensi = () =>
-    fetchData(`${API_DUMMY}/api/absensi/admin/${idAdmin}`, setAbsenData);
+    fetchData(`${API_DUMMY}/api/absensi/admin/${idAdmin}`, setAbsenData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
   const getLokasi = () =>
-    fetchData(`${API_DUMMY}/api/lokasi/get-admin/${idAdmin}`, setLokasiData);
+    fetchData(`${API_DUMMY}/api/lokasi/get-admin/${idAdmin}`, setLokasiData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
   const getOrganisasi = () =>
     fetchData(
       `${API_DUMMY}/api/organisasi/all-by-admin/${idAdmin}`,
-      setOrganisasiData
+      setOrganisasiData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
 
   const getUsername = async () => {
@@ -83,7 +108,11 @@ function Dashboard() {
     const id = localStorage.getItem("adminId");
 
     try {
-      const response = await axios.get(`${API_DUMMY}/api/admin/getById/${id}`);
+      const response = await axios.get(`${API_DUMMY}/api/admin/getById/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setUsername(response.data.username);
     } catch (error) {
       console.error("Error fetching username:", error);
@@ -273,9 +302,10 @@ function Dashboard() {
       {/* <SidebarNavbar /> */}
       {/* </div> */}
       <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />nav
-    </SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+        nav
+      </SidebarProvider>
       <div className="md:w-[77%] w-full mt-10 md:mt-0">
         {/* <div className=""> */}
         {/* <Navbar /> */}
@@ -341,7 +371,8 @@ function Dashboard() {
                 <select
                   value={limit}
                   onChange={handleLimitChange}
-                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
+                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+                >
                   <option value="5">05</option>
                   <option value="10">10</option>
                   <option value="20">20</option>
@@ -380,10 +411,12 @@ function Dashboard() {
                     paginatedAbsensi.map((absen, index) => (
                       <tr
                         key={index}
-                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                      >
                         <th
                           scope="row"
-                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        >
                           {(currentPage - 1) * limit + index + 1}
                         </th>
                         <td className="px-6 py-4 capitalize whitespace-nowrap">
@@ -407,7 +440,8 @@ function Dashboard() {
                     <tr>
                       <td
                         colSpan="6"
-                        className="px-6 py-4 text-center text-gray-500">
+                        className="px-6 py-4 text-center text-gray-500"
+                      >
                         Tidak ada data yang ditampilkan
                       </td>
                     </tr>
@@ -450,7 +484,8 @@ function Dashboard() {
                 <select
                   value={limit2}
                   onChange={handleLimitChange2}
-                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
+                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+                >
                   <option value="5">05</option>
                   <option value="10">10</option>
                   <option value="20">20</option>
@@ -485,10 +520,12 @@ function Dashboard() {
                     paginatedLokasi.map((lokasi, index) => (
                       <tr
                         key={index}
-                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                      >
                         <th
                           scope="row"
-                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        >
                           {(currentPage2 - 1) * limit2 + index + 1}
                         </th>
                         <td className="px-6 py-4 capitalize whitespace-nowrap">
@@ -507,7 +544,8 @@ function Dashboard() {
                     <tr>
                       <td
                         colSpan="5"
-                        className="px-6 py-4 text-center text-gray-500">
+                        className="px-6 py-4 text-center text-gray-500"
+                      >
                         Tidak ada data yang ditampilkan
                       </td>
                     </tr>
@@ -550,7 +588,8 @@ function Dashboard() {
                 <select
                   value={limit3}
                   onChange={handleLimitChange3}
-                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
+                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+                >
                   <option value="5">05</option>
                   <option value="10">10</option>
                   <option value="20">20</option>
@@ -579,10 +618,12 @@ function Dashboard() {
                     paginatedOrganisasi.map((organisasi, index) => (
                       <tr
                         key={index}
-                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                      >
                         <th
                           scope="row"
-                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        >
                           {(currentPage3 - 1) * limit3 + index + 1}
                         </th>
                         <td className="px-6 py-4 capitalize whitespace-nowrap">
@@ -597,7 +638,8 @@ function Dashboard() {
                     <tr>
                       <td
                         colSpan="3"
-                        className="px-6 py-4 text-center text-gray-500">
+                        className="px-6 py-4 text-center text-gray-500"
+                      >
                         Tidak ada data yang ditampilkan
                       </td>
                     </tr>

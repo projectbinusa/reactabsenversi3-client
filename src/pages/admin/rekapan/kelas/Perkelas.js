@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCloudArrowDown,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCloudArrowDown } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { API_DUMMY } from "../../../../utils/api";
@@ -21,6 +19,7 @@ function Perkelas() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const adminId = localStorage.getItem("adminId");
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     if (adminId) {
@@ -38,7 +37,12 @@ function Perkelas() {
   const getAllKelas = async (adminId) => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/kelas/getAllByAdmin/${adminId}`
+        `${API_DUMMY}/api/kelas/getAllByAdmin/${adminId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setListKelas(response.data); // Hapus reverse di sini
     } catch (error) {
@@ -49,7 +53,12 @@ function Perkelas() {
   const getAbsensiByKelasId = async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/absensi/by-kelas/{kelasId}?kelasId=${kelasId}`
+        `${API_DUMMY}/api/absensi/by-kelas/{kelasId}?kelasId=${kelasId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       console.log("Data Absensi:", response.data); // Tambahkan log ini
       setListAbsensi(response.data);
@@ -85,6 +94,11 @@ function Perkelas() {
         `${API_DUMMY}/api/export/absensi/by-kelas/${kelasId}`,
         {
           responseType: "blob",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -154,9 +168,9 @@ function Perkelas() {
   return (
     <div className="flex flex-col h-screen">
       <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="w-full mt-10">
         <div className="content-page flex-1 p-8 md:ml-72 mt-5 text-center overflow-auto md:mt-16">
           <div className="tabel-absen bg-white p-5 rounded-xl shadow-xl border border-gray-300">

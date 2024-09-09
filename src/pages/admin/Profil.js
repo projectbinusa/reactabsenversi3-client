@@ -35,7 +35,11 @@ function Profil() {
 
   const getProfile = async () => {
     try {
-      const response = await axios.get(`${API_DUMMY}/api/admin/getById/${id}`);
+      const response = await axios.get(`${API_DUMMY}/api/admin/getById/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       setProfile(response.data);
       setImageAdmin(response.data.imageAdmin);
@@ -56,12 +60,12 @@ function Profil() {
     try {
       const response = await axios.put(
         `${API_DUMMY}/api/admin/edit-email-username/${id}`,
-        usmail
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // }
+        usmail,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       setUsername(response.data.username);
@@ -78,10 +82,16 @@ function Profil() {
       console.error("Error updating data:", error);
 
       // Checking for specific error messages returned from the server
-      if (error.response && error.response.data && error.response.data.message) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
         if (error.response.data.message.includes("Email sudah digunakan")) {
           Swal.fire("Gagal", "Email sudah digunakan", "error");
-        } else if (error.response.data.message.includes("Username sudah digunakan")) {
+        } else if (
+          error.response.data.message.includes("Username sudah digunakan")
+        ) {
           Swal.fire("Gagal", "Username sudah digunakan", "error");
         } else {
           Swal.fire("Gagal", "Gagal mengubah username dan email", "error");
@@ -121,12 +131,12 @@ function Profil() {
           old_password: passwordLama,
           new_password: passwordBaru,
           confirm_new_password: confirmPassword,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // }
       );
 
       Swal.fire("Berhasil", "Password berhasil diubah", "success");
@@ -153,7 +163,7 @@ function Profil() {
         formData,
         {
           headers: {
-            // Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",
           },
         }
@@ -175,11 +185,11 @@ function Profil() {
     <>
       {loading && <Loader />}
       <div className="flex flex-col h-screen">
-      <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
-      <div className="md:w-[77%] w-full mt-10 md:mt-0">
+        <SidebarProvider>
+          <Navbar1 />
+          <SidebarNavbar />
+        </SidebarProvider>
+        <div className="md:w-[77%] w-full mt-10 md:mt-0">
           {/* <div className="sticky top-16 z-40">
             <Navbar />
           </div> */}

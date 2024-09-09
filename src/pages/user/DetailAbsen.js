@@ -19,12 +19,12 @@ function DetailAbsen() {
 
     try {
       const absensiResponse = await axios.get(
-        `${API_DUMMY}/api/absensi/getData/${id}`
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // }
+        `${API_DUMMY}/api/absensi/getData/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       if (
@@ -88,9 +88,9 @@ function DetailAbsen() {
   return (
     <div className="flex flex-col h-screen">
       <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="md:w-[78%] w-full mt-10 md:mt-0">
         <div
           className={`content-page container p-4 md:p-8 ${

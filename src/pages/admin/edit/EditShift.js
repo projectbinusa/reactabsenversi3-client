@@ -18,10 +18,15 @@ function EditShift() {
   const { id } = useParams();
   const navigate = useNavigate();
   const idAdmin = localStorage.getItem("adminId");
+  const token = localStorage.getItem("token");
 
   const getShift = async () => {
     try {
-      const res = await axios.get(`${API_DUMMY}/api/shift/getbyId/${id}`);
+      const res = await axios.get(`${API_DUMMY}/api/shift/getbyId/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setNamaShift(res.data.namaShift);
       setWaktuMasuk(res.data.waktuMasuk);
       setWaktuPulang(res.data.waktuPulang);
@@ -40,11 +45,13 @@ function EditShift() {
       await axios.put(
         `${API_DUMMY}/api/shift/editbyId/${id}?idAdmin=${idAdmin}`,
         shift,
-        // {
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //   },
-        // }
+
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
       Swal.fire({
         title: "Berhasil",
@@ -66,22 +73,22 @@ function EditShift() {
   }, [id]);
 
   // Helper function to capitalize each word, but not the character after an apostrophe
-const capitalizeWords = (str) => {
-  return str.replace(/\b\w/g, (char, index, input) => {
-    // Check if the character is right after an apostrophe
-    if (index > 0 && input[index - 1] === "'") {
-      return char.toLowerCase(); // Keep it lowercase
-    }
-    return char.toUpperCase(); // Otherwise, capitalize
-  });
-};
+  const capitalizeWords = (str) => {
+    return str.replace(/\b\w/g, (char, index, input) => {
+      // Check if the character is right after an apostrophe
+      if (index > 0 && input[index - 1] === "'") {
+        return char.toLowerCase(); // Keep it lowercase
+      }
+      return char.toUpperCase(); // Otherwise, capitalize
+    });
+  };
 
   return (
     <div className="flex flex-col h-screen">
-     <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+      <SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="md:w-[78%] w-full mt-10">
         <div className="sm:ml-64 content-page container md:p-8 md:ml-64 mt-12">
           <div className="p-4">
@@ -107,7 +114,9 @@ const capitalizeWords = (str) => {
                           id="nama_shift"
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                           placeholder="Nama Shift"
-                          onChange={(e) => setNamaShift(capitalizeWords(e.target.value))}
+                          onChange={(e) =>
+                            setNamaShift(capitalizeWords(e.target.value))
+                          }
                           autoComplete="off"
                           required
                           value={namaShift}

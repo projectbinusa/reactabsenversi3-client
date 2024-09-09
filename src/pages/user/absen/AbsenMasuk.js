@@ -18,6 +18,7 @@ function AbsenMasuk() {
   const [keteranganTerlambat, setKeteranganTerlambat] = useState("");
   const [error, setError] = useState("");
   const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
   const [loading, setLoading] = useState(false);
   const [address, setAddress] = useState("");
   const [fetchingLocation, setFetchingLocation] = useState(true);
@@ -149,7 +150,12 @@ function AbsenMasuk() {
     if (isWithinAllowedCoordinates(latitude, longitude)) {
       try {
         const absensiCheckResponse = await axios.get(
-          `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`
+          `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         const isUserAlreadyAbsenToday =
           absensiCheckResponse.data ===
@@ -167,6 +173,8 @@ function AbsenMasuk() {
             formData,
             {
               headers: {
+                Authorization: `Bearer ${token}`,
+
                 "Content-Type": "multipart/form-data",
               },
             }
@@ -200,7 +208,7 @@ function AbsenMasuk() {
     <>
       {loading && <Loader />}
       <div className="flex flex-col h-screen">
-      <SidebarProvider>
+        <SidebarProvider>
           <Navbar1 />
           <SidebarNavbar />
         </SidebarProvider>
@@ -252,7 +260,8 @@ function AbsenMasuk() {
                         );
                       }
                     }}
-                    className="block w-32 sm:w-40 bg-blue-500 text-white rounded-lg py-3 text-sm sm:text-xs font-medium">
+                    className="block w-32 sm:w-40 bg-blue-500 text-white rounded-lg py-3 text-sm sm:text-xs font-medium"
+                  >
                     {loading ? "Loading..." : "Ambil Foto"}
                   </button>
                 </div>
@@ -276,5 +285,3 @@ function AbsenMasuk() {
 }
 
 export default AbsenMasuk;
-
-

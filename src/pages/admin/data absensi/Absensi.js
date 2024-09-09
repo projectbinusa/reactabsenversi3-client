@@ -24,12 +24,12 @@ function Absensi() {
 
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/absensi/admin/${adminId}`
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // }
+        `${API_DUMMY}/api/absensi/admin/${adminId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       setAbsensi(response.data.reverse());
@@ -108,9 +108,9 @@ function Absensi() {
       const response = await axios.get(
         `${API_DUMMY}/api/absensi/rekap-perkaryawan/export`,
         {
-          // headers: {
-          //   Authorization: `Bearer ${token}`,
-          // },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
           responseType: "blob", // Important for handling binary data
         }
       );
@@ -147,9 +147,9 @@ function Absensi() {
   return (
     <div className="flex flex-col h-screen">
       <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="w-full mt-10 md:mt-0">
         <div className="content-page flex-1 p-8 md:ml-72 mt-5 md:mt-20 text-center overflow-auto">
           <div className="tabel-absen bg-white p-5 rounded-xl shadow-xl border border-gray-300">

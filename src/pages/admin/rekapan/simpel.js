@@ -25,13 +25,21 @@ function Simpel() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const adminId = localStorage.getItem("adminId");
+  const token = localStorage.getItem("token");
 
   const handleSearch = async (bulan, tahun) => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/absensi/admin/${adminId}?bulan=${bulan}&tahun=${tahun}`,
+        `${API_DUMMY}/api/absensi/admin/${adminId}`,
         {
-          params: { tanggalAbsen: `${tahun}-${bulan}-01` },
+          params: {
+            bulan: bulan,
+            tahun: tahun,
+            tanggalAbsen: `${tahun}-${bulan}-01`,
+          },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       setAbsensiData(response.data.reverse());
@@ -125,6 +133,11 @@ function Simpel() {
         {
           params: { month: bulan, year: tahun },
           responseType: "blob",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -166,9 +179,9 @@ function Simpel() {
   return (
     <div className="flex flex-col h-screen">
       <SidebarProvider>
-      <Navbar1   />
-      <SidebarNavbar />
-    </SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="w-full mt-10">
         <div className="content-page flex-1 p-8 md:ml-72 mt-5 md:mt-10 text-center overflow-auto">
           <div className="tabel-absen bg-white p-5 rounded-xl shadow-xl border border-gray-300">

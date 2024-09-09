@@ -28,7 +28,11 @@ function EditLokasi() {
 
   const getLokasi = async () => {
     try {
-      const res = await axios.get(`${API_DUMMY}/api/lokasi/GetById/${id}`);
+      const res = await axios.get(`${API_DUMMY}/api/lokasi/GetById/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setNamaLokasi(res.data.namaLokasi || "");
       setAlamat(res.data.alamat || "");
       setIdOrganisasi(res.data.idOrganisasi || null);
@@ -60,7 +64,7 @@ function EditLokasi() {
       await axios.put(`${API_DUMMY}/api/lokasi/Update/${id}`, lokasi, {
         headers: {
           "Content-Type": "application/json",
-          // Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
       Swal.fire({
@@ -86,22 +90,22 @@ function EditLokasi() {
   }, [id]);
 
   // Helper function to capitalize each word, but not the character after an apostrophe
-const capitalizeWords = (str) => {
-  return str.replace(/\b\w/g, (char, index, input) => {
-    // Check if the character is right after an apostrophe
-    if (index > 0 && input[index - 1] === "'") {
-      return char.toLowerCase(); // Keep it lowercase
-    }
-    return char.toUpperCase(); // Otherwise, capitalize
-  });
-};
+  const capitalizeWords = (str) => {
+    return str.replace(/\b\w/g, (char, index, input) => {
+      // Check if the character is right after an apostrophe
+      if (index > 0 && input[index - 1] === "'") {
+        return char.toLowerCase(); // Keep it lowercase
+      }
+      return char.toUpperCase(); // Otherwise, capitalize
+    });
+  };
 
   return (
     <div className="flex flex-col h-screen">
       <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="md:w-[78%] w-full mt-10">
         <div className=" sm:ml-64 content-page container md:p-8 md:ml-64 mt-12">
           <div className="p-4">
@@ -131,7 +135,9 @@ const capitalizeWords = (str) => {
                           autoComplete="off"
                           required
                           value={namaLokasi}
-                          onChange={(e) => setNamaLokasi(capitalizeWords(e.target.value))}
+                          onChange={(e) =>
+                            setNamaLokasi(capitalizeWords(e.target.value))
+                          }
                         />
                         <label
                           htmlFor="nama_lokasi"
@@ -147,7 +153,9 @@ const capitalizeWords = (str) => {
                           name="alamat"
                           id="alamat"
                           value={alamat}
-                          onChange={(e) => setAlamat(capitalizeWords(e.target.value))}
+                          onChange={(e) =>
+                            setAlamat(capitalizeWords(e.target.value))
+                          }
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                           placeholder=" "
                           autoComplete="off"

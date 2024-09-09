@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Tabs } from "flowbite-react";
-import { HiAdjustments, HiClipboardList, HiUserCircle } from "react-icons/hi";
+import { HiAdjustments, HiUserCircle } from "react-icons/hi";
 import { MdDashboard } from "react-icons/md";
-import Navbar from "../../components/NavbarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Loader from "../../components/Loader";
@@ -17,7 +15,6 @@ function Profile() {
   const [passwordLama, setPasswordLama] = useState("");
   const [passwordBaru, setPasswordBaru] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
   const [showPassword, setShowPassword] = useState(false);
   const [fotoUser, setFotoUser] = useState("");
   const [showPasswordd, setShowPasswordd] = useState(false);
@@ -31,19 +28,17 @@ function Profile() {
   const id = localStorage.getItem("userId");
   const [selectedFile, setSelectedFile] = useState(null);
   const [preview, setPreview] = useState(null);
-  const [edit, setEdit] = useState(false);
   const [organisasi, setOrganisasi] = useState("");
-  const [adminId, setidAdmin] = useState("");
 
   const getProfile = async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/user/getUserBy/${id}`
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // }
+        `${API_DUMMY}/api/user/getUserBy/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       setProfile(response.data);
@@ -67,7 +62,14 @@ function Profile() {
     try {
       const response = await axios.put(
         `${API_DUMMY}/api/user/edit-email-username/${id}`,
-        usmail
+        {
+          usmail,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       setUsername(response.data.username);
@@ -81,9 +83,15 @@ function Profile() {
         }, 1000);
       }, 2000);
     } catch (error) {
-      if (error.response && error.response.data.message === "Email sudah digunakan") {
+      if (
+        error.response &&
+        error.response.data.message === "Email sudah digunakan"
+      ) {
         Swal.fire("Error", "Email sudah digunakan", "error");
-      } else if (error.response && error.response.data.message === "Username sudah digunakan") {
+      } else if (
+        error.response &&
+        error.response.data.message === "Username sudah digunakan"
+      ) {
         Swal.fire("Error", "Username sudah digunakan", "error");
       } else {
         console.error("Error updating data:", error);
@@ -91,7 +99,6 @@ function Profile() {
       }
     }
   };
-
 
   useEffect(() => {
     getProfile();
@@ -122,12 +129,12 @@ function Profile() {
           old_password: passwordLama,
           new_password: passwordBaru,
           confirm_new_password: confirmPassword,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // }
       );
 
       Swal.fire("Berhasil", "Password berhasil diubah", "success");
@@ -154,8 +161,8 @@ function Profile() {
         formData,
         {
           headers: {
-            // Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -171,15 +178,16 @@ function Profile() {
       Swal.fire("Error", "Error uploading image", "error");
     }
   };
+
   return (
     <>
       {loading && <Loader />}
       <div className="flex flex-col h-screen">
-      <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
-      <div className="md:w-[78%] w-full mt-10 md:mt-0">
+        <SidebarProvider>
+          <Navbar1 />
+          <SidebarNavbar />
+        </SidebarProvider>
+        <div className="md:w-[78%] w-full mt-10 md:mt-0">
           <div className="content-page container p-8 ml-0 md:ml-72 mt-10">
             <Tabs aria-label="Tabs with underline" style="underline">
               <Tabs.Item active title="Profile" icon={HiUserCircle}>
@@ -226,7 +234,8 @@ function Profile() {
                         type="submit"
                         className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50"
                         onClick={handleImageUpload}
-                        disabled={loading || !selectedFile}>
+                        disabled={loading || !selectedFile}
+                      >
                         {loading ? "Uploading..." : "Simpan"}
                       </button>
                     </div>
@@ -293,7 +302,8 @@ function Profile() {
                           <button
                             type="button"
                             onClick={() => setUbahUsername(true)}
-                            className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
+                            className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50"
+                          >
                             Ubah
                           </button>
                         )}
@@ -302,13 +312,15 @@ function Profile() {
                             <button
                               type="button"
                               onClick={() => setUbahUsername(false)}
-                              className="z-20 block rounded-xl border-2 border-white bg-rose-100 p-4 text-rose-500 active:bg-rose-50">
+                              className="z-20 block rounded-xl border-2 border-white bg-rose-100 p-4 text-rose-500 active:bg-rose-50"
+                            >
                               Batal
                             </button>
 
                             <button
                               type="submit"
-                              className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
+                              className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50"
+                            >
                               Simpan
                             </button>
                           </>
@@ -389,7 +401,8 @@ function Profile() {
                       <div className="flex justify-between mt-6">
                         <button
                           type="submit"
-                          className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
+                          className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50"
+                        >
                           Simpan
                         </button>
                       </div>

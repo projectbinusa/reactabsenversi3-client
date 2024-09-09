@@ -16,11 +16,17 @@ function AddKelas() {
   const [organisasilist, setOrganisasiList] = useState([]);
   const [selectedOrganisasi, setSelectedOrganisasi] = useState("");
   const idAdmin = localStorage.getItem("adminId");
+  const token = localStorage.getItem("token");
 
   const getOrganisasi = async () => {
     try {
       const org = await axios.get(
-        `${API_DUMMY}/api/organisasi/all-by-admin/${idAdmin}`
+        `${API_DUMMY}/api/organisasi/all-by-admin/${idAdmin}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setOrganisasiList(org.data || []);
     } catch (error) {
@@ -35,7 +41,11 @@ function AddKelas() {
       if (!selectedOrganisasi || !idAdmin) {
         throw new Error("Pilih organisasi dan pastikan admin ID tersedia.");
       }
-      const response = await axios.get(`${API_DUMMY}/api/kelas/kelas/all`);
+      const response = await axios.get(`${API_DUMMY}/api/kelas/kelas/all`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const existingUsers = response.data;
       const isUsernameExists = existingUsers.some(
         (user) => user.namaKelas.toLowerCase() === trimmedKelas.toLowerCase()
@@ -49,16 +59,28 @@ function AddKelas() {
         namaKelas: namaKelas,
       };
       const url = `${API_DUMMY}/api/kelas/tambah?idOrganisasi=${selectedOrganisasi}&idAdmin=${idAdmin}`;
-      await axios.post(url, add);
-      Swal.fire({
-        title: "Berhasil",
-        text: "Berhasil menambahkan data",
-        icon: "success",
-        showConfirmButton: false,
-      });
-      setTimeout(() => {
-        window.location.href = "/admin/kelas";
-      }, 2000);
+
+      try {
+        await axios.post(url, add, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        Swal.fire({
+          title: "Berhasil",
+          text: "Berhasil menambahkan data",
+          icon: "success",
+          showConfirmButton: false,
+        });
+
+        setTimeout(() => {
+          window.location.href = "/admin/kelas";
+        }, 2000);
+      } catch (error) {
+        console.error("Error adding data:", error);
+        Swal.fire("Error", "Gagal menambahkan data", "error");
+      }
     } catch (error) {
       if (error.response && error.response.status === 400) {
         Swal.fire(
@@ -91,9 +113,9 @@ function AddKelas() {
   return (
     <div className="flex flex-col h-screen">
       <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="md:w-[78%] w-full mt-10">
         <div className="sm:ml-64 content-page container md:p-8 md:ml-64 mt-12">
           <div className="p-4">
@@ -124,7 +146,8 @@ function AddKelas() {
                         />
                         <label
                           htmlFor="nama_kelas"
-                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                        >
                           Nama Kelas
                         </label>
                       </div>
@@ -138,7 +161,8 @@ function AddKelas() {
                           onChange={(e) =>
                             setSelectedOrganisasi(Number(e.target.value))
                           }
-                          required>
+                          required
+                        >
                           <option value="" disabled>
                             Pilih Organisasi
                           </option>
@@ -151,18 +175,21 @@ function AddKelas() {
                         </select>
                         <label
                           htmlFor="organisasi"
-                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"></label>
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                        ></label>
                       </div>
                     </div>
                     <div className="flex justify-between">
                       <a
                         className="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                        href="/admin/kelas">
+                        href="/admin/kelas"
+                      >
                         <FontAwesomeIcon icon={faArrowLeft} />
                       </a>
                       <button
                         type="submit"
-                        className="text-white bg-indigo-500 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
+                        className="text-white bg-indigo-500 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800"
+                      >
                         <FontAwesomeIcon icon={faFloppyDisk} />
                       </button>
                     </div>

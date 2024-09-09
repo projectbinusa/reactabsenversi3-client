@@ -18,6 +18,7 @@ function AddInformasi() {
   const [tempatAcara, setTempatAcara] = useState("");
   const [createdAt, setCreatedAt] = useState(new Date().toISOString());
   const idAdmin = localStorage.getItem("adminId");
+  const token = localStorage.getItem("token");
 
   const TambahInformasi = async (e) => {
     e.preventDefault();
@@ -32,7 +33,12 @@ function AddInformasi() {
     try {
       const response = await axios.post(
         `${API_DUMMY}/api/notifications/user/send/${idAdmin}`,
-        informasi
+        informasi,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       Swal.fire({
         title: "Berhasil",
@@ -49,23 +55,23 @@ function AddInformasi() {
     }
   };
 
-// Helper function to capitalize each word, but not the character after an apostrophe
-const capitalizeWords = (str) => {
-  return str.replace(/\b\w/g, (char, index, input) => {
-    // Check if the character is right after an apostrophe
-    if (index > 0 && input[index - 1] === "'") {
-      return char.toLowerCase(); // Keep it lowercase
-    }
-    return char.toUpperCase(); // Otherwise, capitalize
-  });
-};
+  // Helper function to capitalize each word, but not the character after an apostrophe
+  const capitalizeWords = (str) => {
+    return str.replace(/\b\w/g, (char, index, input) => {
+      // Check if the character is right after an apostrophe
+      if (index > 0 && input[index - 1] === "'") {
+        return char.toLowerCase(); // Keep it lowercase
+      }
+      return char.toUpperCase(); // Otherwise, capitalize
+    });
+  };
 
   return (
     <div className="flex flex-col h-screen">
       <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="md:w-[78%] w-full mt-10">
         <div className=" sm:ml-64 content-page container md:p-8 md:ml-64 mt-12">
           <div className="p-4">
@@ -90,7 +96,9 @@ const capitalizeWords = (str) => {
                           autoComplete="off"
                           required
                           value={namaAcara}
-                          onChange={(e) => setNamaAcara(capitalizeWords(e.target.value))}
+                          onChange={(e) =>
+                            setNamaAcara(capitalizeWords(e.target.value))
+                          }
                         />
                         <label
                           htmlFor="nama_acara"
@@ -131,8 +139,9 @@ const capitalizeWords = (str) => {
                           autoComplete="off"
                           required
                           value={tempatAcara}
-                          onChange={(e) => setTempatAcara(capitalizeWords(e.target.value))}
-
+                          onChange={(e) =>
+                            setTempatAcara(capitalizeWords(e.target.value))
+                          }
                         />
                         <label
                           htmlFor="tempat_acara"
@@ -151,7 +160,9 @@ const capitalizeWords = (str) => {
                           autoComplete="off"
                           required
                           value={message}
-                          onChange={(e) => setMessage(capitalizeWords(e.target.value))}
+                          onChange={(e) =>
+                            setMessage(capitalizeWords(e.target.value))
+                          }
                         ></textarea>
                         <label
                           htmlFor="message"

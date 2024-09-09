@@ -17,6 +17,7 @@ import Navbar1 from "../../../components/Navbar1";
 function Organisasi() {
   const [userData, setUserData] = useState([]);
   const idAdmin = localStorage.getItem("adminId");
+  const token = localStorage.getItem("token");
   const [searchTerm, setSearchTerm] = useState("");
   const [limit, setLimit] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
@@ -25,7 +26,12 @@ function Organisasi() {
   const getAllOrganisasi = async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/organisasi/all-by-admin/${idAdmin}`
+        `${API_DUMMY}/api/organisasi/all-by-admin/${idAdmin}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       setUserData(response.data.reverse());
@@ -46,7 +52,11 @@ function Organisasi() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${API_DUMMY}/api/organisasi/delete/` + id);
+          await axios.delete(`${API_DUMMY}/api/organisasi/delete/` + id, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
 
           Swal.fire({
             icon: "success",
@@ -133,9 +143,9 @@ function Organisasi() {
   return (
     <div className="flex flex-col h-screen">
       <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="md:w-[78%] w-full mt-10 md:mt-0">
         <div className=" sm:ml-64 content-page container md:p-8 md:ml-64 mt-5">
           <div className="p-5 mt-10">

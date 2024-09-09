@@ -15,6 +15,7 @@ function AbsenPulang() {
   const [error, setError] = useState("");
   console.log(error);
   const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
   const [address, setAddress] = useState("");
   const [fetchingLocation, setFetchingLocation] = useState(true);
   const [keteranganPulangAwal, setKeteranganPulangAwal] = useState("");
@@ -176,7 +177,12 @@ function AbsenPulang() {
 
         try {
           const absensiCheckResponse = await axios.get(
-            `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`
+            `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
           );
           const isUserAlreadyAbsenToday =
             absensiCheckResponse.data ===
@@ -223,6 +229,7 @@ function AbsenPulang() {
             formData,
             {
               headers: {
+                Authorization: `Bearer ${token}`,
                 "Content-Type": "multipart/form-data",
               },
             }
@@ -257,9 +264,9 @@ function AbsenPulang() {
   return (
     <div className="flex flex-col h-screen">
       <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="md:w-[78%] w-full mt-10 md:mt-0">
         <div className="content-page max-h-screen container p-8 min-h-screen ml-0 lg:ml-64">
           <div className="add-izin mt-12 bg-white p-5 rounded-xl shadow-lg border border-gray-300">

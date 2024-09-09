@@ -14,6 +14,7 @@ function IzinAbsen() {
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const [keteranganPulangAwal, setKeteranganPulangAwal] = useState("");
   const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -55,11 +56,16 @@ function IzinAbsen() {
     try {
       const response = await axios.put(
         `${API_DUMMY}/api/absensi/izin-tengah-hari/${userId}`,
-        izin
+        izin,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       Swal.fire("Berhasil", "Berhasil Izin ", "success");
       // console.log(response.data)
-      window.location.href = "/user/history_absen" ;
+      window.location.href = "/user/history_absen";
     } catch (error) {
       console.error("Error:", error);
       toast.error("Gagal Izin");
@@ -72,10 +78,10 @@ function IzinAbsen() {
 
   return (
     <div className="flex flex-col h-screen">
-     <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+      <SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="md:w-[78%] w-full mt-10 md:mt-0">
         <div className="md:w-full max-h-screen container p-8 min-h-screen md:ml-64">
           <div className="add-izin mt-12 bg-white p-5 rounded-xl shadow-lg border border-gray-300">

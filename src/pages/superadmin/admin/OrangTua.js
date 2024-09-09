@@ -33,6 +33,7 @@ function OrangTua() {
   const [totalPages, setTotalPages] = useState(1);
   const idAdmin = localStorage.getItem("adminId");
   const idOrtu = localStorage.getItem("orangTuaId");
+  const token = localStorage.getItem("token");
   const fileInputRef = useRef(null);
   const [siswa, setSiswa] = useState([]);
   const [jml, setJmlSiswa] = useState([]);
@@ -54,7 +55,12 @@ function OrangTua() {
       const ortuList = response.data.reverse();
 
       const siswaResponse = await axios.get(
-        `${API_DUMMY}/api/user/${idAdmin}/users`
+        `${API_DUMMY}/api/user/${idAdmin}/users`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       const siswaList = siswaResponse.data;
 
@@ -204,6 +210,11 @@ function OrangTua() {
         `${API_DUMMY}/api/orang-tua/export/data-orang-tua/${idAdmin}`,
         {
           responseType: "blob",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -233,7 +244,12 @@ function OrangTua() {
     try {
       await axios.post(
         `${API_DUMMY}/api/orang-tua/import/data-orang-tua/{adminId}?adminId=${idAdmin}`,
-        formData
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       Swal.fire("Sukses!", "Berhasil menambahkan", "success");
       setOpenModal(false);
@@ -255,6 +271,11 @@ function OrangTua() {
         `${API_DUMMY}/api/orang-tua/download/template-orang-tua`,
         {
           responseType: "blob",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -298,9 +319,9 @@ function OrangTua() {
   return (
     <div className="flex flex-col h-screen">
       <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="md:w-[78%] w-full mt-10 md:mt-0">
         <div className=" sm:ml-64 content-page container md:p-8 md:ml-64 mt-5">
           <div className="p-5 mt-10">

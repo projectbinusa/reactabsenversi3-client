@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../../../components/NavbarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faInfo,
-
-  faUserPlus,
-} from "@fortawesome/free-solid-svg-icons";
+import { faInfo, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { Pagination } from "flowbite-react";
 import { API_DUMMY } from "../../../utils/api";
@@ -21,7 +17,6 @@ function TabelAbsen() {
   const [limit, setLimit] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  // useNavigate
 
   const formatDate = (dateString) => {
     const options = {
@@ -33,26 +28,26 @@ function TabelAbsen() {
     return new Date(dateString).toLocaleDateString("id-ID", options);
   };
 
-  const getAbsensi = async () => {
-    const userId = localStorage.getItem("userId");
-
-    try {
-      const response = await axios.get(
-        `${API_DUMMY}/api/absensi/getByUserId/${userId}`
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // }
-      );
-
-      setAbsensi(response.data.reverse());
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
   useEffect(() => {
+    const getAbsensi = async () => {
+      const userId = localStorage.getItem("userId");
+      const token = localStorage.getItem("token");
+
+      try {
+        const response = await axios.get(
+          `${API_DUMMY}/api/absensi/getByUserId/${userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        setAbsensi(response.data.reverse());
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
     getAbsensi();
   }, []);
 
@@ -124,9 +119,9 @@ function TabelAbsen() {
   return (
     <div className="flex flex-col h-screen">
       <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="md:w-[78%] w-full mt-10 md:mt-0">
         <div className="sm:ml-64 content-page container md:p-8 md:ml-64 mt-5">
           <div className="p-5 mt-10">
