@@ -12,7 +12,7 @@ function PrivateRoute({ element: Component }) {
       const tokenData = JSON.parse(atob(token.split(".")[1]));
       const expirationTime = tokenData.exp * 1000;
       const currentTime = Date.now();
-      return currentTime <= expirationTime;
+      return currentTime < expirationTime;
     } catch (e) {
       return false;
     }
