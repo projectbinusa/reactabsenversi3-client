@@ -270,17 +270,17 @@ function Navbar1() {
                   <>
                     <Link
                       className={`block text-sm text-gray-700 dark:text-white ${
-                        isActive(["/superadmin/profile"])
+                        isActive(["/user/profile"])
                           ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
                           : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
                       }`}
-                      to="/superadmin/profile">
+                      to="/user/profile">
                       <button
                         role="menuitem"
                         tabIndex="-1"
                         id="user-menu-item-0"
                         className={`block px-4 py-2 text-sm text-gray-700 dark:text-white ${
-                          isActive(["/superadmin/profile"])
+                          isActive(["/user/profile"])
                             ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
                             : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
                         }`}>

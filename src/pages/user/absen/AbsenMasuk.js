@@ -5,12 +5,14 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import Loader from "../../../components/Loader";
 import { API_DUMMY } from "../../../utils/api";
+import { useNavigate } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 import "../css/AbsenMasuk.css";
 import { SidebarProvider } from "../../../components/SidebarContext";
 import Navbar1 from "../../../components/Navbar1";
 
 function AbsenMasuk() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const webcamRef = useRef(null);
   const [keteranganTerlambat, setKeteranganTerlambat] = useState("");
@@ -116,9 +118,13 @@ function AbsenMasuk() {
     ucapan = "Selamat Malam";
   }
 
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
   // validasi
   const isWithinAllowedCoordinates = (lat, lon) => {
-    const { northWest, northEast, southWest } = allowedCoordinates;
+    const { northWest, northEast, southWest, southEast } = allowedCoordinates;
     const tolerance = 0.00001;
 
     return (
@@ -132,7 +138,7 @@ function AbsenMasuk() {
   const handleCaptureAndSubmitMasuk = async () => {
     const imageSrc = webcamRef.current.getScreenshot();
     const imageBlob = await fetch(imageSrc).then((res) => res.blob());
-    // setLoading(true);
+
     if (!latitude || !longitude) {
       Swal.fire("Error", "Lokasi belum tersedia", "error");
       return;
@@ -156,7 +162,7 @@ function AbsenMasuk() {
           formData.append("lokasiMasuk", `${address}`);
           formData.append("keteranganTerlambat", keteranganTerlambat || "-");
 
-          await axios.post(
+          const response = await axios.post(
             `${API_DUMMY}/api/absensi/masuk/${userId}`,
             formData,
             {
@@ -194,7 +200,7 @@ function AbsenMasuk() {
     <>
       {loading && <Loader />}
       <div className="flex flex-col h-screen">
-        <SidebarProvider>
+      <SidebarProvider>
           <Navbar1 />
           <SidebarNavbar />
         </SidebarProvider>
@@ -270,3 +276,5 @@ function AbsenMasuk() {
 }
 
 export default AbsenMasuk;
+
+
