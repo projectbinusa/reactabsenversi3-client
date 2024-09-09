@@ -67,6 +67,7 @@ const Navbar = ({ toggleSidebar }) => {
       if (result.isConfirmed) {
         // Hapus item dari local storage saat logout
         localStorage.clear();
+        // sessionStorage.removeItem("token");
         Swal.fire({
           title: "Logout Berhasil",
           text: "Anda telah berhasil logout.",

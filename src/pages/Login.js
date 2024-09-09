@@ -1,8 +1,8 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import Logo from "../components/logo.png";
-import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import ikon dari react-icons
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { API_DUMMY } from "../utils/api";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -13,6 +13,17 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showForgot, setShowForgot] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem("rememberMe")) {
+      const storedEmail = localStorage.getItem("email");
+      const storedPassword = localStorage.getItem("password");
+      if (storedEmail) setEmail(storedEmail);
+      if (storedPassword) setPassword(storedPassword);
+      setRememberMe(true);
+    }
+  }, []);
 
   const login = async (e) => {
     e.preventDefault();
@@ -23,31 +34,43 @@ function Login() {
         password: password,
       });
 
+      const { token } = data.token;
+
+      if (rememberMe) {
+        localStorage.setItem("token", token);
+        localStorage.setItem("email", email);
+        localStorage.setItem("password", password);
+        localStorage.setItem("rememberMe", true);
+      } else {
+        sessionStorage.setItem("token", token);
+        sessionStorage.removeItem("email");
+        sessionStorage.removeItem("password");
+        localStorage.removeItem("rememberMe");
+      }
+
       if (data.data.role === "ADMIN") {
-        localStorage.setItem("token", data.token);
         localStorage.setItem("role", data.data.role);
+        localStorage.setItem("token", data.token);
         localStorage.setItem("adminId", data.data.id);
         localStorage.setItem("loginSuccess", "true");
-
         window.location.href = "/";
       } else if (data.data.role === "USER") {
-        localStorage.setItem("token", data.token);
         localStorage.setItem("role", data.data.role);
         localStorage.setItem("userId", data.data.id);
+        localStorage.setItem("token", data.token);
         localStorage.setItem("loginSuccess", "true");
-
         window.location.href = "/";
       } else if (data.data.role === "SUPERADMIN") {
-        localStorage.setItem("token", data.token);
         localStorage.setItem("role", data.data.role);
         localStorage.setItem("superadminId", data.data.id);
         localStorage.setItem("loginSuccess", "true");
+        localStorage.setItem("token", data.token);
         window.location.href = "/";
       } else if (data.data.role === "Wali Murid") {
-        localStorage.setItem("token", data.token);
         localStorage.setItem("role", data.data.role);
         localStorage.setItem("id_orangtua", data.data.id);
         localStorage.setItem("loginSuccess", "true");
+        localStorage.setItem("token", data.token);
         window.location.href = "/";
       }
     } catch (error) {
@@ -115,6 +138,20 @@ function Login() {
                       {showPassword ? <FaEye /> : <FaEyeSlash />}{" "}
                       {/* Menampilkan ikon view atau hide password sesuai dengan state showPassword */}
                     </span>
+                  </div>
+                  <div class="flex items-center mt-2">
+                    <input
+                      id="default-checkbox"
+                      type="checkbox"
+                      checked={rememberMe}
+                      onChange={(e) => setRememberMe(e.target.checked)}
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    />
+                    <label
+                      for="default-checkbox"
+                      class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                      Remember Me
+                    </label>
                   </div>
                   <button className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
                     <svg

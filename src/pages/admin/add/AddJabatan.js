@@ -7,6 +7,8 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import { API_DUMMY } from "../../../utils/api";
 import { useNavigate } from "react-router-dom";
+import { SidebarProvider } from "../../../components/SidebarContext";
+import Navbar1 from "../../../components/Navbar1";
 
 function AddJabatan() {
   const [namaJabatan, setNamaJabatan] = useState("");
@@ -59,13 +61,11 @@ function AddJabatan() {
   }, [adminId]);
   return (
     <div className="flex flex-col h-screen">
-      <div className="sticky top-0 z-50">
-        <SidebarNavbar />
-      </div>
-      <div className="flex h-full">
-        <div className="sticky top-16 z-40">
-          <Navbar />
-        </div>
+      <SidebarProvider>
+      <Navbar1 />
+      <SidebarNavbar />
+    </SidebarProvider>
+      <div className="md:w-[78%] w-full mt-10">
         <div className=" sm:ml-64 content-page container md:p-8 md:ml-64 mt-12">
           <div className="p-4">
             <div className="p-5">

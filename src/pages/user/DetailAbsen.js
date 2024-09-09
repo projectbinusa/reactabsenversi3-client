@@ -6,6 +6,8 @@ import axios from "axios";
 import { API_DUMMY } from "../../utils/api";
 import SidebarNavbar from "../../components/SidebarNavbar";
 import { Link, useParams } from "react-router-dom";
+import { SidebarProvider } from "../../components/SidebarContext";
+import Navbar1 from "../../components/Navbar1";
 
 function DetailAbsen() {
   const [absensi, setAbsensi] = useState([]);
@@ -85,19 +87,11 @@ function DetailAbsen() {
 
   return (
     <div className="flex flex-col h-screen">
-      {localStorage.getItem("role") == "USER" ? (
-        <>
-          <div className="sticky top-0 z-50">
-            <SidebarNavbar />
-          </div>
-        </>
-      ) : (
-        <></>
-      )}
-      <div className="flex h-full">
-        <div className="sticky top-16 z-40">
-          <Navbar />
-        </div>
+      <SidebarProvider>
+      <Navbar1 />
+      <SidebarNavbar />
+    </SidebarProvider>
+      <div className="md:w-[78%] w-full mt-10 md:mt-0">
         <div
           className={`content-page container p-4 md:p-8 ${
             localStorage.getItem("role") === "USER"

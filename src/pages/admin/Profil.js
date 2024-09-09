@@ -12,6 +12,8 @@ import Loader from "../../components/Loader";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../utils/api";
 import SidebarNavbar from "../../components/SidebarNavbar";
+import { SidebarProvider } from "../../components/SidebarContext";
+import Navbar1 from "../../components/Navbar1";
 function Profil() {
   const [showPassword, setShowPassword] = useState(false);
   const [imageAdmin, setImageAdmin] = useState("");
@@ -45,12 +47,12 @@ function Profil() {
   };
   const HandleUbahUsernameEmail = async (e) => {
     e.preventDefault();
-  
+
     const usmail = {
       email: email,
       username: username,
     };
-  
+
     try {
       const response = await axios.put(
         `${API_DUMMY}/api/admin/edit-email-username/${id}`,
@@ -61,11 +63,11 @@ function Profil() {
         //   },
         // }
       );
-  
+
       setUsername(response.data.username);
       setEmail(response.data.email);
       Swal.fire("Berhasil", "Berhasil mengubah username dan email", "success");
-  
+
       setTimeout(() => {
         Swal.fire("Info", "Silahkan login kembali", "info");
         setTimeout(() => {
@@ -74,7 +76,7 @@ function Profil() {
       }, 2000);
     } catch (error) {
       console.error("Error updating data:", error);
-  
+
       // Checking for specific error messages returned from the server
       if (error.response && error.response.data && error.response.data.message) {
         if (error.response.data.message.includes("Email sudah digunakan")) {
@@ -173,13 +175,14 @@ function Profil() {
     <>
       {loading && <Loader />}
       <div className="flex flex-col h-screen">
-        <div className="sticky top-0 z-50">
-          <SidebarNavbar />
-        </div>
-        <div className="flex h-full">
-          <div className="sticky top-16 z-40">
+      <SidebarProvider>
+      <Navbar1 />
+      <SidebarNavbar />
+    </SidebarProvider>
+      <div className="md:w-[77%] w-full mt-10 md:mt-0">
+          {/* <div className="sticky top-16 z-40">
             <Navbar />
-          </div>
+          </div> */}
           <div className="content-page container p-8 ml-0 md:ml-72 mt-10">
             <Tabs aria-label="Tabs with underline" style="underline">
               <Tabs.Item active title="Profile" icon={HiUserCircle}>

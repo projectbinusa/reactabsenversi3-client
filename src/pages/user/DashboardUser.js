@@ -15,6 +15,8 @@ import Swal from "sweetalert2";
 import { API_DUMMY } from "../../utils/api";
 import SidebarNavbar from "../../components/SidebarNavbar";
 import { Link } from "react-router-dom";
+import { SidebarProvider } from "../../components/SidebarContext";
+import Navbar1 from "../../components/Navbar1";
 
 function Dashboard() {
   // const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -361,13 +363,11 @@ function Dashboard() {
   }, []);
   return (
     <div className="flex flex-col h-screen">
-      <div className="sticky top-0 z-50">
-        <SidebarNavbar />
-      </div>
-      <div className="flex h-full">
-        <div className="sticky top-16 z-40">
-          <Navbar />
-        </div>
+    <SidebarProvider>
+    <Navbar1 />
+    <SidebarNavbar />
+  </SidebarProvider>
+    <div className="md:w-[78%] w-full mt-10 md:mt-0">
         <div className="content-page container p-8 min-h-screen ml-0 md:ml-64 mt-2 md:mt-8">
           <div className="mt-2 md:mt-8 bg-slate-200 p-5 rounded-xl shadow-xl">
             <h1 className="judul text-3xl font-semibold text-center capitalize">

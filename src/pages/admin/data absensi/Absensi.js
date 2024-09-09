@@ -8,6 +8,8 @@ import { API_DUMMY } from "../../../utils/api";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import SidebarNavbar from "../../../components/SidebarNavbar";
+import { SidebarProvider } from "../../../components/SidebarContext";
+import Navbar1 from "../../../components/Navbar1";
 
 function Absensi() {
   const [absensi, setAbsensi] = useState([]);
@@ -144,13 +146,11 @@ function Absensi() {
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="sticky top-0 z-50">
-        <SidebarNavbar />
-      </div>
-      <div className="flex h-full">
-        <div className="sticky top-16 z-40">
-          <Navbar />
-        </div>
+      <SidebarProvider>
+      <Navbar1 />
+      <SidebarNavbar />
+    </SidebarProvider>
+      <div className="w-full mt-10 md:mt-0">
         <div className="content-page flex-1 p-8 md:ml-72 mt-5 md:mt-20 text-center overflow-auto">
           <div className="tabel-absen bg-white p-5 rounded-xl shadow-xl border border-gray-300">
             <div className="md:flex justify-between">

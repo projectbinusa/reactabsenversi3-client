@@ -7,6 +7,8 @@ import Swal from "sweetalert2";
 import { API_DUMMY } from "../../utils/api";
 import SidebarNavbar from "../../components/SidebarNavbar";
 import { Pagination } from "flowbite-react";
+import { SidebarProvider } from "../../components/SidebarContext";
+import Navbar1 from "../../components/Navbar1";
 // import jwt from 'jsonwebtoken';
 
 function DashboardSA() {
@@ -161,13 +163,11 @@ function DashboardSA() {
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="sticky top-0 z-50">
-        <SidebarNavbar />
-      </div>
-      <div className="flex h-full">
-        <div className="sticky top-16 z-40">
-          <Navbar />
-        </div>
+     <SidebarProvider>
+      <Navbar1 />
+      <SidebarNavbar />
+    </SidebarProvider>
+      <div className="md:w-[77%] w-full mt-10">
         <div className="content-page container p-8 ml-0 md:ml-72 mt-5 md:mt-12">
           <div className="w-full">
             <div className="p-4 text-center bg-indigo-300 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">

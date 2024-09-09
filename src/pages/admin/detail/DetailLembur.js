@@ -6,6 +6,9 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { API_DUMMY } from "../../../utils/api";
 import { useNavigate, useParams } from "react-router-dom";
+import { SidebarProvider } from "../../../components/SidebarContext";
+import Navbar1 from "../../../components/Navbar1";
+import SidebarNavbar from "../../../components/SidebarNavbar";
 
 function DetailLembur() {
   const [lembur, setLembur] = useState(null);
@@ -32,13 +35,11 @@ function DetailLembur() {
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="sticky top-0 z-50">
-        <NavbarAdmin />
-      </div>
-      <div className="flex h-full">
-        <div className="fixed">
-          <Sidebar />
-        </div>
+      <SidebarProvider>
+      <Navbar1 />
+      <SidebarNavbar />
+    </SidebarProvider>
+      <div className="md:w-[78%] w-full mt-10">
         <div className="sm:ml-64 content-page container md:p-8 md:ml-64 mt-12">
           <div className="p-4">
             <div className="p-5 mt-5">

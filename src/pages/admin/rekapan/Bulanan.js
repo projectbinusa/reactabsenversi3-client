@@ -10,6 +10,9 @@ import Swal from "sweetalert2";
 import { API_DUMMY } from "../../../utils/api";
 import { useNavigate } from "react-router-dom";
 import NavbarAdmin from "../../../components/NavbarAdmin";
+import { SidebarProvider } from "../../../components/SidebarContext";
+import Navbar1 from "../../../components/Navbar1";
+import SidebarNavbar from "../../../components/SidebarNavbar";
 
 function Bulanan() {
   const [bulan, setBulan] = React.useState("");
@@ -120,13 +123,14 @@ function Bulanan() {
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="sticky top-0 z-50">
-        <NavbarAdmin />
-      </div>
-      <div className="flex h-full pt-5">
-        <div className="fixed h-full">
+      <SidebarProvider>
+      <Navbar1 />
+      <SidebarNavbar />
+    </SidebarProvider>
+      <div className="w-full mt-10">
+        {/* <div className="fixed h-full">
           <Sidebar />
-        </div>
+        </div> */}
         <div className="content-page flex-1 p-8 md:ml-72 mt-16 text-center overflow-auto">
           <div className="tabel-absen bg-white p-5 rounded-xl shadow-xl border border-gray-300">
             <div className="flex justify-between">

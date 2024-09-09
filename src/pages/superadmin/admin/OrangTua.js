@@ -21,6 +21,8 @@ import { useNavigate } from "react-router-dom";
 
 import { Pagination } from "flowbite-react";
 import SidebarNavbar from "../../../components/SidebarNavbar";
+import { SidebarProvider } from "../../../components/SidebarContext";
+import Navbar1 from "../../../components/Navbar1";
 
 function OrangTua() {
   const [userData, setUserData] = useState([]);
@@ -295,13 +297,11 @@ function OrangTua() {
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="sticky top-0 z-50">
-        <SidebarNavbar />
-      </div>
-      <div className="flex h-full">
-        <div className="sticky top-16 z-40">
-          <Navbar />
-        </div>
+      <SidebarProvider>
+      <Navbar1 />
+      <SidebarNavbar />
+    </SidebarProvider>
+      <div className="md:w-[78%] w-full mt-10 md:mt-0">
         <div className=" sm:ml-64 content-page container md:p-8 md:ml-64 mt-5">
           <div className="p-5 mt-10">
             {/* <!-- Card --> */}

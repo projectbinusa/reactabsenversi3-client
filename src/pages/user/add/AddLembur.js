@@ -5,6 +5,8 @@ import Swal from "sweetalert2";
 import { API_DUMMY } from "../../../utils/api";
 import { useNavigate } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
+import { SidebarProvider } from "../../../components/SidebarContext";
+import Navbar1 from "../../../components/Navbar1";
 
 function AddLembur() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -69,13 +71,11 @@ function AddLembur() {
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="sticky top-0 z-50">
-        <SidebarNavbar />
-      </div>
-      <div className="flex h-full">
-        <div className="sticky top-16 z-40">
-          <Navbar />
-        </div>
+     <SidebarProvider>
+      <Navbar1 />
+      <SidebarNavbar />
+    </SidebarProvider>
+      <div className="md:w-[78%] w-full mt-10 md:mt-0">
         <div className="content-page max-h-screen container p-8 min-h-screen ml-64">
           <h1 className="judul text-3xl font-semibold">Halaman Lembur</h1>
           <div className="add-lembur mt-12 bg-white p-5 rounded-xl shadow-lg border border-gray-300">
