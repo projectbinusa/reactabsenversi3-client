@@ -23,6 +23,7 @@ function KelasSiswa() {
   const [organisasiData, setOrganisasiData] = useState([]);
   const [validOrganisasiIds, setValidOrganisasiIds] = useState([]);
   const idAdmin = localStorage.getItem("adminId");
+  const token = localStorage.getItem("token");
   const [searchTerm, setSearchTerm] = useState("");
   const [limit, setLimit] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
@@ -61,6 +62,11 @@ function KelasSiswa() {
         `${API_DUMMY}/api/admin/kelas/export?idAdmin=${idAdmin}`,
         {
           responseType: "blob",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -92,6 +98,11 @@ function KelasSiswa() {
         `${API_DUMMY}/api/admin/kelas/templateKelas`,
         {
           responseType: "blob",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -120,7 +131,12 @@ function KelasSiswa() {
     try {
       await axios.post(
         `${API_DUMMY}/api/admin/importKelas/${idAdmin}`,
-        formData
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       Swal.fire({
         title: "Sukses!",
@@ -149,12 +165,22 @@ function KelasSiswa() {
   const getAllKelasbyAdmin = async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/kelas/getAllByAdmin/${idAdmin}`
+        `${API_DUMMY}/api/kelas/getAllByAdmin/${idAdmin}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       const kelasList = response.data.reverse();
 
       const siswaResponse = await axios.get(
-        `${API_DUMMY}/api/user/${idAdmin}/users`
+        `${API_DUMMY}/api/user/${idAdmin}/users`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       const siswaList = siswaResponse.data;
       console.log(
@@ -180,7 +206,12 @@ function KelasSiswa() {
   const getOrganisasiData = async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/organisasi/all-by-admin/${idAdmin}`
+        `${API_DUMMY}/api/organisasi/all-by-admin/${idAdmin}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       setOrganisasiData(response.data);
@@ -236,7 +267,7 @@ function KelasSiswa() {
         try {
           await axios.delete(`${API_DUMMY}/api/kelas/deleteKelas/${id}`, {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              Authorization: `Bearer ${token}`,
             },
           });
 
@@ -311,9 +342,9 @@ function KelasSiswa() {
   return (
     <div className="flex flex-col h-screen">
       <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="md:w-[78%] w-full mt-10 md:mt-0">
         <div className="sm:ml-64 content-page container md:p-8 md:ml-64 mt-5 md:mt-10">
           <div className="p-5 mt-5">

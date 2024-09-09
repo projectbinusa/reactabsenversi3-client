@@ -27,7 +27,7 @@ function SiswaperKelas() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const idAdmin = localStorage.getItem("adminId");
-  // const KlasId = localStorage.getItem("KlasId");
+  const token = localStorage.getItem("token");
   const param = useParams();
   const [openModal, setOpenModal] = useState(false);
 
@@ -41,6 +41,11 @@ function SiswaperKelas() {
         `${API_DUMMY}/api/user/export-data-siswa/${idAdmin}/perkelas/${param.id}`,
         {
           responseType: "blob",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -66,6 +71,11 @@ function SiswaperKelas() {
         `${API_DUMMY}/api/download/template-excel-siswa`,
         {
           responseType: "blob",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -95,7 +105,12 @@ function SiswaperKelas() {
     try {
       await axios.post(
         `${API_DUMMY}/api/import/data-siswa/admin/${idAdmin}/kelas/${param.id}`,
-        formData
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       Swal.fire("Sukses!", "Berhasil menambahkan", "success");
       setOpenModal(false);
@@ -143,7 +158,11 @@ function SiswaperKelas() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${API_DUMMY}/api/user/delete-user/` + id);
+          await axios.delete(`${API_DUMMY}/api/user/delete-user/` + id, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
 
           Swal.fire({
             icon: "success",
@@ -218,9 +237,9 @@ function SiswaperKelas() {
   return (
     <div className="flex flex-col h-screen">
       <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="md:w-[78%] w-full mt-10 md:mt-0">
         <div className=" sm:ml-64 content-page container md:p-8 md:ml-64 mt-5">
           <div className="p-5 mt-10">

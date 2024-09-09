@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCloudArrowDown,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCloudArrowDown } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { API_DUMMY } from "../../../../utils/api";
@@ -21,6 +19,7 @@ function BulanPerkelas() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const adminId = localStorage.getItem("adminId");
+  const token = localStorage.getItem("token");
 
   // Initialize data on component mount
   // useEffect(() => {
@@ -51,7 +50,12 @@ function BulanPerkelas() {
   const getAllKelas = async (adminId) => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/kelas/getAllByAdmin/${adminId}`
+        `${API_DUMMY}/api/kelas/getAllByAdmin/${adminId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setListKelas(response.data);
     } catch (error) {
@@ -73,7 +77,12 @@ function BulanPerkelas() {
   const getRekapPresensiPerkelasSetiapBulan = async (bulan, tahun) => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/absensi/bulanan/kelas/${idKelas}?bulan=${bulan}&tahun=${tahun}`
+        `${API_DUMMY}/api/absensi/bulanan/kelas/${idKelas}?bulan=${bulan}&tahun=${tahun}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       //   if (response == 200) {
       setRekapPerbulan(response.data);
@@ -126,6 +135,11 @@ function BulanPerkelas() {
         `${API_DUMMY}/api/absensi/export/bulanan/by-kelas?bulan=${bulan}&kelasId=${idKelas}&tahun=${tahun}`,
         {
           responseType: "blob",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -185,9 +199,9 @@ function BulanPerkelas() {
   return (
     <div className="flex flex-col h-screen">
       <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="w-full mt-10">
         <div className="content-page flex-1 p-8 md:ml-72 mt-16 text-center overflow-auto">
           <div className="tabel-absen bg-white p-5 rounded-xl shadow-xl border border-gray-300">
@@ -222,10 +236,10 @@ function BulanPerkelas() {
             </div>
             <hr />
             <form className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-5">
-            <select
+              <select
                 id="small"
                 className="block w-40 sm:w-48 md:w-56 p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                style={{ width: 'auto' }}
+                style={{ width: "auto" }}
                 value={idKelas}
                 onChange={(e) => setIdKelas(e.target.value)}
               >
@@ -250,7 +264,7 @@ function BulanPerkelas() {
                   onClick={handleExportClick}
                   title="Export"
                 >
-                   <FontAwesomeIcon icon={faCloudArrowDown} />
+                  <FontAwesomeIcon icon={faCloudArrowDown} />
                 </button>
               </div>
             </form>
@@ -289,48 +303,48 @@ function BulanPerkelas() {
                   </tr>
                 </thead>
                 <tbody>
-                {currentItems.length === 0 ? (
-                      <tr>
-                        <td
-                          colSpan="9"
-                          className="px-6 py-3 text-center text-gray-500"
-                        >
-                          Tidak ada Absen pada Bulan ini!
-                        </td>
-                      </tr>
-                    ) : (
-                      currentItems.map((absensi, index) => (
-                    <tr key={absensi.id}>
-                      <td className="px-6 py-3 whitespace-nowrap">
-                        {index + 1}
-                      </td>
-                      <td className="px-6 py-3 whitespace-nowrap capitalize">
-                        {absensi.user.username}
-                      </td>
-                      <td className="px-6 py-3 whitespace-nowrap capitalize">
-                        {formatDate(absensi.tanggalAbsen)}
-                      </td>
-                      <td className="px-6 py-3 whitespace-nowrap capitalize">
-                        {absensi.jamMasuk}
-                      </td>
-                      <td className="px-6 py-3 whitespace-nowrap capitalize">
-                        <img src={absensi.fotoMasuk} alt="Foto Masuk" />
-                      </td>
-                      <td className="px-6 py-3 whitespace-nowrap capitalize">
-                        {absensi.jamPulang}
-                      </td>
-                      <td className="px-6 py-3 whitespace-nowrap capitalize">
-                        <img src={absensi.fotoPulang} alt="Foto Pulang" />
-                      </td>
-                      <td className="px-6 py-3 whitespace-nowrap capitalize">
-                        {absensi.jamKerja}
-                      </td>
-                      <td className="px-6 py-3 whitespace-nowrap capitalize">
-                        {absensi.keterangan}
+                  {currentItems.length === 0 ? (
+                    <tr>
+                      <td
+                        colSpan="9"
+                        className="px-6 py-3 text-center text-gray-500"
+                      >
+                        Tidak ada Absen pada Bulan ini!
                       </td>
                     </tr>
-                 ))
-                )}
+                  ) : (
+                    currentItems.map((absensi, index) => (
+                      <tr key={absensi.id}>
+                        <td className="px-6 py-3 whitespace-nowrap">
+                          {index + 1}
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          {absensi.user.username}
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          {formatDate(absensi.tanggalAbsen)}
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          {absensi.jamMasuk}
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          <img src={absensi.fotoMasuk} alt="Foto Masuk" />
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          {absensi.jamPulang}
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          <img src={absensi.fotoPulang} alt="Foto Pulang" />
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          {absensi.jamKerja}
+                        </td>
+                        <td className="px-6 py-3 whitespace-nowrap capitalize">
+                          {absensi.keterangan}
+                        </td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             </div>

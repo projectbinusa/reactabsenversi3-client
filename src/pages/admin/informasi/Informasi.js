@@ -22,6 +22,7 @@ function Informasi() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const idAdmin = localStorage.getItem("adminId");
+  const token = localStorage.getItem("token");
 
   const removeOutdatedData = async (dataToCheck) => {
     try {
@@ -50,7 +51,12 @@ function Informasi() {
   const getAllInformasi = async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/notifications/user/getByAdmin/${idAdmin}`
+        `${API_DUMMY}/api/notifications/user/getByAdmin/${idAdmin}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       const fetchedData = response.data.reverse() || [];
@@ -141,7 +147,11 @@ function Informasi() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${API_DUMMY}/api/notifications/delete/` + id);
+          await axios.delete(`${API_DUMMY}/api/notifications/delete/` + id, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
 
           Swal.fire({
             icon: "success",
@@ -151,7 +161,7 @@ function Informasi() {
 
           setTimeout(() => {
             getAllInformasi(); // Refresh the data after deletion
-          }, 1500);
+          }, 1000);
         } catch (error) {
           console.error(error);
           Swal.fire({
@@ -226,9 +236,9 @@ function Informasi() {
   return (
     <div className="flex flex-col h-screen">
       <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="md:w-[80%] w-full mt-10 md:mt-0">
         <div className="sm:ml-64 content-page container md:p-8 ml-0 md:ml-64 mt-12">
           <div className="p-4">
@@ -385,9 +395,3 @@ function Informasi() {
 }
 
 export default Informasi;
-
-
-
-
-
-

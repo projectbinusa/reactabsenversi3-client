@@ -13,10 +13,15 @@ import Navbar1 from "../../../components/Navbar1";
 function DetailKaryawan() {
   const { id } = useParams();
   const [user, setUser] = useState("");
+  const token = localStorage.getItem("token");
 
   const getUserData = async () => {
     try {
-      const res = await axios.get(`${API_DUMMY}/api/user/getUserBy/${id}`);
+      const res = await axios.get(`${API_DUMMY}/api/user/getUserBy/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setUser(res.data);
       console.log("data siswa", res.data);
     } catch (error) {
@@ -29,9 +34,9 @@ function DetailKaryawan() {
   return (
     <div className="flex flex-col h-screen">
       <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="md:w-[78%] w-full mt-10">
         <div className=" sm:ml-64 content-page container md:p-8 md:ml-64 mt-12">
           <div className="p-4">

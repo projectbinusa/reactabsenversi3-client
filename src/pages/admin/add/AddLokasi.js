@@ -17,13 +17,18 @@ function AddLokasi() {
   const [alamat, setAlamat] = useState("");
   const [organisasilist, setOrganisasiList] = useState([]);
   const [selectedOrganisasi, setSelectedOrganisasi] = useState("");
-
   const idAdmin = localStorage.getItem("adminId");
+  const token = localStorage.getItem("token");
 
   const getLokasi = async () => {
     try {
       const org = await axios.get(
-        `${API_DUMMY}/api/organisasi/all-by-admin/${idAdmin}`
+        `${API_DUMMY}/api/organisasi/all-by-admin/${idAdmin}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setOrganisasiList(org.data || []);
     } catch (error) {
@@ -43,7 +48,12 @@ function AddLokasi() {
       };
       await axios.post(
         `${API_DUMMY}/api/lokasi/tambah/${idAdmin}?idOrganisasi=${selectedOrganisasi}`,
-        add
+        add,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       Swal.fire({
         title: "Berhasil",
@@ -64,23 +74,23 @@ function AddLokasi() {
     getLokasi();
   }, [idAdmin]);
 
-// Helper function to capitalize each word, but not the character after an apostrophe
-const capitalizeWords = (str) => {
-  return str.replace(/\b\w/g, (char, index, input) => {
-    // Check if the character is right after an apostrophe
-    if (index > 0 && input[index - 1] === "'") {
-      return char.toLowerCase(); // Keep it lowercase
-    }
-    return char.toUpperCase(); // Otherwise, capitalize
-  });
-};
+  // Helper function to capitalize each word, but not the character after an apostrophe
+  const capitalizeWords = (str) => {
+    return str.replace(/\b\w/g, (char, index, input) => {
+      // Check if the character is right after an apostrophe
+      if (index > 0 && input[index - 1] === "'") {
+        return char.toLowerCase(); // Keep it lowercase
+      }
+      return char.toUpperCase(); // Otherwise, capitalize
+    });
+  };
 
   return (
     <div className="flex flex-col h-screen">
       <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="md:w-[78%] w-full mt-10 md:mt-0">
         <div className=" sm:ml-64 content-page container md:p-8 md:ml-64 mt-12">
           <div className="p-4 ">
@@ -108,7 +118,9 @@ const capitalizeWords = (str) => {
                           placeholder=" "
                           autoComplete="off"
                           value={namaLokasi}
-                          onChange={(e) => setNamaLokasi(capitalizeWords(e.target.value))}
+                          onChange={(e) =>
+                            setNamaLokasi(capitalizeWords(e.target.value))
+                          }
                           required
                         />
                         <label
@@ -129,7 +141,9 @@ const capitalizeWords = (str) => {
                           placeholder=" "
                           autoComplete="off"
                           value={alamat}
-                          onChange={(e) => setAlamat(capitalizeWords(e.target.value))}
+                          onChange={(e) =>
+                            setAlamat(capitalizeWords(e.target.value))
+                          }
                           required
                         />
                         <label

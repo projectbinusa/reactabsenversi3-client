@@ -23,6 +23,7 @@ export default function AddOrganisasi() {
   const [emailOrganisasi, setEmailOrganisasi] = useState("");
   const [image, setImage] = useState(null);
   const idAdmin = localStorage.getItem("adminId");
+  const token = localStorage.getItem("token");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -47,6 +48,7 @@ export default function AddOrganisasi() {
         organisasi,
         {
           headers: {
+            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
         }
@@ -61,7 +63,8 @@ export default function AddOrganisasi() {
         formData,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
           },
         }
       );
@@ -103,11 +106,11 @@ export default function AddOrganisasi() {
     <>
       {loading && <Loader />}
       <div className="flex flex-col h-screen">
-      <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
-      <div className="md:w-[78%] w-full mt-10 md:mt-0">
+        <SidebarProvider>
+          <Navbar1 />
+          <SidebarNavbar />
+        </SidebarProvider>
+        <div className="md:w-[78%] w-full mt-10 md:mt-0">
           <div className="sm:ml-64 content-page container md:p-8 md:ml-64 mt-12">
             <div className="p-4">
               <div className="p-5">
@@ -129,9 +132,7 @@ export default function AddOrganisasi() {
                             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                             placeholder=" "
                             value={namaOrganisasi}
-                            onChange={(e) =>
-                              setNamaOrganisasi(e.target.value)
-                            }
+                            onChange={(e) => setNamaOrganisasi(e.target.value)}
                             required
                           />
                           <label

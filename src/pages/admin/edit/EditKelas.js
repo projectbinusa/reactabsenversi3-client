@@ -19,15 +19,15 @@ function EditKelas() {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("token");
-        // const config = {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // };
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
 
         const response = await axios.get(
-          `${API_DUMMY}/api/kelas/getbyid/${id}`
-          // config
+          `${API_DUMMY}/api/kelas/getbyid/${id}`,
+          config
         );
         const { namaKelas } = response.data;
 
@@ -53,11 +53,11 @@ function EditKelas() {
     event.preventDefault();
 
     const token = localStorage.getItem("token");
-    // const config = {
-    //   headers: {
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    // };
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
     const KelasData = {
       id: id,
@@ -70,8 +70,8 @@ function EditKelas() {
     try {
       await axios.put(
         `${API_DUMMY}/api/kelas/editKelasById/${id}`,
-        KelasData
-        // config
+        KelasData,
+        config
       );
 
       Swal.fire({
@@ -97,22 +97,22 @@ function EditKelas() {
   };
 
   // Helper function to capitalize each word, but not the character after an apostrophe
-const capitalizeWords = (str) => {
-  return str.replace(/\b\w/g, (char, index, input) => {
-    // Check if the character is right after an apostrophe
-    if (index > 0 && input[index - 1] === "'") {
-      return char.toLowerCase(); // Keep it lowercase
-    }
-    return char.toUpperCase(); // Otherwise, capitalize
-  });
-};
+  const capitalizeWords = (str) => {
+    return str.replace(/\b\w/g, (char, index, input) => {
+      // Check if the character is right after an apostrophe
+      if (index > 0 && input[index - 1] === "'") {
+        return char.toLowerCase(); // Keep it lowercase
+      }
+      return char.toUpperCase(); // Otherwise, capitalize
+    });
+  };
 
   return (
     <div className="flex flex-col h-screen">
       <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="md:w-[78%] w-full mt-10">
         <div className="sm:ml-64 content-page container md:p-8 md:ml-64 mt-12">
           <div className="p-4">

@@ -22,7 +22,7 @@ function AddSiswaPerkelas() {
   const [idKelas, setIdKelas] = useState(null);
   const [password, setPassword] = useState("");
   const idAdmin = localStorage.getItem("adminId");
-  const adminId = localStorage.getItem("adminId");
+  const token = localStorage.getItem("token");
   const [organisasiList, setOrganisasiList] = useState([]);
   const [shiftList, setShiftList] = useState([]);
   const [orangTuaList, setOrangTuaList] = useState([]);
@@ -43,7 +43,12 @@ function AddSiswaPerkelas() {
   const GetAllOrganisasi = async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/organisasi/all-by-admin/${idAdmin}`
+        `${API_DUMMY}/api/organisasi/all-by-admin/${idAdmin}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setOrganisasiList(response.data);
     } catch (error) {
@@ -54,7 +59,12 @@ function AddSiswaPerkelas() {
   const GetAllShift = async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/shift/getall-byadmin/${idAdmin}`
+        `${API_DUMMY}/api/shift/getall-byadmin/${idAdmin}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setShiftList(response.data);
     } catch (error) {
@@ -65,7 +75,12 @@ function AddSiswaPerkelas() {
   const GetAllOrangTua = async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/orang-tua/getALlBySuperAdmin/${idAdmin}`
+        `${API_DUMMY}/api/orang-tua/getALlBySuperAdmin/${idAdmin}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setOrangTuaList(response.data);
       console.log("dtaa wali murid: ", response.data);
@@ -77,7 +92,12 @@ function AddSiswaPerkelas() {
   const GetAllKelas = async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/kelas/getALlByAdmin/${idAdmin}`
+        `${API_DUMMY}/api/kelas/getALlByAdmin/${idAdmin}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setKelasList(response.data);
     } catch (error) {
@@ -117,7 +137,12 @@ function AddSiswaPerkelas() {
 
       await axios.post(
         `${API_DUMMY}/api/user/tambahuser/byAdmin/${idAdmin}/byKelas?idKelas=${param.id}&idOrangTua=${idOrangTua}&idOrganisasi=${idOrganisasi}&idShift=${idShift}`,
-        newUser
+        newUser,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       Swal.fire({
@@ -148,10 +173,10 @@ function AddSiswaPerkelas() {
   };
   return (
     <div className="flex flex-col h-screen">
-     <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+      <SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="md:w-[78%] w-full mt-10 md:mt-0">
         <div className="sm:ml-64 content-page container md:p-8 md:ml-64 mt-12">
           <div className="p-4">

@@ -13,10 +13,15 @@ import Navbar1 from "../../../components/Navbar1";
 function DetailOrganisasi() {
   const [organisasi, setOrganisasi] = useState(null);
   const { id } = useParams();
+  const token = localStorage.getItem("token");
 
   const getOrganisasiId = async () => {
     try {
-      const res = await axios.get(`${API_DUMMY}/api/organisasi/getById/${id}`);
+      const res = await axios.get(`${API_DUMMY}/api/organisasi/getById/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setOrganisasi(res.data);
     } catch (error) {
       console.log(error);
@@ -29,10 +34,10 @@ function DetailOrganisasi() {
 
   return (
     <div className="flex flex-col h-screen">
-     <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+      <SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="md:w-[78%] w-full mt-10">
         <div className="sm:ml-64 content-page container md:p-8 md:ml-64 mt-2">
           <div className="p-4">

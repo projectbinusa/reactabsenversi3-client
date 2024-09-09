@@ -13,10 +13,15 @@ import Navbar1 from "../../../components/Navbar1";
 function DetailLokasi() {
   const [lokasi, setLokasi] = useState(null);
   const { id } = useParams();
+  const token = localStorage.getItem("token");
 
   const getLokasiId = async () => {
     try {
-      const res = await axios.get(`${API_DUMMY}/api/lokasi/GetById/${id}`);
+      const res = await axios.get(`${API_DUMMY}/api/lokasi/GetById/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setLokasi(res.data);
     } catch (error) {
       console.log(error);
@@ -30,9 +35,9 @@ function DetailLokasi() {
   return (
     <div className="flex flex-col h-screen">
       <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="md:w-[78%] w-full mt-10">
         <div className=" sm:ml-64 content-page container md:p-8 md:ml-64 mt-12">
           <div className="p-4">

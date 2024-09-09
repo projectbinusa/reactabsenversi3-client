@@ -9,7 +9,6 @@ import {
   faCalendarDays,
   faCircleXmark,
 } from "@fortawesome/free-regular-svg-icons";
-import Navbar from "../../components/NavbarUser";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../utils/api";
@@ -31,40 +30,59 @@ function Dashboard() {
   const [informasi, setInformasi] = useState([]);
   const [admin, setAdmin] = useState(null);
   const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
 
   const fetchData = async () => {
     try {
       // Parallel fetching of data
-      const [userResponse, absensiResponse, cutiResponse, izinResponse] = await Promise.all([
-        axios.get(`${API_DUMMY}/api/user/getUserBy/${userId}`),
-        axios.get(`${API_DUMMY}/api/absensi/getByUserId/${userId}`),
-        axios.get(`${API_DUMMY}/api/cuti/getByUser/${userId}`),
-        axios.get(`${API_DUMMY}/api/absensi/checkAbsensi/${userId}`)
-      ]);
+      const [userResponse, absensiResponse, cutiResponse, izinResponse] =
+        await Promise.all([
+          axios.get(`${API_DUMMY}/api/user/getUserBy/${userId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }),
+          axios.get(`${API_DUMMY}/api/absensi/getByUserId/${userId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }),
+          axios.get(`${API_DUMMY}/api/cuti/getByUser/${userId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }),
+          axios.get(`${API_DUMMY}/api/absensi/checkAbsensi/${userId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }),
+        ]);
 
       setUsername(userResponse.data);
       setAbsensi(absensiResponse.data.reverse());
       setCuti(cutiResponse.data.reverse());
 
-      const isUserAlreadyAbsenToday = izinResponse.data === "Pengguna sudah melakukan absensi hari ini.";
+      const isUserAlreadyAbsenToday =
+        izinResponse.data === "Pengguna sudah melakukan absensi hari ini.";
       setIsAbsenMasuk(isUserAlreadyAbsenToday);
       setIsIzinDisabled(isUserAlreadyAbsenToday);
 
       // Additional checks for izin
-      const filteredIzin = absensiResponse.data.filter(izin =>
-        izin.statusAbsen === "Izin Tengah Hari" || izin.statusAbsen === "Izin"
+      const filteredIzin = absensiResponse.data.filter(
+        (izin) =>
+          izin.statusAbsen === "Izin Tengah Hari" || izin.statusAbsen === "Izin"
       );
 
       setTotalIzin(filteredIzin.length);
 
       const today = new Date().setHours(0, 0, 0, 0);
-      const hasMiddayIzin = filteredIzin.some(izin =>
-        new Date(izin.tanggalAbsen).setHours(0, 0, 0, 0) === today
+      const hasMiddayIzin = filteredIzin.some(
+        (izin) => new Date(izin.tanggalAbsen).setHours(0, 0, 0, 0) === today
       );
 
       setIsPulangTengahHari(hasMiddayIzin);
       setIsPulangDisabled(hasMiddayIzin || isUserAlreadyAbsenToday);
-
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -72,7 +90,14 @@ function Dashboard() {
 
   const fetchUserData = async () => {
     try {
-      const response = await axios.get(`${API_DUMMY}/api/user/getUserBy/${userId}`);
+      const response = await axios.get(
+        `${API_DUMMY}/api/user/getUserBy/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setAdmin(response.data.admin.id);
     } catch (error) {
       console.error("Error fetching user data:", error);
@@ -94,7 +119,14 @@ function Dashboard() {
     if (admin) {
       (async () => {
         try {
-          const response = await axios.get(`${API_DUMMY}/api/notifications/user/getByAdmin/${admin}`);
+          const response = await axios.get(
+            `${API_DUMMY}/api/notifications/user/getByAdmin/${admin}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
           setInformasi(response.data.reverse());
         } catch (error) {
           console.error("Error fetching notifications:", error);
@@ -113,13 +145,21 @@ function Dashboard() {
     month: "long",
     year: "numeric",
   });
-  const time = addLeadingZero(currentDateTime.getHours()) +
-    ":" + addLeadingZero(currentDateTime.getMinutes()) +
-    ":" + addLeadingZero(currentDateTime.getSeconds());
+  const time =
+    addLeadingZero(currentDateTime.getHours()) +
+    ":" +
+    addLeadingZero(currentDateTime.getMinutes()) +
+    ":" +
+    addLeadingZero(currentDateTime.getSeconds());
 
   // Function to format date
   const formatDate = (dateString) => {
-    const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
     return new Date(dateString).toLocaleDateString("id-ID", options);
   };
 
@@ -127,7 +167,9 @@ function Dashboard() {
   const isEventExpired = (eventDate) => new Date(eventDate) < new Date();
 
   // Filter information to show only events that have not expired
-  const validInformasi = informasi.filter(item => !isEventExpired(item.tanggalAcara));
+  const validInformasi = informasi.filter(
+    (item) => !isEventExpired(item.tanggalAcara)
+  );
 
   useEffect(() => {
     if (localStorage.getItem("loginSuccess") === "true") {
@@ -139,14 +181,13 @@ function Dashboard() {
     }
   }, []);
 
-
   return (
     <div className="flex flex-col h-screen">
-    <SidebarProvider>
-    <Navbar1 />
-    <SidebarNavbar />
-  </SidebarProvider>
-    <div className="md:w-[78%] w-full mt-10 md:mt-0">
+      <SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
+      <div className="md:w-[78%] w-full mt-10 md:mt-0">
         <div className="content-page container p-8 min-h-screen ml-0 md:ml-64 mt-2 md:mt-8">
           <div className="mt-2 md:mt-8 bg-slate-200 p-5 rounded-xl shadow-xl">
             <h1 className="judul text-3xl font-semibold text-center capitalize">

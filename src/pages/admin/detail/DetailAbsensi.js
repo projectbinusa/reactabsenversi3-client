@@ -13,10 +13,15 @@ import Navbar1 from "../../../components/Navbar1";
 function DetailAbsensi() {
   const [absensi, setAbsensi] = useState(null);
   const { id } = useParams();
+  const token = localStorage.getItem("token");
 
   const getAbsensiId = async () => {
     try {
-      const res = await axios.get(`${API_DUMMY}/api/absensi/getData/${id}`);
+      const res = await axios.get(`${API_DUMMY}/api/absensi/getData/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setAbsensi(res.data);
     } catch (error) {
       console.log(error);
@@ -44,9 +49,9 @@ function DetailAbsensi() {
   return (
     <div className="flex flex-col h-screen">
       <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="md:w-[78%] w-full mt-10">
         <div className=" sm:ml-64 content-page container md:p-8 md:ml-64 mt-12">
           <div className="p-4">

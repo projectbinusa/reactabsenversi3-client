@@ -13,6 +13,7 @@ function Kehadiran() {
   const [allAbsensi, setAllAbsensi] = useState([]);
   const idAdmin = localStorage.getItem("adminId");
   const adminId = localStorage.getItem("adminId");
+  const token = localStorage.getItem("token");
   const [lateCount, setLateCount] = useState(0);
   const [earlyCount, setEarlyCount] = useState(0);
   const [permissionCount, setPermissionCount] = useState(0);
@@ -23,7 +24,11 @@ function Kehadiran() {
 
   const getAllKaryawanUser = async () => {
     try {
-      const all = await axios.get(`${API_DUMMY}/api/user/${idAdmin}/users`);
+      const all = await axios.get(`${API_DUMMY}/api/user/${idAdmin}/users`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setKehadiran(all.data);
     } catch (error) {
       console.log(error);
@@ -32,7 +37,11 @@ function Kehadiran() {
 
   const getAllAbsensiByAdmin = async () => {
     try {
-      const abs = await axios.get(`${API_DUMMY}/api/absensi/admin/${adminId}`);
+      const abs = await axios.get(`${API_DUMMY}/api/absensi/admin/${adminId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       setAllAbsensi(abs.data.reverse());
     } catch (error) {
@@ -123,10 +132,10 @@ function Kehadiran() {
 
   return (
     <div className="flex flex-col h-screen">
-     <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+      <SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="md:w-[78%] w-full mt-10 md:mt-0">
         <div className="sm:ml-64 content-page container md:p-8 ml-0 md:ml-64 md:mt-10 mt-5">
           <div className="p-4">

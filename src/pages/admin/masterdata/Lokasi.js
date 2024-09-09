@@ -18,6 +18,7 @@ import Navbar1 from "../../../components/Navbar1";
 function Lokasi() {
   const [userData, setUserData] = useState([]);
   const idAdmin = localStorage.getItem("adminId");
+  const token = localStorage.getItem("token");
   const [karyawan, setKaryawan] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [limit, setLimit] = useState(5);
@@ -26,7 +27,11 @@ function Lokasi() {
 
   const getallUser = async () => {
     try {
-      const res = await axios.get(`${API_DUMMY}/api/user/${idAdmin}/users`);
+      const res = await axios.get(`${API_DUMMY}/api/user/${idAdmin}/users`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setKaryawan(res.data.length);
       // console.log("data siswa: ", res.data);
     } catch (error) {}
@@ -35,7 +40,12 @@ function Lokasi() {
   const getAllLokasibyAdmin = async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/lokasi/get-admin/${idAdmin}`
+        `${API_DUMMY}/api/lokasi/get-admin/${idAdmin}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       // const lokasiList = response.data.reverse();
 
@@ -67,7 +77,11 @@ function Lokasi() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${API_DUMMY}/api/lokasi/delete/` + id);
+          await axios.delete(`${API_DUMMY}/api/lokasi/delete/` + id, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
 
           Swal.fire({
             icon: "success",
@@ -146,9 +160,9 @@ function Lokasi() {
   return (
     <div className="flex flex-col h-screen">
       <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="md:w-[78%] w-full mt-10 md:mt-0">
         <div className=" sm:ml-64 content-page container md:p-8 md:ml-64 mt-5">
           <div className="p-5 mt-10">

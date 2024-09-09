@@ -24,11 +24,16 @@ function EditKaryawan() {
   const [kelasOptions, setKelasOptions] = useState([]);
   const { id } = useParams();
   const adminId = localStorage.getItem("adminId");
+  const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
   const getUser = async () => {
     try {
-      const res = await axios.get(`${API_DUMMY}/api/user/getUserBy/${id}`);
+      const res = await axios.get(`${API_DUMMY}/api/user/getUserBy/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setUsername(res.data.username);
       setStatus(res.data.status);
       setIdJabatan(res.data.jabatan ? res.data.jabatan.idJabatan : "");
@@ -43,7 +48,12 @@ function EditKaryawan() {
   const getJabatanOptions = async () => {
     try {
       const res = await axios.get(
-        `${API_DUMMY}/api/jabatan/getByAdmin/${adminId}`
+        `${API_DUMMY}/api/jabatan/getByAdmin/${adminId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setJabatanOptions(res.data);
     } catch (error) {
@@ -54,7 +64,12 @@ function EditKaryawan() {
   const getShiftOptions = async () => {
     try {
       const res = await axios.get(
-        `${API_DUMMY}/api/shift/getall-byadmin/${adminId}`
+        `${API_DUMMY}/api/shift/getall-byadmin/${adminId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setShiftOptions(res.data);
     } catch (error) {
@@ -64,7 +79,11 @@ function EditKaryawan() {
 
   const getOrangTuaOptions = async () => {
     try {
-      const res = await axios.get(`${API_DUMMY}/api/orang-tua/all`);
+      const res = await axios.get(`${API_DUMMY}/api/orang-tua/all`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setOrangTuaOptions(res.data);
     } catch (error) {
       console.log(error);
@@ -74,7 +93,12 @@ function EditKaryawan() {
   const getKelasOptions = async () => {
     try {
       const res = await axios.get(
-        `${API_DUMMY}/api/kelas/getAllByAdmin/${adminId}`
+        `${API_DUMMY}/api/kelas/getAllByAdmin/${adminId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setKelasOptions(res.data);
     } catch (error) {
@@ -97,6 +121,11 @@ function EditKaryawan() {
         `${API_DUMMY}/api/user/editBYSuper/${id}?idShift=${idShift}&idOrangTua=${idOrangTua}&idKelas=${idKelas}`,
         {
           username: username,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       Swal.fire({
@@ -144,10 +173,10 @@ function EditKaryawan() {
 
   return (
     <div className="flex flex-col h-screen">
-     <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+      <SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="md:w-[78%] w-full mt-10">
         <div className="sm:ml-64 content-page container md:p-8 md:ml-64 mt-12">
           <div className="p-4">

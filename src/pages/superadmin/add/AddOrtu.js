@@ -16,6 +16,8 @@ function AddOrtu() {
   const [nama, setnama] = useState("");
   const [password, setPassword] = useState("");
   const idAdmin = localStorage.getItem("adminId");
+  const token = localStorage.getItem("token");
+
   const handleShowPasswordChange = () => {
     setShowPassword(!showPassword);
   };
@@ -24,7 +26,11 @@ function AddOrtu() {
     const trimmedEmail = email.trim();
     const trimmedUsername = nama.trim();
     try {
-      const response = await axios.get(`${API_DUMMY}/api/orang-tua/all`);
+      const response = await axios.get(`${API_DUMMY}/api/orang-tua/all`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const existingUsers = response.data;
 
       const isEmailExists = existingUsers.some(
@@ -43,7 +49,15 @@ function AddOrtu() {
         nama: nama,
         password: password,
       };
-      await axios.post(`${API_DUMMY}/api/orang-tua/tambah/${idAdmin}`, newUser);
+      await axios.post(
+        `${API_DUMMY}/api/orang-tua/tambah/${idAdmin}`,
+        newUser,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       Swal.fire({
         title: "Berhasil",
         text: "Berhasil menambahkan data",
@@ -60,12 +74,11 @@ function AddOrtu() {
   };
   return (
     <div className="flex flex-col h-screen">
-     <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
-      <div className="md:w-[78%] w-full mt-10 md:mt-0">
-      </div>
+      <SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
+      <div className="md:w-[78%] w-full mt-10 md:mt-0"></div>
       <div className=" sm:ml-64 content-page md:p-8 md:ml-64 mb-12">
         <div className="p-4">
           <div className="p-5">

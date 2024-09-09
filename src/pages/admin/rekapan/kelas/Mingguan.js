@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCloudArrowDown,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCloudArrowDown } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { API_DUMMY } from "../../../../utils/api";
@@ -23,12 +21,18 @@ function MingguanPerkelas() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const adminId = localStorage.getItem("adminId");
+  const token = localStorage.getItem("token");
 
   // Fetch user data
   const getAllKelas = async (adminId) => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/kelas/getAllByAdmin/${adminId}`
+        `${API_DUMMY}/api/kelas/getAllByAdmin/${adminId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setListKelas(response.data.reverse());
     } catch (error) {
@@ -81,7 +85,12 @@ function MingguanPerkelas() {
   const getRekapPresensiPerkelasSetiapMinggu = async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/absensi/rekap-mingguan-per-kelas?kelasId=${idKelas}&tanggalAkhir=${tanggalAkhir}&tanggalAwal=${tanggalAwal}`
+        `${API_DUMMY}/api/absensi/rekap-mingguan-per-kelas?kelasId=${idKelas}&tanggalAkhir=${tanggalAkhir}&tanggalAwal=${tanggalAwal}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       //   if (response == 200) {
       const data = response.data;
@@ -109,6 +118,11 @@ function MingguanPerkelas() {
         `${API_DUMMY}/api/absensi/export/mingguan/by-kelas?kelasId=${idKelas}&tanggalAkhir=${tanggalAkhir}&tanggalAwal=${tanggalAwal}`,
         {
           responseType: "blob",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -165,10 +179,10 @@ function MingguanPerkelas() {
 
   return (
     <div className="flex flex-col h-screen">
-     <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+      <SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="w-full mt-10">
         <div className="content-page flex-1 p-8 md:ml-72 mt-16 text-center overflow-auto">
           <div className="tabel-absen bg-white p-5 rounded-xl shadow-xl border border-gray-300">
@@ -206,7 +220,7 @@ function MingguanPerkelas() {
               <select
                 id="small"
                 className="block w-40 sm:w-48 md:w-56 p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                style={{ width: 'auto' }}
+                style={{ width: "auto" }}
                 value={idKelas}
                 onChange={(e) => setIdKelas(e.target.value)}
               >

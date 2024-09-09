@@ -25,6 +25,7 @@ function Karyawan() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const idAdmin = localStorage.getItem("adminId");
+  const token = localStorage.getItem("token");
   const [openModal, setOpenModal] = useState(false);
 
   const exportPerkelas = async () => {
@@ -37,6 +38,11 @@ function Karyawan() {
         `${API_DUMMY}/api/user/export-data-siswa/${idAdmin}`,
         {
           responseType: "blob",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -62,6 +68,11 @@ function Karyawan() {
         `${API_DUMMY}/api/download/template-excel-siswa`,
         {
           responseType: "blob",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -91,7 +102,12 @@ function Karyawan() {
     try {
       await axios.post(
         `${API_DUMMY}/api/import/data-siswa/admin/${idAdmin}`,
-        formData
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       Swal.fire("Sukses!", "Berhasil menambahkan", "success");
       setOpenModal(false);
@@ -107,16 +123,14 @@ function Karyawan() {
     }
   };
   const getAllKaryawan = async () => {
-    const token = localStorage.getItem("token");
-
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/user/${idAdmin}/users`
-        // {
-        //   headers: {
-        //     Authorization: `${token}`,
-        //   },
-        // }
+        `${API_DUMMY}/api/user/${idAdmin}/users`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       setUserData(response.data.reverse());
@@ -138,7 +152,11 @@ function Karyawan() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${API_DUMMY}/api/user/delete-user/` + id);
+          await axios.delete(`${API_DUMMY}/api/user/delete-user/` + id, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
 
           Swal.fire({
             icon: "success",
@@ -213,9 +231,9 @@ function Karyawan() {
   return (
     <div className="flex flex-col h-screen">
       <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="md:w-[78%] w-full mt-10 md:mt-0">
         <div className=" sm:ml-64 content-page container md:p-8 ml-0 md:ml-64 mt-5">
           <div className="p-5 md:mt-10">

@@ -17,6 +17,7 @@ import Navbar1 from "../../../components/Navbar1";
 function Shift() {
   const [userData, setUserData] = useState([]);
   const idAdmin = localStorage.getItem("adminId");
+  const token = localStorage.getItem("token");
   const [jumlahKaryawan, setJumlahKaryawan] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
   const [limit, setLimit] = useState(5);
@@ -50,12 +51,12 @@ function Shift() {
   const getAllShift = async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/shift/getall-byadmin/${idAdmin}`
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // }
+        `${API_DUMMY}/api/shift/getall-byadmin/${idAdmin}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       setUserData(response.data.reverse());
@@ -66,14 +67,11 @@ function Shift() {
 
   const getAllUser = async (id) => {
     try {
-      const response = await axios.get(
-        `${API_DUMMY}/api/user/byShift/${id}`
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // }
-      );
+      const response = await axios.get(`${API_DUMMY}/api/user/byShift/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       setJumlahKaryawan((prevState) => ({
         ...prevState,
@@ -95,7 +93,11 @@ function Shift() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${API_DUMMY}/api/shift/delete/` + id);
+          await axios.delete(`${API_DUMMY}/api/shift/delete/` + id, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
 
           Swal.fire({
             icon: "success",
@@ -177,9 +179,9 @@ function Shift() {
   return (
     <div className="flex flex-col h-screen">
       <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="md:w-[78%] w-full mt-10 md:mt-0">
         <div className=" sm:ml-64 content-page container md:p-8 md:ml-64 mt-5">
           <div className="p-5 mt-10">
