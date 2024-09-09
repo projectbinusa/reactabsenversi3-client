@@ -126,15 +126,16 @@ function Admin() {
 
   const getAllAdmin = async () => {
     const idSuperAdmin = localStorage.getItem("superadminId");
-
+    const token = localStorage.getItem("token");
+    
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/admin/get-all-by-super/${idSuperAdmin}`
-        // {
-        //   headers: {
-        //     Authorization: `${token}`,
-        //   },
-        // }
+        `${API_DUMMY}/api/admin/get-all-by-super/${idSuperAdmin}`,
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
       );
 
       setUserData(response.data.reverse());

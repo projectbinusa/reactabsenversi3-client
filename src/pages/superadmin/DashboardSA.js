@@ -21,7 +21,8 @@ function DashboardSA() {
   const [limit, setLimit] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-
+  const token = localStorage.getItem("token");
+  
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentDateTime(new Date());
@@ -57,14 +58,24 @@ function DashboardSA() {
   const getOrganisasi = useCallback(() => {
     fetchData(
       `${API_DUMMY}/api/organisasi/superadmin/${id}`,
-      setOrganisasiData
+      setOrganisasiData,
+       {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
     );
   }, [id]);
 
   const getUsername = useCallback(async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/superadmin/getbyid/${id}`
+        `${API_DUMMY}/api/superadmin/getbyid/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setUsername(response.data.username);
     } catch (error) {
@@ -163,10 +174,10 @@ function DashboardSA() {
 
   return (
     <div className="flex flex-col h-screen">
-     <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+      <SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="md:w-[77%] w-full mt-10">
         <div className="content-page container p-8 ml-0 md:ml-72 mt-5 md:mt-12">
           <div className="w-full">

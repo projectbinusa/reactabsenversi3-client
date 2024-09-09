@@ -30,7 +30,7 @@ function DashboardOrtu() {
   const [totalPages, setTotalPages] = useState(1);
 
   const id = localStorage.getItem("id_orangtua");
-
+  const token = localStorage.getItem("token");
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentDateTime(new Date());
@@ -57,7 +57,12 @@ function DashboardOrtu() {
   const getUsername = useCallback(async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/orang-tua/getbyid/${id}`
+        `${API_DUMMY}/api/orang-tua/getbyid/${id}`,
+         {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setUsername(response.data.nama);
     } catch (error) {
@@ -68,7 +73,12 @@ function DashboardOrtu() {
   const getAbsensi = useCallback(async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/absensi/by-orang-tua/${id}`
+        `${API_DUMMY}/api/absensi/by-orang-tua/${id}`,
+        {
+         headers: {
+           Authorization: `Bearer ${token}`,
+         },
+       }
       );
       setAbsensiData(response.data);
 
@@ -90,7 +100,12 @@ function DashboardOrtu() {
   const getAdmin = useCallback(async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/orang-tua/${id}/admin`
+        `${API_DUMMY}/api/orang-tua/${id}/admin`,
+        {
+         headers: {
+           Authorization: `Bearer ${token}`,
+         },
+       }
       );
       setAdmin(response.data);
       setIdAdmin(response.data.id);
@@ -103,7 +118,12 @@ function DashboardOrtu() {
     try {
       if (admin && admin.id) {
         const response = await axios.get(
-          `${API_DUMMY}/api/notifications/user/getByAdmin/${idAdmin}`
+          `${API_DUMMY}/api/notifications/user/getByAdmin/${idAdmin}`,
+          {
+           headers: {
+             Authorization: `Bearer ${token}`,
+           },
+         }
         );
         setInformasi(response.data.reverse());
       }
