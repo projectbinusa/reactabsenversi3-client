@@ -126,7 +126,11 @@ function Profil() {
 
     try {
       const response = await axios.put(
-        `${API_DUMMY}/api/admin/edit-password/${id}`,
+        `${API_DUMMY}/api/admin/edit-password/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
         {
           old_password: passwordLama,
           new_password: passwordBaru,

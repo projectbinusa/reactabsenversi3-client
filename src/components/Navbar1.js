@@ -15,6 +15,7 @@ function Navbar1() {
   const id_ortu = localStorage.getItem("id_orangtua");
   const id_user = localStorage.getItem("userId");
   const id_super = localStorage.getItem("superadminId");
+  const token = localStorage.getItem("token");
   const dropdownRef = useRef(null);
   const [profileUser, setProfileUser] = useState("");
 
@@ -44,7 +45,12 @@ function Navbar1() {
   const getSu = async () => {
     try {
       const superAdmin = await axios.get(
-        `${API_DUMMY}/api/superadmin/getbyid/${id}`
+        `${API_DUMMY}/api/superadmin/getbyid/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setProfileSu(superAdmin.data.imageSuperAdmin);
     } catch (error) {
@@ -55,7 +61,12 @@ function Navbar1() {
   const getUser = async () => {
     try {
       const user = await axios.get(
-        `${API_DUMMY}/api/user/getUserBy/${id_user}`
+        `${API_DUMMY}/api/user/getUserBy/${id_user}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setProfileUser(user.data.fotoUser);
     } catch (error) {
@@ -65,7 +76,11 @@ function Navbar1() {
 
   const getAdmin = async () => {
     try {
-      const admin = await axios.get(`${API_DUMMY}/api/admin/getById/${id}`);
+      const admin = await axios.get(`${API_DUMMY}/api/admin/getById/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setProfileAdmin(admin.data.imageAdmin);
     } catch (error) {
       console.log(error);
@@ -75,7 +90,12 @@ function Navbar1() {
   const getOrtu = async () => {
     try {
       const superAdmin = await axios.get(
-        `${API_DUMMY}/api/orang-tua/getbyid/${id_ortu}`
+        `${API_DUMMY}/api/orang-tua/getbyid/${id_ortu}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setProfileOrtu(superAdmin.data.imageOrtu);
     } catch (error) {
