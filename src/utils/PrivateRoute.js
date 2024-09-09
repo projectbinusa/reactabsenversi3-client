@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 
 function PrivateRoute({ element: Component }) {
   const location = useLocation();
@@ -30,7 +30,7 @@ function PrivateRoute({ element: Component }) {
   if (isTokenExpired()) {
     localStorage.removeItem("token");
     // sessionStorage.removeItem("token");
-    return <Navigate to="/login" state={{ from: location }} />;
+    return <Link to="/login" state={{ from: location }} />;
   }
 
   return <Component />;
