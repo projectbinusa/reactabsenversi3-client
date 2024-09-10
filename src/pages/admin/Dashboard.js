@@ -310,7 +310,7 @@ function Dashboard() {
         {/* <div className=""> */}
         {/* <Navbar /> */}
         {/* </div> */}
-        <div className="content-page container p-8 md:ml-72 mt-2 md:mt-12">
+        <div className="content-page container p-8 md:ml-72">
           <div className="mt-2 md:mt-12 w-full">
             <div className="p-4 text-center bg-indigo-300 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
               <h2 className="text-2xl font-semibold mb-4">

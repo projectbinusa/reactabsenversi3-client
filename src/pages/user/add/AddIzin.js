@@ -41,9 +41,9 @@ function AddIzin() {
         showConfirmButton: false,
         timer: 1500,
       });
-      // setTimeout(() => {
-      //   window.location.href = "/user/history_absen";
-      // }, 1500);
+      setTimeout(() => {
+        window.location.href = "/user/history_absen";
+      }, 1500);
     } catch (err) {
       console.log(err);
       Swal.fire({

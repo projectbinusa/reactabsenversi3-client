@@ -37,10 +37,10 @@ function DetailKaryawan() {
         <Navbar1 />
         <SidebarNavbar />
       </SidebarProvider>
-      <div className="md:w-[78%] w-full mt-10">
-        <div className=" sm:ml-64 content-page container md:p-8 md:ml-64 mt-12">
+      <div className="md:w-[78%] w-full mt-16 md:mt-10">
+        <div className=" sm:ml-64 content-page container md:p-8 md:ml-64">
           <div className="p-4">
-            <div className="p-5 mt-5">
+            <div className="p-5">
               {/* <!-- Card --> */}
               <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                 {/* <!-- Header --> */}
