@@ -131,13 +131,11 @@ function Simpel() {
       const response = await axios.get(
         `${API_DUMMY}/api/absensi/export/absensi-bulanan-simpel`,
         {
-          params: { month: bulan, year: tahun },
-          responseType: "blob",
-        },
-        {
           headers: {
             Authorization: `Bearer ${token}`,
           },
+          params: { month: bulan, year: tahun },
+          responseType: "blob",
         }
       );
 
@@ -154,7 +152,7 @@ function Simpel() {
       window.URL.revokeObjectURL(url);
 
       Swal.fire("Berhasil", "Berhasil mengunduh data", "success");
-      window.location.reload();
+      // window.location.reload();
     } catch (error) {
       Swal.fire("Error", "Gagal mengunduh data", "error");
       console.log(error);

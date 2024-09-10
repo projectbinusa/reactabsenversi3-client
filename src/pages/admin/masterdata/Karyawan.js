@@ -70,8 +70,8 @@ function Karyawan() {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-          responseType: "blob",
           },
+          responseType: "blob",
         }
       );
 
