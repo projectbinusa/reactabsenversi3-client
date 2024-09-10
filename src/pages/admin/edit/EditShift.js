@@ -36,35 +36,58 @@ function EditShift() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const shift = {
-      namaShift: namaShift,
-      waktuMasuk: waktuMasuk,
-      waktuPulang: waktuPulang,
-    };
+
+    const trimmedUsername = namaShift.trim();
+
     try {
-      await axios.put(
-        `${API_DUMMY}/api/shift/editbyId/${id}?idAdmin=${idAdmin}`,
-        shift,
-
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      Swal.fire({
-        title: "Berhasil",
-        text: "Berhasil mengubah data shift",
-        icon: "success",
-        showConfirmButton: false,
+      const response = await axios.get(`${API_DUMMY}/api/shift/getall`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
+      const existingUsers = response.data;
+      const isUsernameExists = existingUsers.some(
+        (user) => user.namaShift.toLowerCase() === trimmedUsername.toLowerCase()
+      );
 
-      setTimeout(() => {
-        window.location.href = "/admin/shift";
-      }, 2000);
+      if (isUsernameExists) {
+        Swal.fire("Error", "Nama waktu pembelajaran sudah terdaftar", "error");
+        return;
+      }
+
+      const shift = {
+        namaShift: namaShift,
+        waktuMasuk: waktuMasuk,
+        waktuPulang: waktuPulang,
+      };
+      try {
+        await axios.put(
+          `${API_DUMMY}/api/shift/editbyId/${id}?idAdmin=${idAdmin}`,
+          shift,
+
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        Swal.fire({
+          title: "Berhasil",
+          text: "Berhasil mengubah data shift",
+          icon: "success",
+          showConfirmButton: false,
+        });
+
+        setTimeout(() => {
+          window.location.href = "/admin/shift";
+        }, 2000);
+      } catch (error) {
+        console.log(error);
+      }
     } catch (error) {
-      console.log(error);
+      console.error("There was an error adding the shift!", error);
+      Swal.fire("Error", "Gagal menambahkan shift", "error");
     }
   };
 
