@@ -111,6 +111,8 @@ import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Loader from "./components/Loader";
 import Navbar1 from "./components/Navbar1";
+import { analytics } from "./firebase";
+import { logEvent } from "firebase/analytics";
 
 function App() {
   const [loading, setLoading] = useState(true);
