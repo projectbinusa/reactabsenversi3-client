@@ -93,12 +93,10 @@ function Perkelas() {
       const response = await axios.get(
         `${API_DUMMY}/api/export/absensi/by-kelas/${kelasId}`,
         {
-          responseType: "blob",
-        },
-        {
           headers: {
             Authorization: `Bearer ${token}`,
           },
+          responseType: "blob",
         }
       );
 

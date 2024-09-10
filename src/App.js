@@ -107,18 +107,24 @@ import IndexDashboard from "./pages/IndexDashboard";
 import PrivateRoute from "./utils/PrivateRoute";
 import NotFound from "./pages/NotFound";
 import AddSiswaPerkelas from "./pages/admin/add/AddSiswaPerkelas";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Loader from "./components/Loader";
 import Navbar1 from "./components/Navbar1";
+import { analytics } from "./firebase";
+import { logEvent } from "firebase/analytics";
 
 function App() {
   const [loading, setLoading] = useState(true);
   const role = localStorage.getItem("role");
+  const location = useLocation();
 
   useEffect(() => {
     setTimeout(() => setLoading(false), 1000);
-  }, []);
+    logEvent(analytics, 'page_view', {
+      page_path: location.pathname + location.search,
+    });
+  }, [location]);
 
   return loading ? (
     <Loader />
