@@ -33,12 +33,11 @@ function DetailOrtu() {
   return (
     <div className="flex flex-col h-screen">
       <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
-      <div className="md:w-[78%] w-full mt-10">
-      </div>
-      <div className="sm:ml-64 content-page md:p-8 md:ml-64 mb-14">
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
+      <div className="md:w-[78%] w-full mt-10"></div>
+      <div className="sm:ml-64 content-page md:p-8 md:ml-64 mb-14 mt-10 md:mt-5">
         <div className="p-4">
           {/* // <!-- Card --> */}
           <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">

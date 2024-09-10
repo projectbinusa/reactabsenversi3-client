@@ -70,12 +70,11 @@ function EditOrtu() {
   return (
     <div className="flex flex-col h-screen">
       <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
-      <div className="md:w-[78%] w-full mt-10 md:mt-0">
-      </div>
-      <div className=" sm:ml-64 content-page md:p-8 md:ml-64 mb-20">
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
+      <div className="md:w-[78%] w-full mt-10 md:mt-0"></div>
+      <div className="sm:ml-64 content-page md:p-8 md:ml-64 mb-20 mt-10 md:mt-12">
         <div className="p-4">
           {/* // <!-- Card --> */}
           <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">

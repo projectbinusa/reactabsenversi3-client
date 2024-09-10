@@ -63,26 +63,26 @@ function Dashboard() {
       setAbsensi(absensiResponse.data.reverse());
       setCuti(cutiResponse.data.reverse());
 
+      // Cek apakah user sudah melakukan absen masuk
       const isUserAlreadyAbsenToday =
         izinResponse.data === "Pengguna sudah melakukan absensi hari ini.";
-      setIsAbsenMasuk(isUserAlreadyAbsenToday);
-      setIsIzinDisabled(isUserAlreadyAbsenToday);
 
-      // Additional checks for izin
-      const filteredIzin = absensiResponse.data.filter(
-        (izin) =>
-          izin.statusAbsen === "Izin Tengah Hari" || izin.statusAbsen === "Izin"
+      // Cek apakah user sudah melakukan absen pulang
+      const isUserAlreadyAbsenPulang = absensiResponse.data.some(
+        (absen) => absen.statusAbsen === "Pulang"
       );
 
-      setTotalIzin(filteredIzin.length);
-
-      const today = new Date().setHours(0, 0, 0, 0);
-      const hasMiddayIzin = filteredIzin.some(
-        (izin) => new Date(izin.tanggalAbsen).setHours(0, 0, 0, 0) === today
+      // Cek apakah user sudah melakukan izin
+      const hasIzinToday = absensiResponse.data.some(
+        (izin) => izin.statusAbsen === "Izin"
       );
 
-      setIsPulangTengahHari(hasMiddayIzin);
-      setIsPulangDisabled(hasMiddayIzin || isUserAlreadyAbsenToday);
+      // Atur logika validasi tombol sesuai permintaan
+      setIsAbsenMasuk(isUserAlreadyAbsenToday || hasIzinToday);
+      setIsPulangDisabled(isUserAlreadyAbsenPulang || hasIzinToday);
+      setIsIzinDisabled(
+        isUserAlreadyAbsenToday || isUserAlreadyAbsenPulang || hasIzinToday
+      );
     } catch (error) {
       console.error("Error fetching data:", error);
     }
