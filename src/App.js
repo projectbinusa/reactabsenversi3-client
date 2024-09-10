@@ -1,4 +1,5 @@
 import "../src/App.css";
+// import LogPageView from "./LogPageView";
 import Register from "./pages/Register";
 import Dashboard from "./pages/admin/Dashboard";
 import Karyawan from "./pages/admin/masterdata/Karyawan";
@@ -117,14 +118,22 @@ import { logEvent } from "firebase/analytics";
 function App() {
   const [loading, setLoading] = useState(true);
   const role = localStorage.getItem("role");
-  const location = useLocation();
+
+  const LogPageView = () => {
+    const location = useLocation();
+
+    useEffect(() => {
+      logEvent(analytics, "page_view", {
+        page_path: location.pathname + location.search,
+      });
+    }, [location]);
+
+    return null; 
+  };
 
   useEffect(() => {
     setTimeout(() => setLoading(false), 1000);
-    logEvent(analytics, 'page_view', {
-      page_path: location.pathname + location.search,
-    });
-  }, [location]);
+  }, []);
 
   return loading ? (
     <Loader />
@@ -594,6 +603,7 @@ function App() {
 
         <Route element={<NotFound />} />
       </Routes>
+      <LogPageView />
     </BrowserRouter>
   );
 }
