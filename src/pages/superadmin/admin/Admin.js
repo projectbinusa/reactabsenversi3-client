@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Navbar from "../../../components/NavbarSuper";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -28,6 +28,7 @@ function Admin() {
   const [totalPages, setTotalPages] = useState(1);
   const [openModal, setOpenModal] = useState(false);
   const id_superadmin = localStorage.getItem("superadminId");
+  const token = localStorage.getItem("token");
 
   const exportData = async () => {
     if (userData.length === 0) {
@@ -39,6 +40,9 @@ function Admin() {
       const response = await axios.get(
         `${API_DUMMY}/api/superadmin/admin/export?superadminId=${id_superadmin}`,
         {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
           responseType: "blob",
         }
       );
@@ -72,6 +76,9 @@ function Admin() {
       const response = await axios.get(
         `${API_DUMMY}/api/superadmin/download/tamplate/import`,
         {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
           responseType: "blob",
         }
       );
@@ -102,7 +109,12 @@ function Admin() {
     try {
       await axios.post(
         `${API_DUMMY}/api/superadmin/import/data-admin/${id_superadmin}`,
-        formData
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       Swal.fire({
@@ -124,25 +136,22 @@ function Admin() {
     }
   };
 
-  const getAllAdmin = async () => {
-    const idSuperAdmin = localStorage.getItem("superadminId");
-    const token = localStorage.getItem("token");
-    
+  const getAllAdmin = useCallback(async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/admin/get-all-by-super/${idSuperAdmin}`,
+        `${API_DUMMY}/api/admin/get-all-by-super/${id_superadmin}`,
         {
           headers: {
-            Authorization: `${token}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
 
       setUserData(response.data.reverse());
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching admin data:", error);
     }
-  };
+  }, []);
 
   const deleteData = async (id) => {
     Swal.fire({
@@ -156,7 +165,12 @@ function Admin() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${API_DUMMY}/api/admin/delete/` + id);
+          await axios.delete(`${API_DUMMY}/api/admin/delete/` + id, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            responseType: "blob",
+          });
           Swal.fire({
             icon: "success",
             title: "Dihapus!",
@@ -215,13 +229,13 @@ function Admin() {
 
   return (
     <div className="flex flex-col h-screen">
-     <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
-      <div className="md:w-[79%] w-full mt-10">
-        <div className=" sm:ml-64 content-page container md:p-8 md:ml-64 mt-5">
-          <div className="p-5 mt-10">
+      <SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
+      <div className="md:w-[79%] w-full mt-20 md:mt-12">
+        <div className="sm:ml-64 content-page container md:p-8 md:ml-64">
+          <div className="p-5">
             {/* <!-- Card --> */}
             <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
               <div className="md:flex justify-between">
