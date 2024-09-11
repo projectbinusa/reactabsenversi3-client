@@ -55,19 +55,22 @@ function DashboardSA() {
     }
   };
 
-  const getOrganisasi = useCallback(() => {
-    const token = localStorage.getItem("token");
-    fetchData(
-      `${API_DUMMY}/api/organisasi/superadmin/${id}`,
-      setOrganisasiData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-  }, [id, token]); // Pastikan token ditambahkan
-  console.log("Token:", token); // Cek apakah token valid dan tidak undefined atau null
+  const getOrganisasi = useCallback(async () => {
+    try {
+      const response = await axios.get(
+        `${API_DUMMY}/api/organisasi/superadmin/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setOrganisasiData(response.data);
+    } catch (error) {
+      console.error("Error fetching organisasi data:", error);
+    }
+  }, [id]);
 
   const getUsername = useCallback(async () => {
     try {
@@ -86,50 +89,27 @@ function DashboardSA() {
   }, [id]);
 
   const getAdmin = useCallback(async () => {
-    const token = localStorage.getItem("token");
-    const idSuperAdmin = localStorage.getItem("superadminId");
-
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/admin/get-all-by-super/${idSuperAdmin}`,
+        `${API_DUMMY}/api/admin/get-all-by-super/${id}`,
         {
           headers: {
-            Authorization: `${token}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
 
       setAdmin(response.data.reverse());
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching admin data:", error);
     }
   }, []);
-
-  const getOrganisasiSA = useCallback(async () => {
-    const token = localStorage.getItem("token");
-
-    try {
-      const response = await axios.get(
-        `${API_DUMMY}/api/organisasi/superadmin/${id}`,
-        {
-          headers: {
-            Authorization: `${token}`,
-          },
-        }
-      );
-
-      setOrganisasiData(response.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  }, [id]);
 
   useEffect(() => {
     getUsername();
     getOrganisasi();
     getAdmin();
-    getOrganisasiSA();
-  }, [getOrganisasi, getOrganisasiSA, getUsername, getAdmin]);
+  }, [getOrganisasi, getUsername, getAdmin]);
 
   useEffect(() => {
     if (localStorage.getItem("loginSuccess") === "true") {

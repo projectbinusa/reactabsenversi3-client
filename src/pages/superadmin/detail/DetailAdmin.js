@@ -15,10 +15,15 @@ function DetailAdmin() {
     email: "",
     username: "",
   });
+  const token = localStorage.getItem("token");
 
   const getUserData = useCallback(async () => {
     try {
-      const res = await axios.get(`${API_DUMMY}/api/admin/getById/${id}`);
+      const res = await axios.get(`${API_DUMMY}/api/admin/getById/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setAdmin(res.data);
     } catch (error) {
       console.log(error);
@@ -32,11 +37,10 @@ function DetailAdmin() {
   return (
     <div className="flex flex-col h-screen">
       <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
-      <div className="md:w-[79%] w-full mt-10">
-      </div>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
+      <div className="md:w-[79%] w-full mt-20 md:mt-12"></div>
       <div className="sm:ml-64 content-page md:p-8 md:ml-64 mb-14">
         <div className="p-4">
           {/* // <!-- Card --> */}
