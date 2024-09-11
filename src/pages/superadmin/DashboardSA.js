@@ -22,7 +22,7 @@ function DashboardSA() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const token = localStorage.getItem("token");
-  
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentDateTime(new Date());
@@ -56,16 +56,18 @@ function DashboardSA() {
   };
 
   const getOrganisasi = useCallback(() => {
+    const token = localStorage.getItem("token");
     fetchData(
       `${API_DUMMY}/api/organisasi/superadmin/${id}`,
       setOrganisasiData,
-       {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
-  }, [id]);
+  }, [id, token]); // Pastikan token ditambahkan
+  console.log("Token:", token); // Cek apakah token valid dan tidak undefined atau null
 
   const getUsername = useCallback(async () => {
     try {

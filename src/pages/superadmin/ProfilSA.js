@@ -2,13 +2,14 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Tabs } from "flowbite-react";
 import { HiAdjustments, HiUserCircle } from "react-icons/hi";
 import { MdDashboard } from "react-icons/md";
-import Navbar from "../../components/NavbarSuper";
+import Navbar from "../../components/Navbar1";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../utils/api";
 import SidebarNavbar from "../../components/SidebarNavbar";
+import { SidebarProvider } from "../../components/SidebarContext";
 
 function ProfilSA() {
   const [showPassword, setShowPassword] = useState(false);
@@ -27,7 +28,7 @@ function ProfilSA() {
   const [passwordBaru, setPasswordBaru] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const token = localStorage.getItem("token");
-  
+
   const editPassword = async (e) => {
     e.preventDefault();
 
@@ -185,13 +186,11 @@ function ProfilSA() {
     <>
       {/* {loading && <Loader />} */}
       <div className="flex flex-col h-screen">
-        <div className="sticky top-0 z-50">
+        <SidebarProvider>
+          <Navbar />
           <SidebarNavbar />
-        </div>
-        <div className="flex h-full">
-          <div className="sticky top-16 z-40">
-            <Navbar />
-          </div>
+        </SidebarProvider>
+        <div className="md:w-[78%] w-full mt-10 md:mt-0">
           <div className="content-page container p-8 ml-0 md:ml-72 mt-10">
             <Tabs aria-label="Tabs with underline">
               <Tabs.Item active title="Profile" icon={HiUserCircle}>
