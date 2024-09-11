@@ -15,6 +15,7 @@ function AddAdmin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const idSuperAdmin = localStorage.getItem("superadminId");
+  const token = localStorage.getItem("token");
 
   const handleShowPasswordChange = () => {
     setShowPassword(!showPassword);
@@ -26,7 +27,11 @@ function AddAdmin() {
     const trimmedUsername = username.trim();
 
     try {
-      const response = await axios.get(`${API_DUMMY}/api/admin/all`);
+      const response = await axios.get(`${API_DUMMY}/api/admin/all`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const existingUsers = response.data;
 
       const isEmailExists = existingUsers.some(
@@ -48,7 +53,12 @@ function AddAdmin() {
 
       await axios.post(
         `${API_DUMMY}/api/admin/register-by-superadmin/${idSuperAdmin}`,
-        newUser
+        newUser,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       Swal.fire({
@@ -106,12 +116,11 @@ function AddAdmin() {
 
   return (
     <div className="flex flex-col h-screen">
-     <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
-      <div className="md:w-[79%] w-full mt-10">
-      </div>
+      <SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
+      <div className="md:w-[79%] w-full mt-14 md:mt-10"></div>
       <div className=" sm:ml-64 content-page md:p-8 md:ml-64 mb-12">
         <div className="p-4">
           <div className="p-5">

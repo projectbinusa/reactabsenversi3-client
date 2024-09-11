@@ -43,18 +43,23 @@ function EditAdmin() {
     try {
       const response = await axios.put(
         `${API_DUMMY}/api/admin/edit-email-username/${param.id}`,
-        usmail
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // }
+        usmail,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
 
       setUsername(response.data.username);
       setEmail(response.data.email);
-      Swal.fire("Berhasil", "Berhasil mengubah username dan email", "success");
-
+      Swal.fire({
+        title: "Berhasil!",
+        text: "Berhasil edit data",
+        icon: "success",
+        timer: 3000,
+        showConfirmButton: false,
+      });
       setTimeout(() => {
         window.location.href = "/superadmin/admin";
       }, 1500);
@@ -87,11 +92,10 @@ function EditAdmin() {
   return (
     <div className="flex flex-col h-screen">
       <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
-      <div className="md:w-[79%] w-full mt-10">
-      </div>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
+      <div className="md:w-[79%] w-full mt-20 md:mt-12"></div>
       <div className=" sm:ml-64 content-page md:p-8 md:ml-64 mb-40">
         <div className="p-4">
           {/* // <!-- Card --> */}
