@@ -51,14 +51,14 @@ function EditKelas() {
 
   const submitActionHandler = async (event) => {
     event.preventDefault();
-
+  
     const token = localStorage.getItem("token");
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     };
-
+  
     const KelasData = {
       id: id,
       namaKelas,
@@ -66,14 +66,14 @@ function EditKelas() {
         id: adminId,
       },
     };
-
+  
     try {
       await axios.put(
         `${API_DUMMY}/api/kelas/editKelasById/${id}`,
         KelasData,
         config
       );
-
+  
       Swal.fire({
         position: "center",
         icon: "success",
@@ -86,15 +86,30 @@ function EditKelas() {
       }, 1500);
     } catch (error) {
       console.error("Terjadi kesalahan saat mengedit data: ", error);
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: `Terjadi kesalahan saat mengedit data: ${
-          error.response?.data?.message || error.message
-        }`,
-      });
+  
+      // Cek jika error disebabkan oleh nama kelas yang sudah ada
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message.includes("Kelas dengan nama yang sama sudah ada di bawah admin ini")
+      ) {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Nama kelas sudah ada di bawah admin ini.",
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: `Terjadi kesalahan saat mengedit data: ${
+            error.response?.data?.message || error.message
+          }`,
+        });
+      }
     }
   };
+  
 
   // Helper function to capitalize each word, but not the character after an apostrophe
   const capitalizeWords = (str) => {
