@@ -21,6 +21,7 @@ function AbsenMasuk() {
   const token = localStorage.getItem("token");
   const [loading, setLoading] = useState(false);
   const [address, setAddress] = useState("");
+  const [imageFile, setImageFile] = useState("");
   const [fetchingLocation, setFetchingLocation] = useState(true);
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
@@ -138,16 +139,53 @@ function AbsenMasuk() {
 
   const handleCaptureAndSubmitMasuk = async () => {
     const imageSrc = webcamRef.current.getScreenshot();
-    const imageBlob = await fetch(imageSrc).then((res) => res.blob());
+    const response = await fetch(imageSrc);
+    const imageBlob = await response.blob(); // Convert imageSrc to Blob
+
+    let imageUrl;
+    try {
+      imageUrl = await uploadImageToS3(imageBlob);
+    } catch (error) {
+      console.error('Error during image upload:', error);
+      Swal.fire("Error", "Gagal mengupload gambar", "error");
+      return;
+    }
 
     if (!latitude || !longitude) {
       Swal.fire("Error", "Lokasi belum tersedia", "error");
       return;
     }
 
-    console.log("latitude: ", latitude, "longitude: ", longitude);
 
-    if (isWithinAllowedCoordinates(latitude, longitude)) {
+    async function uploadImageToS3(file) {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      try {
+        const response = await fetch('https://s3.lynk2.co/api/s3/absenMasuk', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error('Gagal mengupload gambar');
+        }
+
+        const data = await response.json();
+        console.log("Respons dari S3:", data);
+        if (data.data && data.data.url_file) {
+          setImageFile(data.data.url_file);
+          return data.data.url_file;
+        } else {
+          throw new Error('URL gambar tidak tersedia dalam respons');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        throw error;
+      }
+    }
+
+    // if (isWithinAllowedCoordinates(latitude, longitude)) {
       try {
         const absensiCheckResponse = await axios.get(
           `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`,
@@ -157,24 +195,21 @@ function AbsenMasuk() {
             },
           }
         );
-        const isUserAlreadyAbsenToday =
-          absensiCheckResponse.data ===
-          "Pengguna sudah melakukan absensi hari ini.";
-        if (isUserAlreadyAbsenToday) {
+
+        if (absensiCheckResponse.data === "Pengguna sudah melakukan absensi hari ini.") {
           Swal.fire("Info", "Anda sudah melakukan absensi hari ini.", "info");
         } else {
           const formData = new FormData();
-          formData.append("image", imageBlob);
+          formData.append("image", imageUrl || "");
           formData.append("lokasiMasuk", `${address}`);
           formData.append("keteranganTerlambat", keteranganTerlambat || "-");
 
-          const response = await axios.post(
+          await axios.post(
             `${API_DUMMY}/api/absensi/masuk/${userId}`,
             formData,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
-
                 "Content-Type": "multipart/form-data",
               },
             }
@@ -187,21 +222,22 @@ function AbsenMasuk() {
             showConfirmButton: false,
             timer: 1500,
           });
-          setTimeout(() => {
-            window.location.href = "/user/history_absen";
-          }, 1500);
+
+          // setTimeout(() => {
+          //   window.location.href = "/user/history_absen";
+          // }, 1500);
         }
       } catch (err) {
         console.error("Error:", err);
         Swal.fire("Error", "Gagal Absen", "error");
       }
-    } else {
-      Swal.fire(
-        "Error",
-        "Lokasi Anda di luar batas yang diizinkan untuk absensi",
-        "error"
-      );
-    }
+    // } else {
+    //   Swal.fire(
+    //     "Error",
+    //     "Lokasi Anda di luar batas yang diizinkan untuk absensi",
+    //     "error"
+    //   );
+    // }
   };
 
   return (
