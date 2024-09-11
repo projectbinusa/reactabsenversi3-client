@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../../../components/NavbarUser";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { API_DUMMY } from "../../../utils/api";
-import { useNavigate } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 import { SidebarProvider } from "../../../components/SidebarContext";
 import Navbar1 from "../../../components/Navbar1";
 
 function AddIzin() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [keteranganIzin, setKeteranganIzin] = useState("");
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
 
@@ -21,15 +18,14 @@ function AddIzin() {
     };
 
     const token = localStorage.getItem("token");
-    const userId = localStorage.getItem("userId");
 
-    if (!userId) {
-      console.error("UserID tidak tersedia");
+    if (!token) {
+      console.error("Token tidak tersedia");
       return;
     }
 
     try {
-      await axios.post(`${API_DUMMY}/api/absensi/izin/${userId}`, add, {
+      await axios.post(`${API_DUMMY}/api/absensi/izin?token=${token}`, add, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -81,10 +77,6 @@ function AddIzin() {
   } else {
     ucapan = "Selamat Malam";
   }
-
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
 
   const handleBack = () => {
     window.location.href = "/user/dashboard";

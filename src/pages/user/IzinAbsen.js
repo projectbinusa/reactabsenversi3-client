@@ -10,10 +10,8 @@ import { SidebarProvider } from "../../components/SidebarContext";
 import Navbar1 from "../../components/Navbar1";
 
 function IzinAbsen() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const [keteranganPulangAwal, setKeteranganPulangAwal] = useState("");
-  const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -44,27 +42,26 @@ function IzinAbsen() {
     ucapan = "Selamat Malam";
   }
 
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!token) {
+      console.error("Token tidak tersedia");
+      return;
+    }
+
     const izin = {
       keteranganPulangAwal,
     };
+
     try {
-      const response = await axios.put(
-        `${API_DUMMY}/api/absensi/izin-tengah-hari/${userId}`,
-        izin,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      Swal.fire("Berhasil", "Berhasil Izin ", "success");
-      // console.log(response.data)
+     await axios.put(
+        `${API_DUMMY}/api/absensi/izin-tengah-hari?token=${token}`, izin, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      Swal.fire("Berhasil", "Berhasil Izin", "success");
       window.location.href = "/user/history_absen";
     } catch (error) {
       console.error("Error:", error);
