@@ -223,7 +223,7 @@ function AbsenPulang() {
 
           // Proceed with the absensi pulang request
           await axios.put(
-            `${API_DUMMY}/api/absensi/pulang/${userId}?keteranganPulangAwal=${encodeURIComponent(
+            `${API_DUMMY}/api/absensi/pulang?token=${token}?keteranganPulangAwal=${encodeURIComponent(
               keteranganPulangAwal || ""
             )}&lokasiPulang=${encodeURIComponent(address)}`,
             formData,

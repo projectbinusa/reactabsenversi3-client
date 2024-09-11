@@ -12,7 +12,6 @@ import { SidebarProvider } from "../../../components/SidebarContext";
 import Navbar1 from "../../../components/Navbar1";
 
 function AbsenMasuk() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const webcamRef = useRef(null);
   const [keteranganTerlambat, setKeteranganTerlambat] = useState("");
@@ -120,9 +119,7 @@ function AbsenMasuk() {
     ucapan = "Selamat Malam";
   }
 
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
+
 
   // validasi
   const isWithinAllowedCoordinates = (lat, lon) => {
@@ -205,7 +202,7 @@ function AbsenMasuk() {
           formData.append("keteranganTerlambat", keteranganTerlambat || "-");
 
           await axios.post(
-            `${API_DUMMY}/api/absensi/masuk/${userId}`,
+            `${API_DUMMY}/api/absensi/masuk?token=${token}`,
             formData,
             {
               headers: {
