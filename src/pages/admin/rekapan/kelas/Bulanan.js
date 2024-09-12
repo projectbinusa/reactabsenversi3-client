@@ -132,27 +132,22 @@ function BulanPerkelas() {
   const exportPerkelas = async (bulan, tahun) => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/absensi/export/bulanan/by-kelas?bulan=${bulan}&kelasId=${idKelas}&tahun=${tahun}`,
+        `${API_DUMMY}/api/absensi/export/bulanan/by-kelas`,
         {
+          params: { kelasId: idKelas, bulan, tahun },
           responseType: "blob",
-        },
-        {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-
-      // Check if the response data is a valid blob
       if (response.data.size === 0) {
         Swal.fire("Peringatan", "Tidak ada data untuk diunduh", "warning");
         return;
       }
 
-      // Optional: Check the content of the blob for additional validation
       const blobContent = await response.data.text();
       if (response.data.length <= 0) {
-        // Example check for unexpected content
         Swal.fire("Peringatan", "Data tidak tersedia untuk ekspor", "warning");
         return;
       }
@@ -224,8 +219,7 @@ function BulanPerkelas() {
                 <select
                   value={itemsPerPage}
                   onChange={(e) => setItemsPerPage(Number(e.target.value))}
-                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
-                >
+                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
                   {[5, 10, 20, 50].map((limit) => (
                     <option key={limit} value={limit}>
                       {limit}
@@ -241,8 +235,7 @@ function BulanPerkelas() {
                 className="block w-40 sm:w-48 md:w-56 p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 style={{ width: "auto" }}
                 value={idKelas}
-                onChange={(e) => setIdKelas(e.target.value)}
-              >
+                onChange={(e) => setIdKelas(e.target.value)}>
                 <option value="">Pilih Kelas</option>
                 {listKelas.map((data) => (
                   <option key={data.id} value={data.id}>
@@ -262,8 +255,7 @@ function BulanPerkelas() {
                   type="submit"
                   className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto"
                   onClick={handleExportClick}
-                  title="Export"
-                >
+                  title="Export">
                   <FontAwesomeIcon icon={faCloudArrowDown} />
                 </button>
               </div>
@@ -307,8 +299,7 @@ function BulanPerkelas() {
                     <tr>
                       <td
                         colSpan="9"
-                        className="px-6 py-3 text-center text-gray-500"
-                      >
+                        className="px-6 py-3 text-center text-gray-500">
                         Tidak ada Absen pada Bulan ini!
                       </td>
                     </tr>
