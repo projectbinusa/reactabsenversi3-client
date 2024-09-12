@@ -26,16 +26,15 @@ function AddCuti() {
     };
 
     const token = localStorage.getItem("token");
-    const userId = localStorage.getItem("userId");
 
-    if (!userId) {
-      // Jika userId tidak tersedia
-      console.error("UserID tidak tersedia");
+    if (!token) {
+      // Jika token tidak tersedia
+      console.error("Token tidak tersedia");
       return;
     }
 
     try {
-      await axios.post(`${API_DUMMY}/api/cuti/tambahCuti/${userId}`, add);
+      await axios.post(`${API_DUMMY}/api/cuti/tambahCuti?token=${token}`, add);
       Swal.fire({
         position: "center",
         icon: "success",
