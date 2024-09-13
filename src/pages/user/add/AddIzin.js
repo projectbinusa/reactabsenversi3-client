@@ -25,7 +25,7 @@ function AddIzin() {
     }
 
     try {
-      await axios.post(`${API_DUMMY}/api/absensi/izin`, add, {
+      await axios.post(`${API_DUMMY}/api/absensi/izin?token=${token}`, add, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
