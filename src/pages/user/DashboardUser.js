@@ -21,7 +21,6 @@ function Dashboard() {
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const [username, setUsername] = useState({});
   const [absensi, setAbsensi] = useState([]);
-  const [cuti, setCuti] = useState([]);
   const [totalIzin, setTotalIzin] = useState(0);
   const [isAbsenMasuk, setIsAbsenMasuk] = useState(false);
   const [isPulangDisabled, setIsPulangDisabled] = useState(false);
@@ -47,11 +46,6 @@ function Dashboard() {
               Authorization: `Bearer ${token}`,
             },
           }),
-          axios.get(`${API_DUMMY}/api/cuti/getByUser/${userId}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }),
           axios.get(`${API_DUMMY}/api/absensi/checkAbsensi/${userId}`, {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -63,8 +57,6 @@ function Dashboard() {
       setAbsensi(absensiResponse.data.reverse());
       console.log("absensi response: ", absensiResponse.data);
 
-      setCuti(cutiResponse.data.reverse());
-
       // Cek apakah user sudah melakukan absen masuk
       const isUserAlreadyAbsenToday =
         izinResponse.data === "Pengguna sudah melakukan absensi hari ini.";
@@ -72,11 +64,6 @@ function Dashboard() {
       // Cek apakah user sudah melakukan absen pulang
       const isUserAlreadyAbsenPulang = absensiResponse.data.some(
         (absen) => absen.statusAbsen === "Pulang"
-      );
-
-      const isUserAlreadyAbsenMasuk = absensiResponse.data.some(
-        (absen) =>
-          absen.statusAbsen === "Telambat" || "Lebih Awal" || "Tepat Waktu"
       );
 
       // Cek apakah user sudah melakukan izin
@@ -111,9 +98,26 @@ function Dashboard() {
     }
   };
 
+  const getIzin = async () => {
+    try {
+      const response = await axios.get(
+        `${API_DUMMY}/api/absensi/getizin/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setTotalIzin(response.data.length);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
   useEffect(() => {
     fetchData();
     fetchUserData();
+    getIzin();
 
     const interval = setInterval(() => {
       setCurrentDateTime(new Date());
@@ -212,67 +216,66 @@ function Dashboard() {
                     isAbsenMasuk
                       ? "bg-gray-500 cursor-not-allowed"
                       : "bg-blue-500"
-                  }`}>
+                  }`}
+                >
                   <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                     <div className="my-auto">
                       <p
                         className={`font-bold ${
                           isAbsenMasuk ? "text-gray-400" : "text-black"
-                        }`}>
+                        }`}
+                      >
                         Masuk
                       </p>
                       <p
                         className={`text-lg ${
                           isAbsenMasuk ? "text-gray-400" : "text-black"
-                        }`}>
+                        }`}
+                      >
                         Presensi masuk.
                       </p>
                     </div>
                     <div
                       className={`my-auto ${
                         isAbsenMasuk ? "text-gray-400" : "text-black"
-                      }`}>
+                      }`}
+                    >
                       <FontAwesomeIcon icon={faArrowRightToBracket} size="2x" />
                     </div>
                   </div>
                 </div>
               </Link>
 
-              <Link
-                to={
-                  isPulangTengahHari ? "#" : "/user/pulang"
-                }>
+              <Link to={isPulangTengahHari ? "#" : "/user/pulang"}>
                 <div
                   className={`pl-2 h-24 rounded-lg shadow-md md:w-auto ${
                     isPulangTengahHari
                       ? "bg-gray-500 cursor-not-allowed"
                       : "bg-green-500"
-                  }`}>
+                  }`}
+                >
                   <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                     <div className="my-auto">
                       <p
                         className={`font-bold ${
-                          isPulangTengahHari
-                            ? "text-gray-400"
-                            : "text-black"
-                        }`}>
+                          isPulangTengahHari ? "text-gray-400" : "text-black"
+                        }`}
+                      >
                         Pulang
                       </p>
                       <p
                         className={`text-lg ${
-                          isPulangTengahHari
-                            ? "text-gray-400"
-                            : "text-black"
-                        }`}>
+                          isPulangTengahHari ? "text-gray-400" : "text-black"
+                        }`}
+                      >
                         Presensi pulang
                       </p>
                     </div>
                     <div
                       className={`my-auto ${
-                        isPulangTengahHari
-                          ? "text-gray-400"
-                          : "text-black"
-                      }`}>
+                        isPulangTengahHari ? "text-gray-400" : "text-black"
+                      }`}
+                    >
                       <FontAwesomeIcon
                         icon={faArrowRightFromBracket}
                         size="2x"
@@ -288,26 +291,30 @@ function Dashboard() {
                     isIzinDisabled
                       ? "bg-gray-500 cursor-not-allowed"
                       : "bg-orange-500"
-                  }`}>
+                  }`}
+                >
                   <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                     <div className="my-auto">
                       <p
                         className={`font-bold ${
                           isIzinDisabled ? "text-gray-400" : "text-black"
-                        }`}>
+                        }`}
+                      >
                         Izin
                       </p>
                       <p
                         className={`text-lg ${
                           isIzinDisabled ? "text-gray-400" : "text-black"
-                        }`}>
+                        }`}
+                      >
                         Permohonan Izin
                       </p>
                     </div>
                     <div
                       className={`my-auto ${
                         isIzinDisabled ? "text-gray-400" : "text-black"
-                      }`}>
+                      }`}
+                    >
                       <FontAwesomeIcon icon={faCircleXmark} size="2x" />
                     </div>
                   </div>
@@ -326,7 +333,8 @@ function Dashboard() {
                 validInformasi.map((item) => (
                   <div
                     key={item.id}
-                    className="informasi-item p-4 bg-white border border-gray-200 rounded-lg shadow-md transform transition-transform hover:scale-105 hover:shadow-xl">
+                    className="informasi-item p-4 bg-white border border-gray-200 rounded-lg shadow-md transform transition-transform hover:scale-105 hover:shadow-xl"
+                  >
                     <div className="flex items-center mb-4">
                       <FontAwesomeIcon
                         icon={faCircleInfo}
