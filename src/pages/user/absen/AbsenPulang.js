@@ -17,7 +17,7 @@ function AbsenPulang() {
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
   const [address, setAddress] = useState("");
-  const [imageFile, setImageFile] = useState("");
+  // const [imageFile, setImageFile] = useState("");
   const [fetchingLocation, setFetchingLocation] = useState(true);
   const [keteranganPulangAwal, setKeteranganPulangAwal] = useState("");
   const [waktuPulang, setWaktuPulang] = useState("");
