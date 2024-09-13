@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Logo from "../components/logo.png";
+import Logo from "../components/logo.jpg";
 
 import axios from "axios";
 import { API_DUMMY } from "../utils/api";
@@ -89,7 +89,7 @@ const NavbarSuper = () => {
           <div className="flex items-center justify-start rtl:justify-end">
             {role !== "SUPERADMIN" && (
               <a href="" className="flex ms-2 md:me-24">
-                <img src={Logo} className="h-11 me-3 text-white" alt="" />
+                <img src={Logo} className="rounded-full h-11 me-3 text-white" alt="" />
                 <span className="self-center text-xl font-semibold sm:text-xl whitespace-nowrap text-white">
                   Presensi App
                 </span>

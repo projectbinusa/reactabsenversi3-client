@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSidebar } from "./SidebarContext";
-import logo from "../components/logo.png";
+import logo from "../components/logo.jpg";
 import { API_DUMMY } from "../utils/api";
 import axios from "axios";
 import { Link, useLocation } from "react-router-dom";
@@ -348,7 +348,7 @@ function Navbar1() {
             class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
             id="navbar-language">
             <Link to="/" className="flex ms-2 md:me-24">
-              <img src={logo} className="h-11 me-3 text-white" alt="" />
+              <img src={logo} className="h-11 rounded-full me-3 text-white" alt="" />
               <span className="self-center text-xl font-semibold sm:text-xl whitespace-nowrap text-white">
                 Presensi App
               </span>

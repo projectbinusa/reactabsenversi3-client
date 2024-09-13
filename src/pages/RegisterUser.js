@@ -19,7 +19,6 @@ function RegisterUser() {
   const [noShiftsError, setNoShiftsError] = useState(false);
 
   useEffect(() => {
-
     GetALLOrganisasi();
   }, []);
 
@@ -100,10 +99,16 @@ function RegisterUser() {
     } catch (error) {
       console.error("Error during registration:", error);
 
-      if (error.response && error.response.data && error.response.data.message) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
         if (error.response.data.message.includes("Email sudah digunakan")) {
           Swal.fire("Error", "Email telah dipakai", "error");
-        } else if (error.response.data.message.includes("Username sudah digunakan")) {
+        } else if (
+          error.response.data.message.includes("Username sudah digunakan")
+        ) {
           Swal.fire("Error", "Username telah dipakai", "error");
         } else {
           Swal.fire("Error", "Gagal mendaftar silahkan coba lagi", "error");
@@ -119,7 +124,7 @@ function RegisterUser() {
       <div className="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1">
         <div className="lg:w-1/2 xl:w-5/12 p-2">
           <div>
-            <img src={Logo} className="w-16 mx-auto" alt="Logo" />
+            <img src={Logo} className="w-16 mx-auto rounded-full" alt="Logo" />
           </div>
           <div className="mt-2 flex flex-col items-center">
             <h1 className="text-2xl xl:text-3xl font-extrabold">Sign up</h1>
@@ -146,8 +151,7 @@ function RegisterUser() {
                     className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                     value={idOrganisasi}
                     onChange={handleOrganisasiChange}
-                    required
-                  >
+                    required>
                     <option value="" disabled>
                       Pilih Organisasi
                     </option>
@@ -166,8 +170,7 @@ function RegisterUser() {
                       className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                       value={selectedShift}
                       onChange={(e) => setSelectedShift(e.target.value)}
-                      required
-                    >
+                      required>
                       <option value="" disabled>
                         Pilih Waktu Pembelajaran
                       </option>
@@ -189,8 +192,7 @@ function RegisterUser() {
                     />
                     <span
                       className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
+                      onClick={() => setShowPassword(!showPassword)}>
                       {showPassword ? <FaEye /> : <FaEyeSlash />}
                     </span>
                   </div>
@@ -201,8 +203,7 @@ function RegisterUser() {
                       stroke="currentColor"
                       strokeWidth="2"
                       strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
+                      strokeLinejoin="round">
                       <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
                       <circle cx="8.5" cy="7" r="4" />
                       <path d="M20 8v6M23 11h-6" />
@@ -213,8 +214,7 @@ function RegisterUser() {
                     Sudah mempunyai akun?
                     <a
                       href="/login"
-                      className="border-b border-blue-500 border-dotted"
-                    >
+                      className="border-b border-blue-500 border-dotted">
                       Login
                     </a>
                   </p>
@@ -229,8 +229,7 @@ function RegisterUser() {
             style={{
               backgroundImage:
                 "url('https://storage.googleapis.com/devitary-image-host.appspot.com/15848031292911696601-undraw_designer_life_w96d.svg')",
-            }}
-          ></div>
+            }}></div>
         </div>
       </div>
     </div>
