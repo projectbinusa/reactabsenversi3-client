@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../../../components/NavbarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfo, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
@@ -9,7 +8,6 @@ import { Link } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 import { SidebarProvider } from "../../../components/SidebarContext";
 import Navbar1 from "../../../components/Navbar1";
-// import { useNavigate } from "react-router-dom";
 
 function TabelAbsen() {
   const [absensi, setAbsensi] = useState([]);
@@ -17,6 +15,8 @@ function TabelAbsen() {
   const [limit, setLimit] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
 
   const formatDate = (dateString) => {
     const options = {
@@ -30,9 +30,6 @@ function TabelAbsen() {
 
   useEffect(() => {
     const getAbsensi = async () => {
-      const userId = localStorage.getItem("userId");
-      const token = localStorage.getItem("token");
-
       try {
         const response = await axios.get(
           `${API_DUMMY}/api/absensi/getByUserId/${userId}`,
@@ -49,6 +46,85 @@ function TabelAbsen() {
       }
     };
     getAbsensi();
+  }, []);
+
+  const checkUserAbsensiToday = async () => {
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
+
+    try {
+      const response = await axios.get(
+        `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            accept: "*/*",
+          },
+        }
+      );
+      return response.data.status === 200;
+    } catch (error) {
+      if (error.response.status === 400) {
+        return false; // No absensi found for today
+      } else {
+        console.error("Error checking absensi:", error);
+        return null; // Handle other errors
+      }
+    }
+  };
+
+  const postAlphaAbsensi = async () => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const response = await axios.post(
+        `${API_DUMMY}/api/absensi/check-alpha`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            accept: "*/*",
+          },
+        }
+      );
+
+      console.log("Alpha absensi posted successfully:", response.data);
+    } catch (error) {
+      if (error.response) {
+        console.error("Error posting alpha data:", error.response.data);
+      } else {
+        console.error("Error posting alpha data:", error.message);
+      }
+    }
+  };
+
+  const handleAbsensi = async () => {
+    const absensiData = await checkUserAbsensiToday();
+
+    if (!absensiData) {
+      console.log("User belum absen hari ini");
+
+      const now = new Date();
+      const startOfDay = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate()
+      );
+
+      const endOfDay = new Date(startOfDay.getTime() + 24 * 60 * 60 * 1000);
+
+      if (now >= endOfDay) {
+        await postAlphaAbsensi();
+      } else {
+        console.log("Pengguna belum melewati batas waktu 24 jam.");
+      }
+    } else {
+      console.log("Pengguna sudah melakukan absen hari ini.");
+    }
+  };
+
+  useEffect(() => {
+    handleAbsensi();
   }, []);
 
   useEffect(() => {
@@ -242,6 +318,7 @@ function TabelAbsen() {
                                 <button
                                   disabled={
                                     absenData.statusAbsen === "Izin" ||
+                                    absenData.statusAbsen === "Alpha" ||
                                     absenData.statusAbsen ===
                                       "Izin Tengah Hari" ||
                                     new Date(absenData.tanggalAbsen).setHours(
@@ -254,6 +331,7 @@ function TabelAbsen() {
                                   }
                                   className={`z-20 block rounded-full border-2 border-white p-4 text-red-700 active:bg-red-50 ${
                                     absenData.statusAbsen === "Izin" ||
+                                    absenData.statusAbsen === "Alpha" ||
                                     absenData.statusAbsen ===
                                       "Izin Tengah Hari" ||
                                     new Date(absenData.tanggalAbsen).setHours(
@@ -272,6 +350,7 @@ function TabelAbsen() {
                                       icon={faUserPlus}
                                       className={`h-4 w-4 ${
                                         absenData.statusAbsen === "Izin" ||
+                                        absenData.statusAbsen === "Alpha" ||
                                         absenData.statusAbsen ===
                                           "Izin Tengah Hari" ||
                                         new Date(
