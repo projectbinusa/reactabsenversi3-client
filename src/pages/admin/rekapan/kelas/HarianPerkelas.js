@@ -133,14 +133,12 @@ function HarianPerkelas() {
         {
           params: { kelasId, tanggal },
           responseType: "blob",
-        },
-        {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`, 
           },
         }
       );
-
+  
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
@@ -149,13 +147,14 @@ function HarianPerkelas() {
       link.click();
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
-
+  
       Swal.fire("Berhasil", "Berhasil mengunduh data", "success");
     } catch (error) {
       Swal.fire("Error", "Gagal mengunduh data", "error");
       console.log(error);
     }
   };
+  
 
   const formatDate = (dateString) => {
     const options = {
