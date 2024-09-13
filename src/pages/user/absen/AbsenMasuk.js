@@ -39,7 +39,6 @@ function AbsenMasuk() {
   //   southWest: { lat: -6.968878380328723, lon: 110.25208956395724 },
   //   southEast: { lat: -6.968878380328723, lon: 110.25231003604275 },
   // };
-
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentDateTime(new Date());
@@ -220,9 +219,9 @@ function AbsenMasuk() {
             timer: 1500,
           });
 
-          // setTimeout(() => {
-          //   window.location.href = "/user/history_absen";
-          // }, 1500);
+          setTimeout(() => {
+            window.location.href = "/user/history_absen";
+          }, 1500);
         }
       } catch (err) {
         console.error("Error:", err);
