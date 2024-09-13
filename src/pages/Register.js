@@ -94,7 +94,7 @@ function Register() {
           <div>
             <img
               src={Logo}
-              className="w-16 mx-auto
+              className="w-16 rounded-full mx-auto
              "
             />
           </div>

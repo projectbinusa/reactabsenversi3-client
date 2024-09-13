@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import Logo from "../components/logo.png";
+import Logo from "../components/logo.jpg";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { API_DUMMY } from "../utils/api";
 import { Link, useNavigate } from "react-router-dom";
@@ -107,7 +107,7 @@ function Login() {
       <div className="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1">
         <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
           <div>
-            <img src={Logo} className="w-16 mx-auto" />
+            <img src={Logo} className="rounded-full w-16 mx-auto" />
           </div>
           <div className="mt-12 flex flex-col items-center">
             <h1 className="text-2xl xl:text-3xl font-extrabold">Sign in</h1>
