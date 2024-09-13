@@ -23,6 +23,7 @@ function AbsenPulang() {
   const [waktuPulang, setWaktuPulang] = useState("");
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
+  const [imageFile, setImageFile] = useState("");
 
   // rmh
   //   const allowedCoordinates = {
@@ -40,22 +41,15 @@ function AbsenPulang() {
     southEast: { lat: -6.982670715, lon: 110.404118565 },
   };
 
-  const isWithinAllowedCoordinates = (lat, lon) => {
-    const { northWest, northEast, southWest } = allowedCoordinates;
-    const tolerance = 0.00001; // adding a small tolerance
-
-    return (
-      lat >= southWest.lat - tolerance &&
-      lat <= northWest.lat + tolerance &&
-      lon >= southWest.lon - tolerance &&
-      lon <= northEast.lon + tolerance
-    );
-  };
-
   const getShift = async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/shift/getShift-byUserId/${userId}`
+        `${API_DUMMY}/api/shift/getShift-byUserId/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       if (response.data && response.data.waktuPulang) {
@@ -154,6 +148,7 @@ function AbsenPulang() {
     ucapan = "Selamat Malam";
   }
 
+// <<<<<<< nisafe
   // const handleCaptureAndSubmitPulang = async () => {
   //   const imageSrc = webcamRef.current.getScreenshot();
   //   const imageBlob = await fetch(imageSrc).then((res) => res.blob());
@@ -261,11 +256,25 @@ function AbsenPulang() {
   //     }
   //   );
   // };
+// =======
+//   const isWithinAllowedCoordinates = (lat, lon) => {
+//     const { northWest, northEast, southWest } = allowedCoordinates;
+//     const tolerance = 0.00001; // adding a small tolerance
+
+//     return (
+//       lat >= southWest.lat - tolerance &&
+//       lat <= northWest.lat + tolerance &&
+//       lon >= southWest.lon - tolerance &&
+//       lon <= northEast.lon + tolerance
+//     );
+//   };
+// >>>>>>> develop
 
   const handleCaptureAndSubmitPulang = async () => {
     const imageSrc = webcamRef.current.getScreenshot();
     const response = await fetch(imageSrc);
     const imageBlob = await response.blob(); // Convert imageSrc to Blob
+// <<<<<<< nisafe
 
     let imageUrl;
     try {
@@ -357,10 +366,122 @@ function AbsenPulang() {
         //   window.location.href = "/user/history_absen";
         // }, 1500);
       }
+// =======
+
+//     let imageUrl;
+//     try {
+//       imageUrl = await uploadImageToS3(imageBlob);
+//     } catch (error) {
+//       console.error("Error during image upload:", error);
+//       Swal.fire("Error", "Gagal mengupload gambar", "error");
+//       return;
+//     }
+
+//     if (!latitude || !longitude) {
+//       Swal.fire("Error", "Lokasi belum tersedia", "error");
+//       return;
+//     }
+
+//     async function uploadImageToS3(file) {
+//       const formData = new FormData();
+//       formData.append("file", file);
+
+//       try {
+//         const response = await fetch("https://s3.lynk2.co/api/s3/absenPulang", {
+//           method: "POST",
+//           body: formData,
+//         });
+
+//         if (!response.ok) {
+//           throw new Error("Gagal mengupload gambar");
+//         }
+
+//         const data = await response.json();
+//         console.log("Respons dari S3:", data);
+//         if (data.data && data.data.url_file) {
+//           setImageFile(data.data.url_file);
+//           return data.data.url_file;
+//         } else {
+//           throw new Error("URL gambar tidak tersedia dalam respons");
+//         }
+//       } catch (error) {
+//         console.error("Error:", error);
+//         throw error;
+//       }
+//     }
+
+//     try {
+//       const absensiCheckResponse = await axios.get(
+//         `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`,
+//         {
+//           headers: {
+//             Authorization: `Bearer ${token}`,
+//           },
+//         }
+//       );
+
+//       const isUserAlreadyAbsenToday =
+//         absensiCheckResponse.data ===
+//         "Pengguna sudah melakukan absensi hari ini.";
+
+//       if (!isUserAlreadyAbsenToday) {
+//         Swal.fire(
+//           "Info",
+//           "Anda belum melakukan absensi masuk hari ini.",
+//           "info"
+//         );
+//         return;
+//       }
+
+//       const currentTime = new Date();
+//       const currentHours = currentTime.getHours();
+//       const currentMinutes = currentTime.getMinutes();
+//       const [shiftHours, shiftMinutes] = waktuPulang.split(":").map(Number);
+
+//       if (
+//         currentHours < shiftHours ||
+//         (currentHours === shiftHours && currentMinutes < shiftMinutes)
+//       ) {
+//         if (!keteranganPulangAwal) {
+//           Swal.fire(
+//             "Info",
+//             `Anda tidak bisa melakukan absensi pulang sebelum pukul ${waktuPulang} tanpa memberikan keterangan. Mohon isi keterangan pulang awal.`,
+//             "info"
+//           );
+//           return;
+//         }
+//       }
+
+//       const formData = new FormData();
+//       formData.append("image", imageUrl || "");
+//       formData.append("lokasiPulang", address || "");
+//       formData.append("keteranganPulangAwal", keteranganPulangAwal || "-");
+
+//       await axios.put(`${API_DUMMY}/api/absensi/pulang`, formData, {
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//           "Content-Type": "multipart/form-data",
+//         },
+//       });
+
+//       Swal.fire({
+//         position: "center",
+//         icon: "success",
+//         title: "Berhasil Pulang",
+//         showConfirmButton: false,
+//         timer: 1500,
+//       });
+
+//       // Redirect or update the UI as needed
+//       // setTimeout(() => {
+//       //   window.location.href = "/user/history_absen";
+//       // }, 1500);
+// >>>>>>> develop
     } catch (err) {
       console.error("Error:", err);
       Swal.fire("Error", "Gagal Absen", "error");
     }
+// <<<<<<< nisafe
     // } else {
     //   Swal.fire(
     //     "Error",
@@ -368,6 +489,8 @@ function AbsenPulang() {
     //     "error"
     //   );
     // }
+// =======
+// >>>>>>> develop
   };
 
   return (
@@ -419,7 +542,7 @@ function AbsenPulang() {
                     } else {
                       Swal.fire(
                         "Tunggu Sebentar",
-                        "Sedang mendapatakan lokasi",
+                        "Sedang mendapatkan lokasi",
                         "info"
                       );
                     }

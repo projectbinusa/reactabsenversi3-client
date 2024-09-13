@@ -1,15 +1,13 @@
 import React, { useState } from "react";
-import Navbar from "../../../components/NavbarAdmin";
-import Sidebar from "../../../components/SidebarUser";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faCloudArrowDown,  faMagnifyingGlass,
+  faCloudArrowDown,
+  faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../../utils/api";
-import { useNavigate } from "react-router-dom";
-import NavbarAdmin from "../../../components/NavbarAdmin";
 import { SidebarProvider } from "../../../components/SidebarContext";
 import Navbar1 from "../../../components/Navbar1";
 import SidebarNavbar from "../../../components/SidebarNavbar";
@@ -17,6 +15,7 @@ import SidebarNavbar from "../../../components/SidebarNavbar";
 function Harian() {
   const [tanggal, setTanggal] = useState("");
   const [absensiData, setAbsensiData] = useState([]);
+  const token = localStorage.getItem("token");
 
   const handleTanggalChange = (event) => {
     setTanggal(event.target.value);
@@ -45,6 +44,9 @@ function Harian() {
         `${API_DUMMY}/api/absensi/export/harian?tanggal=${tanggal}`,
         {
           responseType: "blob",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -115,9 +117,9 @@ function Harian() {
   return (
     <div className="flex flex-col h-screen">
       <SidebarProvider>
-      <Navbar1 />
-      <SidebarNavbar />
-    </SidebarProvider>
+        <Navbar1 />
+        <SidebarNavbar />
+      </SidebarProvider>
       <div className="w-full mt-10">
         {/* <div className="fixed h-full">
           <Sidebar />
@@ -156,7 +158,7 @@ function Harian() {
                   className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto"
                   onClick={handleExport}
                 >
-                   <FontAwesomeIcon icon={faCloudArrowDown} />
+                  <FontAwesomeIcon icon={faCloudArrowDown} />
                 </button>
               </div>
             </form>
