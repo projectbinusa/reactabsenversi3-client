@@ -165,7 +165,7 @@ function Admin() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${API_DUMMY}/api/admin/delete/` + id, {
+          await axios.delete(`${API_DUMMY}/api/admin/delete-sementara/` + id, {
             headers: {
               Authorization: `Bearer ${token}`,
             },

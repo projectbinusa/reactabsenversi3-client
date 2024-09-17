@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import NavbarAdmin from "../../../components/NavbarAdmin";
 import {
+  faCloudArrowDown,
   faFileExport,
   faFileImport,
   faPenToSquare,
@@ -228,31 +229,31 @@ function KelasSiswa() {
     setValidOrganisasiIds(validKelasIds);
   };
 
-  const checkIfHasRelations = async (id) => {
-    try {
-      const response = await axios.get(
-        `${API_DUMMY}/api/kelas/hasRelations/${id}`
-      );
-      console.log("Relation check response:", response.data);
-      return response.data;
-    } catch (error) {
-      console.error("Error checking relations:", error);
-      return false;
-    }
-  };
+  // const checkIfHasRelations = async (id) => {
+  //   try {
+  //     const response = await axios.get(
+  //       `${API_DUMMY}/api/kelas/hasRelations/${id}`
+  //     );
+  //     console.log("Relation check response:", response.data);
+  //     return response.data;
+  //   } catch (error) {
+  //     console.error("Error checking relations:", error);
+  //     return false;
+  //   }
+  // };
 
   const deleteData = async (id) => {
-    const hasRelations = await checkIfHasRelations(id);
+    // const hasRelations = await checkIfHasRelations(id);
 
-    if (hasRelations) {
-      Swal.fire({
-        title: "Data Tidak Dapat Dihapus",
-        text: "Data ini memiliki relasi dengan tabel lain.",
-        icon: "warning",
-        confirmButtonText: "OK",
-      });
-      return;
-    }
+    // if (hasRelations) {
+    //   Swal.fire({
+    //     title: "Data Tidak Dapat Dihapus",
+    //     text: "Data ini memiliki relasi dengan tabel lain.",
+    //     icon: "warning",
+    //     confirmButtonText: "OK",
+    //   });
+    //   return;
+    // }
 
     Swal.fire({
       title: "Anda Ingin Menghapus Data?",
@@ -265,7 +266,7 @@ function KelasSiswa() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${API_DUMMY}/api/kelas/deleteKelas/${id}`, {
+          await axios.delete(`${API_DUMMY}/api/kelas/delete-sementara/${id}`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -390,13 +391,15 @@ function KelasSiswa() {
                       type="button"
                       className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded-lg"
                       onClick={exportData}
+                      title="Export"
                     >
-                      <FontAwesomeIcon icon={faFileExport} />
+                      <FontAwesomeIcon icon={faCloudArrowDown} />
                     </button>
                     <button
                       type="button"
                       className="imp bg-blue-500 hover:bg-blue text-white font-bold py-2 px-4 rounded-lg"
                       onClick={() => setOpenModal(true)}
+                      title="Import"
                     >
                       <FontAwesomeIcon icon={faFileImport} />
                     </button>
