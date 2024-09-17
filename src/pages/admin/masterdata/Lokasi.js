@@ -77,7 +77,7 @@ function Lokasi() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${API_DUMMY}/api/lokasi/delete/` + id, {
+          await axios.delete(`${API_DUMMY}/api/lokasi/delete-sementara/` + id, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
