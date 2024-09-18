@@ -36,11 +36,19 @@ function AbsenPulang() {
   // };
 
   // exc
+  // const allowedCoordinates = {
+  //   northWest: { lat: -6.982580885, lon: 110.404028235 },
+  //   northEast: { lat: -6.982580885, lon: 110.404118565 },
+  //   southWest: { lat: -6.982670715, lon: 110.404028235 },
+  //   southEast: { lat: -6.982670715, lon: 110.404118565 },
+  // };
+
+  //smpn40smg
   const allowedCoordinates = {
-    northWest: { lat: -6.982580885, lon: 110.404028235 },
-    northEast: { lat: -6.982580885, lon: 110.404118565 },
-    southWest: { lat: -6.982670715, lon: 110.404028235 },
-    southEast: { lat: -6.982670715, lon: 110.404118565 },
+    northWest: { lat: -6.988985050934718, lon: 110.40435783994 },
+    northEast: { lat: -6.989424872078232, lon: 110.40505158383749 },
+    southWest: { lat: -6.99016918383492, lon: 110.4050114830342 },
+    southEast: { lat: -6.989554231156763, lon: 110.40406710911383 },
   };
 
   const isWithinAllowedCoordinates = (lat, lon) => {
@@ -215,97 +223,97 @@ function AbsenPulang() {
       }
     }
 
-    // if (isWithinAllowedCoordinates(latitude, longitude)) {
-    try {
-      const absensiCheckResponse = await axios.get(
-        `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const isUserAlreadyAbsenToday =
-        absensiCheckResponse.data ===
-        "Pengguna sudah melakukan absensi hari ini.";
-
-      if (!isUserAlreadyAbsenToday) {
-        Swal.fire(
-          "Info",
-          "Anda belum melakukan absensi masuk hari ini.",
-          "info"
+    if (isWithinAllowedCoordinates(latitude, longitude)) {
+      try {
+        const absensiCheckResponse = await axios.get(
+          `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
-        setFetchingLocation(false);
-        return;
-      }
+        const isUserAlreadyAbsenToday =
+          absensiCheckResponse.data ===
+          "Pengguna sudah melakukan absensi hari ini.";
 
-      const currentTime = new Date();
-      const currentHours = currentTime.getHours();
-      const currentMinutes = currentTime.getMinutes();
-      const [shiftHours, shiftMinutes] = waktuPulang.split(":").map(Number);
-
-      if (
-        currentHours < shiftHours ||
-        (currentHours === shiftHours && currentMinutes < shiftMinutes)
-      ) {
-        if (!keteranganPulangAwal) {
+        if (!isUserAlreadyAbsenToday) {
           Swal.fire(
             "Info",
-            `Anda tidak bisa melakukan absensi pulang sebelum pukul ${waktuPulang} tanpa memberikan keterangan. Mohon isi keterangan pulang awal.`,
+            "Anda belum melakukan absensi masuk hari ini.",
             "info"
           );
           setFetchingLocation(false);
           return;
         }
-      }
 
-      const formData = new FormData();
-      formData.append("image", imageUrl);
-      // if (keteranganPulangAwal) {
-      //   formData.append("keteranganPulangAwal", keteranganPulangAwal || "");
-      // }
-      // formData.append("lokasiPulang", address);
+        const currentTime = new Date();
+        const currentHours = currentTime.getHours();
+        const currentMinutes = currentTime.getMinutes();
+        const [shiftHours, shiftMinutes] = waktuPulang.split(":").map(Number);
 
-      // Proceed with the absensi pulang request
-      await axios.put(
-        `${API_DUMMY}/api/absensi/pulang?image=test&keteranganPulangAwal=${
-          keteranganPulangAwal || ""
-        }&lokasiPulang=${address}&token=${token}`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
+        if (
+          currentHours < shiftHours ||
+          (currentHours === shiftHours && currentMinutes < shiftMinutes)
+        ) {
+          if (!keteranganPulangAwal) {
+            Swal.fire(
+              "Info",
+              `Anda tidak bisa melakukan absensi pulang sebelum pukul ${waktuPulang} tanpa memberikan keterangan. Mohon isi keterangan pulang awal.`,
+              "info"
+            );
+            setFetchingLocation(false);
+            return;
+          }
         }
-      );
 
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Berhasil Pulang",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      setTimeout(() => {
-        window.location.href = "/user/history_absen";
-      }, 1500);
-    } catch (err) {
-      console.error("Error:", err);
-      // if (response == "User sudah melakukan absensi pulang hari ini.") {
-      //   Swal.fire("User sudah melakukan absensi pulang hari ini.");
-      // }
-      Swal.fire("Error", "Gagal Absen", "error");
-    } finally {
-      setFetchingLocation(false);
+        const formData = new FormData();
+        formData.append("image", imageUrl);
+        // if (keteranganPulangAwal) {
+        //   formData.append("keteranganPulangAwal", keteranganPulangAwal || "");
+        // }
+        // formData.append("lokasiPulang", address);
+
+        // Proceed with the absensi pulang request
+        await axios.put(
+          `${API_DUMMY}/api/absensi/pulang?image=test&keteranganPulangAwal=${
+            keteranganPulangAwal || ""
+          }&lokasiPulang=${address}&token=${token}`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Berhasil Pulang",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setTimeout(() => {
+          window.location.href = "/user/history_absen";
+        }, 1500);
+      } catch (err) {
+        console.error("Error:", err);
+        // if (response == "User sudah melakukan absensi pulang hari ini.") {
+        //   Swal.fire("User sudah melakukan absensi pulang hari ini.");
+        // }
+        Swal.fire("Error", "Gagal Absen", "error");
+      } finally {
+        setFetchingLocation(false);
+      }
+    } else {
+      Swal.fire(
+        "Error",
+        "Lokasi Anda di luar batas yang diizinkan untuk absensi",
+        "error"
+      );
     }
-    // } else {
-    //   Swal.fire(
-    //     "Error",
-    //     "Lokasi Anda di luar batas yang diizinkan untuk absensi",
-    //     "error"
-    //   );
-    // }
   };
 
   return (

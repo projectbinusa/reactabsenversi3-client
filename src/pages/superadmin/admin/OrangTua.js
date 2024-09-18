@@ -269,13 +269,13 @@ function OrangTua() {
     try {
       const response = await axios.get(
         `${API_DUMMY}/api/orang-tua/download/template-orang-tua`,
-        {
-          responseType: "blob",
-        },
+        // {
+        // },
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
+          responseType: "blob",
         }
       );
 
