@@ -16,12 +16,14 @@ function EditKaryawan() {
   const [status, setStatus] = useState("");
   const [idJabatan, setIdJabatan] = useState("");
   const [idShift, setIdShift] = useState("");
+  const [idOrganisasi, setIdOrganisasi] = useState("");
   const [idOrangTua, setIdOrangTua] = useState("");
   const [idKelas, setIdKelas] = useState("");
   const [jabatanOptions, setJabatanOptions] = useState([]);
   const [shiftOptions, setShiftOptions] = useState([]);
   const [orangTuaOptions, setOrangTuaOptions] = useState([]);
   const [kelasOptions, setKelasOptions] = useState([]);
+  const [organisasiOptions, setOrganisasiOptions] = useState([]);
   const { id } = useParams();
   const adminId = localStorage.getItem("adminId");
   const token = localStorage.getItem("token");
@@ -40,6 +42,7 @@ function EditKaryawan() {
       setIdShift(res.data.shift ? res.data.shift.id : "");
       setIdOrangTua(res.data.orangTua ? res.data.orangTua.id : "");
       setIdKelas(res.data.kelas ? res.data.kelas.id : "");
+      setIdOrganisasi(res.data.organisasi ? res.data.organisasi.id : "");
     } catch (error) {
       console.log(error);
     }
@@ -72,6 +75,22 @@ function EditKaryawan() {
         }
       );
       setShiftOptions(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getOrganisasiOptions = async () => {
+    try {
+      const res = await axios.get(
+        `${API_DUMMY}/api/organisasi/all-by-admin/${adminId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setOrganisasiOptions(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -112,19 +131,20 @@ function EditKaryawan() {
     getShiftOptions();
     getOrangTuaOptions();
     getKelasOptions();
+    getOrganisasiOptions();
   }, [id, adminId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await axios.put(
-        `${API_DUMMY}/api/user/editBYSuper/${id}?idShift=${idShift}&idOrangTua=${idOrangTua}&idKelas=${idKelas}`,
+        `${API_DUMMY}/api/user/editBYSuper/${id}?idShift=${idShift}&idOrangTua=${idOrangTua}&idKelas=${idKelas}&idOrganisasi=${idOrganisasi}`,
         {
           username: username,
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`
           },
         }
       );
@@ -235,7 +255,7 @@ function EditKaryawan() {
                           htmlFor="id_shift"
                           className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                         >
-                          Shift
+                          Waktu Pembelajaran
                         </label>
                         <select
                           name="idShift"
@@ -291,6 +311,27 @@ function EditKaryawan() {
                           {kelasOptions.map((option) => (
                             <option key={option.id} value={option.id}>
                               {option.namaKelas}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="relative z-0 w-full mb-6 group">
+                        <label
+                          htmlFor="id_kelas"
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                        >
+                          Organisasi
+                        </label>
+                        <select
+                          name="idOrganisasi"
+                          value={idOrganisasi}
+                          onChange={(e) => setIdOrganisasi(e.target.value)}
+                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                        >
+                          <option value="">Belum memiliki</option>
+                          {organisasiOptions.map((option) => (
+                            <option key={option.id} value={option.id}>
+                              {option.namaOrganisasi}
                             </option>
                           ))}
                         </select>

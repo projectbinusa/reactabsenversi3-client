@@ -28,6 +28,17 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+  <script>
+    // Mendapatkan hostname dari URL
+    var hostname = window.location.hostname;
+
+    // Mengatur favicon berdasarkan hostname
+    if (hostname === 'presensi.excellentsistem.com') {
+      document.getElementById('favicon').setAttribute('href', 'logo.png');
+    } else if (hostname === 'smpn40smg.excellentsistem.com') {
+      document.getElementById('favicon').setAttribute('href', 'logo_smp.png');
+    }
+  </script>
   <title>Presensi App</title>
 </head>
 

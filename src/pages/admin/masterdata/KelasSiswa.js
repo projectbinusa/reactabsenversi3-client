@@ -37,9 +37,9 @@ function KelasSiswa() {
     getOrganisasiData();
   }, []);
 
-  useEffect(() => {
-    validateOrganisasiIds();
-  }, [userData, organisasiData]);
+  // useEffect(() => {
+  //   validateOrganisasiIds();
+  // }, [userData, organisasiData]);
 
   useEffect(() => {
     const filteredData = userData.filter(
@@ -199,6 +199,8 @@ function KelasSiswa() {
         };
       });
       setUserData(kelasWithSiswaCount);
+      console.log("kelas: ", kelasWithSiswaCount);
+
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -221,13 +223,13 @@ function KelasSiswa() {
     }
   };
 
-  const validateOrganisasiIds = () => {
-    const validIds = organisasiData.map((org) => org.id);
-    const validKelasIds = userData
-      .filter((kelas) => validIds.includes(kelas.organisasi.id))
-      .map((kelas) => kelas.organisasi.id);
-    setValidOrganisasiIds(validKelasIds);
-  };
+  // const validateOrganisasiIds = () => {
+  //   const validIds = organisasiData.map((org) => org.id);
+  //   const validKelasIds = userData
+  //     .filter((kelas) => validIds.includes(kelas.organisasi.id))
+  //     .map((kelas) => kelas.organisasi.id);
+  //   setValidOrganisasiIds(validKelasIds);
+  // };
 
   // const checkIfHasRelations = async (id) => {
   //   try {
@@ -266,7 +268,7 @@ function KelasSiswa() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${API_DUMMY}/api/kelas/delete-sementara/${id}`, {
+          await axios.delete(`${API_DUMMY}/api/kelas/deleteKelas/${id}`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -423,9 +425,9 @@ function KelasSiswa() {
                       <th scope="col" className="px-6 py-3 whitespace-nowrap">
                         Nama Kelas
                       </th>
-                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
+                      {/* <th scope="col" className="px-6 py-3 whitespace-nowrap">
                         Organisasi
-                      </th>
+                      </th> */}
                       <th scope="col" className="px-6 py-3 whitespace-nowrap">
                         Jumlah Siswa
                       </th>
@@ -460,11 +462,11 @@ function KelasSiswa() {
                           <td className="px-6 py-4 capitalize whitespace-nowrap">
                             {capitalize(kelas.namaKelas)}
                           </td>
-                          <td className="px-6 py-4 capitalize whitespace-nowrap">
-                            {validOrganisasiIds.includes(kelas.organisasi.id)
+                          {/* <td className="px-6 py-4 capitalize whitespace-nowrap">
+                            {validOrganisasiIds.includes(kelas.organisasi.id || "")
                               ? kelas.organisasi.namaOrganisasi
                               : "Invalid Organisasi"}
-                          </td>
+                          </td> */}
                           <td className="px-6 py-4 whitespace-nowrap">
                             {kelas.siswaCount || "0"}
                           </td>
