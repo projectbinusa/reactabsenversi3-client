@@ -24,6 +24,7 @@ export default function AddOrganisasi() {
   const [image, setImage] = useState(null);
   const idAdmin = localStorage.getItem("adminId");
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -65,7 +66,7 @@ export default function AddOrganisasi() {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
           },
         }
       );
@@ -92,6 +93,7 @@ export default function AddOrganisasi() {
       }, 2000);
     } catch (error) {
       Swal.fire("Gagal", "Gagal Menambahkan organisasi", "error");
+      navigate("/admin/organisasi");
     }
   };
 
