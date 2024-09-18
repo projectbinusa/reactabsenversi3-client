@@ -19,7 +19,11 @@ function DetailOrtu() {
 
   const getUserData = async () => {
     try {
-      const res = await axios.get(`${API_DUMMY}/api/orang-tua/getbyid/${id}`);
+      const res = await axios.get(`${API_DUMMY}/api/orang-tua/getbyid/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       setAdmin(res.data);
     } catch (error) {
       console.log(error);
