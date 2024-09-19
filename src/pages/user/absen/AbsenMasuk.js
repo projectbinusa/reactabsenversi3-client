@@ -25,13 +25,21 @@ function AbsenMasuk() {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
 
-  // // Batas koordinat yang diizinkan
-  const allowedCoordinates = {
-    northWest: { lat: -6.982580885, lon: 110.404028235 },
-    northEast: { lat: -6.982580885, lon: 110.404118565 },
-    southWest: { lat: -6.982670715, lon: 110.404028235 },
-    southEast: { lat: -6.982670715, lon: 110.404118565 },
-  };
+  // // Batas koordinat yang diizinkan excelent
+  // const allowedCoordinates = {
+  //   northWest: { lat: -6.982580885, lon: 110.404028235 },
+  //   northEast: { lat: -6.982580885, lon: 110.404118565 },
+  //   southWest: { lat: -6.982670715, lon: 110.404028235 },
+  //   southEast: { lat: -6.982670715, lon: 110.404118565 },
+  // };
+
+  // // Batas koordinat yang diizinkan smpn40smg
+const allowedCoordinates = {
+  northWest: { lat: -6.988985050934718, lon: 110.40435783994 },
+  northEast: { lat: -6.989424872078232, lon: 110.40505158383749 },
+  southWest: { lat: -6.99016918383492, lon: 110.4050114830342 },
+  southEast: { lat: -6.989554231156763, lon: 110.40406710911383 },
+};
 
   // const allowedCoordinates = {
   //   northWest: { lat: -6.968697419671277, lon: 110.25208956395724 },
@@ -181,7 +189,7 @@ function AbsenMasuk() {
       }
     }
 
-    // if (isWithinAllowedCoordinates(latitude, longitude)) {
+    if (isWithinAllowedCoordinates(latitude, longitude)) {
       try {
         const absensiCheckResponse = await axios.get(
           `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`,
@@ -227,13 +235,13 @@ function AbsenMasuk() {
         console.error("Error:", err);
         Swal.fire("Error", "Gagal Absen", "error");
       }
-    // } else {
-    //   Swal.fire(
-    //     "Error",
-    //     "Lokasi Anda di luar batas yang diizinkan untuk absensi",
-    //     "error"
-    //   );
-    // }
+    } else {
+      Swal.fire(
+        "Error",
+        "Lokasi Anda di luar batas yang diizinkan untuk absensi",
+        "error"
+      );
+    }
   };
 
   return (
