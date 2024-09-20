@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import axios from "axios";
+import { API_DUMMY } from "./api";
 
 function PrivateRoute({ element: Component }) {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -36,7 +37,7 @@ function PrivateRoute({ element: Component }) {
       let response;
       try {
         response = await axios.get(
-          `http://localhost:2026/api/superadmin/getbyid/${userId}`,
+          `${API_DUMMY}/api/superadmin/getbyid/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -46,7 +47,7 @@ function PrivateRoute({ element: Component }) {
       } catch (error) {
         try {
           response = await axios.get(
-            `http://localhost:2026/api/admin/getById/${userId}`,
+            `${API_DUMMY}/api/admin/getById/${userId}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -55,7 +56,7 @@ function PrivateRoute({ element: Component }) {
           );
         } catch (error) {
           response = await axios.get(
-            `http://localhost:2020/api/user/getUserBy/${userId}`,
+            `${API_DUMMY}/api/user/getUserBy/${userId}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
