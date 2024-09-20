@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 import { SidebarProvider } from "../../../components/SidebarContext";
 import Navbar1 from "../../../components/Navbar1";
+import ReactSelect from "react-select";
 
 function EditKaryawan() {
   const [username, setUsername] = useState("");
@@ -36,12 +37,39 @@ function EditKaryawan() {
           Authorization: `Bearer ${token}`,
         },
       });
+
+      if (res.data.kelas) {
+        setIdKelas({
+          value: res.data.kelas.id,
+          label: res.data.kelas.namaKelas,
+        });
+      } else {
+        setIdKelas(null);
+      }
+
+      if (res.data.orangTua) {
+        setIdOrangTua({
+          value: res.data.orangTua.id,
+          label: res.data.orangTua.nama,
+        });
+      } else {
+        setIdOrangTua(null);
+      }
+
+      if (res.data.shift) {
+        setIdShift({
+          value: res.data.shift.id,
+          label: res.data.shift.namaShift,
+        });
+      } else {
+        setIdShift(null);
+      }
+
       setUsername(res.data.username);
       setStatus(res.data.status);
       setIdJabatan(res.data.jabatan ? res.data.jabatan.idJabatan : "");
-      setIdShift(res.data.shift ? res.data.shift.id : "");
-      setIdOrangTua(res.data.orangTua ? res.data.orangTua.id : "");
-      setIdKelas(res.data.kelas ? res.data.kelas.id : "");
+      // setIdShift(res.data.shift ? res.data.shift.id : "");
+      // setIdOrangTua(res.data.orangTua ? res.data.orangTua.id : "");
       setIdOrganisasi(res.data.organisasi ? res.data.organisasi.id : "");
     } catch (error) {
       console.log(error);
@@ -98,11 +126,14 @@ function EditKaryawan() {
 
   const getOrangTuaOptions = async () => {
     try {
-      const res = await axios.get(`${API_DUMMY}/api/orang-tua/all`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.get(
+        `${API_DUMMY}/api/orang-tua/getALlBySuperAdmin/${adminId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setOrangTuaOptions(res.data);
     } catch (error) {
       console.log(error);
@@ -126,7 +157,7 @@ function EditKaryawan() {
   };
 
   useEffect(() => {
-    getUser();
+    getUser(idKelas);
     getJabatanOptions();
     getShiftOptions();
     getOrangTuaOptions();
@@ -136,15 +167,18 @@ function EditKaryawan() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const idOrangTua1 = idOrangTua ? idOrangTua.value : null;
+    const idShift1 = idShift ? idShift.value : null;
+    const idKelas1 = idKelas ? idKelas.value : null;
     try {
       await axios.put(
-        `${API_DUMMY}/api/user/editBYSuper/${id}?idShift=${idShift}&idOrangTua=${idOrangTua}&idKelas=${idKelas}&idOrganisasi=${idOrganisasi}`,
+        `${API_DUMMY}/api/user/editBYSuper/${id}?idShift=${idShift1}&idOrangTua=${idOrangTua1}&idKelas=${idKelas1}&idOrganisasi=${idOrganisasi}`,
         {
           username: username,
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -180,6 +214,21 @@ function EditKaryawan() {
     }
   };
 
+  const optionsKelas = kelasOptions.map((kelas) => ({
+    value: kelas.id,
+    label: kelas.namaKelas,
+  }));
+
+  const optionsOrtu = orangTuaOptions.map((ortu) => ({
+    value: ortu.id,
+    label: ortu.nama,
+  }));
+
+  const optionsShift = shiftOptions.map((shift) => ({
+    value: shift.id,
+    label: shift.namaShift,
+  }));
+
   // Helper function to capitalize each word, but not the character after an apostrophe
   // const  = (str) => {
   //   return str.replace(/\b\w/g, (char, index, input) => {
@@ -190,6 +239,25 @@ function EditKaryawan() {
   //     return char.toUpperCase(); // Otherwise, capitalize
   //   });
   // };
+
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      background: "transparent",
+      borderBottom: "1px solid #ccc",
+      marginTop: "10px",
+      poistion: "absolute",
+      fontSize: "14px",
+      "&:hover": {
+        outline: "none",
+        boxShadow: "none",
+      },
+      "&:focus": {
+        outline: "none",
+        boxShadow: "none",
+      },
+    }),
+  };
 
   return (
     <div className="flex flex-col h-screen">
@@ -224,8 +292,7 @@ function EditKaryawan() {
                       />
                       <label
                         htmlFor="username"
-                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                      >
+                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                         Username
                       </label>
                     </div>
@@ -245,89 +312,74 @@ function EditKaryawan() {
                         />
                         <label
                           htmlFor="username"
-                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                        >
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                           Status
                         </label>
                       </div>
-                      <div className="relative z-0 w-full mb-6 group">
+                      <div className="w-full mb-6 group">
                         <label
                           htmlFor="id_shift"
-                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                        >
+                          className="peer-focus:font-medium text-xs text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                           Waktu Pembelajaran
                         </label>
-                        <select
-                          name="idShift"
+                        <ReactSelect
+                          styles={customStyles}
                           value={idShift}
-                          onChange={(e) => setIdShift(e.target.value)}
-                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                        >
-                          <option value="">Belum memiliki</option>
-                          {shiftOptions.map((option) => (
-                            <option key={option.id} value={option.id}>
-                              {option.namaShift}
-                            </option>
-                          ))}
-                        </select>
+                          options={optionsShift}
+                          onChange={(selectedOption) => {
+                            setIdShift(selectedOption);
+                            console.log("Selected option: ", selectedOption);
+                          }}
+                          placeholder="Pilih Waktu Pembelajaran"
+                        />
                       </div>
                     </div>
                     <div className="grid md:grid-cols-2 md:gap-6 mb-6">
-                      <div className="relative z-0 w-full mb-6 group">
+                      <div className="w-full mb-6 group">
                         <label
                           htmlFor="id_orang_tua"
-                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                        >
+                          className="peer-focus:font-medium mt-0 text-xs text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                           Orang Tua
                         </label>
-                        <select
-                          name="idOrangTua"
+                        <ReactSelect
+                          styles={customStyles}
                           value={idOrangTua}
-                          onChange={(e) => setIdOrangTua(e.target.value)}
-                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                        >
-                          <option value="">Belum memiliki</option>
-                          {orangTuaOptions.map((option) => (
-                            <option key={option.id} value={option.id}>
-                              {option.nama}
-                            </option>
-                          ))}
-                        </select>
+                          options={optionsOrtu}
+                          onChange={(selectedOption) => {
+                            setIdOrangTua(selectedOption);
+                            console.log("Selected option: ", selectedOption);
+                          }}
+                          placeholder="Pilih Wali Murid"
+                        />
                       </div>
                       <div className="relative z-0 w-full mb-6 group">
                         <label
                           htmlFor="id_kelas"
-                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                        >
+                          className="peer-focus:font-medium text-xs text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                           Kelas
                         </label>
-                        <select
-                          name="idKelas"
+                        <ReactSelect
+                          styles={customStyles}
                           value={idKelas}
-                          onChange={(e) => setIdKelas(e.target.value)}
-                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                        >
-                          <option value="">Belum memiliki</option>
-                          {kelasOptions.map((option) => (
-                            <option key={option.id} value={option.id}>
-                              {option.namaKelas}
-                            </option>
-                          ))}
-                        </select>
+                          options={optionsKelas}
+                          onChange={(selectedOption) => {
+                            setIdKelas(selectedOption);
+                            console.log("Selected option: ", selectedOption);
+                          }}
+                          placeholder="Pilih Kelas"
+                        />
                       </div>
                       <div className="relative z-0 w-full mb-6 group">
                         <label
                           htmlFor="id_kelas"
-                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                        >
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                           Organisasi
                         </label>
                         <select
                           name="idOrganisasi"
                           value={idOrganisasi}
                           onChange={(e) => setIdOrganisasi(e.target.value)}
-                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                        >
+                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
                           <option value="">Belum memiliki</option>
                           {organisasiOptions.map((option) => (
                             <option key={option.id} value={option.id}>
@@ -340,14 +392,12 @@ function EditKaryawan() {
                     <div className="flex justify-between">
                       <a
                         className="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                        href="/admin/siswa"
-                      >
+                        href="/admin/siswa">
                         <FontAwesomeIcon icon={faArrowLeft} />
                       </a>
                       <button
                         type="submit"
-                        className="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800"
-                      >
+                        className="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
                         <FontAwesomeIcon icon={faFloppyDisk} />
                       </button>
                     </div>

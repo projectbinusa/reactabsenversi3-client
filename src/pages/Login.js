@@ -40,39 +40,29 @@ function Login() {
         localStorage.setItem("token", token);
         localStorage.setItem("email", email);
         localStorage.setItem("password", password);
+        localStorage.setItem("adminId", data.data.id);
+        localStorage.setItem("userId", data.data.id);
+        localStorage.setItem("id_orangtua", data.data.id);
+        localStorage.setItem("superadminId", data.data.id);
         localStorage.setItem("rememberMe", true);
       } else {
         sessionStorage.setItem("token", token);
+        localStorage.setItem("adminId", data.data.id);
+        localStorage.setItem("userId", data.data.id);
+        localStorage.setItem("id_orangtua", data.data.id);
+        localStorage.setItem("superadminId", data.data.id);
         sessionStorage.removeItem("email");
         sessionStorage.removeItem("password");
         localStorage.removeItem("rememberMe");
       }
-
-      if (data.data.role === "ADMIN") {
-        localStorage.setItem("role", data.data.role);
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("adminId", data.data.id);
-        localStorage.setItem("loginSuccess", "true");
-        window.location.href = "/";
-      } else if (data.data.role === "USER") {
-        localStorage.setItem("role", data.data.role);
-        localStorage.setItem("userId", data.data.id);
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("loginSuccess", "true");
-        window.location.href = "/";
-      } else if (data.data.role === "SUPERADMIN") {
-        localStorage.setItem("role", data.data.role);
-        localStorage.setItem("superadminId", data.data.id);
-        localStorage.setItem("loginSuccess", "true");
-        localStorage.setItem("token", data.token);
-        window.location.href = "/";
-      } else if (data.data.role === "Wali Murid") {
-        localStorage.setItem("role", data.data.role);
-        localStorage.setItem("id_orangtua", data.data.id);
-        localStorage.setItem("loginSuccess", "true");
-        localStorage.setItem("token", data.token);
-        window.location.href = "/";
-      }
+      localStorage.setItem("role", data.data.role);
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("adminId", data.data.id);
+      localStorage.setItem("userId", data.data.id);
+      localStorage.setItem("id_orangtua", data.data.id);
+      localStorage.setItem("superadminId", data.data.id);
+      localStorage.setItem("loginSuccess", "true");
+      window.location.href = "/";
     } catch (error) {
       Swal.fire({
         position: "center",
