@@ -1,44 +1,39 @@
-import React, { useEffect, useState } from "react";
-import Navbar from "../../../components/NavbarAdmin";
-import Sidebar from "../../../components/SidebarUser";
+import React, { useEffect, useState, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../../utils/api";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 import { SidebarProvider } from "../../../components/SidebarContext";
 import Navbar1 from "../../../components/Navbar1";
+import $ from "jquery";
+import "select2/dist/css/select2.min.css";
+import "select2/dist/js/select2.min.js";
 
 function AddSiswaPerkelas() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [status, setStatus] = useState("Siswa");
-  const [idOrganisasi, setIdOrganisasi] = useState("");
-  const [idShift, setIdShift] = useState("");
-  const [idOrangTua, setIdOrangTua] = useState(null);
-  const [idKelas, setIdKelas] = useState(null);
   const [password, setPassword] = useState("");
   const idAdmin = localStorage.getItem("adminId");
   const token = localStorage.getItem("token");
   const [organisasiList, setOrganisasiList] = useState([]);
   const [shiftList, setShiftList] = useState([]);
   const [orangTuaList, setOrangTuaList] = useState([]);
-  const [kelasList, setKelasList] = useState([]);
   const param = useParams();
+  const [selectedOrganisasi, setSelectedOrganisasi] = useState([]);
+  const [selectedOrangTua, setSelectedOrangTua] = useState([]);
+  const [selectedShift, setSelectedShift] = useState([]);
+  const selectOrganisasiRef = useRef(null);
+  const selectOrangTuaRef = useRef(null);
+  const selectShiftRef = useRef(null);
 
   const handleShowPasswordChange = () => {
     setShowPassword(!showPassword);
   };
-
-  useEffect(() => {
-    GetAllOrganisasi();
-    GetAllShift();
-    GetAllOrangTua();
-    GetAllKelas();
-  }, []);
 
   const GetAllOrganisasi = async () => {
     try {
@@ -55,6 +50,43 @@ function AddSiswaPerkelas() {
       console.log(error);
     }
   };
+  useEffect(() => {
+    // Fetch data organisasi
+    GetAllOrganisasi();
+
+    // Initialize Select2 on the correct class
+    $(selectOrganisasiRef.current).select2({
+      placeholder: "Pilih Organisasi",
+      width: "100%",
+      multiple: true, // Enable multiple selection
+    });
+
+    // Listen for changes in selection
+    $(selectOrganisasiRef.current).on("change", function () {
+      const selectedOptions = $(this).val();
+
+      // Validasi: Jika pengguna memilih lebih dari satu organisasi
+      if (selectedOptions && selectedOptions.length > 1) {
+        Swal.fire({
+          icon: "warning",
+          title: "Maaf",
+          text: "Anda hanya dapat memilih satu organisasi!",
+        });
+        // Hanya simpan pilihan pertama dan batalkan pilihan yang lain
+        const firstSelection = [selectedOptions[0]];
+        $(selectOrganisasiRef.current).val(firstSelection).trigger("change"); // Update Select2 UI
+
+        setSelectedOrganisasi(firstSelection); // Update state dengan pilihan pertama
+      } else {
+        setSelectedOrganisasi(selectedOptions || []); // Jika hanya satu pilihan, simpan ke state
+      }
+    });
+
+    // Cleanup the Select2 instance on unmount
+    return () => {
+      $(selectOrganisasiRef.current).select2("destroy");
+    };
+  }, [idAdmin]);
 
   const GetAllShift = async () => {
     try {
@@ -71,6 +103,44 @@ function AddSiswaPerkelas() {
       console.log(error);
     }
   };
+  useEffect(() => {
+    // Fetch data organisasi
+    GetAllShift();
+
+    // Initialize Select2 on the correct class
+    $(selectShiftRef.current).select2({
+      placeholder: "Pilih Waktu Pembelajaran",
+      width: "100%",
+      multiple: true, // Enable multiple selection
+    });
+
+    // Listen for changes in selection
+    $(selectShiftRef.current).on("change", function () {
+      const selectedOptions = $(this).val();
+
+      // Validasi: Jika pengguna memilih lebih dari satu organisasi
+      if (selectedOptions && selectedOptions.length > 1) {
+        // Gantikan alert dengan SweetAlert2
+        Swal.fire({
+          icon: "warning",
+          title: "Maaf",
+          text: "Anda hanya dapat memilih satu waktu pembelajaran!",
+        });
+        // Hanya simpan pilihan pertama dan batalkan pilihan yang lain
+        const firstSelection = [selectedOptions[0]];
+        $(selectShiftRef.current).val(firstSelection).trigger("change"); // Update Select2 UI
+
+        setSelectedShift(firstSelection); // Update state dengan pilihan pertama
+      } else {
+        setSelectedShift(selectedOptions || []); // Jika hanya satu pilihan, simpan ke state
+      }
+    });
+
+    // Cleanup the Select2 instance on unmount
+    return () => {
+      $(selectShiftRef.current).select2("destroy");
+    };
+  }, [idAdmin]);
 
   const GetAllOrangTua = async () => {
     try {
@@ -88,22 +158,42 @@ function AddSiswaPerkelas() {
       console.log(error);
     }
   };
+  useEffect(() => {
+    GetAllOrangTua();
+    // Initialize Select2 on the correct class
+    $(selectOrangTuaRef.current).select2({
+      placeholder: "Pilih Orang Tua",
+      width: "100%",
+      multiple: true, // Enable multiple selection
+    });
 
-  const GetAllKelas = async () => {
-    try {
-      const response = await axios.get(
-        `${API_DUMMY}/api/kelas/getALlByAdmin/${idAdmin}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setKelasList(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    // Listen for changes in selection
+    $(selectOrangTuaRef.current).on("change", function () {
+      const selectedOptions = $(this).val();
+
+      // Validasi: Jika pengguna memilih lebih dari satu organisasi
+      if (selectedOptions && selectedOptions.length > 1) {
+        // Gantikan alert dengan SweetAlert2
+        Swal.fire({
+          icon: "warning",
+          title: "Maaf",
+          text: "Anda hanya dapat memilih satu orang tua!",
+        });
+        // Hanya simpan pilihan pertama dan batalkan pilihan yang lain
+        const firstSelection = [selectedOptions[0]];
+        $(selectOrangTuaRef.current).val(firstSelection).trigger("change"); // Update Select2 UI
+
+        setSelectedOrangTua(firstSelection); // Update state dengan pilihan pertama
+      } else {
+        setSelectedOrangTua(selectedOptions || []); // Jika hanya satu pilihan, simpan ke state
+      }
+    });
+
+    // Cleanup the Select2 instance on unmount
+    return () => {
+      $(selectOrangTuaRef.current).select2("destroy");
+    };
+  }, [idAdmin]);
 
   const tambahKaryawan = async (e) => {
     e.preventDefault();
@@ -140,7 +230,7 @@ function AddSiswaPerkelas() {
       };
 
       await axios.post(
-        `${API_DUMMY}/api/user/tambahuser/byAdmin/${idAdmin}/byKelas?idKelas=${param.id}&idOrangTua=${idOrangTua}&idOrganisasi=${idOrganisasi}&idShift=${idShift}`,
+        `${API_DUMMY}/api/user/tambahuser/byAdmin/${idAdmin}/byKelas?idKelas=${param.id}&idOrangTua=${selectedOrangTua}&idOrganisasi=${selectedOrganisasi}&idShift=${selectedShift}`,
         newUser,
         {
           headers: {
@@ -241,18 +331,20 @@ function AddSiswaPerkelas() {
                         htmlFor="id_organisasi"
                         className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                       >
-                        Organisasi
+                        {/* Organisasi */}
                       </label>
                       <select
-                        value={idOrganisasi}
-                        onChange={(e) => setIdOrganisasi(e.target.value)}
+                        ref={selectOrganisasiRef}
+                        id="organisasi"
                         name="id_organisasi"
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                        className="js-example-basic-multiple block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                        multiple="multiple"
+                        required
                       >
                         <option value="" disabled>
                           Pilih Organisasi
                         </option>
-                        {organisasiList &&
+                        {Array.isArray(organisasiList) &&
                           organisasiList
                             .slice()
                             .reverse()
@@ -290,25 +382,28 @@ function AddSiswaPerkelas() {
                         htmlFor="id_shift"
                         className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                       >
-                        Shift
+                        {/* Shift */}
                       </label>
                       <select
+                        ref={selectShiftRef}
+                        id="shift"
                         name="id_shift"
-                        value={idShift}
-                        onChange={(e) => setIdShift(e.target.value)}
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                        className="js-example-basic-multiple block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                        multiple="multiple"
+                        required
                       >
                         <option value="" disabled>
                           Pilih Waktu Pembelajaran
                         </option>
-                        {shiftList
-                          .slice()
-                          .reverse()
-                          .map((sft) => (
-                            <option key={sft.id} value={sft.id}>
-                              {sft.namaShift}
-                            </option>
-                          ))}
+                        {Array.isArray(shiftList) &&
+                          shiftList
+                            .slice()
+                            .reverse()
+                            .map((org) => (
+                              <option key={org.id} value={org.id}>
+                                {org.namaShift}
+                              </option>
+                            ))}
                       </select>
                     </div>
                     <div className="relative z-0 w-full mb-6 group">
@@ -316,25 +411,28 @@ function AddSiswaPerkelas() {
                         htmlFor="id_orang_tua"
                         className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                       >
-                        Wali Murid
+                        {/* Wali Murid */}
                       </label>
                       <select
+                        ref={selectOrangTuaRef}
+                        id="orang_tua"
                         name="id_orang_tua"
-                        value={idOrangTua || ""}
-                        onChange={(e) => setIdOrangTua(Number(e.target.value))}
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                        className="js-example-basic-multiple block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                        multiple="multiple"
+                        required
                       >
-                        <option value="" disabled selected>
-                          Pilih Wali Murid
+                        <option value="" disabled>
+                          Pilih Orang Tua
                         </option>
-                        {orangTuaList
-                          .slice()
-                          .reverse()
-                          .map((ortu) => (
-                            <option key={ortu.id} value={ortu.id}>
-                              {ortu.nama}
-                            </option>
-                          ))}
+                        {Array.isArray(orangTuaList) &&
+                          orangTuaList
+                            .slice()
+                            .reverse()
+                            .map((org) => (
+                              <option key={org.id} value={org.id}>
+                                {org.nama}
+                              </option>
+                            ))}
                       </select>
                     </div>
                     <div className="relative z-0 w-full mb-6 group">
