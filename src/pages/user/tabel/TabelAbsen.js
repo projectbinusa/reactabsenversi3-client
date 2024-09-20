@@ -104,27 +104,38 @@ function TabelAbsen() {
     if (!absensiData) {
       console.log("User belum absen hari ini");
 
-      const now = new Date();
-      const startOfDay = new Date(
-        now.getFullYear(),
-        now.getMonth(),
-        now.getDate()
-      );
-
-      const endOfDay = new Date(startOfDay.getTime() + 24 * 60 * 60 * 1000);
-
-      if (now >= endOfDay) {
-        await postAlphaAbsensi();
-      } else {
-        console.log("Pengguna belum melewati batas waktu 24 jam.");
-      }
+      // Kirim status Alpha
+      await postAlphaAbsensi();
+      console.log("Status Alpha telah dikirim.");
     } else {
       console.log("Pengguna sudah melakukan absen hari ini.");
     }
   };
 
   useEffect(() => {
-    handleAbsensi();
+    // Dapatkan waktu sekarang
+    const now = new Date();
+
+    // Tentukan waktu akhir hari (23:59:59)
+    const endOfDay = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate(),
+      23,
+      59,
+      59
+    );
+
+    // Hitung berapa lama hingga akhir hari
+    const timeUntilEndOfDay = endOfDay.getTime() - now.getTime();
+
+    // Gunakan setTimeout untuk menjalankan pengecekan tepat pada akhir hari
+    const timeoutId = setTimeout(() => {
+      handleAbsensi();
+    }, timeUntilEndOfDay);
+
+    // Membersihkan timeout jika komponen tidak lagi aktif
+    return () => clearTimeout(timeoutId);
   }, []);
 
   useEffect(() => {
