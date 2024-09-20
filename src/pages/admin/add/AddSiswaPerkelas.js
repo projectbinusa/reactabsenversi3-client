@@ -113,7 +113,11 @@ function AddSiswaPerkelas() {
 
     try {
       // Fetch data semua pengguna
-      const response = await axios.get(`${API_DUMMY}/api/user/get-allUser`);
+      const response = await axios.get(`${API_DUMMY}/api/user/get-allUser`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const existingUsers = response.data;
 
       const isEmailExists = existingUsers.some(

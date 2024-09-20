@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Navbar from "../../../components/NavbarAdmin";
 import Sidebar from "../../../components/SidebarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,13 +10,17 @@ import { useNavigate } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 import { SidebarProvider } from "../../../components/SidebarContext";
 import Navbar1 from "../../../components/Navbar1";
+import $ from "jquery";
+import "select2/dist/css/select2.min.css";
+import "select2/dist/js/select2.min.js";
 
 function AddKelas() {
   const [namaKelas, setNamaKelas] = useState("");
   const [organisasilist, setOrganisasiList] = useState([]);
-  const [selectedOrganisasi, setSelectedOrganisasi] = useState("");
+  const [selectedOrganisasi, setSelectedOrganisasi] = useState([]);
   const idAdmin = localStorage.getItem("adminId");
   const token = localStorage.getItem("token");
+  const selectRef = useRef(null);
 
   const getOrganisasi = async () => {
     try {
@@ -97,6 +101,39 @@ function AddKelas() {
 
   useEffect(() => {
     getOrganisasi();
+
+    // Initialize Select2 on the correct class
+    $(selectRef.current).select2({
+      placeholder: "Pilih Organisasi",
+      width: "100%",
+      multiple: true, // Enable multiple selection
+    });
+
+    // Listen for changes in selection
+    $(selectRef.current).on("change", function () {
+      const selectedOptions = $(this).val();
+
+      // Validasi: Jika pengguna memilih lebih dari satu organisasi
+      if (selectedOptions && selectedOptions.length > 1) {
+        Swal.fire({
+          icon: "warning",
+          title: "Maaf",
+          text: "Anda hanya dapat memilih satu organisasi!",
+        });
+        // Hanya simpan pilihan pertama dan batalkan pilihan yang lain
+        const firstSelection = [selectedOptions[0]];
+        $(selectRef.current).val(firstSelection).trigger("change"); // Update Select2 UI
+
+        setSelectedOrganisasi(firstSelection); // Update state dengan pilihan pertama
+      } else {
+        setSelectedOrganisasi(selectedOptions || []); // Jika hanya satu pilihan, simpan ke state
+      }
+    });
+
+    // Cleanup the Select2 instance on unmount
+    return () => {
+      $(selectRef.current).select2("destroy");
+    };
   }, [idAdmin]);
 
   // Helper function to capitalize each word, but not the character after an apostrophe
@@ -154,25 +191,27 @@ function AddKelas() {
 
                       <div className="relative z-0 w-full mb-6 group">
                         <select
+                          ref={selectRef}
                           id="organisasi"
                           name="id_organisasi"
-                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                          value={selectedOrganisasi}
-                          onChange={(e) =>
-                            setSelectedOrganisasi(Number(e.target.value))
-                          }
+                          className="js-example-basic-multiple block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                          multiple="multiple"
                           required
                         >
                           <option value="" disabled>
                             Pilih Organisasi
                           </option>
                           {Array.isArray(organisasilist) &&
-                            organisasilist.map((org) => (
-                              <option key={org.id} value={org.id}>
-                                {org.namaOrganisasi}
-                              </option>
-                            ))}
+                            organisasilist
+                              .slice()
+                              .reverse()
+                              .map((org) => (
+                                <option key={org.id} value={org.id}>
+                                  {org.namaOrganisasi}
+                                </option>
+                              ))}
                         </select>
+
                         <label
                           htmlFor="organisasi"
                           className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"

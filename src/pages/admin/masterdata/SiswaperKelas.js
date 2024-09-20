@@ -133,7 +133,7 @@ function SiswaperKelas() {
         `${API_DUMMY}/api/user/by-kelas/${param.id}`,
         {
           headers: {
-            Authorization: `${token}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );

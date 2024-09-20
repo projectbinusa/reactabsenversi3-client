@@ -88,7 +88,7 @@ function OrangTua() {
         `${API_DUMMY}/api/user/${idAdmin}/users`,
         {
           headers: {
-            Authorization: `${token}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -102,24 +102,24 @@ function OrangTua() {
     }
   };
 
-  const getByIdOrtu = async () => {
-    const token = localStorage.getItem("token");
+  // const getByIdOrtu = async () => {
+  //   const token = localStorage.getItem("token");
 
-    try {
-      const response = await axios.get(
-        `${API_DUMMY}/api/absensi/by-orang-tua/${idOrtu}`,
-        {
-          headers: {
-            Authorization: `${token}`,
-          },
-        }
-      );
+  //   try {
+  //     const response = await axios.get(
+  //       `${API_DUMMY}/api/absensi/by-orang-tua/${idOrtu}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
 
-      setAllAbsensi(response.data.reverse());
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  //     setAllAbsensi(response.data.reverse());
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // };
 
   const deleteData = async (id) => {
     Swal.fire({
@@ -163,7 +163,7 @@ function OrangTua() {
   };
   useEffect(() => {
     getAllOrtu();
-    getByIdOrtu();
+    // getByIdOrtu();
     getAllKaryawan();
   }, []);
 
