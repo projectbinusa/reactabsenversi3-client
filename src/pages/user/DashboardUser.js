@@ -34,26 +34,29 @@ function Dashboard() {
   const fetchData = async () => {
     try {
       // Parallel fetching of data
-      const [userResponse, absensiResponse, cutiResponse, izinResponse] =
+      const [userResponse, absensiResponse, izinResponse] =
         await Promise.all([
           axios.get(`${API_DUMMY}/api/user/getUserBy/${userId}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }),
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }),
           axios.get(`${API_DUMMY}/api/absensi/getByUserId/${userId}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }),
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }),
           axios.get(`${API_DUMMY}/api/absensi/checkAbsensi/${userId}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }),
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }),
         ]);
 
+        console.log("testinggggggg");
+        
       setUsername(userResponse.data);
+      console.log("user: ", userResponse.data);
       setAbsensi(absensiResponse.data.reverse());
       console.log("absensi response: ", absensiResponse.data);
 
@@ -118,6 +121,8 @@ function Dashboard() {
     fetchData();
     fetchUserData();
     getIzin();
+    console.log("token: ", token);
+
 
     const interval = setInterval(() => {
       setCurrentDateTime(new Date());
@@ -216,30 +221,26 @@ function Dashboard() {
                     isAbsenMasuk
                       ? "bg-gray-500 cursor-not-allowed"
                       : "bg-blue-500"
-                  }`}
-                >
+                  }`}>
                   <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                     <div className="my-auto">
                       <p
                         className={`font-bold ${
                           isAbsenMasuk ? "text-gray-400" : "text-black"
-                        }`}
-                      >
+                        }`}>
                         Masuk
                       </p>
                       <p
                         className={`text-lg ${
                           isAbsenMasuk ? "text-gray-400" : "text-black"
-                        }`}
-                      >
+                        }`}>
                         Presensi masuk.
                       </p>
                     </div>
                     <div
                       className={`my-auto ${
                         isAbsenMasuk ? "text-gray-400" : "text-black"
-                      }`}
-                    >
+                      }`}>
                       <FontAwesomeIcon icon={faArrowRightToBracket} size="2x" />
                     </div>
                   </div>
@@ -252,30 +253,26 @@ function Dashboard() {
                     isPulangTengahHari
                       ? "bg-gray-500 cursor-not-allowed"
                       : "bg-green-500"
-                  }`}
-                >
+                  }`}>
                   <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                     <div className="my-auto">
                       <p
                         className={`font-bold ${
                           isPulangTengahHari ? "text-gray-400" : "text-black"
-                        }`}
-                      >
+                        }`}>
                         Pulang
                       </p>
                       <p
                         className={`text-lg ${
                           isPulangTengahHari ? "text-gray-400" : "text-black"
-                        }`}
-                      >
+                        }`}>
                         Presensi pulang
                       </p>
                     </div>
                     <div
                       className={`my-auto ${
                         isPulangTengahHari ? "text-gray-400" : "text-black"
-                      }`}
-                    >
+                      }`}>
                       <FontAwesomeIcon
                         icon={faArrowRightFromBracket}
                         size="2x"
@@ -291,30 +288,26 @@ function Dashboard() {
                     isIzinDisabled
                       ? "bg-gray-500 cursor-not-allowed"
                       : "bg-orange-500"
-                  }`}
-                >
+                  }`}>
                   <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                     <div className="my-auto">
                       <p
                         className={`font-bold ${
                           isIzinDisabled ? "text-gray-400" : "text-black"
-                        }`}
-                      >
+                        }`}>
                         Izin
                       </p>
                       <p
                         className={`text-lg ${
                           isIzinDisabled ? "text-gray-400" : "text-black"
-                        }`}
-                      >
+                        }`}>
                         Permohonan Izin
                       </p>
                     </div>
                     <div
                       className={`my-auto ${
                         isIzinDisabled ? "text-gray-400" : "text-black"
-                      }`}
-                    >
+                      }`}>
                       <FontAwesomeIcon icon={faCircleXmark} size="2x" />
                     </div>
                   </div>
@@ -333,8 +326,7 @@ function Dashboard() {
                 validInformasi.map((item) => (
                   <div
                     key={item.id}
-                    className="informasi-item p-4 bg-white border border-gray-200 rounded-lg shadow-md transform transition-transform hover:scale-105 hover:shadow-xl"
-                  >
+                    className="informasi-item p-4 bg-white border border-gray-200 rounded-lg shadow-md transform transition-transform hover:scale-105 hover:shadow-xl">
                     <div className="flex items-center mb-4">
                       <FontAwesomeIcon
                         icon={faCircleInfo}
