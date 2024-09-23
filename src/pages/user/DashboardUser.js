@@ -265,30 +265,20 @@ function Dashboard() {
 
               <Link to={isIzinDisabled ? "#" : "/user/izin"}>
                 <div
-                  className={`pl-2 h-24 rounded-lg shadow-md md:w-auto ${
-                    isIzinDisabled
-                      ? "bg-gray-500 cursor-not-allowed"
-                      : "bg-orange-500"
-                  }`}>
+                  className={`pl-2 h-24 rounded-lg shadow-md md:w-auto bg-orange-500`}>
                   <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                     <div className="my-auto">
                       <p
-                        className={`font-bold ${
-                          isIzinDisabled ? "text-gray-400" : "text-black"
-                        }`}>
+                        className={`font-bold text-black`}>
                         Izin
                       </p>
                       <p
-                        className={`text-lg ${
-                          isIzinDisabled ? "text-gray-400" : "text-black"
-                        }`}>
+                        className={`text-lg text-black`}>
                         Permohonan Izin
                       </p>
                     </div>
                     <div
-                      className={`my-auto ${
-                        isIzinDisabled ? "text-gray-400" : "text-black"
-                      }`}>
+                      className={`my-auto text-black`}>
                       <FontAwesomeIcon icon={faCircleXmark} size="2x" />
                     </div>
                   </div>

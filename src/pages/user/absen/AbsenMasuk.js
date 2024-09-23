@@ -228,7 +228,7 @@ const allowedCoordinates = {
           });
 
           setTimeout(() => {
-            // window.location.href = "/user/history_absen";
+            window.location.href = "/user/history_absen";
           }, 1500);
         }
       } catch (err) {
