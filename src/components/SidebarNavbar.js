@@ -207,16 +207,16 @@ function SidebarNavbar() {
                   <ul>
                     <li>
                       <Link
-                        to="/admin/dashboard"
+                        to="/"
                         className={`${
-                          isActive(["/admin/dashboard"])
+                          isActive(["/"])
                             ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
                             : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
                         } flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group`}
                       >
                         <FontAwesomeIcon
                           className={`flex-shrink-0 w-5 h-5 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
-                            isActive(["/admin/dashboard"])
+                            isActive(["/"])
                               ? "text-white hover:text-black"
                               : "text-blue-500"
                           }`}
@@ -754,7 +754,7 @@ function SidebarNavbar() {
                     <Link
                       to="/admin/cuti"
                       className={`${
-                    isActive(["/superadmin/dashboard"])
+                    isActive(["/super"])
                       ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
                       : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
                   } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}
@@ -854,7 +854,7 @@ function SidebarNavbar() {
                     <Link
                       to="/admin/lembur"
                       className={`${
-                    isActive(["/superadmin/dashboard"])
+                    isActive(["/super"])
                       ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
                       : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
                   } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}
@@ -875,16 +875,16 @@ function SidebarNavbar() {
                     {" "}
                     <li>
                       <Link
-                        to="/user/dashboard"
+                        to="/"
                         className={`${
-                          isActive(["/user/dashboard"])
+                          isActive(["/"])
                             ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
                             : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
                         } flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group`}
                       >
                         <FontAwesomeIcon
                           className={`flex-shrink-0 w-5 h-5 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
-                            isActive(["/user/dashboard"])
+                            isActive(["/"])
                               ? "text-white hover:text-black"
                               : "text-blue-500"
                           }`}
@@ -947,16 +947,16 @@ function SidebarNavbar() {
                   <ul>
                     <li>
                       <Link
-                        to="/superadmin/dashboard"
+                        to="/"
                         className={`flex items-center p-2 rounded-lg ${
-                          isActive(["/superadmin/dashboard"])
+                          isActive(["/"])
                             ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
                             : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
                         }`}
                       >
                         <FontAwesomeIcon
                           className={`flex-shrink-0 w-5 h-5 transition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
-                            isActive(["/superadmin/dashboard"])
+                            isActive(["/"])
                               ? "text-white hover:text-black"
                               : "text-blue-500"
                           }`}
@@ -1046,7 +1046,7 @@ function SidebarNavbar() {
                 logout();
               }}
               className={`${
-                    isActive(["/superadmin/dashboard"])
+                    isActive(["/super"])
                       ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
                       : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
                   } flex items-center p-2 text-blue-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group`}
