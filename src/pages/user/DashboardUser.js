@@ -54,7 +54,7 @@ function Dashboard() {
         ]);
 
         console.log("testinggggggg");
-        
+
       setUsername(userResponse.data);
       console.log("user: ", userResponse.data);
       setAbsensi(absensiResponse.data.reverse());
@@ -215,32 +215,23 @@ function Dashboard() {
             </div>
 
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8 mt-7">
-              <Link to={isAbsenMasuk ? "#" : "/user/absen"}>
+              <Link to={"/user/absen"}>
                 <div
-                  className={`pl-2 h-24 rounded-lg shadow-md md:w-auto ${
-                    isAbsenMasuk
-                      ? "bg-gray-500 cursor-not-allowed"
-                      : "bg-blue-500"
-                  }`}>
+                  className={`pl-2 h-24 rounded-lg shadow-md md:w-auto`}>
                   <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                     <div className="my-auto">
                       <p
-                        className={`font-bold ${
-                          isAbsenMasuk ? "text-gray-400" : "text-black"
-                        }`}>
+                        className={`font-bold text-black
+                      `}>
                         Masuk
                       </p>
                       <p
-                        className={`text-lg ${
-                          isAbsenMasuk ? "text-gray-400" : "text-black"
-                        }`}>
+                        className={`text-lg text-black`}>
                         Presensi masuk.
                       </p>
                     </div>
                     <div
-                      className={`my-auto ${
-                        isAbsenMasuk ? "text-gray-400" : "text-black"
-                      }`}>
+                      className={`my-auto text-black`}>
                       <FontAwesomeIcon icon={faArrowRightToBracket} size="2x" />
                     </div>
                   </div>
@@ -249,30 +240,20 @@ function Dashboard() {
 
               <Link to={isPulangTengahHari ? "#" : "/user/pulang"}>
                 <div
-                  className={`pl-2 h-24 rounded-lg shadow-md md:w-auto ${
-                    isPulangTengahHari
-                      ? "bg-gray-500 cursor-not-allowed"
-                      : "bg-green-500"
-                  }`}>
+                  className={`pl-2 h-24 rounded-lg shadow-md md:w-auto bg-green-500`}>
                   <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                     <div className="my-auto">
                       <p
-                        className={`font-bold ${
-                          isPulangTengahHari ? "text-gray-400" : "text-black"
-                        }`}>
+                        className={`font-bold text-black`}>
                         Pulang
                       </p>
                       <p
-                        className={`text-lg ${
-                          isPulangTengahHari ? "text-gray-400" : "text-black"
-                        }`}>
+                        className={`text-lg text-black`}>
                         Presensi pulang
                       </p>
                     </div>
                     <div
-                      className={`my-auto ${
-                        isPulangTengahHari ? "text-gray-400" : "text-black"
-                      }`}>
+                      className={`my-auto text-black`}>
                       <FontAwesomeIcon
                         icon={faArrowRightFromBracket}
                         size="2x"
