@@ -128,7 +128,7 @@ function App() {
       });
     }, [location]);
 
-    return null; 
+    return null;
   };
 
   useEffect(() => {
@@ -141,7 +141,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<PrivateRoute element={IndexDashboard} />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<PrivateRoute element={Login} />} />
         <Route path="/navbar" element={<Navbar1 />} />
         <Route path="/register" element={<Register />} />
         <Route path="/registerUser" element={<RegisterUser />} />
@@ -186,10 +186,10 @@ function App() {
               path="/admin/detailOrtu/:id"
               element={<PrivateRoute element={DetailOrtu} />}
             />
-            <Route
+            {/* <Route
               path="/admin/dashboard"
               element={<PrivateRoute element={Dashboard} />}
-            />
+            /> */}
             <Route
               path="/admin/profil"
               element={<PrivateRoute element={Profil} />}
@@ -386,10 +386,10 @@ function App() {
         {/* /* start user */}
         {role === "USER" && (
           <>
-            <Route
+            {/* <Route
               path="/user/dashboard"
               element={<PrivateRoute element={DashboardUser} />}
-            />
+            /> */}
             <Route
               path="/user/history_absen"
               element={<PrivateRoute element={TabelAbsen} />}
@@ -449,10 +449,10 @@ function App() {
         {/* superadmin Routes */}
         {role === "SUPERADMIN" && (
           <>
-            <Route
+            {/* <Route
               path="/superadmin/dashboard"
               element={<PrivateRoute element={DashboardSA} />}
-            />
+            /> */}
             {/* admin */}
             <Route
               path="/superadmin/admin"
@@ -578,10 +578,10 @@ function App() {
         {/* end superadmin */}
         {role === "Wali Murid" && (
           <>
-            <Route
+            {/* <Route
               path="/walimurid/dashboard"
               element={<PrivateRoute element={DashboardOrtu} />}
-            />
+            /> */}
             <Route
               path="/walimurid/detail_info/:id"
               element={<PrivateRoute element={DetailPengumuman} />}

@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 
 function PrivateRoute({ element: Component }) {
   const location = useLocation();
 
-  // Fungsi untuk memeriksa apakah token sudah kedaluwarsa atau tidak ada
   const isTokenValid = () => {
     const token = localStorage.getItem("token");
     if (!token) return false;
@@ -18,9 +17,21 @@ function PrivateRoute({ element: Component }) {
     }
   };
 
-  // Jika token tidak valid atau tidak ada, arahkan ke halaman login
-  if (!isTokenValid()) {
-    return <Navigate to="/login" state={{ from: location }} />;
+  const isLoginPath = location.pathname === "/login";
+  const tokenValid = isTokenValid();
+
+  useEffect(() => {
+    if (tokenValid && isLoginPath) {
+      <Navigate to="/" replace />;
+    }
+  }, [tokenValid, isLoginPath]);
+
+  if (!tokenValid && !isLoginPath) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  if (tokenValid && isLoginPath) {
+    return <Navigate to="/" replace />;
   }
 
   return <Component />;
