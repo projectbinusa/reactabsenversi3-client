@@ -1,11 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
-import Navbar from "../../../components/NavbarUser";
 import Webcam from "react-webcam";
 import axios from "axios";
 import Swal from "sweetalert2";
-import Loader from "../../../components/Loader";
 import { API_DUMMY } from "../../../utils/api";
-import { useNavigate } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 import "../css/AbsenMasuk.css";
 import { SidebarProvider } from "../../../components/SidebarContext";
@@ -18,9 +15,9 @@ function AbsenMasuk() {
   const [error, setError] = useState("");
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
   const [address, setAddress] = useState("");
-  const [imageFile, setImageFile] = useState("");
+  const [ setImageFile] = useState("");
   const [fetchingLocation, setFetchingLocation] = useState(true);
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
@@ -34,12 +31,12 @@ function AbsenMasuk() {
   // };
 
   // // Batas koordinat yang diizinkan smpn40smg
-const allowedCoordinates = {
-  northWest: { lat: -6.988985050934718, lon: 110.40435783994 },
-  northEast: { lat: -6.989424872078232, lon: 110.40505158383749 },
-  southWest: { lat: -6.99016918383492, lon: 110.4050114830342 },
-  southEast: { lat: -6.989554231156763, lon: 110.40406710911383 },
-};
+// const allowedCoordinates = {
+//   northWest: { lat: -6.988985050934718, lon: 110.40435783994 },
+//   northEast: { lat: -6.989424872078232, lon: 110.40505158383749 },
+//   southWest: { lat: -6.99016918383492, lon: 110.4050114830342 },
+//   southEast: { lat: -6.989554231156763, lon: 110.40406710911383 },
+// };
 
   // const allowedCoordinates = {
   //   northWest: { lat: -6.968697419671277, lon: 110.25208956395724 },
@@ -53,7 +50,7 @@ const allowedCoordinates = {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  });
 
   useEffect(() => {
     let watchId;
@@ -108,7 +105,7 @@ const allowedCoordinates = {
         navigator.geolocation.clearWatch(watchId);
       }
     };
-  }, []);
+  });
 
   const tambahkanNolDepan = (num) => {
     return num < 10 ? "0" + num : num;
@@ -129,17 +126,17 @@ const allowedCoordinates = {
 
 
   // validasi
-  const isWithinAllowedCoordinates = (lat, lon) => {
-    const { northWest, northEast, southWest, southEast } = allowedCoordinates;
-    const tolerance = 0.00001;
+  // const isWithinAllowedCoordinates = (lat, lon) => {
+  //   const { northWest, northEast, southWest, southEast } = allowedCoordinates;
+  //   const tolerance = 0.00001;
 
-    return (
-      lat >= southWest.lat - tolerance &&
-      lat <= northWest.lat + tolerance &&
-      lon >= southWest.lon - tolerance &&
-      lon <= northEast.lon + tolerance
-    );
-  };
+  //   return (
+  //     lat >= southWest.lat - tolerance &&
+  //     lat <= northWest.lat + tolerance &&
+  //     lon >= southWest.lon - tolerance &&
+  //     lon <= northEast.lon + tolerance
+  //   );
+  // };
 
   const handleCaptureAndSubmitMasuk = async () => {
     const imageSrc = webcamRef.current.getScreenshot();
@@ -246,7 +243,7 @@ const allowedCoordinates = {
 
   return (
     <>
-      {loading && <Loader />}
+      {/* {loading && <Loader />} */}
       <div className="flex flex-col h-screen">
         <SidebarProvider>
           <Navbar1 />

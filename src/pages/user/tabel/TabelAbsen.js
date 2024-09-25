@@ -46,7 +46,7 @@ function TabelAbsen() {
       }
     };
     getAbsensi();
-  }, []);
+  });
 
   const checkUserAbsensiToday = async () => {
     const token = localStorage.getItem("token");
@@ -136,7 +136,7 @@ function TabelAbsen() {
 
     // Membersihkan timeout jika komponen tidak lagi aktif
     return () => clearTimeout(timeoutId);
-  }, []);
+  });
 
   useEffect(() => {
     const filteredData = absensi.filter(
