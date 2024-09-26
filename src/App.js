@@ -116,7 +116,7 @@ import { analytics } from "./firebase";
 import { logEvent } from "firebase/analytics";
 import Koordinat from "./pages/admin/masterdata/koordinat/Koordinat";
 import AddKoordinat from "./pages/admin/masterdata/koordinat/AddKoordinat";
-import EditKoodinat from "./pages/admin/masterdata/koordinat/EditKoordinat";
+import EditKoordinat from "./pages/admin/masterdata/koordinat/EditKoordinat";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -370,7 +370,7 @@ function App() {
             />
             <Route
               path="/edit/koordinat/:id"
-              element={<PrivateRoute element={EditKoodinat} />}
+              element={<PrivateRoute element={EditKoordinat} />}
             />
             <Route
               path="/add/koordinat"

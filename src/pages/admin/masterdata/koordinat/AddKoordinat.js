@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
@@ -10,28 +10,31 @@ import Navbar1 from "../../../../components/Navbar1";
 
 function AddKoordinat() {
   const [northEastLat, setNorthEastLat] = useState("");
-  const [northEastLong, setnorthEastLong] = useState("");
+  const [northEastLng, setnorthEastLng] = useState("");
   const [northWestLat, setNorthWestLat] = useState("");
-  const [northWestLong, setNorthWestLong] = useState("");
+  const [northWestLng, setNorthWestLng] = useState("");
   const [southEastLat, setSouthEastLat] = useState("");
-  const [southEastLong, setsouthEastLong] = useState("");
+  const [southEastLng, setsouthEastLng] = useState("");
   const [southWestLat, setSouthWestLat] = useState("");
-  const [southWestLong, setSouthWestLong] = useState("");
+  const [southWestLng, setSouthWestLng] = useState("");
   const idAdmin = localStorage.getItem("adminId");
   const token = localStorage.getItem("token");
-  const selectRef = useRef(null);
 
-  const tambahLokasi = async (e) => {
+  const tambahKoordinat = async (e) => {
     e.preventDefault();
     try {
       const add = {
         northEastLat: northEastLat,
-        northEastLong: northEastLong,
+        northEastLng: northEastLng,
         northWestLat: northWestLat,
-        northWestLong: northWestLong,
+        northWestLng: northWestLng,
+        southEastLat: southEastLat,
+        southEastLng: southEastLng,
+        southWestLat: southWestLat,
+        southWestLng: southWestLng,
       };
       await axios.post(
-        `${API_DUMMY}/api/koordinat/tambahKoordinat/10`,
+        `${API_DUMMY}/api/koordinat/tambahKoordinat/${idAdmin}`,
         add,
         {
           headers: {
@@ -43,7 +46,7 @@ function AddKoordinat() {
         title: "Berhasil",
         text: "Berhasil menambahkan data",
         icon: "success",
-        showConfirmButton: false, // Ini akan menghilangkan tombol konfirmasi
+        showConfirmButton: false,
       });
       setTimeout(() => {
         window.location.href = "/admin/koordinat";
@@ -85,10 +88,93 @@ function AddKoordinat() {
                 </div>
                 <hr />
                 <div className="mt-5 text-left">
-                  <form onSubmit={tambahLokasi}>
+                  <form onSubmit={tambahKoordinat}>
                     {/* <!-- Form Input --> */}
                     <div className="grid md:grid-cols-2 md:gap-6">
-                      {/* <!-- Nama Lokasi Input --> */}
+                      <div className="relative z-0 w-full mb-6 group">
+                        <input
+                          type="text"
+                          name="tenggara_lat"
+                          id="tenggara_lat"
+                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                          autoComplete="off"
+                          placeholder=" "
+                          value={southEastLat}
+                          onChange={(e) =>
+                            setSouthEastLat(capitalizeWords(e.target.value))
+                          }
+                          required
+                        />
+                        <label
+                          htmlFor="tenggara_lat"
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                        >
+                          Tenggara Latitude
+                        </label>
+                      </div>
+                      <div className="relative z-0 w-full mb-6 group">
+                        <input
+                          type="text"
+                          name="tenggara_lng"
+                          id="tenggara_lng"
+                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                          placeholder=" "
+                          autoComplete="off"
+                          value={southEastLng}
+                          onChange={(e) =>
+                            setsouthEastLng(capitalizeWords(e.target.value))
+                          }
+                          required
+                        />
+                        <label
+                          htmlFor="tenggara_lng"
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                        >
+                          Tenggara Lngitude
+                        </label>
+                      </div>
+                      <div className="relative z-0 w-full mb-6 group">
+                        <input
+                          type="text"
+                          name="southWestLat"
+                          id="southWestLat"
+                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                          placeholder=" "
+                          autoComplete="off"
+                          value={southWestLat}
+                          onChange={(e) =>
+                            setSouthWestLat(capitalizeWords(e.target.value))
+                          }
+                          required
+                        />
+                        <label
+                          htmlFor="southWestLat"
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                        >
+                          Barat Daya Latitude
+                        </label>
+                      </div>
+                      <div className="relative z-0 w-full mb-6 group">
+                        <input
+                          type="text"
+                          name="southWestLng"
+                          id="southWestLng"
+                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                          placeholder=" "
+                          autoComplete="off"
+                          value={southWestLng}
+                          onChange={(e) =>
+                            setSouthWestLng(capitalizeWords(e.target.value))
+                          }
+                          required
+                        />
+                        <label
+                          htmlFor="northEastLng"
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                        >
+                          Barat Daya Lngitude
+                        </label>
+                      </div>
                       <div className="relative z-0 w-full mb-6 group">
                         <input
                           type="text"
@@ -96,6 +182,7 @@ function AddKoordinat() {
                           id="timur_laut_lat"
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                           autoComplete="off"
+                          placeholder=" "
                           value={northEastLat}
                           onChange={(e) =>
                             setNorthEastLat(capitalizeWords(e.target.value))
@@ -104,30 +191,30 @@ function AddKoordinat() {
                         />
                         <label
                           htmlFor="timur_laut_lat"
-                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                        >
                           Timur Laut Latitude
                         </label>
                       </div>
-
-                      {/* <!-- northEastLong Kantor Input --> */}
                       <div className="relative z-0 w-full mb-6 group">
                         <input
                           type="text"
-                          name="northEastLong"
-                          id="northEastLong"
+                          name="northEastLng"
+                          id="northEastLng"
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                           placeholder=" "
                           autoComplete="off"
-                          value={northEastLong}
+                          value={northEastLng}
                           onChange={(e) =>
-                            setnorthEastLong(capitalizeWords(e.target.value))
+                            setnorthEastLng(capitalizeWords(e.target.value))
                           }
                           required
                         />
                         <label
-                          htmlFor="northEastLong"
-                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                          Timur Laut Longitude
+                          htmlFor="northEastLng"
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                        >
+                          Timur Laut Lngitude
                         </label>
                       </div>
                       <div className="relative z-0 w-full mb-6 group">
@@ -146,28 +233,30 @@ function AddKoordinat() {
                         />
                         <label
                           htmlFor="northWestLat"
-                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                          Utara Barat Latitude
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                        >
+                          Barat Laut Latitude
                         </label>
                       </div>
                       <div className="relative z-0 w-full mb-6 group">
                         <input
                           type="text"
-                          name="northWestLong"
-                          id="northWestLong"
+                          name="northWestLng"
+                          id="northWestLng"
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                           placeholder=" "
                           autoComplete="off"
-                          value={northWestLong}
+                          value={northWestLng}
                           onChange={(e) =>
-                            setNorthWestLong(capitalizeWords(e.target.value))
+                            setNorthWestLng(capitalizeWords(e.target.value))
                           }
                           required
                         />
                         <label
-                          htmlFor="northEastLong"
-                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                          Utara Barat Longitude
+                          htmlFor="northEastLng"
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                        >
+                          Barat Laut Lngitude
                         </label>
                       </div>
                     </div>
@@ -176,12 +265,14 @@ function AddKoordinat() {
                     <div className="flex justify-between">
                       <a
                         className="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                        href="/admin/lokasi">
+                        href="/admin/koordinat"
+                      >
                         <FontAwesomeIcon icon={faArrowLeft} />
                       </a>
                       <button
                         type="submit"
-                        className="text-white bg-indigo-500  focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
+                        className="text-white bg-indigo-500  focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800"
+                      >
                         <FontAwesomeIcon icon={faFloppyDisk} />
                       </button>
                     </div>

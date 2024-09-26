@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  faInfo,
   faPenToSquare,
   faPlus,
   faTrash,
@@ -15,7 +14,7 @@ import { SidebarProvider } from "../../../../components/SidebarContext";
 import Navbar1 from "../../../../components/Navbar1";
 
 function Koordinat() {
-  const [userData, setUserData] = useState([]);
+  const [koordinat, setKoordinat] = useState([]);
   const idAdmin = localStorage.getItem("adminId");
   const token = localStorage.getItem("token");
   const [searchTerm, setSearchTerm] = useState("");
@@ -33,20 +32,8 @@ function Koordinat() {
           },
         }
       );
-      // const lokasiList = response.data.reverse();
 
-      // const siswaResponse = await axios.get(`${API_DUMMY}/api/user/${idAdmin}/users`);
-      // const siswaList = siswaResponse.data;
-      // console.log("siswa list: ", siswaResponse.data);
-
-      // const ortuWithSiswaCount = lokasiList.map((lokasi) => {
-      //     const siswaCount = siswaList.filter((siswa) => siswa.lokasi?.id === lokasi.id).length;
-      //     return {
-      //         ...lokasi,
-      //         siswaCount,
-      //     };
-      // });
-      setUserData(response.data.reverse());
+      setKoordinat(response.data.reverse());
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -64,11 +51,14 @@ function Koordinat() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${API_DUMMY}/api/lokasi/delete-sementara/` + id, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+          await axios.delete(
+            `${API_DUMMY}/api/koordinat/delete-koordinat/` + id,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
 
           Swal.fire({
             icon: "success",
@@ -95,16 +85,33 @@ function Koordinat() {
   }, []);
 
   useEffect(() => {
-    const filteredData = userData.filter(
-      (lokasi) =>
-        lokasi.namaLokasi?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        lokasi.alamat?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        lokasi.organisasi?.namaOrganisasi
+    const filteredData = koordinat.filter(
+      (koordinat) =>
+        koordinat.northEastLat
           ?.toLowerCase()
-          .includes(searchTerm.toLowerCase())
+          .includes(searchTerm.toLowerCase()) ||
+        koordinat.northEastLng
+          ?.toLowerCase()
+          .includes(searchTerm.toLowerCase()) ||
+        koordinat.northWestLat
+          ?.toLowerCase()
+          .includes(searchTerm.toLowerCase()) ||
+        koordinat.northWestLng
+          ?.toLowerCase()
+          .includes(searchTerm.toLowerCase()) ||
+        koordinat.southEastLat
+          ?.toLowerCase()
+          .includes(searchTerm.toLowerCase()) ||
+        koordinat.southEastLng
+          ?.toLowerCase()
+          .includes(searchTerm.toLowerCase()) ||
+        koordinat.southWestLat
+          ?.toLowerCase()
+          .includes(searchTerm.toLowerCase()) ||
+        koordinat.southWestLng?.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setTotalPages(Math.ceil(filteredData.length / limit));
-  }, [searchTerm, limit, userData]);
+  }, [searchTerm, limit, koordinat]);
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -119,29 +126,36 @@ function Koordinat() {
     setCurrentPage(page);
   }
 
-  const filteredLokasi = userData.filter(
-    (lokasi) =>
-      lokasi.namaLokasi?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      lokasi.alamat?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      lokasi.organisasi?.namaOrganisasi
+  const filteredKoordinat = koordinat.filter(
+    (koordinat) =>
+      koordinat.northEastLat
         ?.toLowerCase()
-        .includes(searchTerm.toLowerCase())
+        .includes(searchTerm.toLowerCase()) ||
+      koordinat.northEastLng
+        ?.toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      koordinat.northWestLat
+        ?.toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      koordinat.northWestLng
+        ?.toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      koordinat.southEastLat
+        ?.toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      koordinat.southEastLng
+        ?.toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      koordinat.southWestLat
+        ?.toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      koordinat.southWestLng?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const paginatedLokasi = filteredLokasi.slice(
+  const paginatedKoordinat = filteredKoordinat.slice(
     (currentPage - 1) * limit,
     currentPage * limit
   );
-
-  const capitalize = (str) => {
-    if (typeof str !== "string") {
-      return str; // Atau Anda bisa mengembalikan string kosong jika itu lebih sesuai
-    }
-    return str
-      .split(" ")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(" ");
-  };
 
   return (
     <div className="flex flex-col h-screen">
@@ -194,7 +208,7 @@ function Koordinat() {
               {/* <!-- Tabel --> */}
               <div className=" overflow-x-auto mt-5">
                 <table
-                  id="dataJabatan"
+                  id="dataKoordinat"
                   className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
                 >
                   {/* <!-- Tabel Head --> */}
@@ -204,19 +218,28 @@ function Koordinat() {
                         No
                       </th>
                       <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                      Timur Laut Latitude
+                        Tenggara Latitude
                       </th>
-                      <th scope="col" className="px-6 py-3">
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
+                        Tenggara Longitude
+                      </th>
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
+                        Barat Daya Latitude
+                      </th>
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
+                        Barat Daya Longitude
+                      </th>
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
+                        Timur Laut Latitude
+                      </th>
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
                         Timur Laut Longitude
                       </th>
-                      {/* <th scope="col" className="px-6 py-3">
-                        Jumlah Siswa
-                      </th> */}
-                      <th scope="col" className="px-6 py-3">
-                        Utara Barat Latitude
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
+                        Barat Laut Latitude
                       </th>
-                      <th scope="col" className="px-6 py-3">
-                        Utara Barat Longitude
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
+                        Barat Laut Longitude
                       </th>
                       <th scope="col" className="px-6 py-3 text-center">
                         Aksi
@@ -225,7 +248,7 @@ function Koordinat() {
                   </thead>
                   {/* <!-- Tabel Body --> */}
                   <tbody className="text-left">
-                    {paginatedLokasi.length === 0 ? (
+                    {paginatedKoordinat.length === 0 ? (
                       <tr>
                         <td
                           colSpan="6"
@@ -235,7 +258,7 @@ function Koordinat() {
                         </td>
                       </tr>
                     ) : (
-                      paginatedLokasi.map((lokasi, index) => (
+                      paginatedKoordinat.map((koordinat, index) => (
                         <tr
                           className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                           key={index}
@@ -247,21 +270,33 @@ function Koordinat() {
                             {(currentPage - 1) * limit + index + 1}
                           </th>
                           <td className="px-6 py-4 whitespace-nowrap">
-                            {lokasi.northEastLat}
+                            {koordinat.southEastLat}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
-                            {lokasi.northEastLng}
-                          </td>
-                          {/* <td className="px-6 py-4">{capitalize(karyawan)}</td> */}
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            {lokasi.northWestLat}
+                            {koordinat.southEastLng}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
-                            {lokasi.northWestLng}
+                            {koordinat.southWestLat}
                           </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            {koordinat.southWestLng}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            {koordinat.northEastLat}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            {koordinat.northEastLng}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            {koordinat.northWestLat}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            {koordinat.northWestLng}
+                          </td>
+
                           <td className="py-3">
                             <div className="flex items-center -space-x-4 ml-12">
-                              <a href={`/admin/koordinat/${lokasi.id}`}>
+                              <a href={`/edit/koordinat/${koordinat.id}`}>
                                 <button className="z-30 block rounded-full border-2 border-white bg-yellow-100 p-4 text-yellow-700 active:bg-red-50">
                                   <span className="inline-block">
                                     <FontAwesomeIcon
@@ -273,7 +308,7 @@ function Koordinat() {
                               </a>
                               <button
                                 className="z-30 block rounded-full border-2 border-white bg-red-100 p-4 text-red-700 active:bg-red-50"
-                                onClick={() => deleteData(lokasi.id)}
+                                onClick={() => deleteData(koordinat.id)}
                               >
                                 <span className="inline-block">
                                   <FontAwesomeIcon
