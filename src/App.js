@@ -114,6 +114,9 @@ import Loader from "./components/Loader";
 import Navbar1 from "./components/Navbar1";
 import { analytics } from "./firebase";
 import { logEvent } from "firebase/analytics";
+import Koordinat from "./pages/admin/masterdata/koordinat/Koordinat";
+import AddKoordinat from "./pages/admin/masterdata/koordinat/AddKoordinat";
+import EditKoodinat from "./pages/admin/masterdata/koordinat/EditKoordinat";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -360,6 +363,18 @@ function App() {
             <Route
               path="/admin/addsiswaperkelas/:id"
               element={<PrivateRoute element={AddSiswaPerkelas} />}
+            />
+            <Route
+              path="/admin/koordinat"
+              element={<PrivateRoute element={Koordinat} />}
+            />
+            <Route
+              path="/edit/koordinat/:id"
+              element={<PrivateRoute element={EditKoodinat} />}
+            />
+            <Route
+              path="/add/koordinat"
+              element={<PrivateRoute element={AddKoordinat} />}
             />
           </>
           // ) : (
