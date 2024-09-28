@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../../components/NavbarUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
@@ -70,7 +69,7 @@ function DetailAbsen() {
 
   useEffect(() => {
     getAbsensi();
-  }, []);
+  });
 
   const formatDate = (dateString) => {
     const options = {

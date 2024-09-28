@@ -1,20 +1,17 @@
 import React, { useState } from "react";
-import Navbar from "../../../components/NavbarUser";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../../utils/api";
-import { useNavigate } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 import { SidebarProvider } from "../../../components/SidebarContext";
 import Navbar1 from "../../../components/Navbar1";
 
 function AddLembur() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [jam_mulai, setJamMulai] = useState("");
   const [jam_selesai, setJamSelesai] = useState("");
   const [keterangan_lembur, setKeteranganLembur] = useState("");
   const [tanggal_lembur, setTanggalLembur] = useState("");
-  const [nama, setNama] = useState("");
+  const [nama] = useState("");
 
   const addLembur = async (e) => {
     e.preventDefault();
@@ -27,7 +24,6 @@ function AddLembur() {
       tanggalLembur: tanggal_lembur,
     };
 
-    const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
 
     if (!userId) {
@@ -61,9 +57,6 @@ function AddLembur() {
     }
   };
 
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
 
   const handleBack = () => {
     window.location.href = "/user/dashboard";

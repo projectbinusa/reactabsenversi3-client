@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../../components/NavbarUser";
 import axios from "axios";
 import Swal from "sweetalert2";
 // import { Toast } from "flowbite-react";

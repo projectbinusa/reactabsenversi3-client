@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { API_DUMMY } from "../../utils/api";
 import SidebarNavbar from "../../components/SidebarNavbar";
-import Navbar from "../../components/NavbarUser";
 import { useParams, Link } from "react-router-dom";
 import {
   faArrowLeft,
