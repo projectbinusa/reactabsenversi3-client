@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../../../components/NavbarAdmin";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowLeft,
+  faEye,
+  faEyeSlash,
+  faFloppyDisk,
+} from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -20,6 +25,7 @@ function EditKaryawan() {
   const [idOrganisasi, setIdOrganisasi] = useState("");
   const [idOrangTua, setIdOrangTua] = useState("");
   const [idKelas, setIdKelas] = useState("");
+  const [password, setPassword] = useState("");
   const [jabatanOptions, setJabatanOptions] = useState([]);
   const [shiftOptions, setShiftOptions] = useState([]);
   const [orangTuaOptions, setOrangTuaOptions] = useState([]);
@@ -29,6 +35,12 @@ function EditKaryawan() {
   const adminId = localStorage.getItem("adminId");
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordd, setShowPasswordd] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [passwordLama, setPasswordLama] = useState("");
+  const [passwordBaru, setPasswordBaru] = useState("");
 
   const getUser = async () => {
     try {
@@ -67,6 +79,7 @@ function EditKaryawan() {
 
       setUsername(res.data.username);
       setStatus(res.data.status);
+      setPassword(res.data.password);
       setIdJabatan(res.data.jabatan ? res.data.jabatan.idJabatan : "");
       // setIdShift(res.data.shift ? res.data.shift.id : "");
       // setIdOrangTua(res.data.orangTua ? res.data.orangTua.id : "");
@@ -170,18 +183,35 @@ function EditKaryawan() {
     const idOrangTua1 = idOrangTua ? idOrangTua.value : null;
     const idShift1 = idShift ? idShift.value : null;
     const idKelas1 = idKelas ? idKelas.value : null;
+
     try {
+      if (passwordBaru && confirmPassword && passwordBaru !== confirmPassword) {
+        Swal.fire(
+          "Gagal",
+          "Password baru dan konfirmasi password tidak cocok",
+          "error"
+        );
+        return;
+      }
+
+      const payload = {
+        username: username,
+      };
+
+      if (passwordBaru) payload.new_password = passwordBaru;
+      if (confirmPassword) payload.confirm_new_password = confirmPassword;
+      if (passwordLama) payload.old_password = passwordLama;
+
       await axios.put(
-        `${API_DUMMY}/api/user/editBYSuper/${id}?idShift=${idShift1}&idOrangTua=${idOrangTua1}&idKelas=${idKelas1}&idOrganisasi=${idOrganisasi}`,
-        {
-          username: username,
-        },
+        `${API_DUMMY}/api/user/editByAdmin/${id}?idKelas=${idKelas1}&idOrangTua=${idOrangTua1}&idOrganisasi=${idOrganisasi}&idShift=${idShift1}`,
+        payload,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
+
       Swal.fire({
         title: "Berhasil",
         text: "Berhasil mengubah data siswa",
@@ -316,6 +346,25 @@ function EditKaryawan() {
                           Status
                         </label>
                       </div>
+                      <div className="relative z-0 w-full mb-6 group capitalize hidden">
+                        <input
+                          type="text"
+                          name="password"
+                          id="password"
+                          value={password}
+                          readOnly
+                          onChange={(e) => setPassword(e.target.value)}
+                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer capitalize"
+                          placeholder=" "
+                          autoComplete="off"
+                          required
+                        />
+                        <label
+                          htmlFor="password"
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                          Status
+                        </label>
+                      </div>
                       <div className="w-full mb-6 group">
                         <label
                           htmlFor="id_shift"
@@ -387,6 +436,66 @@ function EditKaryawan() {
                             </option>
                           ))}
                         </select>
+                      </div>
+                      <div className="relative mb-3">
+                        <label className="block mb-2 text-sm sm:text-xs font-medium text-gray-900">
+                          Password Lama
+                        </label>
+                        <input
+                          type={showPasswordd ? "text" : "password"}
+                          id="pw-lama"
+                          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm sm:text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                          // required
+                          value={passwordLama}
+                          onChange={(e) => setPasswordLama(e.target.value)}
+                        />
+                        <FontAwesomeIcon
+                          icon={showPasswordd ? faEye : faEyeSlash}
+                          className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer mt-3"
+                          onClick={() => setShowPasswordd(!showPasswordd)}
+                        />
+                      </div>
+                      <div className="relative mb-3">
+                        <label className="block mb-2 text-sm sm:text-xs font-medium text-gray-900">
+                          Password Baru
+                        </label>
+                        <div className="relative">
+                          <input
+                            type={showPassword ? "text" : "password"}
+                            id="pw-baru"
+                            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm sm:text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                            // required
+                            value={passwordBaru}
+                            onChange={(e) => setPasswordBaru(e.target.value)}
+                          />
+                          <FontAwesomeIcon
+                            icon={showPassword ? faEye : faEyeSlash}
+                            className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer"
+                            onClick={() => setShowPassword(!showPassword)}
+                          />
+                        </div>
+                      </div>
+                      <div className="relative mb-3">
+                        <label className="block mb-2 text-sm sm:text-xs font-medium text-gray-900">
+                          Konfirmasi Password Baru
+                        </label>
+                        <div className="relative">
+                          <input
+                            type={showConfirmPassword ? "text" : "password"}
+                            id="konfirmasi-pw"
+                            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm sm:text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                            // required
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                          />
+                          <FontAwesomeIcon
+                            icon={showConfirmPassword ? faEye : faEyeSlash}
+                            className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer"
+                            onClick={() =>
+                              setShowConfirmPassword(!showConfirmPassword)
+                            }
+                          />
+                        </div>
                       </div>
                     </div>
                     <div className="flex justify-between">

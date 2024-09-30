@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCloudArrowDown } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCloudArrowDown,
+  faMagnifyingGlass,
+} from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { API_DUMMY } from "../../../../utils/api";
@@ -40,11 +43,11 @@ function BulanPerkelas() {
     }
   }, [adminId]);
 
-  useEffect(() => {
-    if (idKelas != null) {
-      getRekapPresensiPerkelasSetiapBulan(idKelas, currentPage);
-    }
-  }, [idKelas, currentPage]);
+  // useEffect(() => {
+  //   if (idKelas != null) {
+  //     getRekapPresensiPerkelasSetiapBulan(idKelas, currentPage);
+  //   }
+  // }, [idKelas, currentPage]);
 
   // Fetch user data
   const getAllKelas = async (adminId) => {
@@ -93,16 +96,32 @@ function BulanPerkelas() {
     }
   };
 
-  function onPageChange(page) {
-    setCurrentPage(page);
-  }
+
   const handleDateChange = (event) => {
     const value = event.target.value;
     setSelectedDate(value);
 
-    const [year, month] = value.split("-");
-    getRekapPresensiPerkelasSetiapBulan(month, year);
+    // const [year, month] = value.split("-");
+    // getRekapPresensiPerkelasSetiapBulan(month, year);
   };
+
+  const handleSearchClick = () => {
+    if (selectedDate && idKelas) {
+      const [year, month] = selectedDate.split("-");
+      getRekapPresensiPerkelasSetiapBulan(month, year);
+    } else {
+      Swal.fire(
+        "Peringatan",
+        "Silakan pilih kelas dan tanggal terlebih dahulu",
+        "warning"
+      );
+    }
+  };
+
+
+  function onPageChange(page) {
+    setCurrentPage(page);
+  }
 
   const handleExportClick = async (e) => {
     e.preventDefault();
@@ -257,6 +276,13 @@ function BulanPerkelas() {
                   onClick={handleExportClick}
                   title="Export">
                   <FontAwesomeIcon icon={faCloudArrowDown} />
+                </button>
+                <button
+                  type="button"
+                  className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto"
+                  onClick={handleSearchClick}
+                  title="View">
+                  <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </button>
               </div>
             </form>
