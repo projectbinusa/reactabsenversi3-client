@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCloudArrowDown } from "@fortawesome/free-solid-svg-icons";
+import { faCloudArrowDown, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../../../../utils/api";
@@ -37,19 +37,23 @@ function HarianPerkelas() {
 
   const handleTanggalChange = (event) => {
     setTanggal(event.target.value);
-    if (event.target.value && kelasId) {
-      getHarianPerkelas(event.target.value, kelasId);
-    } else {
-      setAbsensiData([]);
-    }
+    setAbsensiData([]);
   };
 
   const handleKelasChange = (event) => {
     setKelasId(event.target.value);
-    if (tanggal && event.target.value) {
-      getHarianPerkelas(tanggal, event.target.value);
+    setAbsensiData([]);
+  };
+
+  const handleSearchClick = () => {
+    if (tanggal && kelasId) {
+      getHarianPerkelas(tanggal, kelasId);
     } else {
-      setAbsensiData([]);
+      Swal.fire(
+        "Peringatan",
+        "Silakan pilih kelas dan tanggal terlebih dahulu",
+        "warning"
+      );
     }
   };
 
@@ -134,11 +138,11 @@ function HarianPerkelas() {
           params: { kelasId, tanggal },
           responseType: "blob",
           headers: {
-            Authorization: `Bearer ${token}`, 
+            Authorization: `Bearer ${token}`,
           },
         }
       );
-  
+
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
@@ -147,14 +151,13 @@ function HarianPerkelas() {
       link.click();
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
-  
+
       Swal.fire("Berhasil", "Berhasil mengunduh data", "success");
     } catch (error) {
       Swal.fire("Error", "Gagal mengunduh data", "error");
       console.log(error);
     }
   };
-  
 
   const formatDate = (dateString) => {
     const options = {
@@ -262,8 +265,7 @@ function HarianPerkelas() {
                 <select
                   value={limit}
                   onChange={handleLimitChange}
-                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
-                >
+                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
                   <option value="5">05</option>
                   <option value="10">10</option>
                   <option value="20">20</option>
@@ -276,14 +278,12 @@ function HarianPerkelas() {
             <form
               method="get"
               id="filterForm"
-              className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-5"
-            >
+              className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-5">
               <select
                 id="small"
                 className="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 value={kelasId}
-                onChange={handleKelasChange}
-              >
+                onChange={handleKelasChange}>
                 <option value="">Pilih Kelas</option>
                 {listKelas.map((data) => (
                   <option key={data.id} value={data.id}>
@@ -304,9 +304,15 @@ function HarianPerkelas() {
                   type="button"
                   className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded sm:py-2 sm:px-4"
                   onClick={handleExportClick}
-                  title="Export"
-                >
+                  title="Export">
                   <FontAwesomeIcon icon={faCloudArrowDown} />
+                </button>
+                <button
+                  type="button"
+                  className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto"
+                  onClick={handleSearchClick}
+                  title="View">
+                  <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </button>
               </div>
             </form>
