@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCloudArrowDown,
   faFileExport,
+  faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -26,6 +27,7 @@ function Simpel() {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const adminId = localStorage.getItem("adminId");
   const token = localStorage.getItem("token");
+  const [isDataAvailable, setIsDataAvailable] = useState(true);
 
   const handleSearch = async (bulan, tahun) => {
     try {
@@ -35,14 +37,23 @@ function Simpel() {
           params: {
             bulan: bulan,
             tahun: tahun,
-            tanggalAbsen: `${tahun}-${bulan}-01`,
+            tanggalAbsen: `${tahun}-${bulan}-01`, // Pastikan parameter sesuai dengan API
           },
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-      setAbsensiData(response.data.reverse());
+
+      const data = response.data.reverse();
+      console.log(data); // Debugging: lihat data yang diterima dari API
+
+      if (data.length === 0) {
+        setIsDataAvailable(false);
+      } else {
+        setIsDataAvailable(true);
+        setAbsensiData(data); // Pastikan data di sini sesuai dengan filter yang diinginkan
+      }
     } catch (error) {
       console.error(error);
       Swal.fire("Gagal", "Gagal Mengambil data", "error");
@@ -53,12 +64,25 @@ function Simpel() {
     const value = event.target.value;
     setSelectedDate(value);
 
-    const [tahun, bulan] = value.split("-");
-    setBulan(parseInt(bulan, 10));
-    setTahun(parseInt(tahun, 10));
+    // const [tahun, bulan] = value.split("-");
+    // setBulan(parseInt(bulan, 10));
+    // setTahun(parseInt(tahun, 10));
+    // handleSearch(parseInt(bulan, 10), parseInt(tahun, 10));
+  };
 
-    // Memanggil handleSearch setelah bulan dan tahun dipilih
-    handleSearch(parseInt(bulan, 10), parseInt(tahun, 10));
+  const handleSearchClick = () => {
+    if (selectedDate) {
+      const [tahun, bulan] = selectedDate.split("-");
+      setBulan(parseInt(bulan, 10));
+      setTahun(parseInt(tahun, 10));
+      handleSearch(parseInt(bulan, 10), parseInt(tahun, 10));
+    } else {
+      Swal.fire(
+        "Peringatan",
+        "Silakan pilih kelas dan tanggal terlebih dahulu",
+        "warning"
+      );
+    }
   };
 
   const formatDate = (dateString) => {
@@ -161,9 +185,14 @@ function Simpel() {
 
   const filteredData = Object.values(absensiData)
     .flat()
-    .filter((item) =>
-      item.user.username.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    .filter((item) => {
+      const itemDate = new Date(item.tanggalAbsen); // Pastikan data di-filter berdasarkan tanggal
+      return (
+        item.user.username.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        itemDate.getMonth() + 1 === bulan &&
+        itemDate.getFullYear() === tahun
+      );
+    });
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -202,8 +231,7 @@ function Simpel() {
                 <select
                   value={itemsPerPage}
                   onChange={(e) => setItemsPerPage(Number(e.target.value))}
-                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
-                >
+                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
                   {[5, 10, 20, 50].map((limit) => (
                     <option key={limit} value={limit}>
                       {limit}
@@ -226,9 +254,15 @@ function Simpel() {
                   type="button"
                   onClick={exportSimpel}
                   title="Export"
-                  className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto"
-                >
+                  className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto">
                   <FontAwesomeIcon icon={faCloudArrowDown} />
+                </button>
+                <button
+                  type="button"
+                  className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto"
+                  onClick={handleSearchClick}
+                  title="View">
+                  <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </button>
               </div>
             </form>
@@ -236,8 +270,7 @@ function Simpel() {
             <div className=" overflow-x-auto shadow-md sm:rounded-lg mt-5">
               <table
                 id="rekapSimple"
-                className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
-              >
+                className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead className="text-xs text-left text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
                     <th scope="col" className="px-4 py-3 whitespace-nowrap">
@@ -276,6 +309,9 @@ function Simpel() {
                   </tr>
                 </thead>
                 <tbody className="text-left">
+                  {!isDataAvailable && (
+                    <p>Data tidak ada untuk bulan dan tahun yang dipilih.</p>
+                  )}
                   {currentItems.length > 0 && absensiData != null ? (
                     currentItems.map((absensi, index) => (
                       <tr key={index}>

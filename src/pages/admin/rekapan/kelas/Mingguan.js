@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCloudArrowDown } from "@fortawesome/free-solid-svg-icons";
+import { faCloudArrowDown, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { API_DUMMY } from "../../../../utils/api";
@@ -76,11 +76,11 @@ function MingguanPerkelas() {
     }
   }, [adminId]);
 
-  useEffect(() => {
-    if (idKelas != null) {
-      getRekapPresensiPerkelasSetiapMinggu(idKelas, tanggalAwal, tanggalAkhir);
-    }
-  }, [idKelas, tanggalAwal, tanggalAkhir]);
+  // useEffect(() => {
+  //   if (idKelas != null) {
+  //     getRekapPresensiPerkelasSetiapMinggu(idKelas, tanggalAwal, tanggalAkhir);
+  //   }
+  // }, [idKelas, tanggalAwal, tanggalAkhir]);
 
   const getRekapPresensiPerkelasSetiapMinggu = async () => {
     try {
@@ -99,6 +99,14 @@ function MingguanPerkelas() {
       //   }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const handleSearchClick = () => {
+    if (tanggalAwal && tanggalAkhir && idKelas) {
+      getRekapPresensiPerkelasSetiapMinggu(tanggalAwal, tanggalAkhir, idKelas);
+    } else {
+      Swal.fire("Peringatan", "Silakan pilih kelas dan tanggal terlebih dahulu", "warning");
     }
   };
 
@@ -334,6 +342,13 @@ function MingguanPerkelas() {
                   title="Export"
                 >
                   <FontAwesomeIcon icon={faCloudArrowDown} />
+                </button>
+                <button
+                  type="button"
+                  className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto"
+                  onClick={handleSearchClick}
+                  title="View">
+                  <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </button>
               </div>
             </form>

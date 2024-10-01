@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCloudArrowDown } from "@fortawesome/free-solid-svg-icons";
+import { faCloudArrowDown, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { API_DUMMY } from "../../../../utils/api";
@@ -27,11 +27,11 @@ function Perkelas() {
     }
   }, [adminId]);
 
-  useEffect(() => {
-    if (kelasId != null) {
-      getAbsensiByKelasId(kelasId, currentPage, limit);
-    }
-  }, [kelasId, currentPage, limit]);
+  // useEffect(() => {
+  //   if (kelasId != null) {
+  //     getAbsensiByKelasId(kelasId, currentPage, limit);
+  //   }
+  // }, [kelasId, currentPage, limit]);
 
   // Fetch kelas data
   const getAllKelas = async (adminId) => {
@@ -64,6 +64,14 @@ function Perkelas() {
       setListAbsensi(response.data);
     } catch (error) {
       console.error("Error fetching attendance:", error);
+    }
+  };
+
+  const handleSearchClick = () => {
+    if (kelasId) {
+      getAbsensiByKelasId(kelasId);
+    } else {
+      Swal.fire("Peringatan", "Silakan pilih kelas terlebih dahulu", "warning");
     }
   };
 
@@ -191,8 +199,7 @@ function Perkelas() {
                 <select
                   value={limit}
                   onChange={handleLimitChange}
-                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
-                >
+                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
                   <option value="5">05</option>
                   <option value="10">10</option>
                   <option value="20">20</option>
@@ -206,8 +213,7 @@ function Perkelas() {
                 id="kelas"
                 className="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 value={kelasId}
-                onChange={(e) => setKelasId(e.target.value)}
-              >
+                onChange={(e) => setKelasId(e.target.value)}>
                 <option>Pilih Kelas</option>
                 {listKelas.map((data) => (
                   <option key={data.id} value={data.id}>
@@ -220,9 +226,15 @@ function Perkelas() {
                   type="button"
                   className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto"
                   onClick={exportPerkelas}
-                  title="Export"
-                >
+                  title="Export">
                   <FontAwesomeIcon icon={faCloudArrowDown} />
+                </button>
+                <button
+                  type="button"
+                  className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto"
+                  onClick={handleSearchClick}
+                  title="View">
+                  <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </button>
               </div>
             </form>

@@ -28,6 +28,7 @@ function Profile() {
   const id = localStorage.getItem("userId");
   const [selectedFile, setSelectedFile] = useState(null);
   const [preview, setPreview] = useState(null);
+  const [kelas, setKelas] = useState("");
   const [organisasi, setOrganisasi] = useState("");
 
   const getProfile = async () => {
@@ -40,11 +41,12 @@ function Profile() {
           },
         }
       );
-
       setProfile(response.data);
+      console.log("profile: ", response.data.kelas.namaKelas);
       setFotoUser(response.data.fotoUser);
       setEmail(response.data.email);
       setUsername(response.data.username);
+      setKelas(response.data.kelas.namaKelas);
       setOrganisasi(response.data.organisasi.namaOrganisasi);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -61,7 +63,7 @@ function Profile() {
 
     try {
       const response = await axios.put(
-        `${API_DUMMY}/api/user/edit-email-username/${id}`,
+        `${API_DUMMY}/api/user/edit-email-username`,
         {
           usmail,
         },
@@ -123,7 +125,7 @@ function Profile() {
     }
 
     try {
-       await axios.put(
+        await axios.put(
         `${API_DUMMY}/api/user/edit-password/${id}`,
         {
           old_password: passwordLama,
@@ -157,7 +159,7 @@ function Profile() {
 
     try {
       const response = await axios.put(
-        `${API_DUMMY}/api/user/editFotoBY/${id}`,
+        `${API_DUMMY}/api/user/editFotoBY`,
         formData,
         {
           headers: {
@@ -234,8 +236,7 @@ function Profile() {
                         type="submit"
                         className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50"
                         onClick={handleImageUpload}
-                        disabled={loading || !selectedFile}
-                      >
+                        disabled={loading || !selectedFile}>
                         {loading ? "Uploading..." : "Simpan"}
                       </button>
                     </div>
@@ -291,7 +292,20 @@ function Profile() {
                             className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm sm:text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                             placeholder="Masukkan Email"
                             value={organisasi}
-                            disabled
+                            readOnly
+                          />
+                        </div>
+                        <div className="relative mt-2">
+                          <label className="block mb-2 text-sm sm:text-xs font-medium text-gray-900">
+                            Kelas
+                          </label>
+                          <input
+                            type="kelas"
+                            id="kelas"
+                            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm sm:text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                            placeholder="Masukkan Email"
+                            value={kelas}
+                            readOnly
                           />
                         </div>
                         {/* )} */}
@@ -302,8 +316,7 @@ function Profile() {
                           <button
                             type="button"
                             onClick={() => setUbahUsername(true)}
-                            className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50"
-                          >
+                            className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
                             Ubah
                           </button>
                         )}
@@ -312,15 +325,13 @@ function Profile() {
                             <button
                               type="button"
                               onClick={() => setUbahUsername(false)}
-                              className="z-20 block rounded-xl border-2 border-white bg-rose-100 p-4 text-rose-500 active:bg-rose-50"
-                            >
+                              className="z-20 block rounded-xl border-2 border-white bg-rose-100 p-4 text-rose-500 active:bg-rose-50">
                               Batal
                             </button>
 
                             <button
                               type="submit"
-                              className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50"
-                            >
+                              className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
                               Simpan
                             </button>
                           </>
@@ -401,8 +412,7 @@ function Profile() {
                       <div className="flex justify-between mt-6">
                         <button
                           type="submit"
-                          className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50"
-                        >
+                          className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
                           Simpan
                         </button>
                       </div>
