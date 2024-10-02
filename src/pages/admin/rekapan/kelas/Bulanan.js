@@ -56,7 +56,7 @@ function BulanPerkelas() {
         `${API_DUMMY}/api/kelas/getAllByAdmin/${adminId}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -83,7 +83,7 @@ function BulanPerkelas() {
         `${API_DUMMY}/api/absensi/bulanan/kelas/${idKelas}?bulan=${bulan}&tahun=${tahun}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -156,7 +156,7 @@ function BulanPerkelas() {
           params: { kelasId: idKelas, bulan, tahun },
           responseType: "blob",
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );

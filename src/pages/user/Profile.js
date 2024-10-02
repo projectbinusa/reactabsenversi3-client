@@ -37,7 +37,7 @@ function Profile() {
         `${API_DUMMY}/api/user/getUserBy/${id}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -69,7 +69,7 @@ function Profile() {
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -134,7 +134,7 @@ function Profile() {
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -164,7 +164,7 @@ function Profile() {
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );

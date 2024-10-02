@@ -30,7 +30,7 @@ function Dashboard() {
     try {
       const res = await axios.get(`${API_DUMMY}/api/user/${idAdmin}/users`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          AuthPrs: `Bearer ${token}`,
         },
       });
       setKaryawan(res.data.length);
@@ -74,21 +74,21 @@ function Dashboard() {
   const getUser = () =>
     fetchData(`${API_DUMMY}/api/user/${idAdmin}/users`, setUserData, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        AuthPrs: `Bearer ${token}`,
       },
     });
 
   const getAbsensi = () =>
     fetchData(`${API_DUMMY}/api/absensi/admin/${idAdmin}`, setAbsenData, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        AuthPrs: `Bearer ${token}`,
       },
     });
 
   const getLokasi = () =>
     fetchData(`${API_DUMMY}/api/lokasi/get-admin/${idAdmin}`, setLokasiData, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        AuthPrs: `Bearer ${token}`,
       },
     });
 
@@ -98,7 +98,7 @@ function Dashboard() {
       setOrganisasiData,
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          AuthPrs: `Bearer ${token}`,
         },
       }
     );
@@ -110,7 +110,7 @@ function Dashboard() {
     try {
       const response = await axios.get(`${API_DUMMY}/api/admin/getById/${id}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          AuthPrs: `Bearer ${token}`,
         },
       });
       setUsername(response.data.username);

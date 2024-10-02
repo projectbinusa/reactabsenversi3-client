@@ -36,7 +36,7 @@ function AddInformasi() {
         informasi,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );

@@ -26,7 +26,7 @@ function Kehadiran() {
     try {
       const all = await axios.get(`${API_DUMMY}/api/user/${idAdmin}/users`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          AuthPrs: `Bearer ${token}`,
         },
       });
       setKehadiran(all.data);
@@ -39,7 +39,7 @@ function Kehadiran() {
     try {
       const abs = await axios.get(`${API_DUMMY}/api/absensi/admin/${adminId}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          AuthPrs: `Bearer ${token}`,
         },
       });
 

@@ -66,7 +66,7 @@ function KelasSiswa() {
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -102,7 +102,7 @@ function KelasSiswa() {
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -135,7 +135,7 @@ function KelasSiswa() {
         formData,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -169,7 +169,7 @@ function KelasSiswa() {
         `${API_DUMMY}/api/kelas/getAllByAdmin/${idAdmin}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -179,7 +179,7 @@ function KelasSiswa() {
         `${API_DUMMY}/api/user/${idAdmin}/users`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -212,7 +212,7 @@ function KelasSiswa() {
         `${API_DUMMY}/api/organisasi/all-by-admin/${idAdmin}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -270,7 +270,7 @@ function KelasSiswa() {
         try {
           await axios.delete(`${API_DUMMY}/api/kelas/deleteKelas/${id}`, {
             headers: {
-              Authorization: `Bearer ${token}`,
+              AuthPrs: `Bearer ${token}`,
             },
           });
 

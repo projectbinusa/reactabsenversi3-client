@@ -64,7 +64,7 @@ function AbsenPulang() {
         `${API_DUMMY}/api/shift/getShift-byUserId/${userId}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -222,7 +222,7 @@ function AbsenPulang() {
           `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`,
           {
             headers: {
-              Authorization: `Bearer ${token}`,
+              AuthPrs: `Bearer ${token}`,
             },
           }
         );
@@ -275,7 +275,7 @@ function AbsenPulang() {
           formData,
           {
             headers: {
-              Authorization: `Bearer ${token}`,
+              AuthPrs: `Bearer ${token}`,
               "Content-Type": "multipart/form-data",
             },
           }

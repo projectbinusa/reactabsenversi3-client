@@ -29,7 +29,7 @@ function User() {
         `${API_DUMMY}/api/user/get-allUser`,
         {
           headers: {
-            Authorization: `${token}`,
+            AuthPrs: `${token}`,
           },
         }
       );
@@ -56,7 +56,7 @@ function User() {
             `${API_DUMMY}/api/user/delete-user/` + id,
             {
               headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                AuthPrs: `Bearer ${localStorage.getItem("token")}`,
               },
             }
           );

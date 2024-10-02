@@ -35,7 +35,7 @@ function Profile() {
         `${API_DUMMY}/api/orang-tua/getbyid/${id}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -62,7 +62,7 @@ function Profile() {
         usmail,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -115,7 +115,7 @@ function Profile() {
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -144,7 +144,7 @@ function Profile() {
         formData,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",
           },
         }

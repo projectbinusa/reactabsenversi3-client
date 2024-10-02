@@ -21,7 +21,7 @@ function DetailAbsen() {
         `${API_DUMMY}/api/absensi/getData/${id}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );

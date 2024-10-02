@@ -19,7 +19,7 @@ function DetailKaryawan() {
     try {
       const res = await axios.get(`${API_DUMMY}/api/user/getUserBy/${id}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          AuthPrs: `Bearer ${token}`,
         },
       });
       setUser(res.data);

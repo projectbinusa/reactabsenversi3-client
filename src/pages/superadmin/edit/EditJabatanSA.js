@@ -18,7 +18,7 @@ function EditJabatanSA() {
     axios
       .get(`${API_DUMMY}/api/jabatan/getbyid/` + idJabatan, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          AuthPrs: `Bearer ${localStorage.getItem("token")}`,
         },
       })
       .then((ress) => {
@@ -40,7 +40,7 @@ function EditJabatanSA() {
         jabatan,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            AuthPrs: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );

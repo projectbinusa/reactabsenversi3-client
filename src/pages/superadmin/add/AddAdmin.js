@@ -29,7 +29,7 @@ function AddAdmin() {
     try {
       const response = await axios.get(`${API_DUMMY}/api/admin/all`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          AuthPrs: `Bearer ${token}`,
         },
       });
       const existingUsers = response.data;
@@ -56,7 +56,7 @@ function AddAdmin() {
         newUser,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );

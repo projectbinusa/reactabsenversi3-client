@@ -40,7 +40,7 @@ function TabelCuti() {
         `${API_DUMMY}/api/cuti/getByUser/${userId}`,
         {
           headers: {
-            Authorization: `${token}`,
+            AuthPrs: `${token}`,
           },
         }
       );

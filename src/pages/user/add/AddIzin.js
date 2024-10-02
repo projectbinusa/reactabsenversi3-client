@@ -27,7 +27,7 @@ function AddIzin() {
     try {
       await axios.post(`${API_DUMMY}/api/absensi/izin?token=${token}`, add, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          AuthPrs: `Bearer ${token}`,
         },
       });
       Swal.fire({

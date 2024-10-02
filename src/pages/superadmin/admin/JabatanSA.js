@@ -34,7 +34,7 @@ function JabatanSA() {
         `${API_DUMMY}/api/jabatan/getBySuper/${idSuperAdmin} `,
         {
           headers: {
-            Authorization: `${token}`,
+            AuthPrs: `${token}`,
           },
         }
       );
@@ -61,7 +61,7 @@ function JabatanSA() {
             `${API_DUMMY}/api/jabatan/delete/` + idJabatan,
             {
               headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                AuthPrs: `Bearer ${localStorage.getItem("token")}`,
               },
             }
           );

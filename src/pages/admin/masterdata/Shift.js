@@ -54,7 +54,7 @@ function Shift() {
         `${API_DUMMY}/api/shift/getall-byadmin/${idAdmin}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -69,7 +69,7 @@ function Shift() {
     try {
       const response = await axios.get(`${API_DUMMY}/api/user/byShift/${id}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          AuthPrs: `Bearer ${token}`,
         },
       });
 
@@ -95,7 +95,7 @@ function Shift() {
         try {
           await axios.delete(`${API_DUMMY}/api/shift/delete/` + id, {
             headers: {
-              Authorization: `Bearer ${token}`,
+              AuthPrs: `Bearer ${token}`,
             },
           });
 

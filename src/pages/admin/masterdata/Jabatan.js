@@ -29,7 +29,7 @@ function Jabatan() {
         `${API_DUMMY}/api/jabatan/getByAdmin/${idAdmin}`
         // {
         //   headers: {
-        //     Authorization: `Bearer ${token}`,
+        //     AuthPrs: `Bearer ${token}`,
         //   },
         // }
       );
@@ -46,7 +46,7 @@ function Jabatan() {
         `${API_DUMMY}/api/user/byJabatan/${idJabatan}`
         // {
         //   headers: {
-        //     Authorization: `Bearer ${token}`,
+        //     AuthPrs: `Bearer ${token}`,
         //   },
         // }
       );

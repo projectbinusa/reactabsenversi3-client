@@ -25,7 +25,7 @@ function EditOrganisasiSA() {
     axios
       .get(`${API_DUMMY}/api/organisasi/getById/` + param.id, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          AuthPrs: `Bearer ${localStorage.getItem("token")}`,
         },
       })
       .then((ress) => {
@@ -74,7 +74,7 @@ function EditOrganisasiSA() {
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            AuthPrs: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       )

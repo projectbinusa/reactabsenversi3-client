@@ -32,7 +32,7 @@ function LokasiSA() {
         `${API_DUMMY}/api/lokasi/superadmin/${idSuperAdmin}`,
          {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );

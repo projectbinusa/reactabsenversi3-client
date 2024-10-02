@@ -24,7 +24,7 @@ function Pengumuman() {
         `${API_DUMMY}/api/notifications/user/getById/${id}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );

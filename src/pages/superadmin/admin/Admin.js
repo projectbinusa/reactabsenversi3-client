@@ -41,7 +41,7 @@ function Admin() {
         `${API_DUMMY}/api/superadmin/admin/export?superadminId=${id_superadmin}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
           responseType: "blob",
         }
@@ -77,7 +77,7 @@ function Admin() {
         `${API_DUMMY}/api/superadmin/download/tamplate/import`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
           responseType: "blob",
         }
@@ -112,7 +112,7 @@ function Admin() {
         formData,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -142,7 +142,7 @@ function Admin() {
         `${API_DUMMY}/api/admin/get-all-by-super/${id_superadmin}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -167,7 +167,7 @@ function Admin() {
         try {
           await axios.delete(`${API_DUMMY}/api/admin/delete/` + id, {
             headers: {
-              Authorization: `Bearer ${token}`,
+              AuthPrs: `Bearer ${token}`,
             },
             responseType: "blob",
           });

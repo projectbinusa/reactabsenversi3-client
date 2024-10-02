@@ -192,7 +192,7 @@ function AbsenMasuk() {
           `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`,
           {
             headers: {
-              Authorization: `Bearer ${token}`,
+              AuthPrs: `Bearer ${token}`,
             },
           }
         );
@@ -210,7 +210,7 @@ function AbsenMasuk() {
             formData,
             {
               headers: {
-                Authorization: `Bearer ${token}`,
+                AuthPrs: `Bearer ${token}`,
                 "Content-Type": "multipart/form-data",
               },
             }

@@ -24,7 +24,7 @@ function EditShift() {
     try {
       const res = await axios.get(`${API_DUMMY}/api/shift/getbyId/${id}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          AuthPrs: `Bearer ${token}`,
         },
       });
       setNamaShift(res.data.namaShift);
@@ -42,7 +42,7 @@ function EditShift() {
     try {
       const response = await axios.get(`${API_DUMMY}/api/shift/getall`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          AuthPrs: `Bearer ${token}`,
         },
       });
       const existingUsers = response.data;
@@ -67,7 +67,7 @@ function EditShift() {
 
           {
             headers: {
-              Authorization: `Bearer ${token}`,
+              AuthPrs: `Bearer ${token}`,
               "Content-Type": "application/json",
             },
           }

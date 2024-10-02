@@ -57,7 +57,7 @@ function IzinAbsen() {
      await axios.put(
         `${API_DUMMY}/api/absensi/izin-tengah-hari?token=${token}`, izin, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          AuthPrs: `Bearer ${token}`,
         },
       });
       Swal.fire("Berhasil", "Berhasil Izin", "success");

@@ -30,7 +30,7 @@ function EditLokasi() {
     try {
       const res = await axios.get(`${API_DUMMY}/api/lokasi/GetById/${id}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          AuthPrs: `Bearer ${token}`,
         },
       });
       setNamaLokasi(res.data.namaLokasi || "");
@@ -64,7 +64,7 @@ function EditLokasi() {
       await axios.put(`${API_DUMMY}/api/lokasi/Update/${id}`, lokasi, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          AuthPrs: `Bearer ${token}`,
         },
       });
       Swal.fire({

@@ -21,7 +21,7 @@ function EditJabatan() {
         const token = localStorage.getItem("token");
         // const config = {
         //   headers: {
-        //     Authorization: `Bearer ${token}`,
+        //     AuthPrs: `Bearer ${token}`,
         //   },
         // };
 
@@ -55,7 +55,7 @@ function EditJabatan() {
     const token = localStorage.getItem("token");
     // const config = {
     //   headers: {
-    //     Authorization: `Bearer ${token}`,
+    //     AuthPrs: `Bearer ${token}`,
     //   },
     // };
 

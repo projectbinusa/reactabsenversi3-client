@@ -39,7 +39,7 @@ function TabelLembur() {
         `${API_DUMMY}/api/lembur/getByuserId/${userId}`
         // {
         //   headers: {
-        //     Authorization: `Bearer ${token}`,
+        //     AuthPrs: `Bearer ${token}`,
         //   },
         // }
       );

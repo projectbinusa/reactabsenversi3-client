@@ -40,7 +40,7 @@ function Simpel() {
             tanggalAbsen: `${tahun}-${bulan}-01`, // Pastikan parameter sesuai dengan API
           },
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -156,7 +156,7 @@ function Simpel() {
         `${API_DUMMY}/api/absensi/export/absensi-bulanan-simpel`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
           params: { month: bulan, year: tahun },
           responseType: "blob",

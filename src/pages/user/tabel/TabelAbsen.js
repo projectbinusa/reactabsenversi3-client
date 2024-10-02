@@ -35,7 +35,7 @@ function TabelAbsen() {
           `${API_DUMMY}/api/absensi/getByUserId/${userId}`,
           {
             headers: {
-              Authorization: `Bearer ${token}`,
+              AuthPrs: `Bearer ${token}`,
             },
           }
         );
@@ -57,7 +57,7 @@ function TabelAbsen() {
         `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
             accept: "*/*",
           },
         }
@@ -82,7 +82,7 @@ function TabelAbsen() {
         {},
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
             accept: "*/*",
           },
         }

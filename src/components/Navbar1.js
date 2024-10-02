@@ -48,7 +48,7 @@ function Navbar1() {
         `${API_DUMMY}/api/superadmin/getbyid/${id}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -64,7 +64,7 @@ function Navbar1() {
         `${API_DUMMY}/api/user/getUserBy/${id_user}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -78,7 +78,7 @@ function Navbar1() {
     try {
       const admin = await axios.get(`${API_DUMMY}/api/admin/getById/${id}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          AuthPrs: `Bearer ${token}`,
         },
       });
       setProfileAdmin(admin.data.imageAdmin);
@@ -93,7 +93,7 @@ function Navbar1() {
         `${API_DUMMY}/api/orang-tua/getbyid/${id_ortu}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );

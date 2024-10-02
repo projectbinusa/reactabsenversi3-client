@@ -61,7 +61,7 @@ function DashboardSA() {
         `${API_DUMMY}/api/organisasi/superadmin/${id}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -78,7 +78,7 @@ function DashboardSA() {
         `${API_DUMMY}/api/superadmin/getbyid/${id}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -94,7 +94,7 @@ function DashboardSA() {
         `${API_DUMMY}/api/admin/get-all-by-super/${id}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );

@@ -33,7 +33,7 @@ function OrganisasiSA() {
         `${API_DUMMY}/api/organisasi/superadmin/${idSuperAdmin}`,
         {
           headers: {
-            Authorization: `${token}`,
+            AuthPrs: `${token}`,
           },
         }
       );
@@ -58,7 +58,7 @@ function OrganisasiSA() {
         try {
           await axios.delete(`${API_DUMMY}/api/organisasi/delete/` + id, {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              AuthPrs: `Bearer ${localStorage.getItem("token")}`,
             },
           });
 

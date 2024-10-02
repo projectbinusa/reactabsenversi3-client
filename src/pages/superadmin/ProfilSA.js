@@ -51,7 +51,7 @@ function ProfilSA() {
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -70,7 +70,7 @@ function ProfilSA() {
         `${API_DUMMY}/api/superadmin/getbyid/${id}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -96,7 +96,7 @@ function ProfilSA() {
         usMail,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -161,7 +161,7 @@ function ProfilSA() {
         formData,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",
           },
         }
