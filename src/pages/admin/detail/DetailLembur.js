@@ -19,7 +19,7 @@ function DetailLembur() {
     try {
       const res = await axios.get(`${API_DUMMY}/api/lembur/getByid/${id}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          AuthPrs: `Bearer ${token}`,
         },
       });
       setLembur(res.data);

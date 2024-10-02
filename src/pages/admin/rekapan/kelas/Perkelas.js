@@ -40,7 +40,7 @@ function Perkelas() {
         `${API_DUMMY}/api/kelas/getAllByAdmin/${adminId}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -56,7 +56,7 @@ function Perkelas() {
         `${API_DUMMY}/api/absensi/by-kelas/{kelasId}?kelasId=${kelasId}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -102,7 +102,7 @@ function Perkelas() {
         `${API_DUMMY}/api/export/absensi/by-kelas/${kelasId}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
           responseType: "blob",
         }

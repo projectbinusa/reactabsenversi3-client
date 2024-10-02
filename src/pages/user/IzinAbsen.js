@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../../components/NavbarUser";
 import axios from "axios";
 import Swal from "sweetalert2";
 // import { Toast } from "flowbite-react";
@@ -58,7 +57,7 @@ function IzinAbsen() {
      await axios.put(
         `${API_DUMMY}/api/absensi/izin-tengah-hari?token=${token}`, izin, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          AuthPrs: `Bearer ${token}`,
         },
       });
       Swal.fire("Berhasil", "Berhasil Izin", "success");

@@ -38,17 +38,17 @@ function Dashboard() {
         await Promise.all([
           axios.get(`${API_DUMMY}/api/user/getUserBy/${userId}`, {
               headers: {
-                Authorization: `Bearer ${token}`,
+                AuthPrs: `Bearer ${token}`,
               },
             }),
           axios.get(`${API_DUMMY}/api/absensi/getByUserId/${userId}`, {
               headers: {
-                Authorization: `Bearer ${token}`,
+                AuthPrs: `Bearer ${token}`,
               },
             }),
           axios.get(`${API_DUMMY}/api/absensi/checkAbsensi/${userId}`, {
               headers: {
-                Authorization: `Bearer ${token}`,
+                AuthPrs: `Bearer ${token}`,
               },
             }),
         ]);
@@ -91,7 +91,7 @@ function Dashboard() {
         `${API_DUMMY}/api/user/getUserBy/${userId}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -107,7 +107,7 @@ function Dashboard() {
         `${API_DUMMY}/api/absensi/getizin/${userId}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -139,7 +139,7 @@ function Dashboard() {
             `${API_DUMMY}/api/notifications/user/getByAdmin/${admin}`,
             {
               headers: {
-                Authorization: `Bearer ${token}`,
+                AuthPrs: `Bearer ${token}`,
               },
             }
           );

@@ -20,7 +20,7 @@ function Profile() {
   const [showPasswordd, setShowPasswordd] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [ubahUsername, setUbahUsername] = useState(false);
-  const [profile, setProfile] = useState([]);
+  const [ setProfile] = useState([]);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
@@ -37,7 +37,7 @@ function Profile() {
         `${API_DUMMY}/api/user/getUserBy/${id}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -69,7 +69,7 @@ function Profile() {
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -104,7 +104,7 @@ function Profile() {
 
   useEffect(() => {
     getProfile();
-  }, []);
+  });
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -125,8 +125,8 @@ function Profile() {
     }
 
     try {
-      const response = await axios.put(
-        `${API_DUMMY}/api/user/edit-password`,
+        await axios.put(
+        `${API_DUMMY}/api/user/edit-password/${id}`,
         {
           old_password: passwordLama,
           new_password: passwordBaru,
@@ -134,7 +134,7 @@ function Profile() {
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -164,7 +164,7 @@ function Profile() {
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );

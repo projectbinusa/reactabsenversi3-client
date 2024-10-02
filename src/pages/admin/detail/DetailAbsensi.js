@@ -19,7 +19,7 @@ function DetailAbsensi() {
     try {
       const res = await axios.get(`${API_DUMMY}/api/absensi/getData/${id}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          AuthPrs: `Bearer ${token}`,
         },
       });
       setAbsensi(res.data);

@@ -21,7 +21,7 @@ function DetailAdmin() {
     try {
       const res = await axios.get(`${API_DUMMY}/api/admin/getById/${id}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          AuthPrs: `Bearer ${token}`,
         },
       });
       setAdmin(res.data);

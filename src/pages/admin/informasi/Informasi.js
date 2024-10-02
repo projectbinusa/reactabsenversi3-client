@@ -54,7 +54,7 @@ function Informasi() {
         `${API_DUMMY}/api/notifications/user/getByAdmin/${idAdmin}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -149,7 +149,7 @@ function Informasi() {
         try {
           await axios.delete(`${API_DUMMY}/api/notifications/delete/` + id, {
             headers: {
-              Authorization: `Bearer ${token}`,
+              AuthPrs: `Bearer ${token}`,
             },
           });
 

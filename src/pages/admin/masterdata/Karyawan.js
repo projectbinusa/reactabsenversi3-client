@@ -42,7 +42,7 @@ function Karyawan() {
         // },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
           responseType: "blob",
         }
@@ -70,7 +70,7 @@ function Karyawan() {
         `${API_DUMMY}/api/download/template-excel-siswa`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
           responseType: "blob",
         }
@@ -105,7 +105,7 @@ function Karyawan() {
         formData,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -128,7 +128,7 @@ function Karyawan() {
         `${API_DUMMY}/api/user/${idAdmin}/users`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -154,7 +154,7 @@ function Karyawan() {
         try {
           await axios.delete(`${API_DUMMY}/api/user/delete-user/` + id, {
             headers: {
-              Authorization: `Bearer ${token}`,
+              AuthPrs: `Bearer ${token}`,
             },
           });
 

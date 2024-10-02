@@ -1,15 +1,12 @@
 import React, { useState } from "react";
-import Navbar from "../../../components/NavbarUser";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { API_DUMMY } from "../../../utils/api";
-import { useNavigate } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 import { SidebarProvider } from "../../../components/SidebarContext";
 import Navbar1 from "../../../components/Navbar1";
 
 function AddCuti() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [awal_cuti, setAwalCuti] = useState("");
   const [akhir_cuti, setAkhirCuti] = useState("");
   const [masuk_kerja, setMasukKerja] = useState("");
@@ -58,9 +55,7 @@ function AddCuti() {
     }
   };
 
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
+
 
   const handleBack = () => {
     window.location.href = "/user/dashboard";

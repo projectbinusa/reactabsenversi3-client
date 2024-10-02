@@ -65,7 +65,7 @@ function HarianPerkelas() {
           kelasId: kelasId,
         },
         headers: {
-          Authorization: `Bearer ${token}`,
+          AuthPrs: `Bearer ${token}`,
         },
       });
       if (response.data.length === 0) {
@@ -85,7 +85,7 @@ function HarianPerkelas() {
         `${API_DUMMY}/api/kelas/getAllByAdmin/${adminId}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -138,7 +138,7 @@ function HarianPerkelas() {
           params: { kelasId, tanggal },
           responseType: "blob",
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );

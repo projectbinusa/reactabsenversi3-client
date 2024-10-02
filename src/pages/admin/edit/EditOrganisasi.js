@@ -35,7 +35,7 @@ function EditOrganisasi() {
         const token = localStorage.getItem("token");
         const config = {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         };
 
@@ -96,7 +96,7 @@ function EditOrganisasi() {
       const token = localStorage.getItem("token");
       const config = {
         headers: {
-          Authorization: `Bearer ${token}`,
+          AuthPrs: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
       };

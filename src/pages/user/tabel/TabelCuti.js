@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
-import Navbar from "../../../components/NavbarUser";
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -41,7 +40,7 @@ function TabelCuti() {
         `${API_DUMMY}/api/cuti/getByUser/${userId}`,
         {
           headers: {
-            Authorization: `${token}`,
+            AuthPrs: `${token}`,
           },
         }
       );

@@ -50,7 +50,7 @@ export default function AddOrganisasi() {
         organisasi,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
         }
@@ -65,7 +65,7 @@ export default function AddOrganisasi() {
         formData,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",
           },
         }

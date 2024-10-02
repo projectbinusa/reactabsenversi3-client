@@ -46,7 +46,7 @@ function EditKaryawan() {
     try {
       const res = await axios.get(`${API_DUMMY}/api/user/getUserBy/${id}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          AuthPrs: `Bearer ${token}`,
         },
       });
 
@@ -95,7 +95,7 @@ function EditKaryawan() {
         `${API_DUMMY}/api/jabatan/getByAdmin/${adminId}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -111,7 +111,7 @@ function EditKaryawan() {
         `${API_DUMMY}/api/shift/getall-byadmin/${adminId}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -127,7 +127,7 @@ function EditKaryawan() {
         `${API_DUMMY}/api/organisasi/all-by-admin/${adminId}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -143,7 +143,7 @@ function EditKaryawan() {
         `${API_DUMMY}/api/orang-tua/getALlBySuperAdmin/${adminId}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -159,7 +159,7 @@ function EditKaryawan() {
         `${API_DUMMY}/api/kelas/getAllByAdmin/${adminId}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -207,7 +207,7 @@ function EditKaryawan() {
         payload,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );

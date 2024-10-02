@@ -60,7 +60,7 @@ function DashboardOrtu() {
         `${API_DUMMY}/api/orang-tua/getbyid/${id}`,
          {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -76,7 +76,7 @@ function DashboardOrtu() {
         `${API_DUMMY}/api/absensi/by-orang-tua/${id}`,
         {
          headers: {
-           Authorization: `Bearer ${token}`,
+           AuthPrs: `Bearer ${token}`,
          },
        }
       );
@@ -103,7 +103,7 @@ function DashboardOrtu() {
         `${API_DUMMY}/api/orang-tua/${id}/admin`,
         {
          headers: {
-           Authorization: `Bearer ${token}`,
+           AuthPrs: `Bearer ${token}`,
          },
        }
       );
@@ -121,7 +121,7 @@ function DashboardOrtu() {
           `${API_DUMMY}/api/notifications/user/getByAdmin/${idAdmin}`,
           {
            headers: {
-             Authorization: `Bearer ${token}`,
+             AuthPrs: `Bearer ${token}`,
            },
          }
         );

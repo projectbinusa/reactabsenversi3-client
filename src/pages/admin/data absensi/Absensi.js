@@ -27,7 +27,7 @@ function Absensi() {
         `${API_DUMMY}/api/absensi/admin/${adminId}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -109,7 +109,7 @@ function Absensi() {
         `${API_DUMMY}/api/absensi/rekap-perkaryawan/export`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
           responseType: "blob", // Important for handling binary data
         }

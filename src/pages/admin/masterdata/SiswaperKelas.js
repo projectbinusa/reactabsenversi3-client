@@ -44,7 +44,7 @@ function SiswaperKelas() {
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -74,7 +74,7 @@ function SiswaperKelas() {
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -108,7 +108,7 @@ function SiswaperKelas() {
         formData,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -133,7 +133,7 @@ function SiswaperKelas() {
         `${API_DUMMY}/api/user/by-kelas/${param.id}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -160,7 +160,7 @@ function SiswaperKelas() {
         try {
           await axios.delete(`${API_DUMMY}/api/user/delete-user/` + id, {
             headers: {
-              Authorization: `Bearer ${token}`,
+              AuthPrs: `Bearer ${token}`,
             },
           });
 

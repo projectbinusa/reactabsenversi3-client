@@ -1,7 +1,6 @@
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
-import Navbar from "../../../components/NavbarUser";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { Pagination } from "flowbite-react";
@@ -40,7 +39,7 @@ function TabelLembur() {
         `${API_DUMMY}/api/lembur/getByuserId/${userId}`
         // {
         //   headers: {
-        //     Authorization: `Bearer ${token}`,
+        //     AuthPrs: `Bearer ${token}`,
         //   },
         // }
       );

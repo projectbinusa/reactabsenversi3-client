@@ -46,7 +46,7 @@ function AddKaryawan() {
         `${API_DUMMY}/api/organisasi/all-by-admin/${idAdmin}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -62,7 +62,7 @@ function AddKaryawan() {
         `${API_DUMMY}/api/shift/getall-byadmin/${idAdmin}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -78,7 +78,7 @@ function AddKaryawan() {
         `${API_DUMMY}/api/orang-tua/getALlBySuperAdmin/${idAdmin}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -95,7 +95,7 @@ function AddKaryawan() {
         `${API_DUMMY}/api/kelas/getALlByAdmin/${idAdmin}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -125,7 +125,7 @@ function AddKaryawan() {
       // Fetch data semua pengguna
       const response = await axios.get(`${API_DUMMY}/api/user/get-allUser`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          AuthPrs: `Bearer ${token}`,
         },
       });
       const existingUsers = response.data;
@@ -156,7 +156,7 @@ function AddKaryawan() {
         newUser,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );

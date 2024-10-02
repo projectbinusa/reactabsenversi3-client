@@ -32,7 +32,7 @@ function ShiftSA() {
         `${API_DUMMY}/api/shift/getBySuper/${idSuperAdmin}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -58,7 +58,7 @@ function ShiftSA() {
           await axios.delete(`${API_DUMMY}/api/shift/delete/` + id,
             {
               headers: {
-                Authorization: `Bearer ${token}`,
+                AuthPrs: `Bearer ${token}`,
               },
             }
           );

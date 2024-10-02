@@ -30,7 +30,7 @@ function Cuti() {
         `${API_DUMMY}/api/cuti/admin/${adminId}`,
         {
           headers: {
-            Authorization: `${token}`,
+            AuthPrs: `${token}`,
           },
         }
       );
@@ -59,7 +59,7 @@ function Cuti() {
             method: "GET",
             responseType: "blob",
             // headers: {
-            //   Authorization: `Bearer ${token}`,
+            //   AuthPrs: `Bearer ${token}`,
             // },
           });
 

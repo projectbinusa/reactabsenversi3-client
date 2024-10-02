@@ -24,7 +24,7 @@ function EditInformasi() {
         `${API_DUMMY}/api/notifications/user/getById/${id}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -55,7 +55,7 @@ function EditInformasi() {
         informasi,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );

@@ -19,7 +19,7 @@ function DetailLokasi() {
     try {
       const res = await axios.get(`${API_DUMMY}/api/lokasi/GetById/${id}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          AuthPrs: `Bearer ${token}`,
         },
       });
       setLokasi(res.data);

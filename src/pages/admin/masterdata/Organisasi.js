@@ -29,7 +29,7 @@ function Organisasi() {
         `${API_DUMMY}/api/organisasi/all-by-admin/${idAdmin}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -54,7 +54,7 @@ function Organisasi() {
         try {
           await axios.delete(`${API_DUMMY}/api/organisasi/delete/` + id, {
             headers: {
-              Authorization: `Bearer ${token}`,
+              AuthPrs: `Bearer ${token}`,
             },
           });
 

@@ -28,7 +28,7 @@ function AddOrtu() {
     try {
       const response = await axios.get(`${API_DUMMY}/api/orang-tua/all`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          AuthPrs: `Bearer ${token}`,
         },
       });
       const existingUsers = response.data;
@@ -54,7 +54,7 @@ function AddOrtu() {
         newUser,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );

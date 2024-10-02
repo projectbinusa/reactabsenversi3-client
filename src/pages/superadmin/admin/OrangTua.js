@@ -47,7 +47,7 @@ function OrangTua() {
         `${API_DUMMY}/api/orang-tua/getALlBySuperAdmin/${idAdmin}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -58,7 +58,7 @@ function OrangTua() {
         `${API_DUMMY}/api/user/${idAdmin}/users`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -88,7 +88,7 @@ function OrangTua() {
         `${API_DUMMY}/api/user/${idAdmin}/users`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -110,7 +110,7 @@ function OrangTua() {
   //       `${API_DUMMY}/api/absensi/by-orang-tua/${idOrtu}`,
   //       {
   //         headers: {
-  //           Authorization: `Bearer ${token}`,
+  //           AuthPrs: `Bearer ${token}`,
   //         },
   //       }
   //     );
@@ -137,7 +137,7 @@ function OrangTua() {
             `${API_DUMMY}/api/orang-tua/deleteOrangTua/` + id,
             {
               headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                AuthPrs: `Bearer ${localStorage.getItem("token")}`,
               },
             }
           );
@@ -213,7 +213,7 @@ function OrangTua() {
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -247,7 +247,7 @@ function OrangTua() {
         formData,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -273,7 +273,7 @@ function OrangTua() {
         // },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
           responseType: "blob",
         }

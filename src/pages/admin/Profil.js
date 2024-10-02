@@ -37,7 +37,7 @@ function Profil() {
     try {
       const response = await axios.get(`${API_DUMMY}/api/admin/getById/${id}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          AuthPrs: `Bearer ${token}`,
         },
       });
 
@@ -63,7 +63,7 @@ function Profil() {
         usmail,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -128,7 +128,7 @@ function Profil() {
       const response = await axios.put(
         `${API_DUMMY}/api/admin/edit-password/${id}`, {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         },
         {
@@ -138,7 +138,7 @@ function Profil() {
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -167,7 +167,7 @@ function Profil() {
         formData,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",
           },
         }

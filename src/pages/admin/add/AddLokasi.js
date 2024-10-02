@@ -26,7 +26,7 @@ function AddLokasi() {
         `${API_DUMMY}/api/organisasi/all-by-admin/${idAdmin}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -51,7 +51,7 @@ function AddLokasi() {
         add,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );

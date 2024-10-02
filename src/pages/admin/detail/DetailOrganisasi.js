@@ -19,7 +19,7 @@ function DetailOrganisasi() {
     try {
       const res = await axios.get(`${API_DUMMY}/api/organisasi/getById/${id}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          AuthPrs: `Bearer ${token}`,
         },
       });
       setOrganisasi(res.data);

@@ -19,7 +19,7 @@ function EditAdmin() {
     axios
       .get(`${API_DUMMY}/api/admin/getById/` + param.id, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          AuthPrs: `Bearer ${localStorage.getItem("token")}`,
         },
       })
       .then((ress) => {
@@ -46,7 +46,7 @@ function EditAdmin() {
         usmail,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            AuthPrs: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );

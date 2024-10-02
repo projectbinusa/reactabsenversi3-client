@@ -45,7 +45,7 @@ function Harian() {
         {
           responseType: "blob",
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );

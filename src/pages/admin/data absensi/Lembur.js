@@ -27,7 +27,7 @@ function Lembur() {
         `${API_DUMMY}/api/lembur/getall`
         // {
         //   headers: {
-        //     Authorization: `Bearer ${token}`,
+        //     AuthPrs: `Bearer ${token}`,
         //   },
         // }
       );
@@ -120,7 +120,7 @@ function Lembur() {
             method: "GET",
             responseType: "blob",
             // headers: {
-            //   Authorization: `Bearer ${token}`,
+            //   AuthPrs: `Bearer ${token}`,
             // },
           });
 

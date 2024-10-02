@@ -28,7 +28,7 @@ function AddKelas() {
         `${API_DUMMY}/api/organisasi/all-by-admin/${idAdmin}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -47,7 +47,7 @@ function AddKelas() {
       }
       const response = await axios.get(`${API_DUMMY}/api/kelas/kelas/all`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          AuthPrs: `Bearer ${token}`,
         },
       });
       const existingUsers = response.data;
@@ -67,7 +67,7 @@ function AddKelas() {
       try {
         await axios.post(url, add, {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         });
 

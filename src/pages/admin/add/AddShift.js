@@ -27,7 +27,7 @@ function AddShift() {
     try {
       const response = await axios.get(`${API_DUMMY}/api/shift/getall`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          AuthPrs: `Bearer ${token}`,
         },
       });
       const existingUsers = response.data;
@@ -51,7 +51,7 @@ function AddShift() {
 
       await axios.post(`${API_DUMMY}/api/shift/tambahShift/${idAdmin}`, shift, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          AuthPrs: `Bearer ${token}`,
         },
       });
       Swal.fire({

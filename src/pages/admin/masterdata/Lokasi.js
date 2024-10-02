@@ -29,7 +29,7 @@ function Lokasi() {
     try {
       const res = await axios.get(`${API_DUMMY}/api/user/${idAdmin}/users`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          AuthPrs: `Bearer ${token}`,
         },
       });
       setKaryawan(res.data.length);
@@ -43,7 +43,7 @@ function Lokasi() {
         `${API_DUMMY}/api/lokasi/get-admin/${idAdmin}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            AuthPrs: `Bearer ${token}`,
           },
         }
       );
@@ -79,7 +79,7 @@ function Lokasi() {
         try {
           await axios.delete(`${API_DUMMY}/api/lokasi/delete-sementara/` + id, {
             headers: {
-              Authorization: `Bearer ${token}`,
+              AuthPrs: `Bearer ${token}`,
             },
           });
 
