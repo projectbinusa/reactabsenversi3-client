@@ -1,11 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
-import Navbar from "../../../components/NavbarUser";
 import Webcam from "react-webcam";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { toBeDisabled } from "@testing-library/jest-dom/matchers";
 import { API_DUMMY } from "../../../utils/api";
-import { useNavigate } from "react-router-dom";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 import "../css/AbsenMasuk.css";
 import { SidebarProvider } from "../../../components/SidebarContext";
@@ -24,36 +21,20 @@ function AbsenPulang() {
   const [waktuPulang, setWaktuPulang] = useState("");
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
+  const [allowedCoordinates, setAllowedCoordinates] = useState([]);
   const [imageFile, setImageFile] = useState("");
   const token = localStorage.getItem("token");
 
-  // rmh
-  //   const allowedCoordinates = {
-  //     northWest: { lat: -6.9686335, lon: 110.2521534 },
-  //     northEast: { lat: -6.9686335, lon: 110.2522446 },
-  //     southWest: { lat: -6.9687235, lon: 110.2521534 },
-  //     southEast: { lat: -6.9687235, lon: 110.2522446 },
-  // };
-
-  // exc
-  // const allowedCoordinates = {
-  //   northWest: { lat: -6.982580885, lon: 110.404028235 },
-  //   northEast: { lat: -6.982580885, lon: 110.404118565 },
-  //   southWest: { lat: -6.982670715, lon: 110.404028235 },
-  //   southEast: { lat: -6.982670715, lon: 110.404118565 },
-  // };
-
-  //smpn40smg
-  const allowedCoordinates = {
-    northWest: { lat: -6.988985050934718, lon: 110.40435783994 },
-    northEast: { lat: -6.989424872078232, lon: 110.40505158383749 },
-    southWest: { lat: -6.99016918383492, lon: 110.4050114830342 },
-    southEast: { lat: -6.989554231156763, lon: 110.40406710911383 },
-  };
-
+  // Check if the latitude and longitude are within the allowed coordinates
   const isWithinAllowedCoordinates = (lat, lon) => {
-    const { northWest, northEast, southWest, southEast } = allowedCoordinates;
-    const tolerance = 0.00001; // adding a small tolerance
+    if (allowedCoordinates.length === 0) return false; // No coordinates fetched
+    const { northWest, northEast, southWest, southEast } = {
+      northWest: allowedCoordinates[0],
+      northEast: allowedCoordinates[1],
+      southWest: allowedCoordinates[2],
+      southEast: allowedCoordinates[3],
+    };
+    const tolerance = 0.00001; // Adding a small tolerance
 
     return (
       lat >= southWest.lat - tolerance &&
@@ -61,6 +42,30 @@ function AbsenPulang() {
       lon >= southWest.lon - tolerance &&
       lon <= northEast.lon + tolerance
     );
+  };
+
+  const getAllowedCoordinates = async () => {
+    try {
+      const response = await axios.get(`${API_DUMMY}/api/koordinat/getByIdAdmin`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        params: {
+          token: token,
+        },
+      });
+
+      if (response.data) {
+        // Assuming response.data is an array of coordinates
+        setAllowedCoordinates(response.data.map(coord => ({
+          lat: coord.latitude,
+          lon: coord.longitude
+        })));
+      }
+    } catch (error) {
+      console.error("Error fetching allowed coordinates:", error);
+      Swal.fire("Error", "Gagal mendapatkan koordinat yang diizinkan", "error");
+    }
   };
 
   const getShift = async () => {
@@ -87,6 +92,7 @@ function AbsenPulang() {
   };
 
   useEffect(() => {
+    getAllowedCoordinates();
     getShift();
     const interval = setInterval(() => {
       setCurrentDateTime(new Date());

@@ -24,29 +24,8 @@ function AbsenMasuk() {
   const [fetchingLocation, setFetchingLocation] = useState(true);
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
+  const [allowedCoordinates, setAllowedCoordinates] = useState(null); // New state for allowed coordinates
 
-  // // Batas koordinat yang diizinkan excelent
-  // const allowedCoordinates = {
-  //   northWest: { lat: -6.982580885, lon: 110.404028235 },
-  //   northEast: { lat: -6.982580885, lon: 110.404118565 },
-  //   southWest: { lat: -6.982670715, lon: 110.404028235 },
-  //   southEast: { lat: -6.982670715, lon: 110.404118565 },
-  // };
-
-  // // Batas koordinat yang diizinkan smpn40smg
-const allowedCoordinates = {
-  northWest: { lat: -6.988985050934718, lon: 110.40435783994 },
-  northEast: { lat: -6.989424872078232, lon: 110.40505158383749 },
-  southWest: { lat: -6.99016918383492, lon: 110.4050114830342 },
-  southEast: { lat: -6.989554231156763, lon: 110.40406710911383 },
-};
-
-  // const allowedCoordinates = {
-  //   northWest: { lat: -6.968697419671277, lon: 110.25208956395724 },
-  //   northEast: { lat: -6.968697419671277, lon: 110.25231003604275 },
-  //   southWest: { lat: -6.968878380328723, lon: 110.25208956395724 },
-  //   southEast: { lat: -6.968878380328723, lon: 110.25231003604275 },
-  // };
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentDateTime(new Date());
@@ -54,6 +33,25 @@ const allowedCoordinates = {
 
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    // Fetch allowed coordinates from the server
+    const fetchAllowedCoordinates = async () => {
+      try {
+        const response = await axios.get(`${API_DUMMY}/getByIdAdmin`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setAllowedCoordinates(response.data); // Set the fetched coordinates
+      } catch (err) {
+        console.error("Error fetching coordinates:", err);
+        setError("Gagal mendapatkan koordinat yang diizinkan");
+      }
+    };
+
+    fetchAllowedCoordinates();
+  }, [token]);
 
   useEffect(() => {
     let watchId;
@@ -91,7 +89,7 @@ const allowedCoordinates = {
           {
             enableHighAccuracy: true,
             timeout: 10000,
-            maximumAge: 1000, // Menggunakan cache hingga 1 detik untuk hasil yang lebih cepat.
+            maximumAge: 1000,
           }
         );
       } catch (err) {
@@ -103,7 +101,6 @@ const allowedCoordinates = {
     requestPermissions();
 
     return () => {
-      // Bersihkan watchPosition saat komponen dilepas.
       if (watchId) {
         navigator.geolocation.clearWatch(watchId);
       }
@@ -128,18 +125,20 @@ const allowedCoordinates = {
 
 
 
-  // validasi
-  const isWithinAllowedCoordinates = (lat, lon) => {
-    const { northWest, northEast, southWest, southEast } = allowedCoordinates;
-    const tolerance = 0.00001;
-
-    return (
-      lat >= southWest.lat - tolerance &&
-      lat <= northWest.lat + tolerance &&
-      lon >= southWest.lon - tolerance &&
-      lon <= northEast.lon + tolerance
-    );
-  };
+    // Validasi dengan menggunakan koordinat yang diizinkan
+    const isWithinAllowedCoordinates = (lat, lon) => {
+      if (!allowedCoordinates) return false;
+  
+      const { northWest, northEast, southWest, southEast } = allowedCoordinates[0]; // Assume the response is an array of coordinates
+      const tolerance = 0.00001;
+  
+      return (
+        lat >= southWest.lat - tolerance &&
+        lat <= northWest.lat + tolerance &&
+        lon >= southWest.lon - tolerance &&
+        lon <= northEast.lon + tolerance
+      );
+    };
 
   const handleCaptureAndSubmitMasuk = async () => {
     const imageSrc = webcamRef.current.getScreenshot();

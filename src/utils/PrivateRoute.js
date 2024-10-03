@@ -1,39 +1,40 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 
 function PrivateRoute({ element: Component }) {
   const location = useLocation();
 
+  // Cek apakah token valid
   const isTokenValid = () => {
     const token = localStorage.getItem("token");
     if (!token) return false;
+
     try {
+      // Decode token dan cek waktu expired
       const tokenData = JSON.parse(atob(token.split(".")[1]));
-      const expirationTime = tokenData.exp * 1000;
+      const expirationTime = tokenData.exp * 1000; // Convert to milliseconds
       const currentTime = Date.now();
-      return currentTime < expirationTime;
+      return currentTime < expirationTime; // Token valid jika belum expired
     } catch (e) {
+      // Jika parsing token gagal, anggap token tidak valid
       return false;
     }
   };
 
-  const isLoginPath = location.pathname === "/login";
   const tokenValid = isTokenValid();
+  const isLoginPath = location.pathname === "/login";
 
-  useEffect(() => {
-    if (tokenValid && isLoginPath) {
-      <Navigate to="/" replace />;
-    }
-  }, [tokenValid, isLoginPath]);
-
+  // Redirect ke halaman login jika token tidak valid dan bukan di halaman login
   if (!tokenValid && !isLoginPath) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
+  // Jika token valid tetapi di halaman login, redirect ke halaman home
   if (tokenValid && isLoginPath) {
     return <Navigate to="/" replace />;
   }
 
+  // Jika token valid dan bukan di halaman login, render komponen yang diinginkan
   return <Component />;
 }
 
