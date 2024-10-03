@@ -17,7 +17,7 @@ function AbsenMasuk() {
   const token = localStorage.getItem("token");
   const [loading] = useState(false);
   const [address, setAddress] = useState("");
-  const [ setImageFile] = useState("");
+  const [imageFile ,  setImageFile] = useState("");
   const [fetchingLocation, setFetchingLocation] = useState(true);
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
@@ -64,8 +64,8 @@ function AbsenMasuk() {
             const { latitude, longitude } = position.coords;
             setLatitude(latitude);
             setLongitude(longitude);
-            console.log("latitude: ", latitude);
-            console.log("longitude: ", longitude);
+            // console.log("latitude: ", latitude);
+            // console.log("longitude: ", longitude);
 
             try {
               const response = await fetch(
