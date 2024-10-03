@@ -15,7 +15,7 @@ function DetailPengumuman() {
   const [informasi, setInformasi] = useState([]);
   const { id } = useParams();
   const token = localStorage.getItem("token");
-  
+
   const fetchInformasi = useCallback(async () => {
     try {
       const response = await axios.get(

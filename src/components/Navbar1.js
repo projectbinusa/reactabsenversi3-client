@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSidebar } from "./SidebarContext";
-import logo from "../components/logo.jpg";
+import logo from "../components/logo_smp.png";
 import { API_DUMMY } from "../utils/api";
 import axios from "axios";
 import { Link, useLocation } from "react-router-dom";
