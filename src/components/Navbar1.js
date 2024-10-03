@@ -350,7 +350,7 @@ function Navbar1() {
             <Link to="/" className="flex ms-2 md:me-24">
               <img src={logo} className="h-11 rounded-full me-3 text-white" alt="" />
               <span className="self-center text-xl font-semibold sm:text-xl whitespace-nowrap text-white">
-                Presensi App
+                E-Residence
               </span>
             </Link>
           </div>
