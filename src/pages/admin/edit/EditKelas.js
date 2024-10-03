@@ -51,14 +51,14 @@ function EditKelas() {
 
   const submitActionHandler = async (event) => {
     event.preventDefault();
-  
+
     const token = localStorage.getItem("token");
     const config = {
       headers: {
         AuthPrs: `Bearer ${token}`,
       },
     };
-  
+
     const KelasData = {
       id: id,
       namaKelas,
@@ -66,14 +66,14 @@ function EditKelas() {
         id: adminId,
       },
     };
-  
+
     try {
       await axios.put(
         `${API_DUMMY}/api/kelas/editKelasById/${id}`,
         KelasData,
         config
       );
-  
+
       Swal.fire({
         position: "center",
         icon: "success",
@@ -86,7 +86,7 @@ function EditKelas() {
       }, 1500);
     } catch (error) {
       console.error("Terjadi kesalahan saat mengedit data: ", error);
-  
+
       // Cek jika error disebabkan oleh nama kelas yang sudah ada
       if (
         error.response &&
@@ -109,7 +109,7 @@ function EditKelas() {
       }
     }
   };
-  
+
 
   // Helper function to capitalize each word, but not the character after an apostrophe
   const capitalizeWords = (str) => {

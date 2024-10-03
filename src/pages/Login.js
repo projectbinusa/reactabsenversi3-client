@@ -221,7 +221,7 @@ import Logo from "../components/logo.jpg";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { API_DUMMY } from "../utils/api";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../components/logo_smp.png";
+import logo from "../components/asset/logo_smp.png";
 
 function Login() {
   const navigate = useNavigate();

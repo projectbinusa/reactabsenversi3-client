@@ -165,7 +165,7 @@ function AbsenPulang() {
     ucapan = "Selamat Malam";
   }
 
- 
+
 
   const handleCaptureAndSubmitPulang = async () => {
     const imageSrc = webcamRef.current.getScreenshot();
