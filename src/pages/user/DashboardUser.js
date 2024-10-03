@@ -34,29 +34,20 @@ function Dashboard() {
   const fetchData = async () => {
     try {
       // Parallel fetching of data
-      const [userResponse, absensiResponse, izinResponse] =
-        await Promise.all([
-          axios.get(`${API_DUMMY}/api/user/getUserBy/${userId}`, {
-              headers: {
-                AuthPrs: `Bearer ${token}`,
-              },
-            }),
-          axios.get(`${API_DUMMY}/api/absensi/getByUserId/${userId}`, {
-              headers: {
-                AuthPrs: `Bearer ${token}`,
-              },
-            }),
-          axios.get(`${API_DUMMY}/api/absensi/checkAbsensi/${userId}`, {
-              headers: {
-                AuthPrs: `Bearer ${token}`,
-              },
-            }),
-        ]);
+      const [absensiResponse, izinResponse] = await Promise.all([
+        axios.get(`${API_DUMMY}/api/absensi/getByUserId/${userId}`, {
+          headers: {
+            AuthPrs: `Bearer ${token}`,
+          },
+        }),
+        axios.get(`${API_DUMMY}/api/absensi/checkAbsensi/${userId}`, {
+          headers: {
+            AuthPrs: `Bearer ${token}`,
+          },
+        }),
+      ]);
 
-        console.log("testinggggggg");
-
-      setUsername(userResponse.data);
-      console.log("user: ", userResponse.data);
+      console.log("testinggggggg");
       setAbsensi(absensiResponse.data.reverse());
       console.log("absensi response: ", absensiResponse.data);
 
@@ -96,6 +87,7 @@ function Dashboard() {
         }
       );
       setAdmin(response.data.admin.id);
+      setUsername(response.data);
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
@@ -122,7 +114,6 @@ function Dashboard() {
     fetchUserData();
     getIzin();
     console.log("token: ", token);
-
 
     const interval = setInterval(() => {
       setCurrentDateTime(new Date());
@@ -215,45 +206,34 @@ function Dashboard() {
             </div>
 
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8 mt-7">
-              <Link to={"/user/absen"}>
-                <div
-                  className={`pl-2 h-24 rounded-lg shadow-md md:w-auto`}>
-                  <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
+              <Link className="bg-green-500 rounded" to={"/user/absen"}>
+                <div className={`pl-2 h-24 rounded-lg shadow-md md:w-auto`}>
+                  <div className="flex w-full h-full py-2 px-4 rounded-lg justify-between">
                     <div className="my-auto">
                       <p
-                        className={`font-bold text-black
+                        className={`font-bold text-white
                       `}>
                         Masuk
                       </p>
-                      <p
-                        className={`text-lg text-black`}>
-                        Presensi masuk.
-                      </p>
+                      <p className={`text-lg text-white`}>Presensi masuk.</p>
                     </div>
-                    <div
-                      className={`my-auto text-black`}>
+                    <div className={`my-auto text-white`}>
                       <FontAwesomeIcon icon={faArrowRightToBracket} size="2x" />
                     </div>
                   </div>
                 </div>
               </Link>
 
-              <Link to={isPulangTengahHari ? "#" : "/user/pulang"}>
-                <div
-                  className={`pl-2 h-24 rounded-lg shadow-md md:w-auto bg-green-500`}>
-                  <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
+              <Link
+                className="bg-orange-500 rounded"
+                to={isPulangTengahHari ? "#" : "/user/pulang"}>
+                <div className={`pl-2 h-24 rounded-lg shadow-md md:w-auto`}>
+                  <div className="flex w-full h-full py-2 px-4 rounded-lg justify-between">
                     <div className="my-auto">
-                      <p
-                        className={`font-bold text-black`}>
-                        Pulang
-                      </p>
-                      <p
-                        className={`text-lg text-black`}>
-                        Presensi pulang
-                      </p>
+                      <p className={`font-bold text-white`}>Pulang</p>
+                      <p className={`text-lg text-white`}>Presensi pulang</p>
                     </div>
-                    <div
-                      className={`my-auto text-black`}>
+                    <div className={`my-auto text-white`}>
                       <FontAwesomeIcon
                         icon={faArrowRightFromBracket}
                         size="2x"
@@ -263,22 +243,15 @@ function Dashboard() {
                 </div>
               </Link>
 
-              <Link to={isIzinDisabled ? "#" : "/user/izin"}>
+              <Link className="bg-red-500 rounded" to={isIzinDisabled ? "#" : "/user/izin"}>
                 <div
-                  className={`pl-2 h-24 rounded-lg shadow-md md:w-auto bg-orange-500`}>
-                  <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
+                  className={`pl-2 h-24 rounded-lg shadow-md md:w-auto`}>
+                  <div className="flex w-full h-full py-2 px-4 rounded-lg justify-between">
                     <div className="my-auto">
-                      <p
-                        className={`font-bold text-black`}>
-                        Izin
-                      </p>
-                      <p
-                        className={`text-lg text-black`}>
-                        Permohonan Izin
-                      </p>
+                      <p className={`font-bold text-white`}>Izin</p>
+                      <p className={`text-lg text-white`}>Permohonan Izin</p>
                     </div>
-                    <div
-                      className={`my-auto text-black`}>
+                    <div className={`my-auto text-white`}>
                       <FontAwesomeIcon icon={faCircleXmark} size="2x" />
                     </div>
                   </div>
