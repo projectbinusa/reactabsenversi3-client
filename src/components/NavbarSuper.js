@@ -3,7 +3,7 @@ import Logo from "../components/logo_smp.png";
 
 import axios from "axios";
 import { API_DUMMY } from "../utils/api";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 const NavbarSuper = () => {
   const [profileSu, setProfileSu] = useState([]);
