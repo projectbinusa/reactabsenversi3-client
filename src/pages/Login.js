@@ -102,6 +102,7 @@ function Login() {
           </div>
           <div className="mt-8 flex flex-col items-center">
             <h1 className="text-2xl xl:text-3xl font-extrabold">Sign in</h1>
+            <p className="text-base align-baseline mt-6">Sistem Absensi Berbasis Elektronik</p>
             <div className="w-full flex-1 mt-8">
               <form action="" onSubmit={login} method="POST">
                 <div className="mx-auto max-w-xs">
@@ -159,7 +160,6 @@ function Login() {
                     <span className="ml-3">Sign In</span>
                   </button>
                   <div className="text-center mt-5">
-                  <p className="text-base align-baseline">Sistem Absensi Berbasis Elektronik</p>
                     <a
                       className="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
                       onClick={() => setShowForgot(true)}>
