@@ -39,24 +39,24 @@ function AbsenPulang() {
   // };
 
   //smpn40smg
-  // const allowedCoordinates = {
-  //   northWest: { lat: -6.988985050934718, lon: 110.40435783994 },
-  //   northEast: { lat: -6.989424872078232, lon: 110.40505158383749 },
-  //   southWest: { lat: -6.99016918383492, lon: 110.4050114830342 },
-  //   southEast: { lat: -6.989554231156763, lon: 110.40406710911383 },
-  // };
+  const allowedCoordinates = {
+    northWest: { lat: -6.988985050934718, lon: 110.40435783994 },
+    northEast: { lat: -6.989424872078232, lon: 110.40505158383749 },
+    southWest: { lat: -6.99016918383492, lon: 110.4050114830342 },
+    southEast: { lat: -6.989554231156763, lon: 110.40406710911383 },
+  };
 
-  // const isWithinAllowedCoordinates = (lat, lon) => {
-  //   const { northWest, northEast, southWest, southEast } = allowedCoordinates;
-  //   const tolerance = 0.00001; // adding a small tolerance
+  const isWithinAllowedCoordinates = (lat, lon) => {
+    const { northWest, northEast, southWest, southEast } = allowedCoordinates;
+    const tolerance = 0.00001; // adding a small tolerance
 
-  //   return (
-  //     lat >= southWest.lat - tolerance &&
-  //     lat <= northWest.lat + tolerance &&
-  //     lon >= southWest.lon - tolerance &&
-  //     lon <= northEast.lon + tolerance
-  //   );
-  // };
+    return (
+      lat >= southWest.lat - tolerance &&
+      lat <= northWest.lat + tolerance &&
+      lon >= southWest.lon - tolerance &&
+      lon <= northEast.lon + tolerance
+    );
+  };
 
   const getShift = async () => {
     try {
@@ -216,7 +216,7 @@ function AbsenPulang() {
       }
     }
 
-    // if (isWithinAllowedCoordinates(latitude, longitude)) {
+    if (isWithinAllowedCoordinates(latitude, longitude)) {
       try {
         const absensiCheckResponse = await axios.get(
           `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`,
@@ -300,13 +300,13 @@ function AbsenPulang() {
       } finally {
         setFetchingLocation(false);
       }
-    // } else {
-    //   Swal.fire(
-    //     "Error",
-    //     "Lokasi Anda di luar batas yang diizinkan untuk absensi",
-    //     "error"
-    //   );
-    // }
+    } else {
+      Swal.fire(
+        "Error",
+        "Lokasi Anda di luar batas yang diizinkan untuk absensi",
+        "error"
+      );
+    }
   };
 
   return (
