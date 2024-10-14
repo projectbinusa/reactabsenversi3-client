@@ -79,7 +79,7 @@ function AddIzin() {
   }
 
   const handleBack = () => {
-    window.location.href = "/user/dashboard";
+    window.location.href = "/";
   };
 
   return (
