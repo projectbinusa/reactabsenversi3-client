@@ -216,7 +216,7 @@ function AbsenPulang() {
       }
     }
 
-    if (isWithinAllowedCoordinates(latitude, longitude)) {
+    // if (isWithinAllowedCoordinates(latitude, longitude)) {
       try {
         const absensiCheckResponse = await axios.get(
           `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`,
@@ -300,13 +300,13 @@ function AbsenPulang() {
       } finally {
         setFetchingLocation(false);
       }
-    } else {
-      Swal.fire(
-        "Error",
-        "Lokasi Anda di luar batas yang diizinkan untuk absensi",
-        "error"
-      );
-    }
+    // } else {
+    //   Swal.fire(
+    //     "Error",
+    //     "Lokasi Anda di luar batas yang diizinkan untuk absensi",
+    //     "error"
+    //   );
+    // }
   };
 
   return (
