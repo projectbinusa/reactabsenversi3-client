@@ -17,7 +17,7 @@ function AbsenMasuk() {
   const token = localStorage.getItem("token");
   const [loading] = useState(false);
   const [address, setAddress] = useState("");
-  const [imageFile ,  setImageFile] = useState("");
+  const [imageFile, setImageFile] = useState("");
   const [fetchingLocation, setFetchingLocation] = useState(true);
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
@@ -31,12 +31,12 @@ function AbsenMasuk() {
   // };
 
   // // Batas koordinat yang diizinkan smpn40smg
-const allowedCoordinates = {
-  northWest: { lat: -6.988985050934718, lon: 110.40435783994 },
-  northEast: { lat: -6.989424872078232, lon: 110.40505158383749 },
-  southWest: { lat: -6.99016918383492, lon: 110.4050114830342 },
-  southEast: { lat: -6.989554231156763, lon: 110.40406710911383 },
-};
+  const allowedCoordinates = {
+    northWest: { lat: -6.988985050934718, lon: 110.40435783994 },
+    northEast: { lat: -6.989424872078232, lon: 110.40505158383749 },
+    southWest: { lat: -6.99016918383492, lon: 110.4050114830342 },
+    southEast: { lat: -6.989554231156763, lon: 110.40406710911383 },
+  };
 
   // const allowedCoordinates = {
   //   northWest: { lat: -6.968697419671277, lon: 110.25208956395724 },
@@ -123,8 +123,6 @@ const allowedCoordinates = {
     ucapan = "Selamat Malam";
   }
 
-
-
   // validasi
   const isWithinAllowedCoordinates = (lat, lon) => {
     const { northWest, northEast, southWest, southEast } = allowedCoordinates;
@@ -141,13 +139,19 @@ const allowedCoordinates = {
   const handleCaptureAndSubmitMasuk = async () => {
     const imageSrc = webcamRef.current.getScreenshot();
     const response = await fetch(imageSrc);
-    const imageBlob = await response.blob(); // Convert imageSrc to Blob
+    const imageBlob = await response.blob();
 
-    let imageUrl;
+    if (!imageBlob) {
+      console.error("Tidak ada gambar yang tersedia.");
+      Swal.fire("Error", "Gambar tidak tersedia", "error");
+      return;
+  }
+
+    let imageUrl = null;
     try {
       imageUrl = await uploadImageToS3(imageBlob);
     } catch (error) {
-      console.error('Error during image upload:', error);
+      console.error("Error during image upload:", error);
       Swal.fire("Error", "Gagal mengupload gambar", "error");
       return;
     }
@@ -157,88 +161,89 @@ const allowedCoordinates = {
       return;
     }
 
-
     async function uploadImageToS3(file) {
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append("file", file);
 
       try {
-        const response = await fetch('https://s3.lynk2.co/api/s3/absenMasuk', {
-          method: 'POST',
+        const response = await fetch("https://s3.lynk2.co/api/s3/absenMasuk", {
+          method: "POST",
           body: formData,
         });
 
         if (!response.ok) {
-          throw new Error('Gagal mengupload gambar');
+          throw new Error("Gagal mengupload gambar");
         }
 
         const data = await response.json();
         console.log("Respons dari S3:", data);
         if (data.data && data.data.url_file) {
           setImageFile(data.data.url_file);
+          console.log("image url: ", data.data.url_file);
           return data.data.url_file;
         } else {
-          throw new Error('URL gambar tidak tersedia dalam respons');
+          throw new Error("URL gambar tidak tersedia dalam respons");
         }
       } catch (error) {
-        console.error('Error:', error);
+        console.error("Error:", error);
         throw error;
       }
     }
 
-    // if (isWithinAllowedCoordinates(latitude, longitude)) {
-      try {
-        const absensiCheckResponse = await axios.get(
-          `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`,
+    try {
+      const absensiCheckResponse = await axios.get(
+        `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`,
+        {
+          headers: {
+            AuthPrs: `Bearer ${token}`,
+             "Content-Type": "multipart/form-data"
+          },
+        }
+      );
+
+      if (
+        absensiCheckResponse.data ===
+        "Pengguna sudah melakukan absensi hari ini."
+      ) {
+        Swal.fire("Info", "Anda sudah melakukan absensi hari ini.", "info");
+      } else {
+        const formData = new FormData();
+        formData.append("image", imageBlob);
+        formData.append("lokasiMasuk", address || "");
+        formData.append("keteranganTerlambat", keteranganTerlambat || "-");
+
+        console.log("FormData yang dikirim:", [...formData.entries()]);
+        console.log("Image URL:", imageUrl);
+        await axios.post(
+          `${API_DUMMY}/api/absensi/masuk?token=${token}`,
+          {
+            fotoMasuk: imageUrl,
+            lokasiMasuk: address || "",
+            keteranganTerlambat: keteranganTerlambat || "-",
+          },
           {
             headers: {
               AuthPrs: `Bearer ${token}`,
+              // "Content-Type": "multipart/form-data",
             },
           }
         );
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Berhasil Absen",
+          showConfirmButton: false,
+          timer: 1500,
+        });
 
-        if (absensiCheckResponse.data === "Pengguna sudah melakukan absensi hari ini.") {
-          Swal.fire("Info", "Anda sudah melakukan absensi hari ini.", "info");
-        } else {
-          const formData = new FormData();
-          formData.append("image", imageUrl || "");
-          formData.append("lokasiMasuk", `${address}`);
-          formData.append("keteranganTerlambat", keteranganTerlambat || "-");
-
-          await axios.post(
-            `${API_DUMMY}/api/absensi/masuk?token=${token}`,
-            formData,
-            {
-              headers: {
-                AuthPrs: `Bearer ${token}`,
-                "Content-Type": "multipart/form-data",
-              },
-            }
-          );
-
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Berhasil Absen",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-
-          setTimeout(() => {
-            window.location.href = "/user/history_absen";
-          }, 1500);
-        }
-      } catch (err) {
-        console.error("Error:", err);
-        Swal.fire("Error", "Gagal Absen", "error");
+        setTimeout(() => {
+          window.location.href = "/user/history_absen";
+        }, 1500);
       }
-    // } else {
-    //   Swal.fire(
-    //     "Error",
-    //     "Lokasi Anda di luar batas yang diizinkan untuk absensi",
-    //     "error"
-    //   );
-    // }
+    } catch (err) {
+      console.error("Error:", err);
+      Swal.fire("Error", "Gagal Absen", "error");
+    }
   };
 
   return (
@@ -297,8 +302,7 @@ const allowedCoordinates = {
                         );
                       }
                     }}
-                    className="block w-32 sm:w-40 bg-blue-500 text-white rounded-lg py-3 text-sm sm:text-xs font-medium"
-                  >
+                    className="block w-32 sm:w-40 bg-blue-500 text-white rounded-lg py-3 text-sm sm:text-xs font-medium">
                     {loading ? "Loading..." : "Ambil Foto"}
                   </button>
                 </div>
