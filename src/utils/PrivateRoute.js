@@ -41,14 +41,29 @@
 // export default PrivateRoute;
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 function PrivateRoute({ children }) {
   const location = useLocation();
+  const token = localStorage.getItem("token");
 
-  if (!localStorage.getItem("token")) {
+  // Jika tidak ada token, arahkan ke halaman login
+  if (!token) {
+    return <Navigate to="/login" state={{ from: location }} />;
+  }
+
+  try {
+    const decodedToken = jwtDecode(token);
+    const currentTime = Date.now() / 1000;
+    if (decodedToken.exp < currentTime) {
+      localStorage.removeItem("token");
+      return <Navigate to="/login" state={{ from: location }} />;
+    }
+  } catch (error) {
+    localStorage.removeItem("token");
     return <Navigate to="/login" state={{ from: location }} />;
   }
   return children;
 }
-
 export default PrivateRoute;
+
