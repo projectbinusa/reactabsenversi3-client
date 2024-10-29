@@ -191,22 +191,22 @@ function AbsenMasuk() {
     }
 
     try {
-      // const absensiCheckResponse = await axios.get(
-      //   `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`,
-      //   {
-      //     headers: {
-      //       AuthPrs: `Bearer ${token}`,
-      //        "Content-Type": "multipart/form-data"
-      //     },
-      //   }
-      // );
+      const absensiCheckResponse = await axios.get(
+        `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`,
+        {
+          headers: {
+            AuthPrs: `Bearer ${token}`,
+             "Content-Type": "multipart/form-data"
+          },
+        }
+      );
 
-      // if (
-      //   absensiCheckResponse.data ===
-      //   "Pengguna sudah melakukan absensi hari ini."
-      // ) {
-      //   Swal.fire("Info", "Anda sudah melakukan absensi hari ini.", "info");
-      // } else {
+      if (
+        absensiCheckResponse.data ===
+        "Pengguna sudah melakukan absensi hari ini."
+      ) {
+        Swal.fire("Info", "Anda sudah melakukan absensi hari ini.", "info");
+      } else {
         const formData = new FormData();
         formData.append("image", imageBlob);
         formData.append("lokasiMasuk", address || "");
@@ -239,7 +239,7 @@ function AbsenMasuk() {
         setTimeout(() => {
           window.location.href = "/user/history_absen";
         }, 1500);
-      // }
+      }
     } catch (err) {
       console.error("Error:", err);
       Swal.fire("Error", "Gagal Absen", "error");
