@@ -140,8 +140,15 @@ function App() {
   ) : (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<PrivateRoute element={IndexDashboard} />} />
-        <Route path="/login" element={<PrivateRoute element={Login} />} />
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <IndexDashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route path="/login" element={<Login />} />
         <Route path="/navbar" element={<Navbar1 />} />
         <Route path="/register" element={<Register />} />
         <Route path="/registerUser" element={<RegisterUser />} />
@@ -172,194 +179,378 @@ function App() {
             {/* orang tua */}
             <Route
               path="/admin/ortu"
-              element={<PrivateRoute element={OrangTua} />}
+              element={
+                <PrivateRoute>
+                  <OrangTua />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/addOrtu"
-              element={<PrivateRoute element={AddOrtu} />}
+              element={
+                <PrivateRoute>
+                  <AddOrtu />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/editOrtu/:id"
-              element={<PrivateRoute element={EditOrtu} />}
+              element={
+                <PrivateRoute>
+                  <EditOrtu />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/detailOrtu/:id"
-              element={<PrivateRoute element={DetailOrtu} />}
+              element={
+                <PrivateRoute>
+                  <DetailOrtu />
+                </PrivateRoute>
+              }
             />
             {/* <Route
               path="/admin/dashboard"
-              element={<PrivateRoute element={Dashboard} />}
+              element={<PrivateRoute> <Dashboard/> </PrivateRoute>}
             /> */}
             <Route
               path="/admin/profil"
-              element={<PrivateRoute element={Profil} />}
+              element={
+                <PrivateRoute>
+                  <Profil />
+                </PrivateRoute>
+              }
             />
             {/* master data */}
             <Route
               path="/admin/siswa"
-              element={<PrivateRoute element={Karyawan} />}
+              element={
+                <PrivateRoute>
+                  <Karyawan />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/kelas"
-              element={<PrivateRoute element={KelasSiswa} />}
+              element={
+                <PrivateRoute>
+                  <KelasSiswa />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/jabatan"
-              element={<PrivateRoute element={Jabatan} />}
+              element={
+                <PrivateRoute>
+                  <Jabatan />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/shift"
-              element={<PrivateRoute element={Shift} />}
+              element={
+                <PrivateRoute>
+                  <Shift />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/lokasi"
-              element={<PrivateRoute element={Lokasi} />}
+              element={
+                <PrivateRoute>
+                  <Lokasi />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/organisasi"
-              element={<PrivateRoute element={Organisasi} />}
+              element={
+                <PrivateRoute>
+                  <Organisasi />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/informasi"
-              element={<PrivateRoute element={Informasi} />}
+              element={
+                <PrivateRoute>
+                  <Informasi />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/detailK/:id"
-              element={<PrivateRoute element={DetailKaryawan} />}
+              element={
+                <PrivateRoute>
+                  <DetailKaryawan />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/detailLembur/:id"
-              element={<PrivateRoute element={DetailLembur} />}
+              element={
+                <PrivateRoute>
+                  <DetailLembur />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/detailL/:id"
-              element={<PrivateRoute element={DetailLokasi} />}
+              element={
+                <PrivateRoute>
+                  <DetailLokasi />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/detailO/:id"
-              element={<PrivateRoute element={DetailOrganisasi} />}
+              element={
+                <PrivateRoute>
+                  <DetailOrganisasi />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/detailA/:id"
-              element={<PrivateRoute element={DetailAbsensi} />}
+              element={
+                <PrivateRoute>
+                  <DetailAbsensi />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/addkary"
-              element={<PrivateRoute element={Addkaryawan} />}
+              element={
+                <PrivateRoute>
+                  <Addkaryawan />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/addjab"
-              element={<PrivateRoute element={AddJabatan} />}
+              element={
+                <PrivateRoute>
+                  <AddJabatan />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/addshift"
-              element={<PrivateRoute element={AddShift} />}
+              element={
+                <PrivateRoute>
+                  <AddShift />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/addlok"
-              element={<PrivateRoute element={AddLokasi} />}
+              element={
+                <PrivateRoute>
+                  <AddLokasi />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/addor"
-              element={<PrivateRoute element={AddOrganisasi} />}
+              element={
+                <PrivateRoute>
+                  <AddOrganisasi />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/addkelas"
-              element={<PrivateRoute element={AddKelas} />}
+              element={
+                <PrivateRoute>
+                  <AddKelas />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/addinformasi"
-              element={<PrivateRoute element={AddInformasi} />}
+              element={
+                <PrivateRoute>
+                  <AddInformasi />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/editK/:id"
-              element={<PrivateRoute element={EditKaryawan} />}
+              element={
+                <PrivateRoute>
+                  <EditKaryawan />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/editJ/:id"
-              element={<PrivateRoute element={EditJabatan} />}
+              element={
+                <PrivateRoute>
+                  <EditJabatan />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/editL/:id"
-              element={<PrivateRoute element={EditLokasi} />}
+              element={
+                <PrivateRoute>
+                  <EditLokasi />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/editO/:id"
-              element={<PrivateRoute element={EditOrganisasi} />}
+              element={
+                <PrivateRoute>
+                  <EditOrganisasi />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/editS/:id"
-              element={<PrivateRoute element={EditShift} />}
+              element={
+                <PrivateRoute>
+                  <EditShift />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/editkelas/:id"
-              element={<PrivateRoute element={EditKelas} />}
+              element={
+                <PrivateRoute>
+                  <EditKelas />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/editI/:id"
-              element={<PrivateRoute element={EditInformasi} />}
+              element={
+                <PrivateRoute>
+                  <EditInformasi />
+                </PrivateRoute>
+              }
             />
             {/* rekapan */}
             <Route
               path="/admin/simpel"
-              element={<PrivateRoute element={Simpel} />}
+              element={
+                <PrivateRoute>
+                  <Simpel />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/persiswa"
-              element={<PrivateRoute element={Perkaryawan} />}
+              element={
+                <PrivateRoute>
+                  <Perkaryawan />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/harian"
-              element={<PrivateRoute element={Harian} />}
+              element={
+                <PrivateRoute>
+                  <Harian />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/mingguan"
-              element={<PrivateRoute element={Mingguan} />}
+              element={
+                <PrivateRoute>
+                  <Mingguan />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/bulanan"
-              element={<PrivateRoute element={Bulanan} />}
+              element={
+                <PrivateRoute>
+                  <Bulanan />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/perkelas"
-              element={<PrivateRoute element={Perkelas} />}
+              element={
+                <PrivateRoute>
+                  <Perkelas />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/harian/perkelas"
-              element={<PrivateRoute element={HarianPerkelas} />}
+              element={
+                <PrivateRoute>
+                  <HarianPerkelas />
+                </PrivateRoute>
+              }
             />
             {/* data absensi */}
             <Route
               path="/admin/absensi"
-              element={<PrivateRoute element={Absensi} />}
+              element={
+                <PrivateRoute>
+                  <Absensi />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/cuti"
-              element={<PrivateRoute element={Cuti} />}
+              element={
+                <PrivateRoute>
+                  <Cuti />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/kehadiran"
-              element={<PrivateRoute element={Kehadiran} />}
+              element={
+                <PrivateRoute>
+                  <Kehadiran />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/lembur"
-              element={<PrivateRoute element={Lembur} />}
+              element={
+                <PrivateRoute>
+                  <Lembur />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/siswa/kelas/:id"
-              element={<PrivateRoute element={SiswaperKelas} />}
+              element={
+                <PrivateRoute>
+                  <SiswaperKelas />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/bulanan/perkelas"
-              element={<PrivateRoute element={BulanPerkelas} />}
+              element={
+                <PrivateRoute>
+                  <BulanPerkelas />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/mingguan/perkelas"
-              element={<PrivateRoute element={MingguanPerkelas} />}
+              element={
+                <PrivateRoute>
+                  <MingguanPerkelas />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/admin/addsiswaperkelas/:id"
-              element={<PrivateRoute element={AddSiswaPerkelas} />}
+              element={
+                <PrivateRoute>
+                  <AddSiswaPerkelas />
+                </PrivateRoute>
+              }
             />
           </>
           // ) : (
@@ -376,7 +567,11 @@ function App() {
             <> */}
         <Route
           path="/user/detail_absen/:id"
-          element={<PrivateRoute element={DetailAbsen} />}
+          element={
+            <PrivateRoute>
+              <DetailAbsen />
+            </PrivateRoute>
+          }
         />
         {/* </>
           ) : (
@@ -388,51 +583,95 @@ function App() {
           <>
             {/* <Route
               path="/user/dashboard"
-              element={<PrivateRoute element={DashboardUser} />}
+              element={<PrivateRoute> <DashboardUser/> </PrivateRoute>}
             /> */}
             <Route
               path="/user/history_absen"
-              element={<PrivateRoute element={TabelAbsen} />}
+              element={
+                <PrivateRoute>
+                  <TabelAbsen />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/user/history_cuti"
-              element={<PrivateRoute element={TabelCuti} />}
+              element={
+                <PrivateRoute>
+                  <TabelCuti />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/user/history_lembur"
-              element={<PrivateRoute element={TabelLembur} />}
+              element={
+                <PrivateRoute>
+                  <TabelLembur />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/user/cuti"
-              element={<PrivateRoute element={AddCuti} />}
+              element={
+                <PrivateRoute>
+                  <AddCuti />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/user/lembur"
-              element={<PrivateRoute element={AddLembur} />}
+              element={
+                <PrivateRoute>
+                  <AddLembur />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/user/izin"
-              element={<PrivateRoute element={AddIzin} />}
+              element={
+                <PrivateRoute>
+                  <AddIzin />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/user/profile"
-              element={<PrivateRoute element={Profile} />}
+              element={
+                <PrivateRoute>
+                  <Profile />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/user/absen"
-              element={<PrivateRoute element={AbsenMasuk} />}
+              element={
+                <PrivateRoute>
+                  <AbsenMasuk />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/user/pulang"
-              element={<PrivateRoute element={AbsenPulang} />}
+              element={
+                <PrivateRoute>
+                  <AbsenPulang />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/user/detail_info/:id"
-              element={<PrivateRoute element={Pengumuman} />}
+              element={
+                <PrivateRoute>
+                  <Pengumuman />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/user/izin_absen"
-              element={<PrivateRoute element={IzinAbsen} />}
+              element={
+                <PrivateRoute>
+                  <IzinAbsen />
+                </PrivateRoute>
+              }
             />
           </>
           // ) : (
@@ -451,119 +690,227 @@ function App() {
           <>
             {/* <Route
               path="/superadmin/dashboard"
-              element={<PrivateRoute element={DashboardSA} />}
+              element={<PrivateRoute> <DashboardSA/> </PrivateRoute>}
             /> */}
             {/* admin */}
             <Route
               path="/superadmin/admin"
-              element={<PrivateRoute element={Admin} />}
+              element={
+                <PrivateRoute>
+                  <Admin />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/superadmin/addA"
-              element={<PrivateRoute element={AddAdmin} />}
+              element={
+                <PrivateRoute>
+                  <AddAdmin />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/superadmin/detailA/:id"
-              element={<PrivateRoute element={DetailAdmin} />}
+              element={
+                <PrivateRoute>
+                  <DetailAdmin />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/superadmin/editA/:id"
-              element={<PrivateRoute element={EditAdmin} />}
+              element={
+                <PrivateRoute>
+                  <EditAdmin />
+                </PrivateRoute>
+              }
             />
             {/* organisasi */}
             <Route
               path="/superadmin/organisasi"
-              element={<PrivateRoute element={OrganisasiSA} />}
+              element={
+                <PrivateRoute>
+                  <OrganisasiSA />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/superadmin/profile"
-              element={<PrivateRoute element={ProfilSA} />}
+              element={
+                <PrivateRoute>
+                  <ProfilSA />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/superadmin/addO"
-              element={<PrivateRoute element={AddOrganisasiSA} />}
+              element={
+                <PrivateRoute>
+                  <AddOrganisasiSA />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/superadmin/detailO/:id"
-              element={<PrivateRoute element={DetailOrganisasiSA} />}
+              element={
+                <PrivateRoute>
+                  <DetailOrganisasiSA />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/superadmin/editO/:id"
-              element={<PrivateRoute element={EditOrganisasiSA} />}
+              element={
+                <PrivateRoute>
+                  <EditOrganisasiSA />
+                </PrivateRoute>
+              }
             />
             {/* jabatan */}
             <Route
               path="/superadmin/jabatan"
-              element={<PrivateRoute element={JabatanSA} />}
+              element={
+                <PrivateRoute>
+                  <JabatanSA />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/superadmin/addJ"
-              element={<PrivateRoute element={AddJabatanSA} />}
+              element={
+                <PrivateRoute>
+                  <AddJabatanSA />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/superadmin/detailJ/:id"
-              element={<PrivateRoute element={DetailJabatanSA} />}
+              element={
+                <PrivateRoute>
+                  <DetailJabatanSA />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/superadmin/editJ/:idJabatan"
-              element={<PrivateRoute element={EditJabatanSA} />}
+              element={
+                <PrivateRoute>
+                  <EditJabatanSA />
+                </PrivateRoute>
+              }
             />
             {/* shift */}
             <Route
               path="/superadmin/shift"
-              element={<PrivateRoute element={ShiftSA} />}
+              element={
+                <PrivateRoute>
+                  <ShiftSA />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/superadmin/detailS/:id"
-              element={<PrivateRoute element={DetailShiftSA} />}
+              element={
+                <PrivateRoute>
+                  <DetailShiftSA />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/superadmin/add-shift"
-              element={<PrivateRoute element={AddShiftSA} />}
+              element={
+                <PrivateRoute>
+                  <AddShiftSA />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/superadmin/editS/:id"
-              element={<PrivateRoute element={EditShiftSA} />}
+              element={
+                <PrivateRoute>
+                  <EditShiftSA />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/superadmin/data-user"
-              element={<PrivateRoute element={User} />}
+              element={
+                <PrivateRoute>
+                  <User />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/superadmin/addU"
-              element={<PrivateRoute element={AddUser} />}
+              element={
+                <PrivateRoute>
+                  <AddUser />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/superadmin/editU/:id"
-              element={<PrivateRoute element={EditUser} />}
+              element={
+                <PrivateRoute>
+                  <EditUser />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/superadmin/detailU/:id"
-              element={<PrivateRoute element={DetailUser} />}
+              element={
+                <PrivateRoute>
+                  <DetailUser />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/superadmin/lokasi"
-              element={<PrivateRoute element={LokasiSA} />}
+              element={
+                <PrivateRoute>
+                  <LokasiSA />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/superadmin/addLokasi"
-              element={<PrivateRoute element={AddLokasiSA} />}
+              element={
+                <PrivateRoute>
+                  <AddLokasiSA />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/superadmin/editLokasi/:idLokasi"
-              element={<PrivateRoute element={EditLokasiSA} />}
+              element={
+                <PrivateRoute>
+                  <EditLokasiSA />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/superadmin/detailLokasi/:idLokasi"
-              element={<PrivateRoute element={DetailLokasiSA} />}
+              element={
+                <PrivateRoute>
+                  <DetailLokasiSA />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/superadmin/absensi"
-              element={<PrivateRoute element={AbsensiSA} />}
+              element={
+                <PrivateRoute>
+                  <AbsensiSA />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/superadmin/detailAbsensi/:id"
-              element={<PrivateRoute element={DetailAbsensiSA} />}
+              element={
+                <PrivateRoute>
+                  <DetailAbsensiSA />
+                </PrivateRoute>
+              }
             />
           </>
           // ) : (
@@ -580,15 +927,23 @@ function App() {
           <>
             {/* <Route
               path="/walimurid/dashboard"
-              element={<PrivateRoute element={DashboardOrtu} />}
+              element={<PrivateRoute> <DashboardOrtu/> </PrivateRoute>}
             /> */}
             <Route
               path="/walimurid/detail_info/:id"
-              element={<PrivateRoute element={DetailPengumuman} />}
+              element={
+                <PrivateRoute>
+                  <DetailPengumuman />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/walimurid/profile"
-              element={<PrivateRoute element={ProfileOrtu} />}
+              element={
+                <PrivateRoute>
+                  <ProfileOrtu />
+                </PrivateRoute>
+              }
             />
           </>
           // ) : (
