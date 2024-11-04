@@ -192,7 +192,7 @@ function AbsenMasuk() {
 
     try {
       const absensiCheckResponse = await axios.get(
-        `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`,
+        `${API_DUMMY}/api/absensi/checkAbsensi?token=${token}`,
         {
           headers: {
             AuthPrs: `Bearer ${token}`,
@@ -235,7 +235,6 @@ function AbsenMasuk() {
           showConfirmButton: false,
           timer: 1500,
         });
-
         setTimeout(() => {
           window.location.href = "/user/history_absen";
         }, 1500);

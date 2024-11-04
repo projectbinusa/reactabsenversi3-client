@@ -48,6 +48,7 @@ function Login() {
         localStorage.setItem("rememberMe", true);
       } else {
         sessionStorage.setItem("token", token);
+        localStorage.setItem("email", email);
         localStorage.setItem("adminId", data.data.id);
         localStorage.setItem("userId", data.data.id);
         localStorage.setItem("id_orangtua", data.data.id);
@@ -57,6 +58,7 @@ function Login() {
         localStorage.removeItem("rememberMe");
       }
       localStorage.setItem("role", data.data.role);
+      localStorage.setItem("email", email);
       localStorage.setItem("token", data.token);
       localStorage.setItem("adminId", data.data.id);
       localStorage.setItem("userId", data.data.id);

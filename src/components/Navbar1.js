@@ -44,15 +44,17 @@ function Navbar1() {
 
   const getSu = async () => {
     try {
-      const superAdmin = await axios.get(
-        `${API_DUMMY}/api/superadmin/getbyid/${id}`,
-        {
-          headers: {
-            AuthPrs: `Bearer ${token}`,
-          },
-        }
-      );
-      setProfileSu(superAdmin.data.imageSuperAdmin);
+      if (localStorage.getItem("role") === "SUPERADMIN") {
+        const superAdmin = await axios.get(
+          `${API_DUMMY}/api/superadmin/getbyid/${id}`,
+          {
+            headers: {
+              AuthPrs: `Bearer ${token}`,
+            },
+          }
+        );
+        setProfileSu(superAdmin.data.imageSuperAdmin);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -60,6 +62,7 @@ function Navbar1() {
 
   const getUser = async () => {
     try {
+      if (localStorage.getItem("role") === "USER") {
       const user = await axios.get(
         `${API_DUMMY}/api/user/getUserBy/${id_user}`,
         {
@@ -69,6 +72,7 @@ function Navbar1() {
         }
       );
       setProfileUser(user.data.fotoUser);
+    }
     } catch (error) {
       console.log(error);
     }
@@ -76,12 +80,14 @@ function Navbar1() {
 
   const getAdmin = async () => {
     try {
-      const admin = await axios.get(`${API_DUMMY}/api/admin/getById/${id}`, {
-        headers: {
-          AuthPrs: `Bearer ${token}`,
-        },
-      });
-      setProfileAdmin(admin.data.imageAdmin);
+      if (localStorage.getItem("role") === "ADMIN") {
+        const admin = await axios.get(`${API_DUMMY}/api/admin/getById/${id}`, {
+          headers: {
+            AuthPrs: `Bearer ${token}`,
+          },
+        });
+        setProfileAdmin(admin.data.imageAdmin);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -89,15 +95,17 @@ function Navbar1() {
 
   const getOrtu = async () => {
     try {
-      const superAdmin = await axios.get(
-        `${API_DUMMY}/api/orang-tua/getbyid/${id_ortu}`,
-        {
-          headers: {
-            AuthPrs: `Bearer ${token}`,
-          },
-        }
-      );
-      setProfileOrtu(superAdmin.data.imageOrtu);
+      if (localStorage.getItem("role") === "Wali Murid") {
+        const superAdmin = await axios.get(
+          `${API_DUMMY}/api/orang-tua/getbyid/${id_ortu}`,
+          {
+            headers: {
+              AuthPrs: `Bearer ${token}`,
+            },
+          }
+        );
+        setProfileOrtu(superAdmin.data.imageOrtu);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -348,7 +356,11 @@ function Navbar1() {
             class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
             id="navbar-language">
             <Link to="/" className="flex ms-2 md:me-24">
-              <img src={logo} className="h-11 rounded-full me-3 text-white" alt="" />
+              <img
+                src={logo}
+                className="h-11 rounded-full me-3 text-white"
+                alt=""
+              />
               <span className="self-center text-xl font-semibold sm:text-xl whitespace-nowrap text-white">
                 SIABEL
               </span>
