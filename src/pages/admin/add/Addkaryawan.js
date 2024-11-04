@@ -92,7 +92,7 @@ function AddKaryawan() {
   const GetAllKelas = async () => {
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/kelas/getALlByAdmin/${idAdmin}`,
+        `${API_DUMMY}/api/kelas/getAllByAdmin/${idAdmin}`,
         {
           headers: {
             AuthPrs: `Bearer ${token}`,
@@ -113,6 +113,11 @@ function AddKaryawan() {
   const optionsShift = shiftList.map((ortu) => ({
     value: ortu.id,
     label: ortu.namaShift,
+  }));
+
+  const optionsKelas = kelasList.map((ortu) => ({
+    value: ortu.id,
+    label: ortu.namaKelas,
   }));
 
   const tambahKaryawan = async (e) => {
@@ -151,8 +156,9 @@ function AddKaryawan() {
       const idOrangTua1 = selectedOrangTua ? selectedOrangTua.value : null;
       // const idKelas1 = idKelas ? idKelas.value : null;
       const idShift1 = idShift ? idShift.value : null;
+      const idKelas1 = idKelas ? idKelas.value : null;
       await axios.post(
-        `${API_DUMMY}/api/user/tambahkaryawan/${idAdmin}?idOrangTua=${idOrangTua1}&idOrganisasi=${idOrganisasi}&idShift=${idShift1}`,
+        `${API_DUMMY}/api/user/tambahkaryawan/${idAdmin}?idOrangTua=${idOrangTua1}&idOrganisasi=${idOrganisasi}&idKelas=${idKelas1}&idShift=${idShift1}`,
         newUser,
         {
           headers: {
@@ -248,85 +254,86 @@ function AddKaryawan() {
                       </div>
                     </div>
                     <div className="grid md:grid-cols-2 md:gap-6">
-                    <div className="relative z-0 w-full mb-6 group">
-                      <label
-                        htmlFor="id_organisasi"
-                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                        Organisasi
-                      </label>
-                      <select
-                        value={idOrganisasi}
-                        onChange={(e) => setIdOrganisasi(e.target.value)}
-                        name="id_organisasi"
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
-                        <option value="" disabled>
-                          Pilih Organisasi
-                        </option>
-                        {organisasiList &&
-                          organisasiList
-                            .slice()
-                            .reverse()
-                            .map((org) => (
-                              <option key={org.id} value={org.id}>
-                                {org.namaOrganisasi}
-                              </option>
-                            ))}
-                      </select>
-                    </div>
-                    <div className="relative z-0 w-full mb-6 group">
-                      <input
-                        type="text"
-                        name="status"
-                        id="status"
-                        value={status}
-                        onChange={(e) => setStatus(e.target.value)}
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                        placeholder=" "
-                        autoComplete="off"
-                        required
-                        readOnly
-                      />
-                      <label
-                        htmlFor="jabatan"
-                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                        Status
-                      </label>
-                    </div>
+                      <div className="relative z-0 w-full mb-6 group">
+                        <label
+                          htmlFor="id_organisasi"
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                          Organisasi
+                        </label>
+                        <select
+                          value={idOrganisasi}
+                          onChange={(e) => setIdOrganisasi(e.target.value)}
+                          name="id_organisasi"
+                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
+                          <option value="" disabled>
+                            Pilih Organisasi
+                          </option>
+                          {organisasiList &&
+                            organisasiList
+                              .slice()
+                              .reverse()
+                              .map((org) => (
+                                <option key={org.id} value={org.id}>
+                                  {org.namaOrganisasi}
+                                </option>
+                              ))}
+                        </select>
+                      </div>
+                      <div className="relative z-0 w-full mb-6 group">
+                        <input
+                          type="text"
+                          name="status"
+                          id="status"
+                          value={status}
+                          onChange={(e) => setStatus(e.target.value)}
+                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                          placeholder=" "
+                          autoComplete="off"
+                          required
+                          readOnly
+                        />
+                        <label
+                          htmlFor="jabatan"
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                          Status
+                        </label>
+                      </div>
                     </div>
                     <div className="grid md:grid-cols-2 md:gap-6">
-                    <div className="relative z-10 w-full mb-6 group">
-                      <label
-                        htmlFor="id_shift"
-                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                        Shift
-                      </label>
-                      <ReactSelect
-                        value={idShift}
-                        options={optionsShift}
-                        onChange={(selected) => setIdShift(selected)}
-                        placeholder="Pilih Waktu Pembelajaran"
-                      />
-                    </div>
-                    <div className="relative z-10 w-full mb-6 group">
-                      <label
-                        htmlFor="id_orang_tua"
-                        className="mb-10 peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                        Wali Murid
-                      </label>
-                      <ReactSelect
-                        value={selectedOrangTua}
-                        options={options}
-                        onChange={(selected) => setSelectedOrangTua(selected)}
-                        placeholder="Pilih Wali Murid"
-                      />
-                      {/* Tambahkan komponen lain di sini */}
-                      {/* <div>
+                      <div className="relative z-10 w-full mb-6 group">
+                        <label
+                          htmlFor="id_shift"
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                          Shift
+                        </label>
+                        <ReactSelect
+                          value={idShift}
+                          options={optionsShift}
+                          onChange={(selected) => setIdShift(selected)}
+                          placeholder="Pilih Waktu Pembelajaran"
+                        />
+                      </div>
+
+                      <div className="relative z-10 w-full mb-6 group">
+                        <label
+                          htmlFor="id_orang_tua"
+                          className="mb-10 peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                          Wali Murid
+                        </label>
+                        <ReactSelect
+                          value={selectedOrangTua}
+                          options={options}
+                          onChange={(selected) => setSelectedOrangTua(selected)}
+                          placeholder="Pilih Wali Murid"
+                        />
+                        {/* Tambahkan komponen lain di sini */}
+                        {/* <div>
                         <h2>Wali Murid Terpilih:</h2>
                         {selectedOrangTua.map((ortu) => (
                           <div key={ortu.value}>{ortu.label}</div>
                         ))}
                       </div> */}
-                      {/* <select
+                        {/* <select
                         name="id_orang_tua"
                         value={idOrangTua || ""}
                         onChange={(e) => setIdOrangTua(Number(e.target.value))}
@@ -344,25 +351,40 @@ function AddKaryawan() {
                             </option>
                           ))}
                       </select> */}
+                      </div>
                     </div>
-                    </div>
-                    <div className="relative z-0 w-full mb-6 group">
-                      <input
-                        type={showPassword ? "text" : "password"}
-                        name="password"
-                        id="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                        placeholder=" "
-                        autoComplete="off"
-                        required
-                      />
-                      <label
-                        htmlFor="password"
-                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                        Password
-                      </label>
+                    <div className="grid md:grid-cols-2 md:gap-6">
+                      <div className="relative z-10 w-full mb-6 group">
+                        <label
+                          htmlFor="id_shift"
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                          Kelas
+                        </label>
+                        <ReactSelect
+                          value={idKelas}
+                          options={optionsKelas}
+                          onChange={(selected) => setIdKelas(selected)}
+                          placeholder="Pilih Kelas"
+                        />
+                      </div>
+                      <div className="relative z-0 w-full mb-6 group">
+                        <input
+                          type={showPassword ? "text" : "password"}
+                          name="password"
+                          id="password"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                          placeholder=" "
+                          autoComplete="off"
+                          required
+                        />
+                        <label
+                          htmlFor="password"
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                          Password
+                        </label>
+                      </div>
                     </div>
                   </div>
                   <div className="mb-6">

@@ -35,12 +35,12 @@ function Dashboard() {
     try {
       // Parallel fetching of data
       const [absensiResponse, izinResponse] = await Promise.all([
-        axios.get(`${API_DUMMY}/api/absensi/getByUserId/${userId}`, {
+        axios.get(`${API_DUMMY}/api/absensi/get?token=${token}`, {
           headers: {
             AuthPrs: `Bearer ${token}`,
           },
         }),
-        axios.get(`${API_DUMMY}/api/absensi/checkAbsensi/${userId}`, {
+        axios.get(`${API_DUMMY}/api/absensi/checkAbsensi?token=${token}`, {
           headers: {
             AuthPrs: `Bearer ${token}`,
           },
@@ -110,17 +110,20 @@ function Dashboard() {
   };
 
   useEffect(() => {
-    fetchData();
-    fetchUserData();
-    getIzin();
-    console.log("token: ", token);
+    const fetchDataAndUserData = async () => {
+      await fetchData();
+      await fetchUserData();
+      await getIzin();
+    };
+
+    fetchDataAndUserData();
 
     const interval = setInterval(() => {
       setCurrentDateTime(new Date());
     }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [])
 
   useEffect(() => {
     if (admin) {

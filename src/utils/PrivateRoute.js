@@ -47,7 +47,6 @@ function PrivateRoute({ children }) {
   const location = useLocation();
   const token = localStorage.getItem("token");
 
-  // Jika tidak ada token, arahkan ke halaman login
   if (!token) {
     return <Navigate to="/login" state={{ from: location }} />;
   }

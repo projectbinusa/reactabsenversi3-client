@@ -222,7 +222,6 @@ function AbsenPulang() {
 
     try {
       console.log("Image URL:", imageUrl);
-      // Pastikan idAbsensi di sini adalah ID dari absensi yang ingin diedit
       await axios.put(
         `${API_DUMMY}/api/absensi/pulang/?token=${token}`, // Tambahkan ID absensi ke URL
         {

@@ -40,12 +40,10 @@ function SiswaperKelas() {
       const response = await axios.get(
         `${API_DUMMY}/api/user/export-data-siswa/${idAdmin}/perkelas/${param.id}`,
         {
-          responseType: "blob",
-        },
-        {
           headers: {
             AuthPrs: `Bearer ${token}`,
           },
+          responseType: "blob",
         }
       );
 
@@ -70,12 +68,10 @@ function SiswaperKelas() {
       const response = await axios.get(
         `${API_DUMMY}/api/download/template-excel-siswa`,
         {
-          responseType: "blob",
-        },
-        {
           headers: {
             AuthPrs: `Bearer ${token}`,
           },
+          responseType: "blob",
         }
       );
 
