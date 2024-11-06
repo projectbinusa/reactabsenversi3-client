@@ -229,11 +229,11 @@ function AbsenPulang() {
           lokasiPulang: address || "",
           keteranganPulangAwal: keteranganPulangAwal || "-",
         },
-        {
-          headers: {
-            AuthPrs: `Bearer ${token}`,
-          },
-        }
+        // {
+        //   headers: {
+        //     AuthPrs: `Bearer ${token}`,
+        //   },
+        // }
       );
 
       Swal.fire({
