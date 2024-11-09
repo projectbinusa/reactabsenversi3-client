@@ -90,7 +90,7 @@ const Navbar = ({ toggleSidebar }) => {
               <a href="" className="flex ms-2 md:me-24">
                 {/* <img src={Logo} className="h-11 me-3 text-white" alt="" /> */}
                 <span className="self-center text-xl font-semibold sm:text-xl whitespace-nowrap text-white">
-                  {/* SIABEL */}
+                  {/* PRESENSI */}
                 </span>
               </a>
             )}

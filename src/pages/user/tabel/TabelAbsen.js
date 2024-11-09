@@ -32,7 +32,7 @@ function TabelAbsen() {
     const getAbsensi = async () => {
       try {
         const response = await axios.get(
-          `${API_DUMMY}/api/absensi/getByUserId/${userId}`,
+          `${API_DUMMY}/api/absensi/get?token=${token}`,
           {
             headers: {
               AuthPrs: `Bearer ${token}`,
@@ -54,7 +54,7 @@ function TabelAbsen() {
 
     try {
       const response = await axios.get(
-        `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`,
+        `${API_DUMMY}/api/absensi/checkAbsensi?token=${token}`,
         {
           headers: {
             AuthPrs: `Bearer ${token}`,
