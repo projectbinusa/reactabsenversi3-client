@@ -17,21 +17,14 @@ function Absensi() {
   const [limit, setLimit] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const token = localStorage.getItem("token");
+  const adminId = localStorage.getItem("adminId");
 
   const getAllAbsensi = async () => {
-    const token = localStorage.getItem("token");
-    const adminId = localStorage.getItem("adminId");
-
     try {
-      const response = await axios.get(
-        `${API_DUMMY}/api/absensi/admin/${adminId}`,
-        {
-          headers: {
-            AuthPrs: `Bearer ${token}`,
-          },
-        }
-      );
-
+      const response = await axios.get(`${API_DUMMY}/api/absensi/admin/${adminId}`, {
+        headers: { AuthPrs: `Bearer ${token}` },
+      });
       setAbsensi(response.data.reverse());
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -40,56 +33,37 @@ function Absensi() {
 
   useEffect(() => {
     getAllAbsensi();
-  }, []);
+  });
 
   const formatDate = (dateString) => {
-    const options = {
+    return new Date(dateString).toLocaleDateString("id-ID", {
       weekday: "long",
       year: "numeric",
       month: "long",
       day: "numeric",
-    };
-    return new Date(dateString).toLocaleDateString("id-ID", options);
+    });
   };
 
   useEffect(() => {
-    const filteredData = absensi.filter(
-      (absensi) =>
-        absensi.user?.username
-          ?.toLowerCase()
-          .includes(searchTerm.toLowerCase()) ||
-        absensi.statusAbsen?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (formatDate(absensi.tanggalAbsen)
-          ?.toLowerCase()
-          .includes(searchTerm.toLowerCase()) ??
-          false)
+    const filteredData = absensi.filter((item) => 
+      item.user?.username?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.statusAbsen?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      formatDate(item.tanggalAbsen)?.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setTotalPages(Math.ceil(filteredData.length / limit));
   }, [searchTerm, limit, absensi]);
 
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
+  const handleSearch = (event) => setSearchTerm(event.target.value);
   const handleLimitChange = (event) => {
     setLimit(parseInt(event.target.value));
-    setCurrentPage(1); // Reset to the first page when limit changes
+    setCurrentPage(1);
   };
+  const onPageChange = (page) => setCurrentPage(page);
 
-  function onPageChange(page) {
-    setCurrentPage(page);
-  }
-
-  const filteredAbsensi = absensi.filter(
-    (absensi) =>
-      absensi.user?.username
-        ?.toLowerCase()
-        .includes(searchTerm.toLowerCase()) ||
-      absensi.statusAbsen?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (formatDate(absensi.tanggalAbsen)
-        ?.toLowerCase()
-        .includes(searchTerm.toLowerCase()) ??
-        false)
+  const filteredAbsensi = absensi.filter((item) =>
+    item.user?.username?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.statusAbsen?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    formatDate(item.tanggalAbsen)?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const paginatedAbsensi = filteredAbsensi.slice(
@@ -102,19 +76,14 @@ function Absensi() {
       Swal.fire("Error", "Tidak ada data untuk diekspor", "error");
       return;
     }
-    const token = localStorage.getItem("token");
-
     try {
       const response = await axios.get(
         `${API_DUMMY}/api/absensi/rekap-perkaryawan/export`,
         {
-          headers: {
-            AuthPrs: `Bearer ${token}`,
-          },
-          responseType: "blob", // Important for handling binary data
+          headers: { AuthPrs: `Bearer ${token}` },
+          responseType: "blob",
         }
       );
-
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
@@ -129,17 +98,10 @@ function Absensi() {
         text: "Berhasil mengunduh data",
         icon: "success",
         showConfirmButton: false,
-        timer: 1500, // Auto close after 1.5 seconds
+        timer: 1500,
       });
-      // window.location.reload();
     } catch (error) {
-      Swal.fire({
-        title: "Error",
-        text: "Gagal mengunduh data",
-        icon: "error",
-        showConfirmButton: false,
-        timer: 1500, // Auto close after 1.5 seconds
-      });
+      Swal.fire("Error", "Gagal mengunduh data", "error");
       console.log(error);
     }
   };
@@ -156,141 +118,60 @@ function Absensi() {
             <div className="md:flex justify-between">
               <h6 className="text-xl font-bold">Detail History Presensi</h6>
               <div className="flex items-center gap-2 mt-2">
-                <div className=" w-64">
-                  <input
-                    type="search"
-                    id="search-dropdown"
-                    value={searchTerm}
-                    onChange={handleSearch}
-                    className="block p-2.5 w-full z-20 text-sm rounded-l-md text-gray-900 bg-gray-50 border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
-                    placeholder="Search name..."
-                    required
-                  />
-                </div>
+                <input
+                  type="search"
+                  value={searchTerm}
+                  onChange={handleSearch}
+                  className="w-64 p-2.5 text-sm rounded-l-md bg-gray-50 border-gray-300 dark:bg-gray-700 dark:border-gray-600"
+                  placeholder="Search name..."
+                />
                 <select
                   value={limit}
                   onChange={handleLimitChange}
-                  className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+                  className="z-10 py-2.5 px-4 text-sm rounded-r-md bg-gray-100 border-gray-300 dark:bg-gray-700"
                 >
                   <option value="5">05</option>
                   <option value="10">10</option>
                   <option value="20">20</option>
                   <option value="50">50</option>
                 </select>
-                {/* <button
-                      type="submit"
-                      className="bg-indigo-500 hover:bg-indigo text-white font-bold py-2 px-4 rounded inline-block"
-                    >
-                      <FontAwesomeIcon icon={faMagnifyingGlass} />
-                    </button> */}
                 <a
                   onClick={exportAbsensi}
                   title="Export"
-                  className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto"
+                  className="exp bg-green-500 text-white font-bold py-2 px-4 rounded ml-auto cursor-pointer"
                 >
                   <FontAwesomeIcon icon={faCloudArrowDown} />
                 </a>
               </div>
             </div>
             <hr className="mt-3" />
-            <form
-              action=""
-              method="post"
-              className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-5"
-            >
-              {/* <select
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    id="bulan"
-                    name="bulan"
-                  >
-                    <option>Pilih Bulan</option>
-                    <option value="01">Januari</option>
-                    <option value="02">Februari</option>
-                    <option value="03">Maret</option>
-                    <option value="04">April</option>
-                    <option value="05">Mei</option>
-                    <option value="06">Juni</option>
-                    <option value="07">Juli</option>
-                    <option value="08">Agustus</option>
-                    <option value="09">September</option>
-                    <option value="10">Oktober</option>
-                    <option value="11">November</option>
-                    <option value="12">Desember</option>
-                  </select> */}
-              {/* <input
-                    type="text"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    id="tanggal"
-                    name="tanggal"
-                    placeholder="Pilih Tanggal"
-                    value=""
-                  />
-                  <input
-                    type="number"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    id="tahun"
-                    name="tahun"
-                    placeholder="Pilih Tahun"
-                    value=""
-                  /> */}
-            </form>
-
-            <div className=" overflow-x-auto shadow-md sm:rounded-lg mt-5">
-              <table
-                id="rekapSimple"
-                className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
-              >
-                <thead className="text-left text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <div className="overflow-x-auto shadow-md sm:rounded-lg mt-5">
+              <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead className="text-xs text-gray-700 bg-gray-50 dark:bg-gray-700">
                   <tr>
-                    <th scope="col" className="px-4 py-3">
-                      No
-                    </th>
-                    <th scope="col" className="px-4 py-3 whitespace-nowrap">
-                      Nama Siswa
-                    </th>
-                    <th scope="col" className="px-4 py-3">
-                      Tanggal
-                    </th>
-                    <th scope="col" className="px-4 py-3">
-                      Kehadiran
-                    </th>
-                    <th scope="col" className="px-4 py-3 whitespace-nowrap">
-                      Jam Masuk
-                    </th>
-                    <th scope="col" className="px-4 py-3 whitespace-nowrap">
-                      Foto Masuk
-                    </th>
-                    <th scope="col" className="px-4 py-3 whitespace-nowrap">
-                      Jam Pulang
-                    </th>
-                    <th scope="col" className="px-4 py-3 whitespace-nowrap">
-                      Foto Pulang
-                    </th>
-                    <th scope="col" className="px-4 py-3 whitespace-nowrap">
-                      Jam Sekolah
-                    </th>
-                    <th scope="col" className="px-4 py-3">
-                      Aksi
-                    </th>
+                    <th className="px-4 py-3">No</th>
+                    <th className="px-4 py-3">Nama Siswa</th>
+                    <th className="px-4 py-3">Tanggal</th>
+                    <th className="px-4 py-3">Kehadiran</th>
+                    <th className="px-4 py-3">Jam Masuk</th>
+                    <th className="px-4 py-3">Foto Masuk</th>
+                    <th className="px-4 py-3">Jam Pulang</th>
+                    <th className="px-4 py-3">Foto Pulang</th>
+                    <th className="px-4 py-3">Jam Sekolah</th>
+                    <th className="px-4 py-3">Aksi</th>
                   </tr>
                 </thead>
-                <tbody className="text-left">
+                <tbody>
                   {paginatedAbsensi.length === 0 ? (
                     <tr>
-                      <td
-                        colSpan="9"
-                        className="px-4 py-4 text-center text-gray-500"
-                      >
+                      <td colSpan="9" className="px-4 py-4 text-center text-gray-500">
                         Tidak ada data yang ditampilkan
                       </td>
                     </tr>
                   ) : (
-                    paginatedAbsensi.map((absensi, index) => (
-                      <tr
-                        key={index}
-                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                      >
-                        <th
+                    paginatedAbsensi.map((item, index) => (
+                      <tr key={index} className="bg-white dark:bg-gray-800 hover:bg-gray-50">
+                              <th
                           scope="row"
                           className="px-4 py-4 font-medium text-gray-900 dark:text-white"
                         >
@@ -347,14 +228,9 @@ function Absensi() {
               </table>
             </div>
             <Pagination
-              className="mt-5"
-              layout="table"
               currentPage={currentPage}
               totalPages={totalPages}
               onPageChange={onPageChange}
-              showIcons
-              previousLabel=""
-              nextLabel=""
             />
           </div>
         </div>

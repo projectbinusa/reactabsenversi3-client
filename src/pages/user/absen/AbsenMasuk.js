@@ -22,15 +22,6 @@ function AbsenMasuk() {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
 
-  // // Batas koordinat yang diizinkan excelent
-  // const allowedCoordinates = {
-  //   northWest: { lat: -6.982580885, lon: 110.404028235 },
-  //   northEast: { lat: -6.982580885, lon: 110.404118565 },
-  //   southWest: { lat: -6.982670715, lon: 110.404028235 },
-  //   southEast: { lat: -6.982670715, lon: 110.404118565 },
-  // };
-
-  // // Batas koordinat yang diizinkan smpn40smg
   const allowedCoordinates = {
     northWest: { lat: -6.988985050934718, lon: 110.40435783994 },
     northEast: { lat: -6.989424872078232, lon: 110.40505158383749 },
@@ -38,19 +29,13 @@ function AbsenMasuk() {
     southEast: { lat: -6.989554231156763, lon: 110.40406710911383 },
   };
 
-  // const allowedCoordinates = {
-  //   northWest: { lat: -6.968697419671277, lon: 110.25208956395724 },
-  //   northEast: { lat: -6.968697419671277, lon: 110.25231003604275 },
-  //   southWest: { lat: -6.968878380328723, lon: 110.25208956395724 },
-  //   southEast: { lat: -6.968878380328723, lon: 110.25231003604275 },
-  // };
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentDateTime(new Date());
     }, 1000);
 
     return () => clearInterval(interval);
-  });
+  }, []);
 
   useEffect(() => {
     let watchId;
@@ -64,8 +49,6 @@ function AbsenMasuk() {
             const { latitude, longitude } = position.coords;
             setLatitude(latitude);
             setLongitude(longitude);
-            // console.log("latitude: ", latitude);
-            // console.log("longitude: ", longitude);
 
             try {
               const response = await fetch(
@@ -88,7 +71,7 @@ function AbsenMasuk() {
           {
             enableHighAccuracy: true,
             timeout: 10000,
-            maximumAge: 1000, // Menggunakan cache hingga 1 detik untuk hasil yang lebih cepat.
+            maximumAge: 1000,
           }
         );
       } catch (err) {
@@ -100,12 +83,11 @@ function AbsenMasuk() {
     requestPermissions();
 
     return () => {
-      // Bersihkan watchPosition saat komponen dilepas.
       if (watchId) {
         navigator.geolocation.clearWatch(watchId);
       }
     };
-  });
+  }, []);
 
   const tambahkanNolDepan = (num) => {
     return num < 10 ? "0" + num : num;
@@ -123,7 +105,6 @@ function AbsenMasuk() {
     ucapan = "Selamat Malam";
   }
 
-  // validasi
   const isWithinAllowedCoordinates = (lat, lon) => {
     const { northWest, northEast, southWest, southEast } = allowedCoordinates;
     const tolerance = 0.00001;
@@ -145,7 +126,7 @@ function AbsenMasuk() {
       console.error("Tidak ada gambar yang tersedia.");
       Swal.fire("Error", "Gambar tidak tersedia", "error");
       return;
-  }
+    }
 
     let imageUrl = null;
     try {
@@ -191,22 +172,19 @@ function AbsenMasuk() {
     }
 
     try {
-      // const absensiCheckResponse = await axios.get(
-      //   `${API_DUMMY}/api/absensi/checkAbsensi?token=${token}`,
-      //   {
-      //     headers: {
-      //       AuthPrs: `Bearer ${token}`,
-      //        "Content-Type": "multipart/form-data"
-      //     },
-      //   }
-      // );
+      const absensiCheckResponse = await axios.get(
+        `${API_DUMMY}/api/absensi/checkAbsensi?token=${token}`,
+        {
+          headers: {
+            AuthPrs: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
-      // if (
-      //   absensiCheckResponse.data ===
-      //   "Pengguna sudah melakukan absensi hari ini."
-      // ) {
-      //   Swal.fire("Info", "Anda sudah melakukan absensi hari ini.", "info");
-      // } else {
+      if (absensiCheckResponse.data === "Pengguna sudah melakukan absensi hari ini.") {
+        Swal.fire("Info", "Anda sudah melakukan absensi hari ini.", "info");
+      } else {
         const formData = new FormData();
         formData.append("image", imageBlob);
         formData.append("lokasiMasuk", address || "");
@@ -221,11 +199,11 @@ function AbsenMasuk() {
             lokasiMasuk: address || "",
             keteranganTerlambat: keteranganTerlambat || "-",
           },
-          // {
-          //   headers: {
-          //     Authorization: `Bearer ${token}`,
-          //   },
-          // }
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         Swal.fire({
           position: "center",
@@ -234,10 +212,10 @@ function AbsenMasuk() {
           showConfirmButton: false,
           timer: 1500,
         });
-        // setTimeout(() => {
-        //   window.location.href = "/user/history_absen";
-        // }, 1500);
-      // }
+      }
+      // setTimeout(() => {
+      //   window.location.href = "";
+      // }, 3000);
     } catch (err) {
       console.error("Error:", err);
       Swal.fire("Error", "Gagal Absen", "error");
@@ -246,7 +224,6 @@ function AbsenMasuk() {
 
   return (
     <>
-      {/* {loading && <Loader />} */}
       <div className="flex flex-col h-screen">
         <SidebarProvider>
           <Navbar1 />
@@ -255,7 +232,7 @@ function AbsenMasuk() {
         <div className="md:w-[78%] w-full mt-10 md:mt-0">
           <div className="content-page max-h-screen container p-8 min-h-screen ml-0 lg:ml-64">
             <div className="add-izin mt-12 bg-white p-5 rounded-xl shadow-lg border border-gray-300">
-              <h1 className="text-lg sm:text-2xl font -medium mb-4 sm:mb-7">
+              <h1 className="text-lg sm:text-2xl font-medium mb-4 sm:mb-7">
                 Absen Masuk
               </h1>
               <div className="text-base text-center mt-2">
@@ -265,12 +242,9 @@ function AbsenMasuk() {
                   month: "long",
                   year: "numeric",
                 })}
-                -
-                {tambahkanNolDepan(currentDateTime.getHours()) +
-                  ":" +
-                  tambahkanNolDepan(currentDateTime.getMinutes()) +
-                  ":" +
-                  tambahkanNolDepan(currentDateTime.getSeconds())}
+                - {tambahkanNolDepan(currentDateTime.getHours())}:
+                {tambahkanNolDepan(currentDateTime.getMinutes())}:
+                {tambahkanNolDepan(currentDateTime.getSeconds())}
               </div>
               <div className="text-base text-center mt-2">{ucapan}</div>
               {error && <div className="text-red-500">{error}</div>}
@@ -283,10 +257,10 @@ function AbsenMasuk() {
                   {fetchingLocation ? (
                     <p>Mendapatkan lokasi...</p>
                   ) : (
-                    <p id="address">Alamat: {address}</p>
+                    <p>Lokasi: {address}</p>
                   )}
                 </div>
-                <div className="flex justify-center mt-6">
+             <div className="flex justify-center mt-6">
                   <button
                     type="button"
                     onClick={() => {
