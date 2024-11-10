@@ -79,7 +79,7 @@ function Dashboard() {
     });
 
   const getAbsensi = () =>
-    fetchData(`${API_DUMMY}/api/absensi/admin/${idAdmin}`, setAbsenData, {
+    fetchData(`${API_DUMMY}/api/absensi/admin=${idAdmin}`, setAbsenData, {
       headers: {
         AuthPrs: `Bearer ${token}`,
       },

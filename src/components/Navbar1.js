@@ -18,7 +18,7 @@ function Navbar1() {
   const token = localStorage.getItem("token");
   const dropdownRef = useRef(null);
   const [profileUser, setProfileUser] = useState("");
-
+console.log(profileOrtu);
   const toggleUserMenu = () => {
     setUserMenuOpen(!userMenuOpen);
   };
@@ -95,6 +95,15 @@ function Navbar1() {
 
   const getOrtu = async () => {
     try {
+      const ORTU = await axios.get(
+        `${API_DUMMY}/api/orang-tua/getbyid/${id_ortu}`,
+        {
+          headers: {
+            AuthPrs: `Bearer ${token}`,
+          },
+        }
+      );
+      setProfileOrtu(ORTU.data.imageOrtu);
       if (localStorage.getItem("role") === "Wali Murid") {
         const superAdmin = await axios.get(
           `${API_DUMMY}/api/orang-tua/getbyid/${id_ortu}`,
