@@ -213,9 +213,9 @@ function AbsenMasuk() {
           timer: 1500,
         });
       }
-      // setTimeout(() => {
-      //   window.location.href = "";
-      // }, 3000);
+      setTimeout(() => {
+        window.location.href = "/user/history_absen";
+      }, 3000);
     } catch (err) {
       console.error("Error:", err);
       Swal.fire("Error", "Gagal Absen", "error");

@@ -26,6 +26,8 @@ function Absensi() {
         headers: { AuthPrs: `Bearer ${token}` },
       });
       setAbsensi(response.data.reverse());
+      console.log(response.data);
+      
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -178,7 +180,7 @@ function Absensi() {
                           {(currentPage - 1) * limit + index + 1}
                         </th>
                         <td className="px-4 py-2 text-gray-700 text-center capitalize whitespace-nowrap">
-                          {absensi.user.username}
+                          {/* {absensi.user.username} */}
                         </td>
                         <td className="px-4 py-2 text-gray-700 text-center capitalize whitespace-nowrap">
                           {formatDate(absensi.tanggalAbsen)}
