@@ -209,12 +209,10 @@ function OrangTua() {
       const response = await axios.get(
         `${API_DUMMY}/api/orang-tua/export/data-orang-tua/${idAdmin}`,
         {
-          responseType: "blob",
-        },
-        {
           headers: {
             AuthPrs: `Bearer ${token}`,
           },
+          responseType: "blob",
         }
       );
 

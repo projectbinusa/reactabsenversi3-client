@@ -46,7 +46,7 @@ function Simpel() {
       );
 
       const data = response.data.reverse();
-      console.log(data); // Debugging: lihat data yang diterima dari API
+      console.log("data: ", data); // Debugging: lihat data yang diterima dari API
 
       if (data.length === 0) {
         setIsDataAvailable(false);
@@ -351,7 +351,7 @@ function Simpel() {
                           {absensi.lokasiPulang}
                         </td>
                         <td className="px-5 py-4 whitespace-nowrap">
-                          {formatLamaKerja(absensi.user.startKerja)}
+                          {absensi.user.startKerja}
                         </td>
                         <td className="px-5 py-4 whitespace-nowrap capitalize">
                           {absensi.statusAbsen}
