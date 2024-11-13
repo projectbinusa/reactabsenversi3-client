@@ -44,7 +44,13 @@
         month: "long",
         day: "numeric",
       });
-    };
+      setAbsensi(response.data.reverse());
+      console.log(response.data);
+      
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
     useEffect(() => {
       const filteredData = absensi.filter((item) =>
@@ -162,12 +168,58 @@
                       <th className="px-4 py-3">Jam Sekolah</th>
                       <th className="px-4 py-3">Aksi</th>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {paginatedAbsensi.length === 0 ? (
-                      <tr>
-                        <td colSpan="9" className="px-4 py-4 text-center text-gray-500">
-                          Tidak ada data yang ditampilkan
+                  ) : (
+                    paginatedAbsensi.map((item, index) => (
+                      <tr key={index} className="bg-white dark:bg-gray-800 hover:bg-gray-50">
+                              <th
+                          scope="row"
+                          className="px-4 py-4 font-medium text-gray-900 dark:text-white"
+                        >
+                          {(currentPage - 1) * limit + index + 1}
+                        </th>
+                        <td className="px-4 py-2 text-gray-700 text-center capitalize whitespace-nowrap">
+                          {/* {absensi.user.username} */}
+                        </td>
+                        <td className="px-4 py-2 text-gray-700 text-center capitalize whitespace-nowrap">
+                          {formatDate(absensi.tanggalAbsen)}
+                        </td>
+                        <td className="px-4 py-2 text-gray-700 text-center capitalize whitespace-nowrap">
+                          {absensi.statusAbsen}
+                        </td>
+                        <td className="px-4 py-2 text-gray-700 text-center capitalize">
+                          {absensi.jamMasuk}
+                        </td>
+                        <td className="px-4 py-2 text-gray-700 text-center capitalize">
+                          <img
+                            src={absensi.fotoMasuk ? absensi.fotoMasuk : "-"}
+                            alt="Foto Masuk"
+                            className="block py-2.5 px-0 w-25 max-h-32 h-25 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            id="foto_masuk"
+                          />
+                        </td>
+                        <td className="px-4 py-4">{absensi.jamPulang}</td>
+                        <td className="px-4 py-4">
+                          <img
+                            src={absensi.fotoPulang ? absensi.fotoPulang : "-"}
+                            alt="Foto Pulang"
+                            className="block py-2.5 px-0 w-25 max-h-96 h-25 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            id="foto_pulang"
+                          />
+                        </td>
+                        <td className="px-4 py-2 text-gray-700 text-center capitalize">
+                          00 jam 00 menit
+                        </td>
+                        <td className="px-4 py-2 text-gray-700 text-center capitalize">
+                          <a href={`/admin/detailA/${absensi.id}`}>
+                            <button className="z-20 block rounded-full border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
+                              <span className="inline-block">
+                                <FontAwesomeIcon
+                                  icon={faInfo}
+                                  className="h-4 w-4"
+                                />
+                              </span>
+                            </button>
+                          </a>
                         </td>
                       </tr>
                     ) : (
