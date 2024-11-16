@@ -40,10 +40,10 @@ function AbsenPulang() {
 
   //smpn40smg
   const allowedCoordinates = {
-    northWest: { lat: -6.988985050934718, lon: 110.40435783994 },
-    northEast: { lat: -6.989424872078232, lon: 110.40505158383749 },
-    southWest: { lat: -6.99016918383492, lon: 110.4050114830342 },
-    southEast: { lat: -6.989554231156763, lon: 110.40406710911383 },
+    northWest: { lat: -6.988646944485839, lon: 110.40412306438553 },
+    northEast: { lat: -6.989307880821571, lon: 110.40550399043418 },
+    southWest: { lat: -6.989715589772726, lon: 110.40366515092936 },
+    southEast: { lat: -6.990584517300366, lon: 110.40523078152198 },
   };
 
   const isWithinAllowedCoordinates = (lat, lon) => {
@@ -219,7 +219,7 @@ function AbsenPulang() {
         throw error;
       }
     }
-
+if (isWithinAllowedCoordinates(latitude, longitude)) {
     try {
       console.log("Image URL:", imageUrl);
       await axios.put(
@@ -229,11 +229,12 @@ function AbsenPulang() {
           lokasiPulang: address || "",
           keteranganPulangAwal: keteranganPulangAwal || "-",
         },
-        // {
-        //   headers: {
-        //     AuthPrs: `Bearer ${token}`,
-        //   },
-        // }
+        {
+          headers: {
+            AuthPrs: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
 
       Swal.fire({
@@ -251,8 +252,16 @@ function AbsenPulang() {
       console.error("Error:", err);
       Swal.fire("Error", "Gagal Absen", "error");
     }
-  };
+  } else {
+        Swal.fire(
+          "Error",
+          "Lokasi Anda di luar batas yang diizinkan untuk absensi",
+          "error"
+        );
+      }
 
+
+}
 
   // const handleCaptureAndSubmitPulang = async () => {
   //   const imageSrc = webcamRef.current.getScreenshot();

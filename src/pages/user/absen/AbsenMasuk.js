@@ -23,10 +23,10 @@ function AbsenMasuk() {
   const [longitude, setLongitude] = useState(null);
 
   const allowedCoordinates = {
-    northWest: { lat: -6.988985050934718, lon: 110.40435783994 },
-    northEast: { lat: -6.989424872078232, lon: 110.40505158383749 },
-    southWest: { lat: -6.99016918383492, lon: 110.4050114830342 },
-    southEast: { lat: -6.989554231156763, lon: 110.40406710911383 },
+    northWest: { lat: -6.988646944485839, lon: 110.40412306438553 },
+    northEast: { lat: -6.989307880821571, lon: 110.40550399043418 },
+    southWest: { lat: -6.989715589772726, lon: 110.40366515092936 },
+    southEast: { lat: -6.990584517300366, lon: 110.40523078152198 },
   };
 
   useEffect(() => {
@@ -170,55 +170,65 @@ function AbsenMasuk() {
         throw error;
       }
     }
-
-    try {
-      const absensiCheckResponse = await axios.get(
-        `${API_DUMMY}/api/absensi/checkAbsensi?token=${token}`,
-        {
-          headers: {
-            AuthPrs: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      if (absensiCheckResponse.data === "Pengguna sudah melakukan absensi hari ini.") {
-        Swal.fire("Info", "Anda sudah melakukan absensi hari ini.", "info");
-      } else {
-        const formData = new FormData();
-        formData.append("image", imageBlob);
-        formData.append("lokasiMasuk", address || "");
-        formData.append("keteranganTerlambat", keteranganTerlambat || "-");
-
-        console.log("FormData yang dikirim:", [...formData.entries()]);
-        console.log("Image URL:", imageUrl);
-        await axios.post(
-          `${API_DUMMY}/api/absensi/masuk?token=${token}`,
-          {
-            fotoMasuk: imageUrl,
-            lokasiMasuk: address || "",
-            keteranganTerlambat: keteranganTerlambat || "-",
-          },
+    if (isWithinAllowedCoordinates(latitude, longitude)) {
+      try {
+        const absensiCheckResponse = await axios.get(
+          `${API_DUMMY}/api/absensi/checkAbsensi?token=${token}`,
           {
             headers: {
-              Authorization: `Bearer ${token}`,
+              AuthPrs: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
             },
           }
         );
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Berhasil Absen",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+
+        if (
+          absensiCheckResponse.data ===
+          "Pengguna sudah melakukan absensi hari ini."
+        ) {
+          Swal.fire("Info", "Anda sudah melakukan absensi hari ini.", "info");
+        } else {
+          const formData = new FormData();
+          formData.append("image", imageBlob);
+          formData.append("lokasiMasuk", address || "");
+          formData.append("keteranganTerlambat", keteranganTerlambat || "-");
+
+          console.log("FormData yang dikirim:", [...formData.entries()]);
+          console.log("Image URL:", imageUrl);
+          await axios.post(
+            `${API_DUMMY}/api/absensi/masuk?token=${token}`,
+            {
+              fotoMasuk: imageUrl,
+              lokasiMasuk: address || "",
+              keteranganTerlambat: keteranganTerlambat || "-",
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Berhasil Absen",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+        // setTimeout(() => {
+        //   window.location.href = "";
+        // }, 3000);
+      } catch (err) {
+        console.error("Error:", err);
+        Swal.fire("Error", "Gagal Absen", "error");
       }
-      // setTimeout(() => {
-      //   window.location.href = "";
-      // }, 3000);
-    } catch (err) {
-      console.error("Error:", err);
-      Swal.fire("Error", "Gagal Absen", "error");
+    } else {
+      Swal.fire(
+        "Error",
+        "Lokasi Anda di luar batas yang diizinkan untuk absensi",
+        "error"
+      );
     }
   };
 
@@ -260,7 +270,7 @@ function AbsenMasuk() {
                     <p>Lokasi: {address}</p>
                   )}
                 </div>
-             <div className="flex justify-center mt-6">
+                <div className="flex justify-center mt-6">
                   <button
                     type="button"
                     onClick={() => {
