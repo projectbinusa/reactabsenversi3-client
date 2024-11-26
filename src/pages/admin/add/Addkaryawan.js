@@ -139,7 +139,7 @@ function AddKaryawan() {
         (user) => user.email.toLowerCase() === trimmedEmail.toLowerCase()
       );
       const isUsernameExists = existingUsers.some(
-        (user) => user.username.toLowerCase() === trimmedUsername.toLowerCase()
+        (user) => user.username === username
       );
 
       if (isEmailExists || isUsernameExists) {
@@ -153,6 +153,8 @@ function AddKaryawan() {
         password: password,
         status: status,
       };
+      console.log("username1: ", username);
+
       const idOrangTua1 = selectedOrangTua ? selectedOrangTua.value : null;
       // const idKelas1 = idKelas ? idKelas.value : null;
       const idShift1 = idShift ? idShift.value : null;
