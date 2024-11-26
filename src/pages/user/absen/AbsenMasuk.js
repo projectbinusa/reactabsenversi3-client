@@ -22,12 +22,36 @@ function AbsenMasuk() {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
 
+  const TOLERANCE = 0.00001;
+  // smpn40 ke 1
+  // const allowedCoordinates = {
+  //   northWest: { lat: -6.988646944485839, lon: 110.40412306438553 },
+  //   northEast: { lat: -6.989307880821571, lon: 110.40550399043418 },
+  //   southWest: { lat: -6.989715589772726, lon: 110.40366515092936 },
+  //   southEast: { lat: -6.990584517300366, lon: 110.40523078152198 },
+  // };
+
+
+  // smpn40 ke 2
   const allowedCoordinates = {
-    northWest: { lat: -6.988646944485839, lon: 110.40412306438553 },
-    northEast: { lat: -6.989307880821571, lon: 110.40550399043418 },
-    southWest: { lat: -6.989715589772726, lon: 110.40366515092936 },
-    southEast: { lat: -6.990584517300366, lon: 110.40523078152198 },
+    northWest: { lat: -6.9886715772467669, lon: 110.40413205141627 },
+    northEast: { lat: -6.989250031560412, lon: 110.40553250855176 },
+    southWest: { lat: -6.989684282878134, lon: 110.40368713223796 },
+    southEast: { lat: -6.99048075110716, lon: 110.40527006050439 },
   };
+
+const isWithinAllowedCoordinates = (lat, lon) => {
+  const { northWest, northEast, southWest, southEast } = allowedCoordinates;
+  const isLatInRange =
+    lat >= Math.min(northWest.lat, southWest.lat) - TOLERANCE &&
+    lat <= Math.max(northWest.lat, southWest.lat) + TOLERANCE;
+
+  const isLonInRange =
+    lon >= Math.min(southWest.lon, southEast.lon) - TOLERANCE &&
+    lon <= Math.max(northEast.lon, southEast.lon) + TOLERANCE;
+
+  return isLatInRange && isLonInRange;
+};
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -105,17 +129,18 @@ function AbsenMasuk() {
     ucapan = "Selamat Malam";
   }
 
-  const isWithinAllowedCoordinates = (lat, lon) => {
-    const { northWest, northEast, southWest, southEast } = allowedCoordinates;
-    const tolerance = 0.00001;
+  // const isWithinAllowedCoordinates = (lat, lon) => {
+  //   const { northWest, northEast, southWest, southEast } = allowedCoordinates;
+  //   const tolerance = 0.00001; // Toleransi tambahan
 
-    return (
-      lat >= southWest.lat - tolerance &&
-      lat <= northWest.lat + tolerance &&
-      lon >= southWest.lon - tolerance &&
-      lon <= northEast.lon + tolerance
-    );
-  };
+  //   return (
+  //     lat >= (southWest.lat - tolerance) &&
+  //     lat <= (northWest.lat + tolerance) &&
+  //     lon >= (southWest.lon - tolerance) &&
+  //     lon <= (southEast.lon + tolerance)
+  //   );
+  // };
+
 
   const handleCaptureAndSubmitMasuk = async () => {
     const imageSrc = webcamRef.current.getScreenshot();
@@ -170,7 +195,7 @@ function AbsenMasuk() {
         throw error;
       }
     }
-    // if (isWithinAllowedCoordinates(latitude, longitude)) {
+    if (isWithinAllowedCoordinates(latitude, longitude)) {
       try {
         const absensiCheckResponse = await axios.get(
           `${API_DUMMY}/api/absensi/checkAbsensi?token=${token}`,
@@ -223,14 +248,13 @@ function AbsenMasuk() {
         console.error("Error:", err);
         Swal.fire("Error", "Gagal Absen", "error");
       }
-    // } else {
-    //   Swal.fire(
-    //     "Error",
-    //     "Lokasi Anda di luar batas yang diizinkan untuk absensi",
-    //     "error"
-    //   );
-    // }
-    alert(`Titik koordinat Anda: Latitude = ${latitude}, Longitude = ${longitude}`);
+    } else {
+      Swal.fire(
+        "Error",
+        "Lokasi Anda di luar batas yang diizinkan untuk absensi",
+        "error"
+      );
+    }
   };
 
   return (
