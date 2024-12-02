@@ -23,10 +23,10 @@ function AbsenMasuk() {
   const [longitude, setLongitude] = useState(null);
 
   const allowedCoordinates = {
-    northWest: { lat: -6.988646944485839, lon: 110.40412306438553 },
-    northEast: { lat: -6.989307880821571, lon: 110.40550399043418 },
-    southWest: { lat: -6.989715589772726, lon: 110.40366515092936 },
-    southEast: { lat: -6.990584517300366, lon: 110.40523078152198 },
+    northWest: { lat: -6.982580885, lon: 110.404028235 },
+    northEast: { lat: -6.982580885, lon: 110.404118565 },
+    southWest: { lat: -6.982670715, lon: 110.404028235 },
+    southEast: { lat: -6.982670715, lon: 110.404118565 },
   };
 
   useEffect(() => {
@@ -155,7 +155,6 @@ function AbsenMasuk() {
         if (!response.ok) {
           throw new Error("Gagal mengupload gambar");
         }
-
         const data = await response.json();
         console.log("Respons dari S3:", data);
         if (data.data && data.data.url_file) {
@@ -170,24 +169,24 @@ function AbsenMasuk() {
         throw error;
       }
     }
-    if (isWithinAllowedCoordinates(latitude, longitude)) {
+    // if (isWithinAllowedCoordinates(latitude, longitude)) {
       try {
-        const absensiCheckResponse = await axios.get(
-          `${API_DUMMY}/api/absensi/checkAbsensi?token=${token}`,
-          {
-            headers: {
-              AuthPrs: `Bearer ${token}`,
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
+        // const absensiCheckResponse = await axios.get(
+        //   `${API_DUMMY}/api/absensi/checkAbsensi?token=${token}`,
+        //   {
+        //     headers: {
+        //       AuthPrs: `Bearer ${token}`,
+        //       "Content-Type": "multipart/form-data",
+        //     },
+        //   }
+        // );
 
-        if (
-          absensiCheckResponse.data ===
-          "Pengguna sudah melakukan absensi hari ini."
-        ) {
-          Swal.fire("Info", "Anda sudah melakukan absensi hari ini.", "info");
-        } else {
+        // if (
+        //   absensiCheckResponse.data ===
+        //   "Pengguna sudah melakukan absensi hari ini."
+        // ) {
+        //   Swal.fire("Info", "Anda sudah melakukan absensi hari ini.", "info");
+        // } else {
           const formData = new FormData();
           formData.append("image", imageBlob);
           formData.append("lokasiMasuk", address || "");
@@ -215,7 +214,7 @@ function AbsenMasuk() {
             showConfirmButton: false,
             timer: 1500,
           });
-        }
+        // }
         // setTimeout(() => {
         //   window.location.href = "";
         // }, 3000);
@@ -223,13 +222,13 @@ function AbsenMasuk() {
         console.error("Error:", err);
         Swal.fire("Error", "Gagal Absen", "error");
       }
-    } else {
-      Swal.fire(
-        "Error",
-        "Lokasi Anda di luar batas yang diizinkan untuk absensi",
-        "error"
-      );
-    }
+    // } else {
+    //   Swal.fire(
+    //     "Error",
+    //     "Lokasi Anda di luar batas yang diizinkan untuk absensi",
+    //     "error"
+    //   );
+    // }
   };
 
   return (

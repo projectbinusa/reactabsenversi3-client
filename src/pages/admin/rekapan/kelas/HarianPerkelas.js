@@ -59,23 +59,22 @@ function HarianPerkelas() {
 
   const getHarianPerkelas = async (tanggal, kelasId) => {
     try {
-      const response = await axios.get(`${API_DUMMY}/api/absensi/by-tanggal`, {
-        params: {
-          tanggalAbsen: tanggal,
-          kelasId: kelasId,
-        },
-        headers: {
-          AuthPrs: `Bearer ${token}`,
-        },
+      const response = await axios.get(`${API_DUMMY}/api/absensi/harian/by-kelas/${kelasId}?tanggal=${tanggal}`, {
+        headers: { AuthPrs: `Bearer ${token}` },
       });
-      if (response.data.length === 0) {
-        Swal.fire("Tidak ada", "Tidak ada yang absen hari ini", "info");
-      } else {
-        setAbsensiData(response.data.reverse());
-      }
+
+      const data = response.data;
+
+      // Transformasi data menjadi array
+      const transformedData = Object.values(data).flat(); // Gabungkan semua array dari objek berdasarkan tanggal
+
+      setAbsensiData(transformedData); // Simpan hasil transformasi ke state
+      console.log("trs: ", transformedData);
+
     } catch (error) {
       console.error(error);
       Swal.fire("Gagal", "Gagal Mengambil data", "error");
+      setAbsensiData([]); // Reset data jika terjadi error
     }
   };
 
