@@ -202,11 +202,7 @@ function HarianPerkelas() {
   useEffect(() => {
     const filteredData = absensiData.filter(
       (user) =>
-        user.username?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.admin?.username
-          ?.toLowerCase()
-          .includes(searchTerm.toLowerCase()) ||
-        user.email?.toLowerCase().includes(searchTerm.toLowerCase())
+        user.user.username?.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setTotalPages(Math.ceil(filteredData.length / limit));
   }, [searchTerm, limit, absensiData]);
@@ -217,18 +213,16 @@ function HarianPerkelas() {
 
   const handleLimitChange = (event) => {
     setLimit(parseInt(event.target.value));
-    setCurrentPage(1); // Reset to the first page when limit changes
-    if (kelasId != null) {
-      getHarianPerkelas(kelasId, 1, parseInt(event.target.value));
-    }
+    setCurrentPage(1);
   };
 
   function onPageChange(page) {
     setCurrentPage(page);
   }
 
-  const filteredUser = absensiData.filter((user) =>
-    user.user.username?.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredUser = absensiData.filter(
+    (user) =>
+      user.user.username.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const paginatedUser = filteredUser.slice(
