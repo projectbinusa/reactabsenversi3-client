@@ -199,7 +199,7 @@ function Karyawan() {
 
   const handleLimitChange = (event) => {
     setLimit(parseInt(event.target.value));
-    setCurrentPage(1); // Reset to the first page when limit changes
+    setCurrentPage(1);
   };
 
   function onPageChange(page) {
