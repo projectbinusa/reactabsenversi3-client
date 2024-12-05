@@ -45,6 +45,7 @@ function Perkelas() {
         }
       );
       setListKelas(response.data); // Hapus reverse di sini
+      console.log("data: ", response.data); // Hapus reverse di sini
     } catch (error) {
       console.error("Error fetching classes:", error);
     }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Logo from "../components/logo_smp.png";
+import Logo from "../components/logo.png";
 
 import axios from "axios";
 import { API_DUMMY } from "../utils/api";
