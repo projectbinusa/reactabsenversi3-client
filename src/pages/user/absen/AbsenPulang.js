@@ -220,7 +220,7 @@ function AbsenPulang() {
         throw error;
       }
     }
-    if (isWithinAllowedCoordinates(latitude, longitude)) {
+    // if (isWithinAllowedCoordinates(latitude, longitude)) {
     try {
       console.log("Image URL:", imageUrl);
       await axios.put(
@@ -253,14 +253,14 @@ function AbsenPulang() {
       console.error("Error:", err);
       Swal.fire("Error", "Gagal Absen", "error");
     }
-    }
-    else {
-          Swal.fire(
-            "Error",
-            "Lokasi Anda di luar batas yang diizinkan untuk absensi",
-            "error"
-          );
-        }
+    // }
+    // else {
+    //       Swal.fire(
+    //         "Error",
+    //         "Lokasi Anda di luar batas yang diizinkan untuk absensi",
+    //         "error"
+    //       );
+    //     }
 
     alert(
       `Titik koordinat Anda: Latitude = ${latitude}, Longitude = ${longitude}`
