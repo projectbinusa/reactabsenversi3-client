@@ -165,7 +165,6 @@ function AbsenPulang() {
     ucapan = "Selamat Malam";
   }
 
-
   const handleCaptureAndSubmitPulang = async () => {
     const imageSrc = webcamRef.current.getScreenshot();
     const response = await fetch(imageSrc);
@@ -219,7 +218,7 @@ function AbsenPulang() {
         throw error;
       }
     }
-if (isWithinAllowedCoordinates(latitude, longitude)) {
+    // if (isWithinAllowedCoordinates(latitude, longitude)) {
     try {
       console.log("Image URL:", imageUrl);
       await axios.put(
@@ -252,16 +251,14 @@ if (isWithinAllowedCoordinates(latitude, longitude)) {
       console.error("Error:", err);
       Swal.fire("Error", "Gagal Absen", "error");
     }
-  } else {
-        Swal.fire(
-          "Error",
-          "Lokasi Anda di luar batas yang diizinkan untuk absensi",
-          "error"
-        );
-      }
-
-
-}
+    // } else {
+    //       Swal.fire(
+    //         "Error",
+    //         "Lokasi Anda di luar batas yang diizinkan untuk absensi",
+    //         "error"
+    //       );
+    //     }
+  };
 
   // const handleCaptureAndSubmitPulang = async () => {
   //   const imageSrc = webcamRef.current.getScreenshot();
