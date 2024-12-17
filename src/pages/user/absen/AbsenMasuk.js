@@ -207,12 +207,12 @@ const isWithinAllowedCoordinates = (lat, lon) => {
           }
         );
 
-        if (
-          absensiCheckResponse.data ===
-          "Pengguna sudah melakukan absensi hari ini."
-        ) {
-          Swal.fire("Info", "Anda sudah melakukan absensi hari ini.", "info");
-        } else {
+        // if (
+        //   absensiCheckResponse.data ===
+        //   "Pengguna sudah melakukan absensi hari ini."
+        // ) {
+        //   Swal.fire("Info", "Anda sudah melakukan absensi hari ini.", "info");
+        // } else {
           const formData = new FormData();
           formData.append("image", imageBlob);
           formData.append("lokasiMasuk", address || "");
@@ -240,7 +240,7 @@ const isWithinAllowedCoordinates = (lat, lon) => {
             showConfirmButton: false,
             timer: 1500,
           });
-        }
+        // }
         // setTimeout(() => {
         //   window.location.href = "";
         // }, 3000);
