@@ -183,6 +183,7 @@ function KelasSiswa() {
           },
         }
       );
+
       const siswaList = siswaResponse.data;
       console.log(
         "siswa list: ",
@@ -199,6 +200,9 @@ function KelasSiswa() {
         };
       });
       setUserData(kelasWithSiswaCount);
+      console.log("ssiwa: ", siswaResponse.data);
+      console.log("kwlas siswa: ", response.data.data);
+
       console.log("kelas: ", kelasWithSiswaCount);
 
     } catch (error) {
