@@ -29,7 +29,7 @@ function AbsenPulang() {
   //     southWest: { lat: -6.9687235, lon: 110.2521534 },
   //     southEast: { lat: -6.9687235, lon: 110.2522446 },
   // };
-
+  // -6.9825853796404385, 110.40398942261717
   // exc
   // const allowedCoordinates = {
   //   northWest: { lat: -6.982580885, lon: 110.404028235 },
@@ -39,23 +39,25 @@ function AbsenPulang() {
   // };
 
   //smpn40smg
+  const TOLERANCE = 0.00001;
   const allowedCoordinates = {
-    northWest: { lat: -6.988646944485839, lon: 110.40412306438553 },
-    northEast: { lat: -6.989307880821571, lon: 110.40550399043418 },
-    southWest: { lat: -6.989715589772726, lon: 110.40366515092936 },
-    southEast: { lat: -6.990584517300366, lon: 110.40523078152198 },
+    northWest: { lat: -6.9886715772467669, lon: 110.40413205141627 },
+    northEast: { lat: -6.989250031560412, lon: 110.40553250855176 },
+    southWest: { lat: -6.989684282878134, lon: 110.40368713223796 },
+    southEast: { lat: -6.99048075110716, lon: 110.40527006050439 },
   };
 
   const isWithinAllowedCoordinates = (lat, lon) => {
     const { northWest, northEast, southWest, southEast } = allowedCoordinates;
-    const tolerance = 0.00001; // adding a small tolerance
+    const isLatInRange =
+      lat >= Math.min(northWest.lat, southWest.lat) - TOLERANCE &&
+      lat <= Math.max(northWest.lat, southWest.lat) + TOLERANCE;
 
-    return (
-      lat >= southWest.lat - tolerance &&
-      lat <= northWest.lat + tolerance &&
-      lon >= southWest.lon - tolerance &&
-      lon <= northEast.lon + tolerance
-    );
+    const isLonInRange =
+      lon >= Math.min(southWest.lon, southEast.lon) - TOLERANCE &&
+      lon <= Math.max(northEast.lon, southEast.lon) + TOLERANCE;
+
+    return isLatInRange && isLonInRange;
   };
 
   const getShift = async () => {
