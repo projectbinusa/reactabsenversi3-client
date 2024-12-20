@@ -136,7 +136,7 @@ function AddKaryawan() {
       const existingUsers = response.data;
 
       const isEmailExists = existingUsers.some(
-        (user) => user.email.toLowerCase() === trimmedEmail.toLowerCase()
+        (user) => user.email === trimmedEmail
       );
       const isUsernameExists = existingUsers.some(
         (user) => user.username === username

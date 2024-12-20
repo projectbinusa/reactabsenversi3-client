@@ -59,23 +59,22 @@ function HarianPerkelas() {
 
   const getHarianPerkelas = async (tanggal, kelasId) => {
     try {
-      const response = await axios.get(`${API_DUMMY}/api/absensi/by-tanggal`, {
-        params: {
-          tanggalAbsen: tanggal,
-          kelasId: kelasId,
-        },
-        headers: {
-          AuthPrs: `Bearer ${token}`,
-        },
+      const response = await axios.get(`${API_DUMMY}/api/absensi/harian/by-kelas/${kelasId}?tanggal=${tanggal}`, {
+        headers: { AuthPrs: `Bearer ${token}` },
       });
-      if (response.data.length === 0) {
-        Swal.fire("Tidak ada", "Tidak ada yang absen hari ini", "info");
-      } else {
-        setAbsensiData(response.data.reverse());
-      }
+
+      const data = response.data;
+
+      // Transformasi data menjadi array
+      const transformedData = Object.values(data).flat(); // Gabungkan semua array dari objek berdasarkan tanggal
+
+      setAbsensiData(transformedData); // Simpan hasil transformasi ke state
+      console.log("trs: ", transformedData);
+
     } catch (error) {
       console.error(error);
       Swal.fire("Gagal", "Gagal Mengambil data", "error");
+      setAbsensiData([]); // Reset data jika terjadi error
     }
   };
 
@@ -203,11 +202,7 @@ function HarianPerkelas() {
   useEffect(() => {
     const filteredData = absensiData.filter(
       (user) =>
-        user.username?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.admin?.username
-          ?.toLowerCase()
-          .includes(searchTerm.toLowerCase()) ||
-        user.email?.toLowerCase().includes(searchTerm.toLowerCase())
+        user.user.username?.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setTotalPages(Math.ceil(filteredData.length / limit));
   }, [searchTerm, limit, absensiData]);
@@ -218,18 +213,16 @@ function HarianPerkelas() {
 
   const handleLimitChange = (event) => {
     setLimit(parseInt(event.target.value));
-    setCurrentPage(1); // Reset to the first page when limit changes
-    if (kelasId != null) {
-      getHarianPerkelas(kelasId, 1, parseInt(event.target.value));
-    }
+    setCurrentPage(1);
   };
 
   function onPageChange(page) {
     setCurrentPage(page);
   }
 
-  const filteredUser = absensiData.filter((user) =>
-    user.user.username?.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredUser = absensiData.filter(
+    (user) =>
+      user.user.username.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const paginatedUser = filteredUser.slice(

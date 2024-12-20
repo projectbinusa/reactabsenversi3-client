@@ -34,10 +34,10 @@ function AbsenMasuk() {
 
   // smpn40 ke 2
   const allowedCoordinates = {
-    northWest: { lat: -6.9886715772467669, lon: 110.40413205141627 },
-    northEast: { lat: -6.989250031560412, lon: 110.40553250855176 },
-    southWest: { lat: -6.989684282878134, lon: 110.40368713223796 },
-    southEast: { lat: -6.99048075110716, lon: 110.40527006050439 },
+    northWest: { lat: -6.982580885, lon: 110.404028235 },
+    northEast: { lat: -6.982580885, lon: 110.404118565 },
+    southWest: { lat: -6.982670715, lon: 110.404028235 },
+    southEast: { lat: -6.982670715, lon: 110.404118565 },
   };
 
 const isWithinAllowedCoordinates = (lat, lon) => {
@@ -180,7 +180,6 @@ const isWithinAllowedCoordinates = (lat, lon) => {
         if (!response.ok) {
           throw new Error("Gagal mengupload gambar");
         }
-
         const data = await response.json();
         console.log("Respons dari S3:", data);
         if (data.data && data.data.url_file) {
@@ -197,15 +196,15 @@ const isWithinAllowedCoordinates = (lat, lon) => {
     }
     // if (isWithinAllowedCoordinates(latitude, longitude)) {
       try {
-        const absensiCheckResponse = await axios.get(
-          `${API_DUMMY}/api/absensi/checkAbsensi?token=${token}`,
-          {
-            headers: {
-              AuthPrs: `Bearer ${token}`,
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
+        // const absensiCheckResponse = await axios.get(
+        //   `${API_DUMMY}/api/absensi/checkAbsensi?token=${token}`,
+        //   {
+        //     headers: {
+        //       AuthPrs: `Bearer ${token}`,
+        //       "Content-Type": "multipart/form-data",
+        //     },
+        //   }
+        // );
 
         // if (
         //   absensiCheckResponse.data ===
