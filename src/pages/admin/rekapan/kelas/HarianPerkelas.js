@@ -19,7 +19,7 @@ function HarianPerkelas() {
   const [listKelas, setListKelas] = useState([]);
   const [absensiData, setAbsensiData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [totalAbsen, setTotalAbsen] = useState("");
+  const [totalAbsen, setTotalAbsen] = useState([]);
   const [limit, setLimit] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -340,8 +340,8 @@ function HarianPerkelas() {
               </div>
             </form>
 
-            <div className=" overflow-x-auto shadow-md sm:rounded-lg mt-5 py-3">
-              {absensiData.length === 0 ? (
+            <div className="overflow-x-auto shadow-md sm:rounded-lg mt-5 py-3">
+              {!totalAbsen || Object.keys(totalAbsen).length === 0 ? (
                 <>
                   <h1 className="text-2xl font-bold text-center text-gray-900 dark:text-white mt-5 mb-3">
                     Tidak Ada Absen Hari Ini !!
@@ -356,63 +356,41 @@ function HarianPerkelas() {
                         No
                       </th>
                       <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                        Nama
+                        Nama Kelas
                       </th>
                       <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                        Tanggal
+                        Jumlah Siswa
                       </th>
                       <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                        Jam Masuk
+                        Hadir
                       </th>
                       <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                        Foto Masuk
-                      </th>
-                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                        Jam Pulang
-                      </th>
-                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                        Foto Pulang
-                      </th>
-                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                        Jam Sekolah
-                      </th>
-                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                        Keterangan
+                        Tidak Hadir
                       </th>
                     </tr>
                   </thead>
                   <tbody>
-                    {paginatedUser.map((absensi, index) => (
-                      <tr key={absensi.id}>
-                        <td className="px-6 py-3 whitespace-nowrap">
-                          {index + 1}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {absensi.user.username}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {formatDate(absensi.tanggalAbsen)}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {absensi.jamMasuk}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          <img src={absensi.fotoMasuk} alt="Foto Masuk" />
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {absensi.jamPulang}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          <img src={absensi.fotoPulang} alt="Foto Pulang" />
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {absensi.jamKerja}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap capitalize">
-                          {absensi.keterangan}
-                        </td>
-                      </tr>
-                    ))}
+                    {totalAbsen
+                      .filter((absen) => absen.kelasName && absen.jumlahSiswa) // Filter data yang valid
+                      .map((absen, index) => (
+                        <tr key={absen.kelasId || index}>
+                          <td className="px-6 py-3 whitespace-nowrap">
+                            {index + 1}
+                          </td>
+                          <td className="px-6 py-3 whitespace-nowrap">
+                            {absen.kelasName}
+                          </td>
+                          <td className="px-6 py-3 whitespace-nowrap">
+                            {absen.jumlahSiswa}
+                          </td>
+                          <td className="px-6 py-3 whitespace-nowrap">
+                            {absen.hadir}
+                          </td>
+                          <td className="px-6 py-3 whitespace-nowrap">
+                            {absen.tidakHadir}
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               )}
