@@ -35,16 +35,20 @@ function AddAdmin() {
       const existingUsers = response.data;
 
       const isEmailExists = existingUsers.some(
-        (user) => user.email.toLowerCase() === trimmedEmail.toLowerCase()
+        (user) =>
+          user.email && user.email.toLowerCase() === trimmedEmail.toLowerCase()
       );
       const isUsernameExists = existingUsers.some(
-        (user) => user.username.toLowerCase() === trimmedUsername.toLowerCase()
+        (user) =>
+          user.username &&
+          user.username.toLowerCase() === trimmedUsername.toLowerCase()
       );
 
       if (isEmailExists || isUsernameExists) {
         Swal.fire("Error", "Email atau Username sudah terdaftar", "error");
         return;
       }
+
       const newUser = {
         email: email,
         username: username,
@@ -74,7 +78,6 @@ function AddAdmin() {
     } catch (error) {
       console.log(error);
 
-      // Extracting error message from the response
       const errorResponse = error.response?.data;
       const errorMessage = errorResponse?.message || error.message;
 
