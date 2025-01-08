@@ -19,6 +19,7 @@ function HarianPerkelas() {
   const [listKelas, setListKelas] = useState([]);
   const [absensiData, setAbsensiData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [totalAbsen, setTotalAbsen] = useState([]);
   const [limit, setLimit] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -60,11 +61,35 @@ function HarianPerkelas() {
     }
   };
 
+  // const getHarianPerkelas = async (tanggal, kelasId) => {
+  //   try {
+  //     const response = await axios.get(`${API_DUMMY}/api/absensi/harian/by-kelas/${kelasId}?tanggal=${tanggal}`, {
+  //       headers: { AuthPrs: `Bearer ${token}` },
+  //     });
+
+  //     const data = response.data;
+
+  //     // Transformasi data menjadi array
+  //     const transformedData = Object.values(data).flat(); // Gabungkan semua array dari objek berdasarkan tanggal
+
+  //     setAbsensiData(transformedData); // Simpan hasil transformasi ke state
+  //     console.log("trs: ", transformedData);
+
+  //   } catch (error) {
+  //     console.error(error);
+  //     Swal.fire("Gagal", "Gagal Mengambil data", "error");
+  //     setAbsensiData([]); // Reset data jika terjadi error
+  //   }
+  // };
+
   const getHarianPerkelas = async (tanggal, kelasId) => {
     try {
-      const response = await axios.get(`${API_DUMMY}/api/absensi/harian/by-kelas/${kelasId}?tanggal=${tanggal}`, {
-        headers: { AuthPrs: `Bearer ${token}` },
-      });
+      const response = await axios.get(
+        `${API_DUMMY}/api/absensi/rekap/harian/by-kelas?kelasId=${kelasId}&tanggal=${tanggal}`,
+        {
+          headers: { AuthPrs: `Bearer ${token}` },
+        }
+      );
 
       const data = response.data;
 

@@ -27,7 +27,7 @@ function Absensi() {
         `${API_DUMMY}/api/absensi/admin/${adminId}`,
         {
           headers: {
-            AuthPrs: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -185,7 +185,8 @@ function Absensi() {
                 <a
                   onClick={exportAbsensi}
                   title="Export"
-                  className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto">
+                  className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto"
+                >
                   <FontAwesomeIcon icon={faCloudArrowDown} />
                 </a>
               </div>
@@ -194,7 +195,8 @@ function Absensi() {
             <form
               action=""
               method="post"
-              className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-5">
+              className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-5"
+            >
               {/* <select
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     id="bulan"
@@ -235,7 +237,8 @@ function Absensi() {
             <div className=" overflow-x-auto shadow-md sm:rounded-lg mt-5">
               <table
                 id="rekapSimple"
-                className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+              >
                 <thead className="text-left text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
                     <th scope="col" className="px-4 py-3">
@@ -275,7 +278,8 @@ function Absensi() {
                     <tr>
                       <td
                         colSpan="9"
-                        className="px-4 py-4 text-center text-gray-500">
+                        className="px-4 py-4 text-center text-gray-500"
+                      >
                         Tidak ada data yang ditampilkan
                       </td>
                     </tr>
@@ -283,7 +287,8 @@ function Absensi() {
                     paginatedAbsensi.map((absensi, index) => (
                       <tr
                         key={index}
-                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                      >
                         <th
                           scope="row"
                           className="px-4 py-4 font-medium text-gray-900 dark:text-white">
