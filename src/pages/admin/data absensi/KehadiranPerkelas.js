@@ -5,8 +5,14 @@ import { API_DUMMY } from "../../../utils/api";
 import SidebarNavbar from "../../../components/SidebarNavbar";
 import { SidebarProvider } from "../../../components/SidebarContext";
 import Navbar1 from "../../../components/Navbar1";
+import Swal from "sweetalert2";
+import { faCloudArrowDown } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function KehadiranPerkelas() {
+  const [tanggal, setTanggal] = useState(
+    new Date().toISOString().split("T")[0]
+  );
   const [kehadiran, setKehadiran] = useState([]);
   const [allAbsensi, setAllAbsensi] = useState([]);
   const idAdmin = localStorage.getItem("adminId");
@@ -20,13 +26,16 @@ function KehadiranPerkelas() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  const getAllKaryawanUser = async () => {
+  const getAllKaryawanUser = async (
+    tanggal = new Date().toISOString().split("T")[0]
+  ) => {
     try {
-      const all = await axios.get(`${API_DUMMY}/api/user/${idAdmin}/users`, {
-        headers: {
-          AuthPrs: `Bearer ${token}`,
-        },
-      });
+      const all = await axios.get(
+        `${API_DUMMY}/api/absensi/rekap/harian/all-kelas/per-hari?tanggal=${tanggal}&idAdmin=${idAdmin}`,
+        {
+          headers: { AuthPrs: `Bearer ${token}` },
+        }
+      );
       setKehadiran(all.data);
     } catch (error) {
       console.log(error);
@@ -40,7 +49,6 @@ function KehadiranPerkelas() {
           AuthPrs: `Bearer ${token}`,
         },
       });
-
       setAllAbsensi(abs.data.reverse());
     } catch (error) {
       console.log(error);
@@ -48,25 +56,9 @@ function KehadiranPerkelas() {
   };
 
   useEffect(() => {
-    getAllKaryawanUser();
+    getAllKaryawanUser(tanggal); // Fetch data based on the selected date
     getAllAbsensiByAdmin();
-  }, []);
-
-  const getAbsensiByUserId = (userId, status) => {
-    return allAbsensi.filter(
-      (abs) => abs.user.id === userId && abs.statusAbsen === status
-    ).length;
-  };
-
-  const getTotalMasukPerBulan = (userId) => {
-    const currentMonth = new Date().getMonth() + 1;
-    return allAbsensi.filter(
-      (abs) =>
-        abs.user.id === userId &&
-        (abs.statusAbsen === "Lebih Awal" || abs.statusAbsen === "Terlambat") &&
-        new Date(abs.tanggalAbsen).getMonth() + 1 === currentMonth
-    ).length;
-  };
+  }, [tanggal]); // Re-fetch on date change
 
   useEffect(() => {
     const userAbsensiCounts = kehadiran.map((user) => ({
@@ -87,26 +79,41 @@ function KehadiranPerkelas() {
     );
   }, [allAbsensi]);
 
+  const getAbsensiByUserId = (userId, status) => {
+    return allAbsensi.filter(
+      (abs) => abs.user.id === userId && abs.statusAbsen === status
+    ).length;
+  };
+
+  const getTotalMasukPerBulan = (userId) => {
+    const currentMonth = new Date().getMonth() + 1;
+    return allAbsensi.filter(
+      (abs) =>
+        abs.user.id === userId &&
+        (abs.statusAbsen === "Lebih Awal" || abs.statusAbsen === "Terlambat") &&
+        new Date(abs.tanggalAbsen).getMonth() + 1 === currentMonth
+    ).length;
+  };
+
   useEffect(() => {
     const filteredData = kehadiran.filter(
-      (kehadiran) =>
-        (kehadiran.username.toLowerCase().includes(searchTerm.toLowerCase()) ??
-          false) ||
-        (kehadiran.jabatan?.namaJabatan
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase()) ??
-          false)
+      (kehadiran) => kehadiran.kelasName?.includes(searchTerm) ?? false
     );
     setTotalPages(Math.ceil(filteredData.length / limit));
-  }, [searchTerm, limit, kehadiran]);
+  }, [searchTerm, kehadiran, limit, currentPage]);
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
+    setCurrentPage(1);
+  };
+
+  const handleTanggalChange = (event) => {
+    setTanggal(event.target.value);
   };
 
   const handleLimitChange = (event) => {
     setLimit(parseInt(event.target.value));
-    setCurrentPage(1); // Reset to the first page when limit changes
+    setCurrentPage(1);
   };
 
   function onPageChange(page) {
@@ -114,19 +121,66 @@ function KehadiranPerkelas() {
   }
 
   const filteredKehadiran = kehadiran.filter(
-    (kehadiran) =>
-      (kehadiran.username.toLowerCase().includes(searchTerm.toLowerCase()) ??
-        false) ||
-      (kehadiran.jabatan?.namaJabatan
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase()) ??
-        false)
+    (kehadiran) => kehadiran.kelasName?.includes(searchTerm) ?? false
   );
 
   const paginatedKehadiran = filteredKehadiran.slice(
     (currentPage - 1) * limit,
     currentPage * limit
   );
+
+  const exportPerkelas = async (e, tanggal) => {
+    e.preventDefault();
+    if (!tanggal) {
+      Swal.fire(
+        "Peringatan",
+        "Silakan pilih tanggal terlebih dahulu",
+        "warning"
+      );
+      return;
+    }
+    try {
+      const response = await axios.get(
+        `${API_DUMMY}/api/absensi/export/harian/all-kelas/per-hari`,
+        {
+          params: { idAdmin, tanggal },
+          responseType: "blob",
+          headers: {
+            AuthPrs: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "Absensi-Kelas-Harian.xlsx");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      Swal.fire("Berhasil", "Berhasil mengunduh data", "success");
+    } catch (error) {
+      Swal.fire("Error", "Gagal mengunduh data", "error");
+      console.log(error);
+    }
+  };
+
+  const handleExportClick = (e) => {
+    e.preventDefault();
+
+    if (kehadiran.length === 0) {
+      Swal.fire(
+        "Peringatan",
+        "Data belum tersedia untuk kelas yang dipilih",
+        "warning"
+      );
+      return;
+    }
+
+    exportPerkelas(e, tanggal);
+  };
 
   return (
     <div className="flex flex-col h-screen">
@@ -158,21 +212,37 @@ function KehadiranPerkelas() {
                     <select
                       value={limit}
                       onChange={handleLimitChange}
-                      className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
-                    >
+                      className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
                       <option value="5">05</option>
                       <option value="10">10</option>
                       <option value="20">20</option>
                       <option value="50">50</option>
                     </select>
+                      <button
+                        type="button"
+                        className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded sm:py-2 sm:px-4"
+                        onClick={handleExportClick}
+                        title="Export">
+                        <FontAwesomeIcon icon={faCloudArrowDown} />
+                      </button>
                   </div>
                 </div>
+                <br />
+                <div>
+                  <input
+                    type="date"
+                    className="appearance-none block w-full bg-white border border-gray-300 rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-gray-500"
+                    id="tanggal"
+                    name="tanggal"
+                    value={tanggal}
+                    onChange={handleTanggalChange}
+                  />
+                </div>
                 <hr className="mt-3" />
-                <div className=" overflow-x-auto mt-5">
+                <div className="overflow-x-auto mt-5">
                   <table
                     id="dataKehadiran"
-                    className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
-                  >
+                    className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                       <tr>
                         <th scope="col" className="px-6 py-3">
@@ -200,42 +270,46 @@ function KehadiranPerkelas() {
                         <tr>
                           <td
                             colSpan="7"
-                            className="px-6 py-4 text-center text-gray-500"
-                          >
+                            className="px-6 py-4 text-center text-gray-500">
                             Tidak ada data yang ditampilkan
                           </td>
                         </tr>
                       ) : (
-                        paginatedKehadiran.map((kehadiran, index) => (
-                          <tr
-                            key={index}
-                            className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                          >
-                            <th
-                              scope="row"
-                              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                            >
-                              {(currentPage - 1) * limit + index + 1}
-                            </th>
-                            <td className="px-6 py-4 text-gray-700 capitalize">
-                              {/* {kehadiran.username || "0"} */}
-                            </td>
-                            <td className="px-6 py-4 text-gray-700 capitalize">
-                              {/* {kehadiran.jabatan
-                                ? kehadiran.jabatan.namaJabatan
-                                : "Siswa"} */}
-                            </td>
-                            <td className="px-6 py-4 text-gray-700 capitalize">
-                              {/* {kehadiran.lateCount || "0"} */}
-                            </td>
-                            <td className="px-6 py-4 text-gray-700 capitalize">
-                              {/* {kehadiran.earlyCount || "0"} */}
-                            </td>
-                            <td className="px-6 py-4 text-gray-700 capitalize">
-                              {/* {kehadiran.permissionCount || "0"} */}
-                            </td>
-                          </tr>
-                        ))
+                        paginatedKehadiran.map((kehadiran, index) => {
+                          const persentaseKehadiran =
+                            kehadiran.jumlahSiswa > 0
+                              ? (
+                                  (kehadiran.hadir / kehadiran.jumlahSiswa) *
+                                  100
+                                ).toFixed(2)
+                              : "0";
+                          return (
+                            <tr
+                              key={index}
+                              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                              <th
+                                scope="row"
+                                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {(currentPage - 1) * limit + index + 1}
+                              </th>
+                              <td className="px-6 py-4 text-gray-700 capitalize">
+                                {kehadiran.kelasName || "0"}
+                              </td>
+                              <td className="px-6 py-4 text-gray-700 capitalize">
+                                {kehadiran.jumlahSiswa || "0"}
+                              </td>
+                              <td className="px-6 py-4 text-gray-700 capitalize">
+                                {kehadiran.hadir || "0"}
+                              </td>
+                              <td className="px-6 py-4 text-gray-700 capitalize">
+                                {kehadiran.tidakHadir || "0"}
+                              </td>
+                              <td className="px-6 py-4 text-gray-700 capitalize">
+                                {persentaseKehadiran} %
+                              </td>
+                            </tr>
+                          );
+                        })
                       )}
                     </tbody>
                   </table>

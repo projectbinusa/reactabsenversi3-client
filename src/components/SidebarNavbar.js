@@ -84,7 +84,7 @@ function SidebarNavbar() {
       );
     };
 
-    if (isActive(["/admin/absensi", "/admin/kehadiran"])) {
+    if (isActive(["/admin/absensi", "/admin/kehadiran", "/admin/rekap_perkelas"])) {
       setAbsenOpen(true);
     } else {
       setAbsenOpen(false);
@@ -749,25 +749,29 @@ function SidebarNavbar() {
                             </span>
                           </Link>
                         </li>
-                        {/* <!-- Menu Cuti --> */}
-                        {/* <li>
-                    <Link
-                      to="/admin/cuti"
-                      className={`${
-                    isActive(["/super"])
-                      ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
-                      : "hover:bg-blue-100 dark:hover:bg-blue-700 text-gray-900 dark:text-white hover:text-black"
-                  } flex items-center w-full p-2 text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}
-                    >
-                      <FontAwesomeIcon
-                        className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${isActive(["/superadmin/admin"]) ? "" : "text-whitetext-blue-500"}`}
-                        icon={faCalendarDays}
-                      />{" "}
-                      <span className="flex-1 ml-3 whitespace-nowrap">
-                        Cuti
-                      </span>
-                    </Link>
-                  </li> */}
+                        {/* <!-- Menu Kehadiran Perkelas --> */}
+                        <li>
+                          <Link
+                            to="/admin/rekap_perkelas"
+                            className={`flex items-center p-2 rounded-lg ml-9 pl-3 ${
+                              isActive(["/admin/rekap_perkelas"])
+                                ? "bg-indigo-500 text-white dark:bg-indigo-500 dark:text-white hover:text-black"
+                                : "text-blue-900 transition duration-75 rounded-lg pl-11 group hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700"
+                            }`}
+                          >
+                            <FontAwesomeIcon
+                              className={`flex-shrink-0 w-5 h-5 textsition duration-75 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-white ${
+                                isActive(["/admin/rekap_perkelas"])
+                                  ? "text-white hover:text-black"
+                                  : "text-blue-500"
+                              }`}
+                              icon={faAddressCard}
+                            />{" "}
+                            <span className="flex-1 ml-3 whitespace-nowrap">
+                              Kehadiran Perkelas
+                            </span>
+                          </Link>
+                        </li>
                         {/* <!-- Menu Kehadiran --> */}
                         <li>
                           <Link

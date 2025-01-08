@@ -315,7 +315,7 @@ function Karyawan() {
                         Email
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        Admin
+                        Kelas
                       </th>
                       <th scope="col" className="px-6 py-3 text-center">
                         Aksi
@@ -355,7 +355,7 @@ function Karyawan() {
                             {/* </a> */}
                           </td>
                           <td className="px-6 py-4 text-gray-900">
-                            {user.admin.username}
+                            {user.kelas?.namaKelas}
                           </td>
                           <td className=" py-3">
                             <div className="flex items-center -space-x-4 ml-12">
