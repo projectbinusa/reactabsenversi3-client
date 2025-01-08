@@ -514,7 +514,7 @@ function App() {
               }
             />
             <Route
-              path="/admin/kehadiran/perkelas"
+              path="/admin/rekap_perkelas"
               element={
                 <PrivateRoute>
                   <KehadiranPerkelas />
