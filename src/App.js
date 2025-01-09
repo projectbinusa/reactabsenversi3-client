@@ -114,6 +114,7 @@ import Loader from "./components/Loader";
 import Navbar1 from "./components/Navbar1";
 import { analytics } from "./firebase";
 import { logEvent } from "firebase/analytics";
+import KehadiranPerkelas from "./pages/admin/data absensi/KehadiranPerkelas";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -509,6 +510,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <Kehadiran />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/admin/rekap_perkelas"
+              element={
+                <PrivateRoute>
+                  <KehadiranPerkelas />
                 </PrivateRoute>
               }
             />
