@@ -437,7 +437,7 @@ function EditKaryawan() {
                           ))}
                         </select>
                       </div>
-                      <div className="relative mb-3">
+                      <div className="mb-3">
                         <label className="block mb-2 text-sm sm:text-xs font-medium text-gray-900">
                           Password Lama
                         </label>
@@ -455,11 +455,11 @@ function EditKaryawan() {
                           onClick={() => setShowPasswordd(!showPasswordd)}
                         />
                       </div>
-                      <div className="relative mb-3">
+                      <div className="mb-3">
                         <label className="block mb-2 text-sm sm:text-xs font-medium text-gray-900">
                           Password Baru
                         </label>
-                        <div className="relative">
+                        <div className="">
                           <input
                             type={showPassword ? "text" : "password"}
                             id="pw-baru"
@@ -475,11 +475,11 @@ function EditKaryawan() {
                           />
                         </div>
                       </div>
-                      <div className="relative mb-3">
+                      <div className="mb-3">
                         <label className="block mb-2 text-sm sm:text-xs font-medium text-gray-900">
                           Konfirmasi Password Baru
                         </label>
-                        <div className="relative">
+                        <div className="">
                           <input
                             type={showConfirmPassword ? "text" : "password"}
                             id="konfirmasi-pw"

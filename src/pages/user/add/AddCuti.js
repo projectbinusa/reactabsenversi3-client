@@ -89,7 +89,7 @@ function AddCuti() {
                     required
                   />
                 </div>
-                <div className="relative">
+                <div className="">
                   <label className="block mb-2 text-sm sm:text-xs font-medium text-gray-900 ">
                     Akhir Cuti
                   </label>
@@ -105,7 +105,7 @@ function AddCuti() {
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
-                <div className="relative">
+                <div className="">
                   <label className="block mb-2 text-sm sm:text-xs font-medium text-gray-900 ">
                     Masuk Sekolah
                   </label>
@@ -119,7 +119,7 @@ function AddCuti() {
                     required
                   />
                 </div>{" "}
-                <div className="relative">
+                <div className="">
                   <label className="block mb-2 text-sm sm:text-xs font-medium text-gray-900 ">
                     Keperluan
                   </label>
