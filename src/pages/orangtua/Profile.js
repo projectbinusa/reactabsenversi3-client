@@ -247,7 +247,7 @@ function Profile() {
                         disabled={!ubahUsername}
                       />
                     </div>
-                    <div className="relative">
+                    <div className="">
                       <label className="block mb-2 text-sm sm:text-xs font-medium text-gray-900">
                         Email
                       </label>
@@ -325,7 +325,7 @@ function Profile() {
                       <label className="block mb-2 text-sm sm:text-xs font-medium text-gray-900">
                         Password Baru
                       </label>
-                      <div className="relative">
+                      <div className="">
                         <input
                           type={showPassword ? "text" : "password"}
                           id="pw-baru"
@@ -345,7 +345,7 @@ function Profile() {
                       <label className="block mb-2 text-sm sm:text-xs font-medium text-gray-900">
                         Konfirmasi Password Baru
                       </label>
-                      <div className="relative">
+                      <div className="">
                         <input
                           type={showConfirmPassword ? "text" : "password"}
                           id="konfirmasi-pw"

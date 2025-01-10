@@ -91,7 +91,7 @@ function AddLembur() {
                     required
                   />
                 </div>
-                <div className="relative">
+                <div className="">
                   <label className="block mb-2 text-sm sm:text-xs font-medium text-gray-900 ">
                     Keterangan Lembur
                   </label>
@@ -107,7 +107,7 @@ function AddLembur() {
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
-                <div className="relative">
+                <div className="">
                   <label className="block mb-2 text-sm sm:text-xs font-medium text-gray-900 ">
                     Jam Mulai
                   </label>
@@ -121,7 +121,7 @@ function AddLembur() {
                     required
                   />
                 </div>
-                <div className="relative">
+                <div className="">
                   <label className="block mb-2 text-sm sm:text-xs font-medium text-gray-900 ">
                     Jam Selesai
                   </label>
