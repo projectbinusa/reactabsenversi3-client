@@ -142,7 +142,7 @@ function AddLokasi() {
                     {/* <!-- Form Input --> */}
                     <div className="grid md:grid-cols-2 md:gap-6">
                       {/* <!-- Nama Lokasi Input --> */}
-                      <div className="relative z-0 w-full mb-6 group">
+                      <div className="relative z-10 w-full mb-6 group">
                         <input
                           type="text"
                           name="nama_lokasi"
@@ -165,7 +165,7 @@ function AddLokasi() {
                       </div>
 
                       {/* <!-- Alamat Kantor Input --> */}
-                      <div className="relative z-0 w-full mb-6 group">
+                      <div className="relative z-10 w-full mb-6 group">
                         <input
                           type="text"
                           name="alamat_kantor"
@@ -190,7 +190,7 @@ function AddLokasi() {
 
                     <div className="grid md:grid-cols-2 md:gap-6">
                       {/* <!-- Pilihan Organisasi --> */}
-                      <div className="relative z-0 w-full mb-6 group">
+                      <div className="relative z-10 w-full mb-6 group">
                         <select
                           ref={selectRef}
                           id="organisasi"

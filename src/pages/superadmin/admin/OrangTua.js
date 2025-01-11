@@ -482,7 +482,7 @@ function OrangTua() {
                 <hr />
                 <Modal.Body>
                   <Button
-                    className="mb-3"
+                    className="mb-3 relative"
                     color="green"
                     type="submit"
                     onClick={downloadTemplate}>

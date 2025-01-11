@@ -404,7 +404,7 @@ function Admin() {
                 <Modal.Body>
                   <form className="space-y-6">
                     <Button
-                      className="mb-3 bg-green-500 text-white"
+                      className="mb-3 relative bg-green-500 text-white"
                       type="submit"
                       onClick={downloadTemplate}
                     >
