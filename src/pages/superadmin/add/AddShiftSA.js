@@ -157,7 +157,7 @@ function AddShift() {
                           Jam Pulang
                         </label>
                       </div>
-                      <div className="relative z-0 w-full mb-6 group">
+                      <div className="relative z-10 w-full mb-6 group">
                         <select
                           value={idAdmin}
                           onChange={(e) => setIdAdmin(e.target.value)}
