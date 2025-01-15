@@ -110,7 +110,7 @@ function AddLokasiSA() {
                       </div>
                     </div>
                     <div className="grid md:grid-cols-2 md:gap-6">
-                      <div className="relative z-0 w-full mb-6 group">
+                      <div className="relative z-10 w-full mb-6 group">
                         <select
                           id="organisasi"
                           name="id_organisasi"

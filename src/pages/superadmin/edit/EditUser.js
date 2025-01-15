@@ -151,7 +151,7 @@ function EditUser() {
                       </label>
                     </div>
                     <div className="grid md:grid-cols-2 md:gap-6 mb-6">
-                      <div className="relative z-0 w-full mb-6 group">
+                      <div className="relative z-10 w-full mb-6 group">
                         <label
                           htmlFor="id_jabatan"
                           className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
@@ -174,7 +174,7 @@ function EditUser() {
                           ))}
                         </select>
                       </div>
-                      <div className="relative z-0 w-full mb-6 group">
+                      <div className="relative z-10 w-full mb-6 group">
                         <label
                           htmlFor="id_shift"
                           className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
@@ -197,7 +197,7 @@ function EditUser() {
                       </div>
                     </div>
                     <div className="grid md:grid-cols-2 md:gap-6 mb-6">
-                      <div className="relative z-0 w-full mb-6 group">
+                      <div className="relative z-10 w-full mb-6 group">
                         <label
                           htmlFor="id_orang_tua"
                           className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
@@ -217,7 +217,7 @@ function EditUser() {
                           ))}
                         </select>
                       </div>
-                      <div className="relative z-0 w-full mb-6 group">
+                      <div className="relative z-10 w-full mb-6 group">
                         <label
                           htmlFor="id_kelas"
                           className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
