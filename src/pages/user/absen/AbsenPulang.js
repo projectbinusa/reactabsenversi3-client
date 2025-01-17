@@ -251,7 +251,15 @@ function AbsenPulang() {
       }, 1500);
     } catch (err) {
       console.error("Error:", err);
-      Swal.fire("Error", "Gagal Absen", "error");
+
+      // Cek apakah ada response dari backend
+      const errorMessage =
+        err.response && err.response.data && err.response.data.message
+          ? err.response.data.message
+          : "Gagal Absen"; // Pesan default jika tidak ada pesan dari backend
+
+      // Tampilkan pesan menggunakan Swal
+      Swal.fire("Error", errorMessage, "error");
     }
     // } else {
     //       Swal.fire(
@@ -456,7 +464,8 @@ function AbsenPulang() {
                       );
                     }
                   }}
-                  className="block w-32 sm:w-40 bg-blue-500 text-white rounded-lg py-3 text-sm sm:text-xs font-medium">
+                  className="block w-32 sm:w-40 bg-blue-500 text-white rounded-lg py-3 text-sm sm:text-xs font-medium"
+                >
                   Ambil Foto
                 </button>
               </div>
