@@ -147,43 +147,56 @@ function BulanPerkelas() {
     await exportPerkelas(month, year);
   };
 
-  // Export data function
   const exportPerkelas = async (bulan, tahun) => {
     try {
-      const response = await axios.get(
-        `${API_DUMMY}/api/absensi/export/bulanan/by-kelas`,
-        {
-          params: { kelasId: idKelas, bulan, tahun },
-          responseType: "blob",
-          headers: {
-            AuthPrs: `Bearer ${token}`,
-          },
-        }
-      );
+        const selectedKelas = listKelas.find((kelas) => kelas.id == idKelas);
+
+      console.log("nama_kelas: ", selectedKelas, "id_kelas: ", idKelas);
+
+      if (!selectedKelas) {
+        Swal.fire("Peringatan", "Kelas tidak ditemukan", "warning");
+        return;
+      }
+
+      const isGuruKelas = selectedKelas.namaKelas.toLowerCase().includes("guru");
+
+      const url = isGuruKelas
+        ? `${API_DUMMY}/api/absensi/export/bulanan-guru/by-kelas`
+        : `${API_DUMMY}/api/absensi/export/bulanan/by-kelas`;
+
+      const response = await axios.get(url, {
+        params: {
+          kelasId: idKelas,
+          bulan,
+          tahun,
+          ...(isGuruKelas && { idAdmin: adminId }), // Tambahkan idAdmin hanya jika kelas terkait guru
+        },
+        responseType: "blob",
+        headers: {
+          AuthPrs: `Bearer ${token}`,
+        },
+      });
+
       if (response.data.size === 0) {
         Swal.fire("Peringatan", "Tidak ada data untuk diunduh", "warning");
         return;
       }
 
-      const blobContent = await response.data.text();
-      if (response.data.length <= 0) {
-        Swal.fire("Peringatan", "Data tidak tersedia untuk ekspor", "warning");
-        return;
-      }
-
-      const url = window.URL.createObjectURL(new Blob([response.data]));
+      // Unduh file
+      const blob = new Blob([response.data]);
+      const urlBlob = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
-      link.href = url;
+      link.href = urlBlob;
       link.setAttribute("download", "RekapBulananPerKelas.xlsx");
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
+      window.URL.revokeObjectURL(urlBlob);
 
       Swal.fire("Berhasil", "Berhasil mengunduh data", "success");
     } catch (error) {
       Swal.fire("Error", "Gagal mengunduh data", "error");
-      console.log(error);
+      console.error(error);
     }
   };
 
