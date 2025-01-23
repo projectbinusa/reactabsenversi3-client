@@ -50,10 +50,10 @@ function EditShift() {
         (user) => user.namaShift.toLowerCase() === trimmedUsername.toLowerCase()
       );
 
-      if (isUsernameExists) {
-        Swal.fire("Error", "Nama waktu pembelajaran sudah terdaftar", "error");
-        return;
-      }
+      // if (isUsernameExists) {
+      //   Swal.fire("Error", "Nama waktu pembelajaran sudah terdaftar", "error");
+      //   return;
+      // }
 
       const shift = {
         namaShift: namaShift,

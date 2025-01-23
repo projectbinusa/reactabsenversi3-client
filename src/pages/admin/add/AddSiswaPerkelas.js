@@ -212,10 +212,10 @@ function AddSiswaPerkelas() {
       const existingUsers = response.data;
 
       const isEmailExists = existingUsers.some(
-        (user) => user.email.toLowerCase() === trimmedEmail.toLowerCase()
+        (user) => user.email === trimmedEmail
       );
       const isUsernameExists = existingUsers.some(
-        (user) => user.username.toLowerCase() === trimmedUsername.toLowerCase()
+        (user) => user.username === trimmedUsername
       );
 
       if (isEmailExists || isUsernameExists) {
