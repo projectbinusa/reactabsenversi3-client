@@ -204,7 +204,6 @@ function KelasSiswa() {
       console.log("kwlas siswa: ", response.data.data);
 
       console.log("kelas: ", kelasWithSiswaCount);
-
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -336,14 +335,11 @@ function KelasSiswa() {
     currentPage * limit
   );
 
-  const capitalize = (str) => {
+  const toUppercase = (str) => {
     if (typeof str !== "string") {
       return str;
     }
-    return str
-      .split(" ")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(" ");
+    return str.toUpperCase();
   };
 
   return (
@@ -464,7 +460,7 @@ function KelasSiswa() {
                             {(currentPage - 1) * limit + index + 1}
                           </th>
                           <td className="px-6 py-4 capitalize whitespace-nowrap">
-                            {capitalize(kelas.namaKelas)}
+                            {toUppercase(kelas.namaKelas)}
                           </td>
                           {/* <td className="px-6 py-4 capitalize whitespace-nowrap">
                             {validOrganisasiIds.includes(kelas.organisasi.id || "")
