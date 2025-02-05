@@ -125,12 +125,10 @@ function MingguanPerkelas() {
       const response = await axios.get(
         `${API_DUMMY}/api/absensi/export/mingguan/by-kelas?kelasId=${idKelas}&tanggalAkhir=${tanggalAkhir}&tanggalAwal=${tanggalAwal}`,
         {
-          responseType: "blob",
-        },
-        {
           headers: {
             AuthPrs: `Bearer ${token}`,
           },
+          responseType: "blob",
         }
       );
 
