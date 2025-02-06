@@ -2,7 +2,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import Logo from "../components/logo.png"
+import Logo from "../components/logo.jpg"
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { API_DUMMY } from "../utils/api";
 import { Link, useNavigate } from "react-router-dom";
