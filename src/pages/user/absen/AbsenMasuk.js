@@ -31,7 +31,6 @@ function AbsenMasuk() {
   //   southEast: { lat: -6.990584517300366, lon: 110.40523078152198 },
   // };
 
-
   // smpn40 ke 2
   const allowedCoordinates = {
     northWest: { lat: -6.982580885, lon: 110.404028235 },
@@ -40,18 +39,18 @@ function AbsenMasuk() {
     southEast: { lat: -6.982670715, lon: 110.404118565 },
   };
 
-const isWithinAllowedCoordinates = (lat, lon) => {
-  const { northWest, northEast, southWest, southEast } = allowedCoordinates;
-  const isLatInRange =
-    lat >= Math.min(northWest.lat, southWest.lat) - TOLERANCE &&
-    lat <= Math.max(northWest.lat, southWest.lat) + TOLERANCE;
+  const isWithinAllowedCoordinates = (lat, lon) => {
+    const { northWest, northEast, southWest, southEast } = allowedCoordinates;
+    const isLatInRange =
+      lat >= Math.min(northWest.lat, southWest.lat) - TOLERANCE &&
+      lat <= Math.max(northWest.lat, southWest.lat) + TOLERANCE;
 
-  const isLonInRange =
-    lon >= Math.min(southWest.lon, southEast.lon) - TOLERANCE &&
-    lon <= Math.max(northEast.lon, southEast.lon) + TOLERANCE;
+    const isLonInRange =
+      lon >= Math.min(southWest.lon, southEast.lon) - TOLERANCE &&
+      lon <= Math.max(northEast.lon, southEast.lon) + TOLERANCE;
 
-  return isLatInRange && isLonInRange;
-};
+    return isLatInRange && isLonInRange;
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -141,7 +140,6 @@ const isWithinAllowedCoordinates = (lat, lon) => {
   //   );
   // };
 
-
   const handleCaptureAndSubmitMasuk = async () => {
     const imageSrc = webcamRef.current.getScreenshot();
     const response = await fetch(imageSrc);
@@ -195,58 +193,66 @@ const isWithinAllowedCoordinates = (lat, lon) => {
       }
     }
     // if (isWithinAllowedCoordinates(latitude, longitude)) {
-      try {
-        // const absensiCheckResponse = await axios.get(
-        //   `${API_DUMMY}/api/absensi/checkAbsensi?token=${token}`,
-        //   {
-        //     headers: {
-        //       AuthPrs: `Bearer ${token}`,
-        //       "Content-Type": "multipart/form-data",
-        //     },
-        //   }
-        // );
+    try {
+      // const absensiCheckResponse = await axios.get(
+      //   `${API_DUMMY}/api/absensi/checkAbsensi?token=${token}`,
+      //   {
+      //     headers: {
+      //       AuthPrs: `Bearer ${token}`,
+      //       "Content-Type": "multipart/form-data",
+      //     },
+      //   }
+      // );
 
-        // if (
-        //   absensiCheckResponse.data ===
-        //   "Pengguna sudah melakukan absensi hari ini."
-        // ) {
-        //   Swal.fire("Info", "Anda sudah melakukan absensi hari ini.", "info");
-        // } else {
-          const formData = new FormData();
-          formData.append("image", imageBlob);
-          formData.append("lokasiMasuk", address || "");
-          formData.append("keteranganTerlambat", keteranganTerlambat || "-");
+      // if (
+      //   absensiCheckResponse.data ===
+      //   "Pengguna sudah melakukan absensi hari ini."
+      // ) {
+      //   Swal.fire("Info", "Anda sudah melakukan absensi hari ini.", "info");
+      // } else {
+      const formData = new FormData();
+      formData.append("image", imageBlob);
+      formData.append("lokasiMasuk", address || "");
+      formData.append("keteranganTerlambat", keteranganTerlambat || "-");
 
-          console.log("FormData yang dikirim:", [...formData.entries()]);
-          console.log("Image URL:", imageUrl);
-          await axios.post(
-            `${API_DUMMY}/api/absensi/masuk?token=${token}`,
-            {
-              fotoMasuk: imageUrl,
-              lokasiMasuk: address || "",
-              keteranganTerlambat: keteranganTerlambat || "-",
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Berhasil Absen",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        // }
-        // setTimeout(() => {
-        //   window.location.href = "";
-        // }, 3000);
-      } catch (err) {
-        console.error("Error:", err);
-        Swal.fire("Error", "Gagal Absen", "error");
-      }
+      console.log("FormData yang dikirim:", [...formData.entries()]);
+      console.log("Image URL:", imageUrl);
+      await axios.post(
+        `${API_DUMMY}/api/absensi/masuk?token=${token}`,
+        {
+          fotoMasuk: imageUrl,
+          lokasiMasuk: address || "",
+          keteranganTerlambat: keteranganTerlambat || "-",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Berhasil Absen",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      // }
+      // setTimeout(() => {
+      //   window.location.href = "";
+      // }, 3000);
+    } catch (err) {
+      console.error("Error:", err);
+
+      // Cek apakah ada response dari backend
+      const errorMessage =
+        err.response && err.response.data && err.response.data.message
+          ? err.response.data.message
+          : "Gagal Absen"; // Pesan default jika tidak ada pesan dari backend
+
+      // Tampilkan pesan menggunakan Swal
+      Swal.fire("Error", errorMessage, "error");
+    }
     // } else {
     //   Swal.fire(
     //     "Error",
@@ -308,7 +314,8 @@ const isWithinAllowedCoordinates = (lat, lon) => {
                         );
                       }
                     }}
-                    className="block w-32 sm:w-40 bg-blue-500 text-white rounded-lg py-3 text-sm sm:text-xs font-medium">
+                    className="block w-32 sm:w-40 bg-blue-500 text-white rounded-lg py-3 text-sm sm:text-xs font-medium"
+                  >
                     {loading ? "Loading..." : "Ambil Foto"}
                   </button>
                 </div>
