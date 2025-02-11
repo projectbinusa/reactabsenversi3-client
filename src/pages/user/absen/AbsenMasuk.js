@@ -210,13 +210,13 @@ function AbsenMasuk() {
       // ) {
       //   Swal.fire("Info", "Anda sudah melakukan absensi hari ini.", "info");
       // } else {
-      const formData = new FormData();
-      formData.append("image", imageBlob);
-      formData.append("lokasiMasuk", address || "");
-      formData.append("keteranganTerlambat", keteranganTerlambat || "-");
+      // const formData = new FormData();
+      // formData.append("image", imageBlob);
+      // formData.append("lokasiMasuk", address || "");
+      // formData.append("keteranganTerlambat", keteranganTerlambat || "-");
 
-      console.log("FormData yang dikirim:", [...formData.entries()]);
-      console.log("Image URL:", imageUrl);
+      // console.log("FormData yang dikirim:", [...formData.entries()]);
+      // console.log("Image URL:", imageUrl);
       await axios.post(
         `${API_DUMMY}/api/absensi/masuk?token=${token}`,
         {
