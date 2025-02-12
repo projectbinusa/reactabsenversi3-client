@@ -295,7 +295,7 @@ function AbsenPulang() {
       formData.append("file", file);
 
       try {
-        const response = await fetch("https://s3.lynk2.co/api/s3/absenPulang", {
+        const response = await fetch("https://s3.lynk2.co/api/s3/absenMasuk", {
           method: "POST",
           body: formData,
         });
@@ -321,7 +321,7 @@ function AbsenPulang() {
     // if (isWithinAllowedCoordinates(latitude, longitude)) {
       try {
         const absensiCheckResponse = await axios.get(
-          `${API_DUMMY}/api/absensi/checkAbsensi/${userId}`,
+          `${API_DUMMY}/api/absensi/checkAbsensi?token=${localStorage.getItem("token")}`,
           {
             headers: {
               AuthPrs: `Bearer ${token}`,
@@ -347,20 +347,20 @@ function AbsenPulang() {
         const currentMinutes = currentTime.getMinutes();
         const [shiftHours, shiftMinutes] = waktuPulang.split(":").map(Number);
 
-        if (
-          currentHours < shiftHours ||
-          (currentHours === shiftHours && currentMinutes < shiftMinutes)
-        ) {
-          if (!keteranganPulangAwal) {
-            Swal.fire(
-              "Info",
-              `Anda tidak bisa melakukan absensi pulang sebelum pukul ${waktuPulang} tanpa memberikan keterangan. Mohon isi keterangan pulang awal.`,
-              "info"
-            );
-            setFetchingLocation(false);
-            return;
-          }
-        }
+        // if (
+        //   currentHours < shiftHours ||
+        //   (currentHours === shiftHours && currentMinutes < shiftMinutes)
+        // ) {
+        //   if (!keteranganPulangAwal) {
+        //     Swal.fire(
+        //       "Info",
+        //       `Anda tidak bisa melakukan absensi pulang sebelum pukul ${waktuPulang} tanpa memberikan keterangan. Mohon isi keterangan pulang awal.`,
+        //       "info"
+        //     );
+        //     setFetchingLocation(false);
+        //     return;
+        //   }
+        // }
 
         const formData = new FormData();
         // if (keteranganPulangAwal) {
