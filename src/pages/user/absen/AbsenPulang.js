@@ -295,7 +295,7 @@ function AbsenPulang() {
       formData.append("file", file);
 
       try {
-        const response = await fetch("https://s3.lynk2.co/api/s3/absenMasuk", {
+        const response = await fetch("https://s3.lynk2.co/api/s3/absenPulang", {
           method: "POST",
           body: formData,
         });
