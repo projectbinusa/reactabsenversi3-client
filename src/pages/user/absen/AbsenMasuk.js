@@ -21,6 +21,7 @@ function AbsenMasuk() {
   const [fetchingLocation, setFetchingLocation] = useState(true);
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const TOLERANCE = 0.00001;
   // smpn40 ke 1
@@ -157,11 +158,13 @@ function AbsenMasuk() {
     } catch (error) {
       console.error("Error during image upload:", error);
       Swal.fire("Error", "Gagal mengupload gambar", "error");
+      setIsLoading(false);
       return;
     }
 
     if (!latitude || !longitude) {
       Swal.fire("Error", "Lokasi belum tersedia", "error");
+      setIsLoading(false);
       return;
     }
 
@@ -190,6 +193,8 @@ function AbsenMasuk() {
       } catch (error) {
         console.error("Error:", error);
         throw error;
+      } finally {
+        setIsLoading(false);
       }
     }
     // if (isWithinAllowedCoordinates(latitude, longitude)) {
@@ -304,19 +309,30 @@ function AbsenMasuk() {
                   <button
                     type="button"
                     onClick={() => {
-                      if (!fetchingLocation) {
+                      if (!fetchingLocation && !isLoading) {
                         handleCaptureAndSubmitMasuk();
-                      } else {
+                      } else if (fetchingLocation) {
                         Swal.fire(
                           "Tunggu Sebentar",
-                          "Sedang mendapatakan lokasi",
+                          "Sedang mendapatkan lokasi",
                           "info"
                         );
                       }
                     }}
-                    className="block w-32 sm:w-40 bg-blue-500 text-white rounded-lg py-3 text-sm sm:text-xs font-medium"
-                  >
-                    {loading ? "Loading..." : "Ambil Foto"}
+                    className={`block w-32 sm:w-40 ${
+                      isLoading ? "bg-gray-400" : "bg-blue-500"
+                    } text-white rounded-lg py-3 text-sm sm:text-xs font-medium`}
+                    disabled={isLoading}>
+                    {isLoading ? (
+                      <div className="flex items-center justify-center">
+                        <svg
+                          className="animate-spin h-4 w-4 mr-2 border-t-2 border-white rounded-full"
+                          viewBox="0 0 24 24"></svg>
+                        Loading...
+                      </div>
+                    ) : (
+                      "Ambil Foto"
+                    )}
                   </button>
                 </div>
                 <div className="relative mb-3 mt-5">
