@@ -46,7 +46,7 @@ function EditKelas() {
   }, [id]);
 
   const namaKelasChangeHandler = (event) => {
-    setNamaKelas(capitalizeWords(event.target.value));
+    setNamaKelas(toUppercase(event.target.value));
   };
 
   const submitActionHandler = async (event) => {
@@ -91,7 +91,9 @@ function EditKelas() {
       if (
         error.response &&
         error.response.data &&
-        error.response.data.message.includes("Kelas dengan nama yang sama sudah ada di bawah admin ini")
+        error.response.data.message.includes(
+          "Kelas dengan nama yang sama sudah ada di bawah admin ini"
+        )
       ) {
         Swal.fire({
           icon: "error",
@@ -110,16 +112,11 @@ function EditKelas() {
     }
   };
 
-
-  // Helper function to capitalize each word, but not the character after an apostrophe
-  const capitalizeWords = (str) => {
-    return str.replace(/\b\w/g, (char, index, input) => {
-      // Check if the character is right after an apostrophe
-      if (index > 0 && input[index - 1] === "'") {
-        return char.toLowerCase(); // Keep it lowercase
-      }
-      return char.toUpperCase(); // Otherwise, capitalize
-    });
+  const toUppercase = (str) => {
+    if (typeof str !== "string") {
+      return str;
+    }
+    return str.toUpperCase();
   };
 
   return (

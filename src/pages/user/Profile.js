@@ -104,7 +104,7 @@ function Profile() {
 
   useEffect(() => {
     getProfile();
-  });
+  }, []);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -125,7 +125,7 @@ function Profile() {
     }
 
     try {
-        await axios.put(
+      await axios.put(
         `${API_DUMMY}/api/user/edit-password/${id}`,
         {
           old_password: passwordLama,
@@ -236,7 +236,8 @@ function Profile() {
                         type="submit"
                         className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50"
                         onClick={handleImageUpload}
-                        disabled={loading || !selectedFile}>
+                        disabled={loading || !selectedFile}
+                      >
                         {loading ? "Uploading..." : "Simpan"}
                       </button>
                     </div>
@@ -316,7 +317,8 @@ function Profile() {
                           <button
                             type="button"
                             onClick={() => setUbahUsername(true)}
-                            className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
+                            className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50"
+                          >
                             Ubah
                           </button>
                         )}
@@ -325,13 +327,15 @@ function Profile() {
                             <button
                               type="button"
                               onClick={() => setUbahUsername(false)}
-                              className="z-20 block rounded-xl border-2 border-white bg-rose-100 p-4 text-rose-500 active:bg-rose-50">
+                              className="z-20 block rounded-xl border-2 border-white bg-rose-100 p-4 text-rose-500 active:bg-rose-50"
+                            >
                               Batal
                             </button>
 
                             <button
                               type="submit"
-                              className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
+                              className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50"
+                            >
                               Simpan
                             </button>
                           </>
@@ -412,7 +416,8 @@ function Profile() {
                       <div className="flex justify-between mt-6">
                         <button
                           type="submit"
-                          className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50">
+                          className="z-20 block rounded-xl border-2 border-white bg-blue-100 p-4 text-blue-700 active:bg-blue-50"
+                        >
                           Simpan
                         </button>
                       </div>
