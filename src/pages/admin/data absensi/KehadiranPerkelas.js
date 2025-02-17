@@ -212,21 +212,19 @@ function KehadiranPerkelas() {
                     <select
                       value={limit}
                       onChange={handleLimitChange}
-                      className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
-                    >
+                      className="flex-shrink-0 z-10 inline-flex rounded-r-md items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
                       <option value="5">05</option>
                       <option value="10">10</option>
                       <option value="20">20</option>
                       <option value="50">50</option>
                     </select>
-                    <button
-                      type="button"
-                      className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded sm:py-2 sm:px-4"
-                      onClick={handleExportClick}
-                      title="Export"
-                    >
-                      <FontAwesomeIcon icon={faCloudArrowDown} />
-                    </button>
+                      <button
+                        type="button"
+                        className="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded sm:py-2 sm:px-4"
+                        onClick={handleExportClick}
+                        title="Export">
+                        <FontAwesomeIcon icon={faCloudArrowDown} />
+                      </button>
                   </div>
                 </div>
                 <br />
@@ -244,8 +242,7 @@ function KehadiranPerkelas() {
                 <div className="overflow-x-auto mt-5">
                   <table
                     id="dataKehadiran"
-                    className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
-                  >
+                    className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                       <tr>
                         <th scope="col" className="px-6 py-3">
@@ -273,8 +270,7 @@ function KehadiranPerkelas() {
                         <tr>
                           <td
                             colSpan="7"
-                            className="px-6 py-4 text-center text-gray-500"
-                          >
+                            className="px-6 py-4 text-center text-gray-500">
                             Tidak ada data yang ditampilkan
                           </td>
                         </tr>
@@ -290,12 +286,10 @@ function KehadiranPerkelas() {
                           return (
                             <tr
                               key={index}
-                              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                            >
+                              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                               <th
                                 scope="row"
-                                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                              >
+                                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {(currentPage - 1) * limit + index + 1}
                               </th>
                               <td className="px-6 py-4 text-gray-700 capitalize">

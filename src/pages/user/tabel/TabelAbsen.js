@@ -46,7 +46,7 @@ function TabelAbsen() {
       }
     };
     getAbsensi();
-  }, []);
+  });
 
   const checkUserAbsensiToday = async () => {
     const token = localStorage.getItem("token");

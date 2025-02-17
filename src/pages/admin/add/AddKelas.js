@@ -136,11 +136,15 @@ function AddKelas() {
     };
   }, [idAdmin]);
 
-  const toUppercase = (str) => {
-    if (typeof str !== "string") {
-      return str;
-    }
-    return str.toUpperCase();
+  // Helper function to capitalize each word, but not the character after an apostrophe
+  const capitalizeWords = (str) => {
+    return str.replace(/\b\w/g, (char, index, input) => {
+      // Check if the character is right after an apostrophe
+      if (index > 0 && input[index - 1] === "'") {
+        return char.toLowerCase(); // Keep it lowercase
+      }
+      return char.toUpperCase(); // Otherwise, capitalize
+    });
   };
 
   return (
@@ -173,7 +177,7 @@ function AddKelas() {
                           autoComplete="off"
                           value={namaKelas}
                           onChange={(e) =>
-                            setNamaKelas(toUppercase(e.target.value))
+                            setNamaKelas(capitalizeWords(e.target.value))
                           }
                           required
                         />
